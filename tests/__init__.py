@@ -1,12 +1,13 @@
+"""The tests collector used in setup.py"""
+import os
 import unittest
 
-import tests.test_damn_at
 
 def suite():
-    import unittest
-    suite = unittest.TestSuite()
-    suite.addTests(test_damn_at.suite())
-    return suite
+    """Return a list of tests"""
+    loader = unittest.TestLoader()
+    directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+    return loader.discover(directory, 'test_*.py')
 
 if __name__ == '__main__':
     unittest.TextTestRunner(verbosity=2).run(suite())

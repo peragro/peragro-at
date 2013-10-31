@@ -1,0 +1,9 @@
+[Core]
+Name = Blender analyzer
+Module = analyzerblend
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = Blender blend file analyzer

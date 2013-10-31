@@ -11,7 +11,7 @@ config = {
     'author_email': 'No, thanks',
     'version': '0.1',
     'test_suite': 'tests.suite',
-    'install_requires': ['nose'],
+    'install_requires': ['Yapsy', 'pylint'],
     'packages': ['damn_at'],
     'scripts': [],
     'name': 'damn_at'

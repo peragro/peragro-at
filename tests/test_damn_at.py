@@ -1,19 +1,17 @@
+"""Run pylint"""
+import os
 import unittest
-import damn_at
 
+from pylint import lint
 
-class TestCase(unittest.TestCase):
+class PyLint(unittest.TestCase):
+    """Run pylint"""
+    def test_pylint(self):
+        """Run pylint"""
+        directory = os.path.dirname(os.path.abspath(__file__))
+        config_file = os.path.join(directory, '..', 'pylint.cfg')
+        directory = os.path.join(directory, '../damn_at')
+        lint.Run(list((directory, "--rcfile="+config_file, )), exit=False)
+        assert True
 
-    def test_say(self):
-        assert 'hello world' == 'hello world'
-
-
-def suite():
-    loader = unittest.TestLoader()
-    suite = unittest.TestSuite()
-    suite.addTest(loader.loadTestsFromTestCase(TestCase))
-    return suite
-
-if __name__ == '__main__':
-    unittest.TextTestRunner(verbosity=2).run(suite())
 
