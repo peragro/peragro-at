@@ -45,10 +45,54 @@
             
   <div class="section" id="welcome-to-damn-at-s-documentation">
 <h1>Welcome to damn-at&#8217;s documentation!<a class="headerlink" href="#welcome-to-damn-at-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+<p>The general process:</p>
+<div class="highlight-python"><pre>                      user requested format-\
+                                       ______\______
+        ___________                    |            |
+        |          |/---&gt; Asset 1  ---&gt;| Transcoder |--&gt; Asset 1 in user requested format
+File --&gt;| Analyzer |----&gt; Asset 2      |____________|
+        |__________|\---&gt; Asset 3
+              \             /
+               \--Metadata-/</pre>
+</div>
+<p>Example: A blend file is given to the analyzer, the analyzer looks up the plugin for .blend files by mimetype. The plugin then begins to scan the file, and it will output a list of all blender objects(which from now on will be called assets), the assets are given an internal mimetype of &#8216;x-blender/object&#8217; and additional information like face/vertex count, number of materials, etc is scanned and added to the asset as metadata. All this information is stored in the database. Note: at this point we haven&#8217;t done anything with the file except for having scanned it. An asset is just an unique ID combined with a file reference, a name(unique for that file), an internal mimetype and some metadata!</p>
+<p>Now say a user wants asset 1 in CS format, he&#8217;d request it with the mimetype &#8216;application/x-crystalspace.library+xml&#8217;, asset 1 is then looked up in the database, this tells us it has the internal mimetype of &#8216;x-blender/object&#8217; , so now we can lookup a transcoder for &#8216;application/x-crystalspace.library+xml&#8217; &#8211;&gt;&#8217;x-blender/object&#8217;. The asset is passed to the transcoder plugin, it reads the file, finds the object by name and extracts its data and converts it to the CS format.</p>
+<div class="section" id="analyzers">
+<h2>Analyzers<a class="headerlink" href="#analyzers" title="Permalink to this headline">¶</a></h2>
+<p>...</p>
+</div>
+<div class="section" id="transcoders">
+<h2>Transcoders<a class="headerlink" href="#transcoders" title="Permalink to this headline">¶</a></h2>
+<p>Any .py file in the transcoders/ directory will be automatically scanned on startup and registered as a plugin if it has the following requirements: It has a function &#8216;transcode(self, anAsset, aFormat, kwargs)&#8217; It has a member dictionary <strong>convert_map</strong> and it has a member dictionary <strong>options_map</strong></p>
+<div class="section" id="convert-map">
+<h3>convert_map<a class="headerlink" href="#convert-map" title="Permalink to this headline">¶</a></h3>
+<p>This specifies the source and destination mimetypes this transcoder supports. Each entry describes a &#8216;source &#8211;&gt; destination&#8217;-mapping and is of the format:</p>
+<div class="highlight-python"><pre>"source-mimetype": "destination-mimetype"</pre>
+</div>
+<p>or:</p>
+<div class="highlight-python"><pre>"source-mimetype": ["destination-mimetype1", "destination-mimetype2", ...]</pre>
+</div>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">convert_map</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;image/png&quot;</span> <span class="p">:</span> <span class="s">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s">&quot;image/tga&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s">&quot;image/png&quot;</span><span class="p">]}</span>
+</pre></div>
+</div>
+<p>It can convert png to jpeg or convert tga to either jpeg or png.</p>
+</div>
+<div class="section" id="options-map">
+<h3>options_map<a class="headerlink" href="#options-map" title="Permalink to this headline">¶</a></h3>
+<p>This specifies what options/arguments can be given when transcoding an asset. Each entry specifies a source mimetype(corresponding to one in the convert_map) and a dictionary of options; each tuple consists of the option&#8217;s name and a function used to convert the input to the correct type(all inputs are string).</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">convert_map</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;x-blender/object&quot;</span> <span class="p">:</span> <span class="s">&quot;image/jpeg&quot;</span><span class="p">}</span>
+<span class="n">options_map</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;x-blender/object&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;sizex&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s">&#39;sizey&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s">&#39;angley&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s">&#39;cameraType&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s">&#39;cameraAngley&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s">&#39;anglesy&#39;</span><span class="p">:</span> <span class="n">floatArray</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>This one renders a blender object to a jpeg, it&#8217;s options are size(x/y): specifying the width and height of the rendered image. angley: the rotation around the Y axis of the object. cameraType: blender options for camera type, ORTHO or PERSP. cameraAngley: the angle of the camera.</p>
+<p>(This transcoder is used for the 2D previews of blender objects in the DAMN interface, it can also be used for sprites for a 2D game(use ortho and a camera angle to get top-down views of the asset))</p>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -69,6 +113,14 @@
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome to damn-at&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#analyzers">Analyzers</a></li>
+<li><a class="reference internal" href="#transcoders">Transcoders</a><ul>
+<li><a class="reference internal" href="#convert-map">convert_map</a></li>
+<li><a class="reference internal" href="#options-map">options_map</a><ul>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
