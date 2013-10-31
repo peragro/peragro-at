@@ -36,6 +36,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="autodoc/damn_at.html" title="damn_at Package"
              accesskey="N">next</a> |</li>
         <li><a href="#">damn-at 0.1 documentation</a> &raquo;</li> 
@@ -65,11 +68,11 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="autodoc/damn_at.html">damn_at Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#id1"><tt class="docutils literal"><span class="pre">damn_at</span></tt> Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#analyzer-module"><tt class="docutils literal"><span class="pre">analyzer</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#mimetypes-module"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#pluginmanager-module"><tt class="docutils literal"><span class="pre">pluginmanager</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#types-module"><tt class="docutils literal"><span class="pre">types</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#utilities-module"><tt class="docutils literal"><span class="pre">utilities</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#module-damn_at.analyzer"><tt class="docutils literal"><span class="pre">analyzer</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#module-damn_at.mimetypes"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#module-damn_at.pluginmanager"><tt class="docutils literal"><span class="pre">pluginmanager</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#module-damn_at.types"><tt class="docutils literal"><span class="pre">types</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#module-damn_at.utilities"><tt class="docutils literal"><span class="pre">utilities</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#subpackages">Subpackages</a></li>
 </ul>
 </li>
@@ -77,6 +80,38 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 </div>
 <div class="section" id="analyzers">
 <h2>Analyzers<a class="headerlink" href="#analyzers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="damn_at.pluginmanager.IAnalyzer">
+<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">IAnalyzer</tt><a class="reference internal" href="_modules/damn_at/pluginmanager.html#IAnalyzer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IAnalyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface class for an Analyzer</p>
+<dl class="method">
+<dt id="damn_at.pluginmanager.IAnalyzer.analyze">
+<tt class="descname">analyze</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="_modules/damn_at/pluginmanager.html#IAnalyzer.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IAnalyzer.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a FileReference</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="autodoc/damn_at.html#damn_at.types.FileReference" title="damn_at.types.FileReference"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.types.FileReference</span></tt></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"><a class="reference internal" href="autodoc/damn_at.html#damn_at.analyzer.AnalyzerException" title="damn_at.analyzer.AnalyzerException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.analyzer.AnalyzerException</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.pluginmanager.IAnalyzer.handled_types">
+<tt class="descname">handled_types</tt><em class="property"> = []</em><a class="headerlink" href="#damn_at.pluginmanager.IAnalyzer.handled_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mimetypes this analyzer can handle.
+Example::
+handled_types = [&#8220;application/x-blender&#8221;]</p>
+</dd></dl>
+
+</dd></dl>
+
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="autodoc/damn_at.analyzers.html">analyzers Package</a></li>
@@ -85,6 +120,18 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 </div>
 <div class="section" id="transcoders">
 <h2>Transcoders<a class="headerlink" href="#transcoders" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="damn_at.pluginmanager.ITranscoder">
+<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">ITranscoder</tt><a class="reference internal" href="_modules/damn_at/pluginmanager.html#ITranscoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface class for an Transcoder</p>
+<dl class="method">
+<dt id="damn_at.pluginmanager.ITranscoder.analyze">
+<tt class="descname">analyze</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="_modules/damn_at/pluginmanager.html#ITranscoder.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>blah</p>
+</dd></dl>
+
+</dd></dl>
+
 <p>Any .py file in the transcoders/ directory will be automatically scanned on startup and registered as a plugin if it has the following requirements: It has a function &#8216;transcode(self, anAsset, aFormat, kwargs)&#8217; It has a member dictionary <strong>convert_map</strong> and it has a member dictionary <strong>options_map</strong></p>
 <div class="section" id="convert-map">
 <h3>convert_map<a class="headerlink" href="#convert-map" title="Permalink to this headline">¶</a></h3>
@@ -181,6 +228,9 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="autodoc/damn_at.html" title="damn_at Package"
              >next</a> |</li>
