@@ -1,9 +1,3 @@
-.. damn-at documentation master file, created by
-   sphinx-quickstart on Thu Oct 31 00:52:08 2013.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-
 Welcome to damn-at's documentation!
 ===================================
 
@@ -24,14 +18,29 @@ Example: A blend file is given to the analyzer, the analyzer looks up the plugin
 
 Now say a user wants asset 1 in CS format, he'd request it with the mimetype 'application/x-crystalspace.library+xml', asset 1 is then looked up in the database, this tells us it has the internal mimetype of 'x-blender/object' , so now we can lookup a transcoder for 'application/x-crystalspace.library+xml' -->'x-blender/object'. The asset is passed to the transcoder plugin, it reads the file, finds the object by name and extracts its data and converts it to the CS format.
 
+.. toctree::
+   :maxdepth: 2
+
+   autodoc/damn_at
+   
 
 Analyzers
 ----------
 
-...
+.. autoclass:: damn_at.pluginmanager.IAnalyzer
+   :members:
+
+.. toctree::
+   :maxdepth: 1
+
+   autodoc/damn_at.analyzers
+
 
 Transcoders
 -----------
+
+.. autoclass:: damn_at.pluginmanager.ITranscoder
+   :members:
 
 Any .py file in the transcoders/ directory will be automatically scanned on startup and registered as a plugin if it has the following requirements: It has a function 'transcode(self, anAsset, aFormat, kwargs)' It has a member dictionary **convert_map** and it has a member dictionary **options_map**
 
@@ -67,12 +76,10 @@ This one renders a blender object to a jpeg, it's options are size(x/y): specify
 
 (This transcoder is used for the 2D previews of blender objects in the DAMN interface, it can also be used for sprites for a 2D game(use ortho and a camera angle to get top-down views of the asset)) 
 
-
-
-
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
+   autodoc/damn_at.transcoders
 
 
 Indices and tables

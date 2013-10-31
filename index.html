@@ -25,7 +25,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="damn-at 0.1 documentation" href="#" /> 
+    <link rel="top" title="damn-at 0.1 documentation" href="#" />
+    <link rel="next" title="damn_at Package" href="autodoc/damn_at.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,6 +35,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="autodoc/damn_at.html" title="damn_at Package"
+             accesskey="N">next</a> |</li>
         <li><a href="#">damn-at 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -57,9 +61,27 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 </div>
 <p>Example: A blend file is given to the analyzer, the analyzer looks up the plugin for .blend files by mimetype. The plugin then begins to scan the file, and it will output a list of all blender objects(which from now on will be called assets), the assets are given an internal mimetype of &#8216;x-blender/object&#8217; and additional information like face/vertex count, number of materials, etc is scanned and added to the asset as metadata. All this information is stored in the database. Note: at this point we haven&#8217;t done anything with the file except for having scanned it. An asset is just an unique ID combined with a file reference, a name(unique for that file), an internal mimetype and some metadata!</p>
 <p>Now say a user wants asset 1 in CS format, he&#8217;d request it with the mimetype &#8216;application/x-crystalspace.library+xml&#8217;, asset 1 is then looked up in the database, this tells us it has the internal mimetype of &#8216;x-blender/object&#8217; , so now we can lookup a transcoder for &#8216;application/x-crystalspace.library+xml&#8217; &#8211;&gt;&#8217;x-blender/object&#8217;. The asset is passed to the transcoder plugin, it reads the file, finds the object by name and extracts its data and converts it to the CS format.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autodoc/damn_at.html">damn_at Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#id1"><tt class="docutils literal"><span class="pre">damn_at</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#analyzer-module"><tt class="docutils literal"><span class="pre">analyzer</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#mimetypes-module"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#pluginmanager-module"><tt class="docutils literal"><span class="pre">pluginmanager</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#types-module"><tt class="docutils literal"><span class="pre">types</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#utilities-module"><tt class="docutils literal"><span class="pre">utilities</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="analyzers">
 <h2>Analyzers<a class="headerlink" href="#analyzers" title="Permalink to this headline">¶</a></h2>
-<p>...</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autodoc/damn_at.analyzers.html">analyzers Package</a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="transcoders">
 <h2>Transcoders<a class="headerlink" href="#transcoders" title="Permalink to this headline">¶</a></h2>
@@ -113,7 +135,9 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome to damn-at&#8217;s documentation!</a><ul>
-<li><a class="reference internal" href="#analyzers">Analyzers</a></li>
+<li><a class="reference internal" href="#analyzers">Analyzers</a><ul>
+</ul>
+</li>
 <li><a class="reference internal" href="#transcoders">Transcoders</a><ul>
 <li><a class="reference internal" href="#convert-map">convert_map</a></li>
 <li><a class="reference internal" href="#options-map">options_map</a><ul>
@@ -126,6 +150,9 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
+  <h4>Next topic</h4>
+  <p class="topless"><a href="autodoc/damn_at.html"
+                        title="next chapter">damn_at Package</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -154,11 +181,14 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="autodoc/damn_at.html" title="damn_at Package"
+             >next</a> |</li>
         <li><a href="#">damn-at 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, sueatside.
+        &copy; Copyright 2013, sueastside.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

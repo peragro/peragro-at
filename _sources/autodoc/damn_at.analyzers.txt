@@ -1,0 +1,18 @@
+analyzers Package
+=================
+
+:mod:`analyzers` Package
+------------------------
+
+.. automodule:: damn_at.analyzers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    damn_at.analyzers.mesh
+

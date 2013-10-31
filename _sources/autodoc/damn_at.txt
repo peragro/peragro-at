@@ -1,0 +1,58 @@
+damn_at Package
+===============
+
+:mod:`damn_at` Package
+----------------------
+
+.. automodule:: damn_at.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`analyzer` Module
+----------------------
+
+.. automodule:: damn_at.analyzer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`mimetypes` Module
+-----------------------
+
+.. automodule:: damn_at.mimetypes
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`pluginmanager` Module
+---------------------------
+
+.. automodule:: damn_at.pluginmanager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`types` Module
+-------------------
+
+.. automodule:: damn_at.types
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`utilities` Module
+-----------------------
+
+.. automodule:: damn_at.utilities
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    damn_at.analyzers
+
