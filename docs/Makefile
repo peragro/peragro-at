@@ -152,24 +152,3 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
-
-create-gh-pages:
-	git checkout --orphan gh-pages
-	git rm -rf .
-	echo "Blah blah blah" > index.html
-	touch .nojekyll
-	git add .
-	git commit -m "Initial commit to gh-pages"
-	#git push origin :gh-pages
-	git push origin gh-pages
-	
-gh-pages:
-	git checkout gh-pages
-	rm -rf _build ../_sources ../_static ../_modules
-	git checkout master $(GH_PAGES_SOURCES)
-	git reset HEAD
-	make html
-	mv -fv _build/html/* ../
-	rm -rf $(GH_PAGES_SOURCES)/_build
-	git add -A ../
-	git commit -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && git push origin gh-pages ; git checkout master

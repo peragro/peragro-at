@@ -1,0 +1,13 @@
+language: python
+python: 
+- "2.7"
+- "3.2"
+- "3.3"
+env: 
+  global: 
+    secure: CR0RYDzX5o+Jwd7wAE4XES8Gwpk6X9JbRREb7dFhfUgXoW1gLOlRlz5lI9CtXw4ib/XtYvm3gcpJADn63S+X2edVt5loQcB7wH8LhPYfdkhmDm+DUpugq4TZnWjkeYKkOQpu7l65dKCfO9nnXiuzZlJ4jIW7vhh3IPmHLUWUzAw=
+install: 
+- pip install -r requirements.txt
+script: 
+- python setup.py test
+after_success: ./bin/update-gh-pages.sh
