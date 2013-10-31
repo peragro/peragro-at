@@ -1,6 +1,6 @@
 # Makefile for Sphinx documentation
 #
-GH_PAGES_SOURCES = docs/
+GH_PAGES_SOURCES = docs/sources
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
@@ -154,13 +154,13 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 	      
 gh-pages:
-        git checkout gh-pages
-        rm -rf build _sources _static _modules
-        git checkout master $(GH_PAGES_SOURCES)
-        git reset HEAD
-        make -f docs/Makefile html
-        mv -fv build/html/* ./
-        rm -rf $(GH_PAGES_SOURCES) build
-        git add -A
-        git commit -m "Generated gh-pages for `git log master -1 --pretty=short \
-                --abbrev-commit`" && git push origin gh-pages ; git checkout master
+	git checkout gh-pages
+	rm -rf build _sources _static _modules
+	git checkout master $(GH_PAGES_SOURCES)
+	git reset HEAD
+	make -f docs/Makefile html
+	mv -fv build/html/* ./
+	rm -rf $(GH_PAGES_SOURCES) build
+	git add -A
+	git commit -m "Generated gh-pages for `git log master -1 --pretty=short \
+		--abbrev-commit`" && git push origin gh-pages ; git checkout master
