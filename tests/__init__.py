@@ -1,6 +1,6 @@
 import unittest
 
-import test_damn_at
+import tests.test_damn_at
 
 def suite():
     import unittest
