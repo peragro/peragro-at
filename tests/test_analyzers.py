@@ -27,7 +27,7 @@ class TestCase(unittest.TestCase):
         
     def test_analyze(self):
         """Test say"""
-        ref = Analyzer().AnalyzeFile('/home/sueastside/dev/blenderassets/cube1.blend')
+        #ref = Analyzer().analyze_file('/home/sueastside/dev/blenderassets/cube1.blend')
         assert True
 
 def test_suite():

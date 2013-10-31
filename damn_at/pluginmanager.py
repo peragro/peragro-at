@@ -24,17 +24,27 @@ class ActivationFailedException(Exception):
 
 
 class IAnalyzer(IPlugin):
-    """Base class for an Analyzer""" 
+    """Interface class for an Analyzer""" 
+    
+    handled_types = []
+    """
+    The mimetypes this analyzer can handle.
+    Example::
+    handled_types = ["application/x-blender"]
+    """
+    
     def analyze(self, an_uri):
-        """Returns a list of AssetReference
-        arguments:
-        anURI -- the URI pointing to the file to be analyzed
+        """Returns a FileReference
+
+        :param an_uri: the URI pointing to the file to be analyzed
+        :rtype: :py:class:`damn_at.types.FileReference`
+        :raises: :py:class:`damn_at.analyzer.AnalyzerException`
         """
         raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self)        
 
 
 class ITranscoder(IPlugin):
-    """Base class for an Transcoder"""
+    """Interface class for an Transcoder"""
     def analyze(self, an_uri):
         """ blah """
         raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self)        

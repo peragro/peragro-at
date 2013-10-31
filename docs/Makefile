@@ -1,6 +1,5 @@
 # Makefile for Sphinx documentation
 #
-GH_PAGES_SOURCES = .
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
@@ -43,7 +42,9 @@ clean:
 	-rm -rf $(BUILDDIR)/*
 
 html:
+	sphinx-apidoc ../damn_at -o autodoc
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	rm -rf autodoc
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 

@@ -6,7 +6,7 @@ and address it.
 """
 
 from .pluginmanager import DAMNPluginManagerSingleton
-from .utilities import IsExistingFile
+from .utilities import is_existing_file
 
 from . import mimetypes
 
@@ -43,8 +43,10 @@ class Analyzer(object):
       
     def analyze_file(self, an_uri):
         """Returns a FileReference
-        arguments:
-        anURI -- the URI pointing to the file to be analyzed
+        
+        :param an_uri: the URI pointing to the file to be analyzed
+        :rtype: :py:class:`damn_at.types.FileReference`
+        :raises: AnalyzerException, AnalyzerFileException, AnalyzerUnknownTypeException
         """
         if not is_existing_file(an_uri):
             raise AnalyzerFileException('E: Analyzer: No such file "%s"!'%(an_uri))
