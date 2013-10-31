@@ -6,6 +6,11 @@ python:
 env: 
   global: 
     secure: CR0RYDzX5o+Jwd7wAE4XES8Gwpk6X9JbRREb7dFhfUgXoW1gLOlRlz5lI9CtXw4ib/XtYvm3gcpJADn63S+X2edVt5loQcB7wH8LhPYfdkhmDm+DUpugq4TZnWjkeYKkOQpu7l65dKCfO9nnXiuzZlJ4jIW7vhh3IPmHLUWUzAw=
+before_install:
+ - yes | sudo add-apt-repository ppa:irie/blender
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq python-sphinx
+ - sudo apt-get install -qq blender
 install: 
 - pip install -r requirements.txt
 script: 
