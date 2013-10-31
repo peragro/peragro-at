@@ -4,8 +4,13 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   #generate and copy data we're interested in to other place
   cd docs/
   make html
-  mkdir $HOME/html/
+  echo "Copying html to " $HOME
   cp -R _build/html $HOME/html_gen
+  echo "==============================="
+  ls -la $HOME/html_gen
+  echo "==============================="
+  ls -la .
+  echo "==============================="
 
   #go to home and setup git
   cd $HOME
@@ -18,6 +23,10 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   #go into directory and copy data we're interested in to that directory
   cd gh-pages
   cp -Rf $HOME/html_gen/* .
+  
+  echo "==============================="
+  ls -la .
+  echo "==============================="
 
   #add, commit and push files
   git add -f .
