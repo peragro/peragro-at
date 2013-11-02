@@ -18,4 +18,4 @@ script:
 - sudo python setup.py develop
 after_script:
 - ./bin/update-gh-pages.sh
-- ./bin/run-pylint.py
+- python bin/run-pylint.py
