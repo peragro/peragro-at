@@ -1,0 +1,42 @@
+thrift Package
+==============
+
+:mod:`thrift` Package
+---------------------
+
+.. automodule:: damn_at.thrift
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`client` Module
+--------------------
+
+.. automodule:: damn_at.thrift.client
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`serialization` Module
+---------------------------
+
+.. automodule:: damn_at.thrift.serialization
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`server` Module
+--------------------
+
+.. automodule:: damn_at.thrift.server
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    damn_at.thrift.generated
+

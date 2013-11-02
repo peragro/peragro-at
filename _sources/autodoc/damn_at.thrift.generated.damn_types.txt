@@ -1,0 +1,27 @@
+damn_types Package
+==================
+
+:mod:`damn_types` Package
+-------------------------
+
+.. automodule:: damn_at.thrift.generated.damn_types
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`constants` Module
+-----------------------
+
+.. automodule:: damn_at.thrift.generated.damn_types.constants
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`ttypes` Module
+--------------------
+
+.. automodule:: damn_at.thrift.generated.damn_types.ttypes
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

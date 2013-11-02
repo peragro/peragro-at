@@ -81,9 +81,23 @@ and address it.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#damn_at.types.FileReference" title="damn_at.types.FileReference"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.types.FileReference</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.types.FileReference</span></tt></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body">AnalyzerException, AnalyzerFileException, AnalyzerUnknownTypeException</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.analyzer.Analyzer.get_supported_mimetypes">
+<tt class="descname">get_supported_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#Analyzer.get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.Analyzer.get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of supported mimetypes, &#8216;handled_types&#8217; of all analyzers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;string&gt;</td>
 </tr>
 </tbody>
 </table>
@@ -183,7 +197,7 @@ method in the following way:
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#damn_at.types.FileReference" title="damn_at.types.FileReference"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.types.FileReference</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.types.FileReference</span></tt></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"><a class="reference internal" href="#damn_at.analyzer.AnalyzerException" title="damn_at.analyzer.AnalyzerException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.analyzer.AnalyzerException</span></tt></a></td>
 </tr>
@@ -216,17 +230,6 @@ handled_types = [&#8220;application/x-blender&#8221;]</p>
 
 </div>
 </div>
-<div class="section" id="module-damn_at.types">
-<span id="types-module"></span><h2><a class="reference external" href="http://docs.python.org/library/types.html#types" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">types</span></tt></a> Module<a class="headerlink" href="#module-damn_at.types" title="Permalink to this headline">¶</a></h2>
-<p>The types that are passed around between analyzers and transcoders</p>
-<dl class="class">
-<dt id="damn_at.types.FileReference">
-<em class="property">class </em><tt class="descclassname">damn_at.types.</tt><tt class="descname">FileReference</tt><a class="reference internal" href="../_modules/damn_at/types.html#FileReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.types.FileReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>FileReference</p>
-</dd></dl>
-
-</div>
 <div class="section" id="module-damn_at.utilities">
 <span id="utilities-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">utilities</span></tt> Module<a class="headerlink" href="#module-damn_at.utilities" title="Permalink to this headline">¶</a></h2>
 <p>General utilities.</p>
@@ -234,8 +237,22 @@ handled_types = [&#8220;application/x-blender&#8221;]</p>
 <dt id="damn_at.utilities.is_existing_file">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">is_existing_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#is_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.is_existing_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether the file exists and it is an actual file. 
-arguments:
-anURI &#8211; the URI pointing to the file to be analyzed</p>
+:param an_uri: the URI pointing to the file to be analyzed
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.run_blender">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">run_blender</tt><big>(</big><em>an_uri</em>, <em>script_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#run_blender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.run_blender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs blender with the given file and script</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.script_path">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">script_path</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#script_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.script_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>b-script-&#8216;+__file__+&#8217;.py 
+:param filename: __file__
+:rtype: string</p>
 </dd></dl>
 
 </div>
@@ -250,6 +267,35 @@ anURI &#8211; the URI pointing to the file to be analyzed</p>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#id1"><tt class="docutils literal"><span class="pre">mesh</span></tt> Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#module-damn_at.analyzers.mesh.analyzerblend"><tt class="docutils literal"><span class="pre">analyzerblend</span></tt> Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#b-script-analyzerblend-module"><tt class="docutils literal"><span class="pre">b-script-analyzerblend</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="damn_at.thrift.html">thrift Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#id1"><tt class="docutils literal"><span class="pre">thrift</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#client-module"><tt class="docutils literal"><span class="pre">client</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#module-damn_at.thrift.serialization"><tt class="docutils literal"><span class="pre">serialization</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#server-module"><tt class="docutils literal"><span class="pre">server</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="damn_at.thrift.generated.html">generated Package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="damn_at.thrift.generated.damn.html">damn Package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn.html#id1"><tt class="docutils literal"><span class="pre">damn</span></tt> Package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn.html#damnservice-module"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn.html#constants-module"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn.html#ttypes-module"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html">damn_types Package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#id1"><tt class="docutils literal"><span class="pre">damn_types</span></tt> Package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#module-damn_at.thrift.generated.damn_types.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#module-damn_at.thrift.generated.damn_types.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -283,7 +329,6 @@ anURI &#8211; the URI pointing to the file to be analyzed</p>
 <li><a class="reference internal" href="#id3">Role</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-damn_at.types"><tt class="docutils literal"><span class="pre">types</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.utilities"><tt class="docutils literal"><span class="pre">utilities</span></tt> Module</a></li>
 <li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 </ul>

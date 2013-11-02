@@ -33,14 +33,6 @@ damn_at Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`types` Module
--------------------
-
-.. automodule:: damn_at.types
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`utilities` Module
 -----------------------
 
@@ -55,4 +47,5 @@ Subpackages
 .. toctree::
 
     damn_at.analyzers
+    damn_at.thrift
 

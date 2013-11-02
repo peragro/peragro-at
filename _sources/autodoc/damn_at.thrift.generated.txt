@@ -1,0 +1,11 @@
+generated Package
+=================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    damn_at.thrift.generated.damn
+    damn_at.thrift.generated.damn_types
+

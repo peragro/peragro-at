@@ -91,7 +91,14 @@
             <span class="k">if</span> <span class="n">plugin</span><span class="o">.</span><span class="n">plugin_object</span><span class="o">.</span><span class="n">is_activated</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">mimetype</span> <span class="ow">in</span> <span class="n">plugin</span><span class="o">.</span><span class="n">plugin_object</span><span class="o">.</span><span class="n">handled_types</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">analyzers</span><span class="p">[</span><span class="n">mimetype</span><span class="p">]</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">.</span><span class="n">plugin_object</span>
-      
+    
+<div class="viewcode-block" id="Analyzer.get_supported_mimetypes"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.Analyzer.get_supported_mimetypes">[docs]</a>    <span class="k">def</span> <span class="nf">get_supported_mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of supported mimetypes, &#39;handled_types&#39; of all analyzers</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: list&lt;string&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">analyzers</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+          </div>
 <div class="viewcode-block" id="Analyzer.analyze_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.Analyzer.analyze_file">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a FileReference</span>
 <span class="sd">        </span>
