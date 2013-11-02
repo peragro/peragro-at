@@ -40,7 +40,14 @@ class Analyzer(object):
             if plugin.plugin_object.is_activated:
                 for mimetype in plugin.plugin_object.handled_types:
                     self.analyzers[mimetype] = plugin.plugin_object
-      
+    
+    def get_supported_mimetypes(self):
+        """Returns a list of supported mimetypes, 'handled_types' of all analyzers
+        
+        :rtype: list<string>
+        """
+        return self.analyzers.keys()
+          
     def analyze_file(self, an_uri):
         """Returns a FileReference
         

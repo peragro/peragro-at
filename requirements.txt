@@ -1,0 +1,1 @@
+#pip install -e git+https://github.com/wgwang/thrift.git#egg=thrift-0.9.1-py3.2&subdirectory=lib/py3

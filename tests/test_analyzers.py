@@ -12,7 +12,7 @@ from damn_at.analyzer import Analyzer
 
 class TestCase(unittest.TestCase):
     """Test case"""
-    def test_say(self):
+    def rtest_say(self):
         """Test say"""
         # Build the manager
         simple_plugin_mgr = DAMNPluginManagerSingleton.get()
@@ -27,11 +27,13 @@ class TestCase(unittest.TestCase):
         
     def test_analyze(self):
         """Test say"""
-        #ref = Analyzer().analyze_file('/home/sueastside/dev/blenderassets/cube1.blend')
+        ref = Analyzer().analyze_file('/home/sueastside/dev/blenderassets/cube1.blend')
         assert True
 
 def test_suite():
     """Return a list of tests"""
-    loader = unittest.TestLoader()
-    directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    return loader.discover(directory, 'test_ana*.py')
+    return unittest.TestLoader().loadTestsFromTestCase(TestCase)
+
+if __name__ == '__main__':
+    #unittest.main()
+    unittest.TextTestRunner().run(test_suite())
