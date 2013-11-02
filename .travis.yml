@@ -15,6 +15,5 @@ install:
 script: 
 - python setup.py test
 - sudo python setup.py develop
-after_success: 
 - ./bin/update-gh-pages.sh
 - ./bin/run-pylint.py
