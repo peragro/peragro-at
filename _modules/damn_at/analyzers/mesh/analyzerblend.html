@@ -87,19 +87,8 @@
         <span class="n">data</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         
         <span class="n">fileref</span> <span class="o">=</span> <span class="n">DeserializeThriftMsg</span><span class="p">(</span><span class="n">FileReference</span><span class="p">(),</span> <span class="n">data</span><span class="p">,</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocol</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">fileref</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">fileref</span>
-</div>
-<div class="viewcode-block" id="BlendAnalyzer.pretty_print"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.mesh.html#damn_at.analyzers.mesh.analyzerblend.BlendAnalyzer.pretty_print">[docs]</a>    <span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileref</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Pretty print the fileref&quot;&quot;&quot;</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">fileref</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">fileref</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">fileref</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">asset</span><span class="o">.</span><span class="n">dependencies</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">dep</span> <span class="ow">in</span> <span class="n">asset</span><span class="o">.</span><span class="n">dependencies</span><span class="p">:</span>
-                        <span class="k">print</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">dep</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">dep</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">dep</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
         
         
 </pre></div></div></div>

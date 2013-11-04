@@ -56,6 +56,9 @@
 <span class="sd">and address it.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">metrology.instruments.gauge</span> <span class="kn">import</span> <span class="n">Gauge</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">registry</span>
 <span class="kn">from</span> <span class="nn">.pluginmanager</span> <span class="kn">import</span> <span class="n">DAMNPluginManagerSingleton</span>
 <span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">is_existing_file</span>
 
@@ -69,21 +72,32 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
-    </div>
+
+</div>
 <div class="viewcode-block" id="AnalyzerFileException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.AnalyzerFileException">[docs]</a><span class="k">class</span> <span class="nc">AnalyzerFileException</span><span class="p">(</span><span class="n">AnalyzerException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Something wrong with the file&quot;&quot;&quot;</span>
     <span class="k">pass</span>
-  </div>
+  
+</div>
 <div class="viewcode-block" id="AnalyzerUnknownTypeException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.AnalyzerUnknownTypeException">[docs]</a><span class="k">class</span> <span class="nc">AnalyzerUnknownTypeException</span><span class="p">(</span><span class="n">AnalyzerException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Unknown type&quot;&quot;&quot;</span>
     <span class="k">pass</span>
 
 </div>
+<div class="viewcode-block" id="AnalyzerGauge"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.AnalyzerGauge">[docs]</a><span class="k">class</span> <span class="nc">AnalyzerGauge</span><span class="p">(</span><span class="n">Gauge</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gauge that returns the number of analyzer-plugins&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">analyzer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">analyzer</span>
+<div class="viewcode-block" id="AnalyzerGauge.value"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.AnalyzerGauge.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="o">.</span><span class="n">analyzers</span><span class="p">)</span>
+
+</div></div>
 <div class="viewcode-block" id="Analyzer"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.Analyzer">[docs]</a><span class="k">class</span> <span class="nc">Analyzer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Analyze files and tries to find known assets types in it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">registry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s">&#39;damn_at.analyzer.number_of_analyzers&#39;</span><span class="p">,</span> <span class="n">AnalyzerGauge</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">analyzers</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">plugin_mgr</span> <span class="o">=</span> <span class="n">DAMNPluginManagerSingleton</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 

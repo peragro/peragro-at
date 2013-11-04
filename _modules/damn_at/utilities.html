@@ -54,6 +54,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">glob</span>
 
 <div class="viewcode-block" id="is_existing_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.is_existing_file">[docs]</a><span class="k">def</span> <span class="nf">is_existing_file</span><span class="p">(</span><span class="n">an_uri</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns whether the file exists and it is an actual file. </span>
@@ -75,17 +76,36 @@
 </div>
 <div class="viewcode-block" id="run_blender"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.run_blender">[docs]</a><span class="k">def</span> <span class="nf">run_blender</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">script_uri</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Runs blender with the given file and script&quot;&quot;&quot;</span>
-    <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">collect_python3_paths</span><span class="p">()</span>
+    
     <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
     <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s">&#39;..&#39;</span><span class="p">))</span>
-    <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;/usr/local/lib/python3.2/dist-packages/thrift-0.9.1-py3.2.egg&#39;</span><span class="p">)</span>
+
     <span class="n">env</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
     <span class="n">env</span><span class="p">[</span><span class="s">&#39;PYTHONPATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;blender&#39;</span><span class="p">,</span> <span class="s">&quot;-b&quot;</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">,</span> <span class="s">&#39;-P&#39;</span><span class="p">,</span> <span class="n">script_uri</span><span class="p">]</span>
 
     <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
     <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span></div>
+    <span class="k">return</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span>
+
+</div>
+<div class="viewcode-block" id="collect_python3_paths"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.collect_python3_paths">[docs]</a><span class="k">def</span> <span class="nf">collect_python3_paths</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Collect python3&#39;s &#39;dist-packages&#39; paths to create PYTHONPATH with&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;python3&#39;</span><span class="p">,</span> <span class="s">&quot;-c&quot;</span><span class="p">,</span> <span class="s">&#39;import site; [print(x) for x in site.getsitepackages()]&#39;</span><span class="p">]</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+    <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">stdout</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s">&#39;/*.egg&#39;</span><span class="p">):</span>
+            <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">include</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s">&#39;/*.egg-link&#39;</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">include</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">include_path</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
+                    <span class="n">include_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">include</span><span class="p">,</span> <span class="n">include_path</span><span class="p">)</span>
+                    <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">include_path</span><span class="p">)</span>
+                    
+    <span class="k">return</span> <span class="n">paths</span></div>
 </pre></div>
 
           </div>
