@@ -5,6 +5,9 @@ Analyzer convience class to find the right plugin for a mimetype
 and address it.
 """
 
+from metrology.instruments.gauge import Gauge
+
+from . import registry
 from .pluginmanager import DAMNPluginManagerSingleton
 from .utilities import is_existing_file
 
@@ -18,14 +21,24 @@ class AnalyzerException(Exception):
         self.msg = msg
     def __str__(self):
         return repr(self.msg)
-    
+
+
 class AnalyzerFileException(AnalyzerException):
     """Something wrong with the file"""
     pass
   
+
 class AnalyzerUnknownTypeException(AnalyzerException):
     """Unknown type"""
     pass
+
+
+class AnalyzerGauge(Gauge):
+    """Gauge that returns the number of analyzer-plugins"""
+    def __init__(self, analyzer):
+        self.analyzer = analyzer
+    def value(self):
+        return len(self.analyzer.analyzers)
 
 
 class Analyzer(object):
@@ -33,6 +46,7 @@ class Analyzer(object):
     Analyze files and tries to find known assets types in it.
     """
     def __init__(self):
+        registry.gauge('damn_at.analyzer.number_of_analyzers', AnalyzerGauge(self))
         self.analyzers = {}
         plugin_mgr = DAMNPluginManagerSingleton.get()
 

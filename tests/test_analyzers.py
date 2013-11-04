@@ -4,11 +4,23 @@ Does some stuff
 import os
 import unittest
 
-import logging
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+#import logging
+#logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
 from damn_at.analyzer import Analyzer
+from damn_at import registry
+
+def pretty_print(fileref):
+    """Pretty print the fileref"""
+    print(fileref.file.filename)
+    if fileref.assets:
+        for asset in fileref.assets:
+            print('', asset.asset.subname, asset.asset.mimetype, asset.asset.file.filename)
+            if asset.dependencies:
+                for dep in asset.dependencies:
+                    print('  ', dep.subname, dep.mimetype, dep.file.filename)
+
 
 class TestCase(unittest.TestCase):
     """Test case"""
@@ -28,6 +40,12 @@ class TestCase(unittest.TestCase):
     def test_analyze(self):
         """Test say"""
         ref = Analyzer().analyze_file('/home/sueastside/dev/blenderassets/cube1.blend')
+        pretty_print(ref)
+        assert True
+        
+    def test_registry(self):
+        """Test say"""
+        print(registry.get('damn_at.analyzer.number_of_analyzers').value())
         assert True
 
 def test_suite():

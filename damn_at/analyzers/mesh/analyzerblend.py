@@ -36,19 +36,8 @@ class BlendAnalyzer(IAnalyzer):
         data = binascii.unhexlify(data)
         
         fileref = DeserializeThriftMsg(FileReference(), data, TBinaryProtocol.TBinaryProtocol)
-        self.pretty_print(fileref)
         
         return fileref
-
-    def pretty_print(self, fileref):
-        """Pretty print the fileref"""
-        print(fileref.file.filename)
-        if fileref.assets:
-            for asset in fileref.assets:
-                print('\t', asset.asset.subname, asset.asset.mimetype, asset.asset.file.filename)
-                if asset.dependencies:
-                    for dep in asset.dependencies:
-                        print('\t\t', dep.subname, dep.mimetype, dep.file.filename)
         
         
 
