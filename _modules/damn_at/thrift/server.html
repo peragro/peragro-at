@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>damn_at.thrift.server &mdash; damn-at 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="damn-at 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">damn-at 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for damn_at.thrift.server</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;DAMN Service server&quot;&quot;&quot;</span>
+ 
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s">&#39;generated&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+ 
+<span class="kn">from</span> <span class="nn">thrift.transport</span> <span class="kn">import</span> <span class="n">TSocket</span>
+<span class="kn">from</span> <span class="nn">thrift.transport</span> <span class="kn">import</span> <span class="n">TTransport</span>
+<span class="kn">from</span> <span class="nn">thrift.protocol</span> <span class="kn">import</span> <span class="n">TBinaryProtocol</span>
+<span class="kn">from</span> <span class="nn">thrift.server</span> <span class="kn">import</span> <span class="n">TServer</span>
+
+<span class="kn">from</span> <span class="nn">damn_at.thrift.generated.damn</span> <span class="kn">import</span> <span class="n">DamnService</span>
+
+<span class="kn">from</span> <span class="nn">damn_at.analyzer</span> <span class="kn">import</span> <span class="n">Analyzer</span>
+
+<span class="kn">from</span> <span class="nn">damn_at.thrift.generated.damn_types.ttypes</span> <span class="kn">import</span> <span class="n">TargetMimetype</span><span class="p">,</span> <span class="n">TargetMimetypeOption</span>
+ 
+<div class="viewcode-block" id="DamnServiceHandler"><a class="viewcode-back" href="../../../autodoc/damn_at.thrift.html#damn_at.thrift.server.DamnServiceHandler">[docs]</a><span class="k">class</span> <span class="nc">DamnServiceHandler</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;DAMN Service Implementation&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="DamnServiceHandler.ping"><a class="viewcode-back" href="../../../autodoc/damn_at.thrift.html#damn_at.thrift.server.DamnServiceHandler.ping">[docs]</a>    <span class="k">def</span> <span class="nf">ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implementation&quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;ping()&quot;</span>
+</div>
+<div class="viewcode-block" id="DamnServiceHandler.get_supported_mimetypes"><a class="viewcode-back" href="../../../autodoc/damn_at.thrift.html#damn_at.thrift.server.DamnServiceHandler.get_supported_mimetypes">[docs]</a>    <span class="k">def</span> <span class="nf">get_supported_mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implementation&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Analyzer</span><span class="p">()</span><span class="o">.</span><span class="n">get_supported_mimetypes</span><span class="p">()</span>
+    </div>
+<div class="viewcode-block" id="DamnServiceHandler.get_target_mimetypes"><a class="viewcode-back" href="../../../autodoc/damn_at.thrift.html#damn_at.thrift.server.DamnServiceHandler.get_target_mimetypes">[docs]</a>    <span class="k">def</span> <span class="nf">get_target_mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implementation&quot;&quot;&quot;</span>
+        <span class="n">mimetypes</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">Analyzer</span><span class="p">()</span><span class="o">.</span><span class="n">get_supported_mimetypes</span><span class="p">():</span>
+            <span class="n">option</span> <span class="o">=</span> <span class="n">TargetMimetypeOption</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">constraint</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">TargetMimetype</span><span class="p">(</span><span class="n">mimetype</span><span class="o">=</span><span class="s">&#39;target//&#39;</span><span class="o">+</span><span class="n">source</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s">&#39;/x/x/&#39;</span><span class="p">)</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="n">option</span><span class="p">]</span>
+            <span class="n">mimetypes</span><span class="p">[</span><span class="n">source</span><span class="p">]</span> <span class="o">=</span> <span class="n">target</span>
+        
+        <span class="k">return</span> <span class="n">mimetypes</span>
+        </div>
+<div class="viewcode-block" id="DamnServiceHandler.analyze"><a class="viewcode-back" href="../../../autodoc/damn_at.thrift.html#damn_at.thrift.server.DamnServiceHandler.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">         - file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+</div></div>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../autodoc/damn_at.thrift.html#damn_at.thrift.server.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span> 
+    <span class="sd">&quot;&quot;&quot;Start the server&quot;&quot;&quot;</span>
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">DamnServiceHandler</span><span class="p">()</span>
+    <span class="n">processor</span> <span class="o">=</span> <span class="n">DamnService</span><span class="o">.</span><span class="n">Processor</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+    <span class="n">transport</span> <span class="o">=</span> <span class="n">TSocket</span><span class="o">.</span><span class="n">TServerSocket</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">9090</span><span class="p">)</span>
+    <span class="n">tfactory</span> <span class="o">=</span> <span class="n">TTransport</span><span class="o">.</span><span class="n">TBufferedTransportFactory</span><span class="p">()</span>
+    <span class="n">pfactory</span> <span class="o">=</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocolFactory</span><span class="p">()</span>
+
+    <span class="n">server</span> <span class="o">=</span> <span class="n">TServer</span><span class="o">.</span><span class="n">TSimpleServer</span><span class="p">(</span><span class="n">processor</span><span class="p">,</span> <span class="n">transport</span><span class="p">,</span> <span class="n">tfactory</span><span class="p">,</span> <span class="n">pfactory</span><span class="p">)</span>
+
+    <span class="c"># You could do one of these for a multithreaded server</span>
+    <span class="c">#server = TServer.TThreadedServer(processor, transport, tfactory, pfactory)</span>
+    <span class="c">#server = TServer.TThreadPoolServer(processor, transport, tfactory, pfactory)</span>
+
+    <span class="k">print</span> <span class="s">&#39;Starting the server...&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;done.&#39;</span>
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span> 
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">damn-at 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, sueastside.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

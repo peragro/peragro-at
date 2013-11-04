@@ -70,7 +70,7 @@
 <p>Serialization helpers</p>
 <dl class="function">
 <dt id="damn_at.thrift.serialization.DeserializeThriftMsg">
-<tt class="descclassname">damn_at.thrift.serialization.</tt><tt class="descname">DeserializeThriftMsg</tt><big>(</big><em>msg</em>, <em>data</em>, <em>protocol_type=&lt;class thrift.protocol.TBinaryProtocol.TBinaryProtocol at 0x25b3390&gt;</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/serialization.html#DeserializeThriftMsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.serialization.DeserializeThriftMsg" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">damn_at.thrift.serialization.</tt><tt class="descname">DeserializeThriftMsg</tt><big>(</big><em>msg</em>, <em>data</em>, <em>protocol_type=&lt;class thrift.protocol.TBinaryProtocol.TBinaryProtocol at 0x2a57258&gt;</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/serialization.html#DeserializeThriftMsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.serialization.DeserializeThriftMsg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deserialize a thrift message using the given protocol.</p>
 <p>The default protocol is binary.</p>
 <dl class="docutils">
@@ -85,7 +85,7 @@ protocol_type: the Thrift protocol class to use.</dd>
 
 <dl class="function">
 <dt id="damn_at.thrift.serialization.SerializeThriftMsg">
-<tt class="descclassname">damn_at.thrift.serialization.</tt><tt class="descname">SerializeThriftMsg</tt><big>(</big><em>msg</em>, <em>protocol_type=&lt;class thrift.protocol.TBinaryProtocol.TBinaryProtocol at 0x25b3390&gt;</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/serialization.html#SerializeThriftMsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.serialization.SerializeThriftMsg" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">damn_at.thrift.serialization.</tt><tt class="descname">SerializeThriftMsg</tt><big>(</big><em>msg</em>, <em>protocol_type=&lt;class thrift.protocol.TBinaryProtocol.TBinaryProtocol at 0x2a57258&gt;</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/serialization.html#SerializeThriftMsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.serialization.SerializeThriftMsg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize a thrift message using the given protocol.</p>
 <p>The default protocol is binary.</p>
 <dl class="docutils">
@@ -98,8 +98,46 @@ protocol_type: the Thrift protocol class to use.</dd>
 </dd></dl>
 
 </div>
-<div class="section" id="server-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">server</span></tt> Module<a class="headerlink" href="#server-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-damn_at.thrift.server">
+<span id="server-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">server</span></tt> Module<a class="headerlink" href="#module-damn_at.thrift.server" title="Permalink to this headline">¶</a></h2>
+<p>DAMN Service server</p>
+<dl class="class">
+<dt id="damn_at.thrift.server.DamnServiceHandler">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.server.</tt><tt class="descname">DamnServiceHandler</tt><a class="reference internal" href="../_modules/damn_at/thrift/server.html#DamnServiceHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.server.DamnServiceHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>DAMN Service Implementation</p>
+<dl class="method">
+<dt id="damn_at.thrift.server.DamnServiceHandler.analyze">
+<tt class="descname">analyze</tt><big>(</big><em>a_file</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/server.html#DamnServiceHandler.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.server.DamnServiceHandler.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters:
+- file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.server.DamnServiceHandler.get_supported_mimetypes">
+<tt class="descname">get_supported_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/server.html#DamnServiceHandler.get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.server.DamnServiceHandler.get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.server.DamnServiceHandler.get_target_mimetypes">
+<tt class="descname">get_target_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/server.html#DamnServiceHandler.get_target_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.server.DamnServiceHandler.get_target_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.server.DamnServiceHandler.ping">
+<tt class="descname">ping</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/server.html#DamnServiceHandler.ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.server.DamnServiceHandler.ping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.thrift.server.main">
+<tt class="descclassname">damn_at.thrift.server.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/server.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.server.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the server</p>
+</dd></dl>
+
 </div>
 <div class="section" id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
@@ -109,9 +147,9 @@ protocol_type: the Thrift protocol class to use.</dd>
 <li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.generated.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.thrift.generated.damn.html">damn Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.damn.html#id1"><tt class="docutils literal"><span class="pre">damn</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.damn.html#damnservice-module"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.damn.html#constants-module"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.damn.html#ttypes-module"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.damn.html#module-damn_at.thrift.generated.damn.DamnService"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.damn.html#module-damn_at.thrift.generated.damn.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.damn.html#module-damn_at.thrift.generated.damn.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html">damn_types Package</a><ul>
@@ -141,7 +179,7 @@ protocol_type: the Thrift protocol class to use.</dd>
 <li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">thrift</span></tt> Package</a></li>
 <li><a class="reference internal" href="#client-module"><tt class="docutils literal"><span class="pre">client</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.thrift.serialization"><tt class="docutils literal"><span class="pre">serialization</span></tt> Module</a></li>
-<li><a class="reference internal" href="#server-module"><tt class="docutils literal"><span class="pre">server</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-damn_at.thrift.server"><tt class="docutils literal"><span class="pre">server</span></tt> Module</a></li>
 <li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 </ul>
 </li>

@@ -63,14 +63,402 @@
 <div class="section" id="id1">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">damn</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-damn_at.thrift.generated.damn"></span></div>
-<div class="section" id="damnservice-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">DamnService</span></tt> Module<a class="headerlink" href="#damnservice-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-damn_at.thrift.generated.damn.DamnService">
+<span id="damnservice-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">DamnService</span></tt> Module<a class="headerlink" href="#module-damn_at.thrift.generated.damn.DamnService" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">Client</tt><big>(</big><em>iprot</em>, <em>oprot=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#damn_at.thrift.generated.damn.DamnService.Iface" title="damn_at.thrift.generated.damn.DamnService.Iface"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn.DamnService.Iface</span></tt></a></p>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.analyze">
+<tt class="descname">analyze</tt><big>(</big><em>file</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters:
+- file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.get_supported_mimetypes">
+<tt class="descname">get_supported_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.get_target_mimetypes">
+<tt class="descname">get_target_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.get_target_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.get_target_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.ping">
+<tt class="descname">ping</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.recv_analyze">
+<tt class="descname">recv_analyze</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.recv_analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.recv_analyze" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.recv_get_supported_mimetypes">
+<tt class="descname">recv_get_supported_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.recv_get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.recv_get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.recv_get_target_mimetypes">
+<tt class="descname">recv_get_target_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.recv_get_target_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.recv_get_target_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.recv_ping">
+<tt class="descname">recv_ping</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.recv_ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.recv_ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.send_analyze">
+<tt class="descname">send_analyze</tt><big>(</big><em>file</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.send_analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.send_analyze" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.send_get_supported_mimetypes">
+<tt class="descname">send_get_supported_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.send_get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.send_get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.send_get_target_mimetypes">
+<tt class="descname">send_get_target_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.send_get_target_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.send_get_target_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.send_ping">
+<tt class="descname">send_ping</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.send_ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.send_ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.Iface">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">Iface</tt><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Iface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Iface" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Iface.analyze">
+<tt class="descname">analyze</tt><big>(</big><em>file</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Iface.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Iface.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters:
+- file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Iface.get_supported_mimetypes">
+<tt class="descname">get_supported_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Iface.get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Iface.get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Iface.get_target_mimetypes">
+<tt class="descname">get_target_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Iface.get_target_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Iface.get_target_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Iface.ping">
+<tt class="descname">ping</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Iface.ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Iface.ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.Processor">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">Processor</tt><big>(</big><em>handler</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Processor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#damn_at.thrift.generated.damn.DamnService.Iface" title="damn_at.thrift.generated.damn.DamnService.Iface"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn.DamnService.Iface</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">thrift.Thrift.TProcessor</span></tt></p>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Processor.process">
+<tt class="descname">process</tt><big>(</big><em>iprot</em>, <em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Processor.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Processor.process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Processor.process_analyze">
+<tt class="descname">process_analyze</tt><big>(</big><em>seqid</em>, <em>iprot</em>, <em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Processor.process_analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Processor.process_analyze" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Processor.process_get_supported_mimetypes">
+<tt class="descname">process_get_supported_mimetypes</tt><big>(</big><em>seqid</em>, <em>iprot</em>, <em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Processor.process_get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Processor.process_get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Processor.process_get_target_mimetypes">
+<tt class="descname">process_get_target_mimetypes</tt><big>(</big><em>seqid</em>, <em>iprot</em>, <em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Processor.process_get_target_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Processor.process_get_target_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Processor.process_ping">
+<tt class="descname">process_ping</tt><big>(</big><em>seqid</em>, <em>iprot</em>, <em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Processor.process_ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Processor.process_ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_args">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">analyze_args</tt><big>(</big><em>file=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#analyze_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_args" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>file</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_args.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#analyze_args.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_args.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_args.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 12, 'file', (&lt;class damn_types.ttypes.File at 0x3e10c80&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'data', None, None))), None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_args.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_args.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#analyze_args.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_args.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_args.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#analyze_args.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_args.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_result">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">analyze_result</tt><big>(</big><em>success=None</em>, <em>ae=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#analyze_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_result" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>success</li>
+<li>ae</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_result.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#analyze_result.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_result.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_result.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = ((0, 12, 'success', (&lt;class damn_types.ttypes.FileReference at 0x3e10e20&gt;, (None, (1, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x3e10ce8&gt;, (None, (1, 11, 'filename', None, None))), None), (2, 11, 'hash', None, None), (3, 15, 'assets', (12, (&lt;class damn_types.ttypes.AssetReference at 0x3e10db8&gt;, (None, (1, 12, 'asset', (&lt;class damn_types.ttypes.AssetId at 0x3e10d50&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x3e10ce8&gt;, (None, (1, 11, 'filename', None, None))), None))), None), (2, 13, 'metadata', (11, None, 12, (&lt;class damn_types.ttypes.MetaDataValue at 0x3e10b48&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (3, 15, 'dependencies', (12, (&lt;class damn_types.ttypes.AssetId at 0x3e10d50&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x3e10ce8&gt;, (None, (1, 11, 'filename', None, None))), None)))), None)))), None))), None), (1, 12, 'ae', (&lt;class 'damn_at.thrift.generated.damn.ttypes.AnalyzerException'&gt;, (None, (1, 11, 'msg', None, None))), None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_result.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#analyze_result.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_result.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.analyze_result.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#analyze_result.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_result.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">get_supported_mimetypes_args</tt><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_supported_mimetypes_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_supported_mimetypes_args.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = ()</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_supported_mimetypes_args.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_supported_mimetypes_args.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_args.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">get_supported_mimetypes_result</tt><big>(</big><em>success=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_supported_mimetypes_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>success</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_supported_mimetypes_result.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = ((0, 15, 'success', (11, None), None),)</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_supported_mimetypes_result.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_supported_mimetypes_result.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_supported_mimetypes_result.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">get_target_mimetypes_args</tt><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_target_mimetypes_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_target_mimetypes_args.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = ()</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_target_mimetypes_args.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_target_mimetypes_args.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_args.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">get_target_mimetypes_result</tt><big>(</big><em>success=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_target_mimetypes_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>success</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_target_mimetypes_result.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = ((0, 13, 'success', (11, None, 12, (&lt;class damn_types.ttypes.TargetMimetype at 0x3e10c18&gt;, (None, (1, 11, 'mimetype', None, None), (2, 11, 'template', None, None), (3, 15, 'options', (12, (&lt;class damn_types.ttypes.TargetMimetypeOption at 0x3e10bb0&gt;, (None, (1, 11, 'name', None, None), (2, 11, 'type', None, None), (3, 11, 'constraint', None, None), (4, 11, 'default_value', None, None)))), None)))), None),)</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_target_mimetypes_result.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#get_target_mimetypes_result.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_args">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">ping_args</tt><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#ping_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_args" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_args.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#ping_args.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_args.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_args.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = ()</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_args.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_args.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#ping_args.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_args.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_args.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#ping_args.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_args.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_result">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">ping_result</tt><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#ping_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_result" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_result.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#ping_result.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_result.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_result.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = ()</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_result.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#ping_result.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_result.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.ping_result.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#ping_result.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.ping_result.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="constants-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">constants</span></tt> Module<a class="headerlink" href="#constants-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-damn_at.thrift.generated.damn.constants">
+<span id="constants-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">constants</span></tt> Module<a class="headerlink" href="#module-damn_at.thrift.generated.damn.constants" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="ttypes-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">ttypes</span></tt> Module<a class="headerlink" href="#ttypes-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-damn_at.thrift.generated.damn.ttypes">
+<span id="ttypes-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ttypes</span></tt> Module<a class="headerlink" href="#module-damn_at.thrift.generated.damn.ttypes" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="damn_at.thrift.generated.damn.ttypes.AnalyzerException">
+<em class="property">exception </em><tt class="descclassname">damn_at.thrift.generated.damn.ttypes.</tt><tt class="descname">AnalyzerException</tt><big>(</big><em>msg=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#AnalyzerException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.AnalyzerException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">thrift.Thrift.TException</span></tt></p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>msg</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.ttypes.AnalyzerException.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#AnalyzerException.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.AnalyzerException.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.ttypes.AnalyzerException.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 11, 'msg', None, None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.AnalyzerException.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.ttypes.AnalyzerException.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#AnalyzerException.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.AnalyzerException.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.ttypes.AnalyzerException.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#AnalyzerException.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.AnalyzerException.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -84,9 +472,9 @@
   <ul>
 <li><a class="reference internal" href="#">damn Package</a><ul>
 <li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">damn</span></tt> Package</a></li>
-<li><a class="reference internal" href="#damnservice-module"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
-<li><a class="reference internal" href="#constants-module"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
-<li><a class="reference internal" href="#ttypes-module"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-damn_at.thrift.generated.damn.DamnService"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-damn_at.thrift.generated.damn.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-damn_at.thrift.generated.damn.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
