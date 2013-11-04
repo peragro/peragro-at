@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 """DAMN Service server"""
  
+import os
 import sys
-sys.path.append('generated')
+directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'generated')
+sys.path.append(directory)
  
 from thrift.transport import TSocket
 from thrift.transport import TTransport
