@@ -17,7 +17,7 @@ config = {
     'scripts': [],
     'name': 'damn_at',
     'entry_points':{
-          'console_scripts':['damn-server = damn_at.thrift.server:main']
+          'console_scripts':['damn_at-server = damn_at.thrift.server:main']
     }
 }
 
