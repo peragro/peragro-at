@@ -1,0 +1,9 @@
+[Core]
+Name = PIL image-transcoder
+Module = transcoderimage
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = PIL based image transcoder

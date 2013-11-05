@@ -45,7 +45,17 @@ class IAnalyzer(IPlugin):
 
 class ITranscoder(IPlugin):
     """Interface class for an Transcoder"""
-    def analyze(self, an_uri):
+    
+    convert_map = {}
+    """
+    The mimetypes this transocder can handle.
+    Example::
+    convert_map = {"image/tiff" : {"image/jpeg": [IntVectorOption(name='size', description='The target size of the image', size=2, default=(-1,-1))], 
+                                   "image/png": []
+                                   }, }
+    """
+    
+    def transcode(self, an_uri):
         """ blah """
         raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self)        
 
