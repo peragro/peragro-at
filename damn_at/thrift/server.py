@@ -35,8 +35,8 @@ class DamnServiceHandler:
         mimetypes = {}
         
         for source in Analyzer().get_supported_mimetypes():
-            option = TargetMimetypeOption(name='', type='', constraint='', default_value='')
-            target = TargetMimetype(mimetype='target//'+source, template='/x/x/')
+            option = TargetMimetypeOption(name='', description='', type='', constraint='', default_value='')
+            target = TargetMimetype(mimetype='target//'+source, description='', template='/x/x/')
             target.options = [option]
             mimetypes[source] = target
         

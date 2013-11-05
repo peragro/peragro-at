@@ -15,15 +15,17 @@ struct MetaDataValue {
 
 struct TargetMimetypeOption {
   1: string name,
-  2: string type,
-  3: string constraint,
-  4: string default_value,
+  2: string description,
+  3: string type,
+  4: string constraint,
+  5: string default_value,
 }
 
 struct TargetMimetype {
   1: string mimetype,
-  2: string template,
-  3: list<TargetMimetypeOption> options,
+  2: string description,
+  3: string template,
+  4: list<TargetMimetypeOption> options = [],
 }
 
 struct File {

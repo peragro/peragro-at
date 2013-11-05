@@ -34,6 +34,16 @@ class Iface:
     """
     pass
 
+  def transcode(self, files, asset, mimetype, options):
+    """
+    Parameters:
+     - files
+     - asset
+     - mimetype
+     - options
+    """
+    pass
+
 
 class Client(Iface):
   def __init__(self, iprot, oprot=None):
@@ -147,6 +157,44 @@ class Client(Iface):
       raise result.ae
     raise TApplicationException(TApplicationException.MISSING_RESULT, "analyze failed: unknown result");
 
+  def transcode(self, files, asset, mimetype, options):
+    """
+    Parameters:
+     - files
+     - asset
+     - mimetype
+     - options
+    """
+    self.send_transcode(files, asset, mimetype, options)
+    return self.recv_transcode()
+
+  def send_transcode(self, files, asset, mimetype, options):
+    self._oprot.writeMessageBegin('transcode', TMessageType.CALL, self._seqid)
+    args = transcode_args()
+    args.files = files
+    args.asset = asset
+    args.mimetype = mimetype
+    args.options = options
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_transcode(self, ):
+    (fname, mtype, rseqid) = self._iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(self._iprot)
+      self._iprot.readMessageEnd()
+      raise x
+    result = transcode_result()
+    result.read(self._iprot)
+    self._iprot.readMessageEnd()
+    if result.success is not None:
+      return result.success
+    if result.te is not None:
+      raise result.te
+    raise TApplicationException(TApplicationException.MISSING_RESULT, "transcode failed: unknown result");
+
 
 class Processor(Iface, TProcessor):
   def __init__(self, handler):
@@ -156,6 +204,7 @@ class Processor(Iface, TProcessor):
     self._processMap["get_supported_mimetypes"] = Processor.process_get_supported_mimetypes
     self._processMap["get_target_mimetypes"] = Processor.process_get_target_mimetypes
     self._processMap["analyze"] = Processor.process_analyze
+    self._processMap["transcode"] = Processor.process_transcode
 
   def process(self, iprot, oprot):
     (name, type, seqid) = iprot.readMessageBegin()
@@ -215,6 +264,20 @@ class Processor(Iface, TProcessor):
     except AnalyzerException as ae:
       result.ae = ae
     oprot.writeMessageBegin("analyze", TMessageType.REPLY, seqid)
+    result.write(oprot)
+    oprot.writeMessageEnd()
+    oprot.trans.flush()
+
+  def process_transcode(self, seqid, iprot, oprot):
+    args = transcode_args()
+    args.read(iprot)
+    iprot.readMessageEnd()
+    result = transcode_result()
+    try:
+      result.success = self._handler.transcode(args.files, args.asset, args.mimetype, args.options)
+    except TranscoderException as te:
+      result.te = te
+    oprot.writeMessageBegin("transcode", TMessageType.REPLY, seqid)
     result.write(oprot)
     oprot.writeMessageEnd()
     oprot.trans.flush()
@@ -464,7 +527,7 @@ class get_target_mimetypes_result:
   """
 
   thrift_spec = (
-    (0, TType.MAP, 'success', (TType.STRING,None,TType.STRUCT,(damn_types.ttypes.TargetMimetype, damn_types.ttypes.TargetMimetype.thrift_spec)), None, ), # 0
+    (0, TType.MAP, 'success', (TType.STRING,None,TType.LIST,(TType.STRUCT,(damn_types.ttypes.TargetMimetype, damn_types.ttypes.TargetMimetype.thrift_spec))), None, ), # 0
   )
 
   def __init__(self, success=None,):
@@ -485,8 +548,13 @@ class get_target_mimetypes_result:
           (_ktype8, _vtype9, _size7 ) = iprot.readMapBegin() 
           for _i11 in xrange(_size7):
             _key12 = iprot.readString();
-            _val13 = damn_types.ttypes.TargetMimetype()
-            _val13.read(iprot)
+            _val13 = []
+            (_etype17, _size14) = iprot.readListBegin()
+            for _i18 in xrange(_size14):
+              _elem19 = damn_types.ttypes.TargetMimetype()
+              _elem19.read(iprot)
+              _val13.append(_elem19)
+            iprot.readListEnd()
             self.success[_key12] = _val13
           iprot.readMapEnd()
         else:
@@ -503,10 +571,13 @@ class get_target_mimetypes_result:
     oprot.writeStructBegin('get_target_mimetypes_result')
     if self.success is not None:
       oprot.writeFieldBegin('success', TType.MAP, 0)
-      oprot.writeMapBegin(TType.STRING, TType.STRUCT, len(self.success))
-      for kiter14,viter15 in self.success.items():
-        oprot.writeString(kiter14)
-        viter15.write(oprot)
+      oprot.writeMapBegin(TType.STRING, TType.LIST, len(self.success))
+      for kiter20,viter21 in self.success.items():
+        oprot.writeString(kiter20)
+        oprot.writeListBegin(TType.STRUCT, len(viter21))
+        for iter22 in viter21:
+          iter22.write(oprot)
+        oprot.writeListEnd()
       oprot.writeMapEnd()
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
@@ -642,6 +713,203 @@ class analyze_result:
     if self.ae is not None:
       oprot.writeFieldBegin('ae', TType.STRUCT, 1)
       self.ae.write(oprot)
+      oprot.writeFieldEnd()
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class transcode_args:
+  """
+  Attributes:
+   - files
+   - asset
+   - mimetype
+   - options
+  """
+
+  thrift_spec = (
+    None, # 0
+    (1, TType.LIST, 'files', (TType.STRUCT,(damn_types.ttypes.File, damn_types.ttypes.File.thrift_spec)), None, ), # 1
+    (2, TType.STRUCT, 'asset', (damn_types.ttypes.AssetId, damn_types.ttypes.AssetId.thrift_spec), None, ), # 2
+    (3, TType.STRING, 'mimetype', None, None, ), # 3
+    (4, TType.MAP, 'options', (TType.STRING,None,TType.STRING,None), None, ), # 4
+  )
+
+  def __init__(self, files=None, asset=None, mimetype=None, options=None,):
+    self.files = files
+    self.asset = asset
+    self.mimetype = mimetype
+    self.options = options
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      if fid == 1:
+        if ftype == TType.LIST:
+          self.files = []
+          (_etype26, _size23) = iprot.readListBegin()
+          for _i27 in xrange(_size23):
+            _elem28 = damn_types.ttypes.File()
+            _elem28.read(iprot)
+            self.files.append(_elem28)
+          iprot.readListEnd()
+        else:
+          iprot.skip(ftype)
+      elif fid == 2:
+        if ftype == TType.STRUCT:
+          self.asset = damn_types.ttypes.AssetId()
+          self.asset.read(iprot)
+        else:
+          iprot.skip(ftype)
+      elif fid == 3:
+        if ftype == TType.STRING:
+          self.mimetype = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      elif fid == 4:
+        if ftype == TType.MAP:
+          self.options = {}
+          (_ktype30, _vtype31, _size29 ) = iprot.readMapBegin() 
+          for _i33 in xrange(_size29):
+            _key34 = iprot.readString();
+            _val35 = iprot.readString();
+            self.options[_key34] = _val35
+          iprot.readMapEnd()
+        else:
+          iprot.skip(ftype)
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('transcode_args')
+    if self.files is not None:
+      oprot.writeFieldBegin('files', TType.LIST, 1)
+      oprot.writeListBegin(TType.STRUCT, len(self.files))
+      for iter36 in self.files:
+        iter36.write(oprot)
+      oprot.writeListEnd()
+      oprot.writeFieldEnd()
+    if self.asset is not None:
+      oprot.writeFieldBegin('asset', TType.STRUCT, 2)
+      self.asset.write(oprot)
+      oprot.writeFieldEnd()
+    if self.mimetype is not None:
+      oprot.writeFieldBegin('mimetype', TType.STRING, 3)
+      oprot.writeString(self.mimetype)
+      oprot.writeFieldEnd()
+    if self.options is not None:
+      oprot.writeFieldBegin('options', TType.MAP, 4)
+      oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.options))
+      for kiter37,viter38 in self.options.items():
+        oprot.writeString(kiter37)
+        oprot.writeString(viter38)
+      oprot.writeMapEnd()
+      oprot.writeFieldEnd()
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class transcode_result:
+  """
+  Attributes:
+   - success
+   - te
+  """
+
+  thrift_spec = (
+    (0, TType.LIST, 'success', (TType.STRUCT,(damn_types.ttypes.File, damn_types.ttypes.File.thrift_spec)), None, ), # 0
+    (1, TType.STRUCT, 'te', (TranscoderException, TranscoderException.thrift_spec), None, ), # 1
+  )
+
+  def __init__(self, success=None, te=None,):
+    self.success = success
+    self.te = te
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      if fid == 0:
+        if ftype == TType.LIST:
+          self.success = []
+          (_etype42, _size39) = iprot.readListBegin()
+          for _i43 in xrange(_size39):
+            _elem44 = damn_types.ttypes.File()
+            _elem44.read(iprot)
+            self.success.append(_elem44)
+          iprot.readListEnd()
+        else:
+          iprot.skip(ftype)
+      elif fid == 1:
+        if ftype == TType.STRUCT:
+          self.te = TranscoderException()
+          self.te.read(iprot)
+        else:
+          iprot.skip(ftype)
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('transcode_result')
+    if self.success is not None:
+      oprot.writeFieldBegin('success', TType.LIST, 0)
+      oprot.writeListBegin(TType.STRUCT, len(self.success))
+      for iter45 in self.success:
+        iter45.write(oprot)
+      oprot.writeListEnd()
+      oprot.writeFieldEnd()
+    if self.te is not None:
+      oprot.writeFieldBegin('te', TType.STRUCT, 1)
+      self.te.write(oprot)
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
     oprot.writeStructEnd()

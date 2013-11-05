@@ -149,6 +149,7 @@ class TargetMimetypeOption:
   """
   Attributes:
    - name
+   - description
    - type
    - constraint
    - default_value
@@ -157,13 +158,15 @@ class TargetMimetypeOption:
   thrift_spec = (
     None, # 0
     (1, TType.STRING, 'name', None, None, ), # 1
-    (2, TType.STRING, 'type', None, None, ), # 2
-    (3, TType.STRING, 'constraint', None, None, ), # 3
-    (4, TType.STRING, 'default_value', None, None, ), # 4
+    (2, TType.STRING, 'description', None, None, ), # 2
+    (3, TType.STRING, 'type', None, None, ), # 3
+    (4, TType.STRING, 'constraint', None, None, ), # 4
+    (5, TType.STRING, 'default_value', None, None, ), # 5
   )
 
-  def __init__(self, name=None, type=None, constraint=None, default_value=None,):
+  def __init__(self, name=None, description=None, type=None, constraint=None, default_value=None,):
     self.name = name
+    self.description = description
     self.type = type
     self.constraint = constraint
     self.default_value = default_value
@@ -184,15 +187,20 @@ class TargetMimetypeOption:
           iprot.skip(ftype)
       elif fid == 2:
         if ftype == TType.STRING:
-          self.type = iprot.readString();
+          self.description = iprot.readString();
         else:
           iprot.skip(ftype)
       elif fid == 3:
         if ftype == TType.STRING:
-          self.constraint = iprot.readString();
+          self.type = iprot.readString();
         else:
           iprot.skip(ftype)
       elif fid == 4:
+        if ftype == TType.STRING:
+          self.constraint = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      elif fid == 5:
         if ftype == TType.STRING:
           self.default_value = iprot.readString();
         else:
@@ -211,16 +219,20 @@ class TargetMimetypeOption:
       oprot.writeFieldBegin('name', TType.STRING, 1)
       oprot.writeString(self.name)
       oprot.writeFieldEnd()
+    if self.description is not None:
+      oprot.writeFieldBegin('description', TType.STRING, 2)
+      oprot.writeString(self.description)
+      oprot.writeFieldEnd()
     if self.type is not None:
-      oprot.writeFieldBegin('type', TType.STRING, 2)
+      oprot.writeFieldBegin('type', TType.STRING, 3)
       oprot.writeString(self.type)
       oprot.writeFieldEnd()
     if self.constraint is not None:
-      oprot.writeFieldBegin('constraint', TType.STRING, 3)
+      oprot.writeFieldBegin('constraint', TType.STRING, 4)
       oprot.writeString(self.constraint)
       oprot.writeFieldEnd()
     if self.default_value is not None:
-      oprot.writeFieldBegin('default_value', TType.STRING, 4)
+      oprot.writeFieldBegin('default_value', TType.STRING, 5)
       oprot.writeString(self.default_value)
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
@@ -245,6 +257,7 @@ class TargetMimetype:
   """
   Attributes:
    - mimetype
+   - description
    - template
    - options
   """
@@ -252,13 +265,19 @@ class TargetMimetype:
   thrift_spec = (
     None, # 0
     (1, TType.STRING, 'mimetype', None, None, ), # 1
-    (2, TType.STRING, 'template', None, None, ), # 2
-    (3, TType.LIST, 'options', (TType.STRUCT,(TargetMimetypeOption, TargetMimetypeOption.thrift_spec)), None, ), # 3
+    (2, TType.STRING, 'description', None, None, ), # 2
+    (3, TType.STRING, 'template', None, None, ), # 3
+    (4, TType.LIST, 'options', (TType.STRUCT,(TargetMimetypeOption, TargetMimetypeOption.thrift_spec)), [
+    ], ), # 4
   )
 
-  def __init__(self, mimetype=None, template=None, options=None,):
+  def __init__(self, mimetype=None, description=None, template=None, options=thrift_spec[4][4],):
     self.mimetype = mimetype
+    self.description = description
     self.template = template
+    if options is self.thrift_spec[4][4]:
+      options = [
+    ]
     self.options = options
 
   def read(self, iprot):
@@ -277,10 +296,15 @@ class TargetMimetype:
           iprot.skip(ftype)
       elif fid == 2:
         if ftype == TType.STRING:
-          self.template = iprot.readString();
+          self.description = iprot.readString();
         else:
           iprot.skip(ftype)
       elif fid == 3:
+        if ftype == TType.STRING:
+          self.template = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      elif fid == 4:
         if ftype == TType.LIST:
           self.options = []
           (_etype3, _size0) = iprot.readListBegin()
@@ -305,12 +329,16 @@ class TargetMimetype:
       oprot.writeFieldBegin('mimetype', TType.STRING, 1)
       oprot.writeString(self.mimetype)
       oprot.writeFieldEnd()
+    if self.description is not None:
+      oprot.writeFieldBegin('description', TType.STRING, 2)
+      oprot.writeString(self.description)
+      oprot.writeFieldEnd()
     if self.template is not None:
-      oprot.writeFieldBegin('template', TType.STRING, 2)
+      oprot.writeFieldBegin('template', TType.STRING, 3)
       oprot.writeString(self.template)
       oprot.writeFieldEnd()
     if self.options is not None:
-      oprot.writeFieldBegin('options', TType.LIST, 3)
+      oprot.writeFieldBegin('options', TType.LIST, 4)
       oprot.writeListBegin(TType.STRUCT, len(self.options))
       for iter6 in self.options:
         iter6.write(oprot)
