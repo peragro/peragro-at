@@ -112,6 +112,11 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.recv_transcode">
+<tt class="descname">recv_transcode</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.recv_transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.recv_transcode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="damn_at.thrift.generated.damn.DamnService.Client.send_analyze">
 <tt class="descname">send_analyze</tt><big>(</big><em>file</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.send_analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.send_analyze" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -130,6 +135,21 @@
 <dt id="damn_at.thrift.generated.damn.DamnService.Client.send_ping">
 <tt class="descname">send_ping</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.send_ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.send_ping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.send_transcode">
+<tt class="descname">send_transcode</tt><big>(</big><em>files</em>, <em>asset</em>, <em>mimetype</em>, <em>options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.send_transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.send_transcode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Client.transcode">
+<tt class="descname">transcode</tt><big>(</big><em>files</em>, <em>asset</em>, <em>mimetype</em>, <em>options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Client.transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Client.transcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters:
+- files
+- asset
+- mimetype
+- options</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -157,6 +177,16 @@
 <dt id="damn_at.thrift.generated.damn.DamnService.Iface.ping">
 <tt class="descname">ping</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Iface.ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Iface.ping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Iface.transcode">
+<tt class="descname">transcode</tt><big>(</big><em>files</em>, <em>asset</em>, <em>mimetype</em>, <em>options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Iface.transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Iface.transcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters:
+- files
+- asset
+- mimetype
+- options</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -189,6 +219,11 @@
 <tt class="descname">process_ping</tt><big>(</big><em>seqid</em>, <em>iprot</em>, <em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Processor.process_ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Processor.process_ping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.Processor.process_transcode">
+<tt class="descname">process_transcode</tt><big>(</big><em>seqid</em>, <em>iprot</em>, <em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#Processor.process_transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.Processor.process_transcode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -208,7 +243,7 @@
 
 <dl class="attribute">
 <dt id="damn_at.thrift.generated.damn.DamnService.analyze_args.thrift_spec">
-<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 12, 'file', (&lt;class damn_types.ttypes.File at 0x2afedb8&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'data', None, None))), None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_args.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 12, 'file', (&lt;class damn_types.ttypes.File at 0x3753600&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'data', None, None))), None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_args.thrift_spec" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -241,7 +276,7 @@
 
 <dl class="attribute">
 <dt id="damn_at.thrift.generated.damn.DamnService.analyze_result.thrift_spec">
-<tt class="descname">thrift_spec</tt><em class="property"> = ((0, 12, 'success', (&lt;class damn_types.ttypes.FileReference at 0x2afef58&gt;, (None, (1, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x2afee20&gt;, (None, (1, 11, 'filename', None, None))), None), (2, 11, 'hash', None, None), (3, 15, 'assets', (12, (&lt;class damn_types.ttypes.AssetReference at 0x2afeef0&gt;, (None, (1, 12, 'asset', (&lt;class damn_types.ttypes.AssetId at 0x2afee88&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x2afee20&gt;, (None, (1, 11, 'filename', None, None))), None))), None), (2, 13, 'metadata', (11, None, 12, (&lt;class damn_types.ttypes.MetaDataValue at 0x2afec80&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (3, 15, 'dependencies', (12, (&lt;class damn_types.ttypes.AssetId at 0x2afee88&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x2afee20&gt;, (None, (1, 11, 'filename', None, None))), None)))), None)))), None))), None), (1, 12, 'ae', (&lt;class 'damn_at.thrift.generated.damn.ttypes.AnalyzerException'&gt;, (None, (1, 11, 'msg', None, None))), None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">thrift_spec</tt><em class="property"> = ((0, 12, 'success', (&lt;class damn_types.ttypes.FileReference at 0x37537a0&gt;, (None, (1, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x3753668&gt;, (None, (1, 11, 'filename', None, None))), None), (2, 11, 'hash', None, None), (3, 15, 'assets', (12, (&lt;class damn_types.ttypes.AssetReference at 0x3753738&gt;, (None, (1, 12, 'asset', (&lt;class damn_types.ttypes.AssetId at 0x37536d0&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x3753668&gt;, (None, (1, 11, 'filename', None, None))), None))), None), (2, 13, 'metadata', (11, None, 12, (&lt;class damn_types.ttypes.MetaDataValue at 0x3753460&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (3, 15, 'dependencies', (12, (&lt;class damn_types.ttypes.AssetId at 0x37536d0&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x3753668&gt;, (None, (1, 11, 'filename', None, None))), None)))), None)))), None))), None), (1, 12, 'ae', (&lt;class 'damn_at.thrift.generated.damn.ttypes.AnalyzerException'&gt;, (None, (1, 11, 'msg', None, None))), None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.analyze_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -355,7 +390,7 @@
 
 <dl class="attribute">
 <dt id="damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.thrift_spec">
-<tt class="descname">thrift_spec</tt><em class="property"> = ((0, 13, 'success', (11, None, 12, (&lt;class damn_types.ttypes.TargetMimetype at 0x2afed50&gt;, (None, (1, 11, 'mimetype', None, None), (2, 11, 'template', None, None), (3, 15, 'options', (12, (&lt;class damn_types.ttypes.TargetMimetypeOption at 0x2afece8&gt;, (None, (1, 11, 'name', None, None), (2, 11, 'type', None, None), (3, 11, 'constraint', None, None), (4, 11, 'default_value', None, None)))), None)))), None),)</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">thrift_spec</tt><em class="property"> = ((0, 13, 'success', (11, None, 15, (12, (&lt;class damn_types.ttypes.TargetMimetype at 0x3753598&gt;, (None, (1, 11, 'mimetype', None, None), (2, 11, 'description', None, None), (3, 11, 'template', None, None), (4, 15, 'options', (12, (&lt;class damn_types.ttypes.TargetMimetypeOption at 0x3753530&gt;, (None, (1, 11, 'name', None, None), (2, 11, 'description', None, None), (3, 11, 'type', None, None), (4, 11, 'constraint', None, None), (5, 11, 'default_value', None, None)))), []))))), None),)</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.get_target_mimetypes_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -420,6 +455,74 @@
 
 </dd></dl>
 
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_args">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">transcode_args</tt><big>(</big><em>files=None</em>, <em>asset=None</em>, <em>mimetype=None</em>, <em>options=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#transcode_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_args" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>files</li>
+<li>asset</li>
+<li>mimetype</li>
+<li>options</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_args.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#transcode_args.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_args.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_args.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 15, 'files', (12, (&lt;class damn_types.ttypes.File at 0x3753600&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'data', None, None)))), None), (2, 12, 'asset', (&lt;class damn_types.ttypes.AssetId at 0x37536d0&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_types.ttypes.FileId at 0x3753668&gt;, (None, (1, 11, 'filename', None, None))), None))), None), (3, 11, 'mimetype', None, None), (4, 13, 'options', (11, None, 11, None), None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_args.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_args.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#transcode_args.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_args.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_args.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#transcode_args.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_args.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_result">
+<em class="property">class </em><tt class="descclassname">damn_at.thrift.generated.damn.DamnService.</tt><tt class="descname">transcode_result</tt><big>(</big><em>success=None</em>, <em>te=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#transcode_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_result" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>success</li>
+<li>te</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_result.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#transcode_result.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_result.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_result.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = ((0, 15, 'success', (12, (&lt;class damn_types.ttypes.File at 0x3753600&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'data', None, None)))), None), (1, 12, 'te', (&lt;class 'damn_at.thrift.generated.damn.ttypes.TranscoderException'&gt;, (None, (1, 11, 'msg', None, None))), None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_result.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_result.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#transcode_result.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_result.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.DamnService.transcode_result.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/DamnService.html#transcode_result.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.DamnService.transcode_result.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-damn_at.thrift.generated.damn.constants">
 <span id="constants-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">constants</span></tt> Module<a class="headerlink" href="#module-damn_at.thrift.generated.damn.constants" title="Permalink to this headline">¶</a></h2>
@@ -455,6 +558,39 @@
 <dl class="method">
 <dt id="damn_at.thrift.generated.damn.ttypes.AnalyzerException.write">
 <tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#AnalyzerException.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.AnalyzerException.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="damn_at.thrift.generated.damn.ttypes.TranscoderException">
+<em class="property">exception </em><tt class="descclassname">damn_at.thrift.generated.damn.ttypes.</tt><tt class="descname">TranscoderException</tt><big>(</big><em>msg=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#TranscoderException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.TranscoderException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">thrift.Thrift.TException</span></tt></p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>msg</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.ttypes.TranscoderException.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#TranscoderException.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.TranscoderException.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.thrift.generated.damn.ttypes.TranscoderException.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 11, 'msg', None, None))</em><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.TranscoderException.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.ttypes.TranscoderException.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#TranscoderException.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.TranscoderException.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.thrift.generated.damn.ttypes.TranscoderException.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/thrift/generated/damn/ttypes.html#TranscoderException.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.thrift.generated.damn.ttypes.TranscoderException.write" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

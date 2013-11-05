@@ -25,10 +25,26 @@ damn_at Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`options` Module
+---------------------
+
+.. automodule:: damn_at.options
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`pluginmanager` Module
 ---------------------------
 
 .. automodule:: damn_at.pluginmanager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`transcoder` Module
+------------------------
+
+.. automodule:: damn_at.transcoder
     :members:
     :undoc-members:
     :show-inheritance:

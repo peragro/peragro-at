@@ -84,6 +84,16 @@
 <span class="sd">     - file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Iface.transcode"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.Iface.transcode">[docs]</a>  <span class="k">def</span> <span class="nf">transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">     - files</span>
+<span class="sd">     - asset</span>
+<span class="sd">     - mimetype</span>
+<span class="sd">     - options</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
 
 </div></div>
 <div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="n">Iface</span><span class="p">):</span>
@@ -197,6 +207,44 @@
     <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">ae</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
       <span class="k">raise</span> <span class="n">result</span><span class="o">.</span><span class="n">ae</span>
     <span class="k">raise</span> <span class="n">TApplicationException</span><span class="p">(</span><span class="n">TApplicationException</span><span class="o">.</span><span class="n">MISSING_RESULT</span><span class="p">,</span> <span class="s">&quot;analyze failed: unknown result&quot;</span><span class="p">);</span>
+</div>
+<div class="viewcode-block" id="Client.transcode"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.Client.transcode">[docs]</a>  <span class="k">def</span> <span class="nf">transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">     - files</span>
+<span class="sd">     - asset</span>
+<span class="sd">     - mimetype</span>
+<span class="sd">     - options</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">send_transcode</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recv_transcode</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Client.send_transcode"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.Client.send_transcode">[docs]</a>  <span class="k">def</span> <span class="nf">send_transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_oprot</span><span class="o">.</span><span class="n">writeMessageBegin</span><span class="p">(</span><span class="s">&#39;transcode&#39;</span><span class="p">,</span> <span class="n">TMessageType</span><span class="o">.</span><span class="n">CALL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seqid</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">transcode_args</span><span class="p">()</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="n">files</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">asset</span> <span class="o">=</span> <span class="n">asset</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">=</span> <span class="n">mimetype</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_oprot</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_oprot</span><span class="o">.</span><span class="n">writeMessageEnd</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_oprot</span><span class="o">.</span><span class="n">trans</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Client.recv_transcode"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.Client.recv_transcode">[docs]</a>  <span class="k">def</span> <span class="nf">recv_transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+    <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mtype</span><span class="p">,</span> <span class="n">rseqid</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iprot</span><span class="o">.</span><span class="n">readMessageBegin</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">mtype</span> <span class="o">==</span> <span class="n">TMessageType</span><span class="o">.</span><span class="n">EXCEPTION</span><span class="p">:</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">TApplicationException</span><span class="p">()</span>
+      <span class="n">x</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iprot</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_iprot</span><span class="o">.</span><span class="n">readMessageEnd</span><span class="p">()</span>
+      <span class="k">raise</span> <span class="n">x</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">transcode_result</span><span class="p">()</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iprot</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_iprot</span><span class="o">.</span><span class="n">readMessageEnd</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span>
+    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">te</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">result</span><span class="o">.</span><span class="n">te</span>
+    <span class="k">raise</span> <span class="n">TApplicationException</span><span class="p">(</span><span class="n">TApplicationException</span><span class="o">.</span><span class="n">MISSING_RESULT</span><span class="p">,</span> <span class="s">&quot;transcode failed: unknown result&quot;</span><span class="p">);</span>
 
 </div></div>
 <div class="viewcode-block" id="Processor"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.Processor">[docs]</a><span class="k">class</span> <span class="nc">Processor</span><span class="p">(</span><span class="n">Iface</span><span class="p">,</span> <span class="n">TProcessor</span><span class="p">):</span>
@@ -207,6 +255,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">_processMap</span><span class="p">[</span><span class="s">&quot;get_supported_mimetypes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Processor</span><span class="o">.</span><span class="n">process_get_supported_mimetypes</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_processMap</span><span class="p">[</span><span class="s">&quot;get_target_mimetypes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Processor</span><span class="o">.</span><span class="n">process_get_target_mimetypes</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_processMap</span><span class="p">[</span><span class="s">&quot;analyze&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Processor</span><span class="o">.</span><span class="n">process_analyze</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_processMap</span><span class="p">[</span><span class="s">&quot;transcode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Processor</span><span class="o">.</span><span class="n">process_transcode</span>
 
 <div class="viewcode-block" id="Processor.process"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.Processor.process">[docs]</a>  <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprot</span><span class="p">,</span> <span class="n">oprot</span><span class="p">):</span>
     <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">seqid</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readMessageBegin</span><span class="p">()</span>
@@ -266,6 +315,20 @@
     <span class="k">except</span> <span class="n">AnalyzerException</span> <span class="k">as</span> <span class="n">ae</span><span class="p">:</span>
       <span class="n">result</span><span class="o">.</span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span>
     <span class="n">oprot</span><span class="o">.</span><span class="n">writeMessageBegin</span><span class="p">(</span><span class="s">&quot;analyze&quot;</span><span class="p">,</span> <span class="n">TMessageType</span><span class="o">.</span><span class="n">REPLY</span><span class="p">,</span> <span class="n">seqid</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">writeMessageEnd</span><span class="p">()</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">trans</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Processor.process_transcode"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.Processor.process_transcode">[docs]</a>  <span class="k">def</span> <span class="nf">process_transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seqid</span><span class="p">,</span> <span class="n">iprot</span><span class="p">,</span> <span class="n">oprot</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">transcode_args</span><span class="p">()</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+    <span class="n">iprot</span><span class="o">.</span><span class="n">readMessageEnd</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">transcode_result</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="o">.</span><span class="n">transcode</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">asset</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">TranscoderException</span> <span class="k">as</span> <span class="n">te</span><span class="p">:</span>
+      <span class="n">result</span><span class="o">.</span><span class="n">te</span> <span class="o">=</span> <span class="n">te</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">writeMessageBegin</span><span class="p">(</span><span class="s">&quot;transcode&quot;</span><span class="p">,</span> <span class="n">TMessageType</span><span class="o">.</span><span class="n">REPLY</span><span class="p">,</span> <span class="n">seqid</span><span class="p">)</span>
     <span class="n">result</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
     <span class="n">oprot</span><span class="o">.</span><span class="n">writeMessageEnd</span><span class="p">()</span>
     <span class="n">oprot</span><span class="o">.</span><span class="n">trans</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
@@ -515,7 +578,7 @@
 <span class="sd">  &quot;&quot;&quot;</span>
 
   <span class="n">thrift_spec</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">,</span> <span class="s">&#39;success&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">TargetMimetype</span><span class="p">,</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">TargetMimetype</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 0</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">,</span> <span class="s">&#39;success&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">TargetMimetype</span><span class="p">,</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">TargetMimetype</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">))),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 0</span>
   <span class="p">)</span>
 
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">success</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
@@ -536,8 +599,13 @@
           <span class="p">(</span><span class="n">_ktype8</span><span class="p">,</span> <span class="n">_vtype9</span><span class="p">,</span> <span class="n">_size7</span> <span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readMapBegin</span><span class="p">()</span> 
           <span class="k">for</span> <span class="n">_i11</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">_size7</span><span class="p">):</span>
             <span class="n">_key12</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
-            <span class="n">_val13</span> <span class="o">=</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">TargetMimetype</span><span class="p">()</span>
-            <span class="n">_val13</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+            <span class="n">_val13</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="p">(</span><span class="n">_etype17</span><span class="p">,</span> <span class="n">_size14</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readListBegin</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">_i18</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">_size14</span><span class="p">):</span>
+              <span class="n">_elem19</span> <span class="o">=</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">TargetMimetype</span><span class="p">()</span>
+              <span class="n">_elem19</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+              <span class="n">_val13</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_elem19</span><span class="p">)</span>
+            <span class="n">iprot</span><span class="o">.</span><span class="n">readListEnd</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">[</span><span class="n">_key12</span><span class="p">]</span> <span class="o">=</span> <span class="n">_val13</span>
           <span class="n">iprot</span><span class="o">.</span><span class="n">readMapEnd</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -554,10 +622,13 @@
     <span class="n">oprot</span><span class="o">.</span><span class="n">writeStructBegin</span><span class="p">(</span><span class="s">&#39;get_target_mimetypes_result&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;success&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-      <span class="n">oprot</span><span class="o">.</span><span class="n">writeMapBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">))</span>
-      <span class="k">for</span> <span class="n">kiter14</span><span class="p">,</span><span class="n">viter15</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="n">kiter14</span><span class="p">)</span>
-        <span class="n">viter15</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeMapBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">kiter20</span><span class="p">,</span><span class="n">viter21</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="n">kiter20</span><span class="p">)</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="n">writeListBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">viter21</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">iter22</span> <span class="ow">in</span> <span class="n">viter21</span><span class="p">:</span>
+          <span class="n">iter22</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="n">writeListEnd</span><span class="p">()</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeMapEnd</span><span class="p">()</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
     <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldStop</span><span class="p">()</span>
@@ -698,6 +769,203 @@
     <span class="n">oprot</span><span class="o">.</span><span class="n">writeStructEnd</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="analyze_result.validate"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.analyze_result.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span>
+
+</div>
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">=</span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+
+  <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__dict__</span>
+
+  <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span> <span class="o">==</span> <span class="n">other</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="transcode_args"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.transcode_args">[docs]</a><span class="k">class</span> <span class="nc">transcode_args</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Attributes:</span>
+<span class="sd">   - files</span>
+<span class="sd">   - asset</span>
+<span class="sd">   - mimetype</span>
+<span class="sd">   - options</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">thrift_spec</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="bp">None</span><span class="p">,</span> <span class="c"># 0</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="s">&#39;files&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">File</span><span class="p">,</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">File</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 1</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="s">&#39;asset&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">AssetId</span><span class="p">,</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">AssetId</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 2</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="s">&#39;mimetype&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 3</span>
+    <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">,</span> <span class="s">&#39;options&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span><span class="bp">None</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 4</span>
+  <span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">asset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mimetype</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="n">files</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">asset</span> <span class="o">=</span> <span class="n">asset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">=</span> <span class="n">mimetype</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+
+<div class="viewcode-block" id="transcode_args.read"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.transcode_args.read">[docs]</a>  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprot</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">iprot</span><span class="o">.</span><span class="n">__class__</span> <span class="o">==</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocolAccelerated</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iprot</span><span class="o">.</span><span class="n">trans</span><span class="p">,</span> <span class="n">TTransport</span><span class="o">.</span><span class="n">CReadableTransport</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">fastbinary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">fastbinary</span><span class="o">.</span><span class="n">decode_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprot</span><span class="o">.</span><span class="n">trans</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">))</span>
+      <span class="k">return</span>
+    <span class="n">iprot</span><span class="o">.</span><span class="n">readStructBegin</span><span class="p">()</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+      <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">fid</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readFieldBegin</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">STOP</span><span class="p">:</span>
+        <span class="k">break</span>
+      <span class="k">if</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+          <span class="p">(</span><span class="n">_etype26</span><span class="p">,</span> <span class="n">_size23</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readListBegin</span><span class="p">()</span>
+          <span class="k">for</span> <span class="n">_i27</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">_size23</span><span class="p">):</span>
+            <span class="n">_elem28</span> <span class="o">=</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">File</span><span class="p">()</span>
+            <span class="n">_elem28</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_elem28</span><span class="p">)</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">readListEnd</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">asset</span> <span class="o">=</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">AssetId</span><span class="p">()</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+          <span class="p">(</span><span class="n">_ktype30</span><span class="p">,</span> <span class="n">_vtype31</span><span class="p">,</span> <span class="n">_size29</span> <span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readMapBegin</span><span class="p">()</span> 
+          <span class="k">for</span> <span class="n">_i33</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">_size29</span><span class="p">):</span>
+            <span class="n">_key34</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
+            <span class="n">_val35</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_key34</span><span class="p">]</span> <span class="o">=</span> <span class="n">_val35</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">readMapEnd</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="n">iprot</span><span class="o">.</span><span class="n">readFieldEnd</span><span class="p">()</span>
+    <span class="n">iprot</span><span class="o">.</span><span class="n">readStructEnd</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="transcode_args.write"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.transcode_args.write">[docs]</a>  <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oprot</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">oprot</span><span class="o">.</span><span class="n">__class__</span> <span class="o">==</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocolAccelerated</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">fastbinary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">trans</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fastbinary</span><span class="o">.</span><span class="n">encode_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)))</span>
+      <span class="k">return</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">writeStructBegin</span><span class="p">(</span><span class="s">&#39;transcode_args&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;files&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeListBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">iter36</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+        <span class="n">iter36</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeListEnd</span><span class="p">()</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;asset&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;mimetype&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;options&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeMapBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">kiter37</span><span class="p">,</span><span class="n">viter38</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="n">kiter37</span><span class="p">)</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="n">viter38</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeMapEnd</span><span class="p">()</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldStop</span><span class="p">()</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">writeStructEnd</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="transcode_args.validate"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.transcode_args.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span>
+
+</div>
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">=</span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+
+  <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__dict__</span>
+
+  <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span> <span class="o">==</span> <span class="n">other</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="transcode_result"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.transcode_result">[docs]</a><span class="k">class</span> <span class="nc">transcode_result</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Attributes:</span>
+<span class="sd">   - success</span>
+<span class="sd">   - te</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">thrift_spec</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="s">&#39;success&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">File</span><span class="p">,</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">File</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 0</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="s">&#39;te&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TranscoderException</span><span class="p">,</span> <span class="n">TranscoderException</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 1</span>
+  <span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">success</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">te</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="n">success</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">te</span> <span class="o">=</span> <span class="n">te</span>
+
+<div class="viewcode-block" id="transcode_result.read"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.transcode_result.read">[docs]</a>  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprot</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">iprot</span><span class="o">.</span><span class="n">__class__</span> <span class="o">==</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocolAccelerated</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iprot</span><span class="o">.</span><span class="n">trans</span><span class="p">,</span> <span class="n">TTransport</span><span class="o">.</span><span class="n">CReadableTransport</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">fastbinary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">fastbinary</span><span class="o">.</span><span class="n">decode_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprot</span><span class="o">.</span><span class="n">trans</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">))</span>
+      <span class="k">return</span>
+    <span class="n">iprot</span><span class="o">.</span><span class="n">readStructBegin</span><span class="p">()</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+      <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">fid</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readFieldBegin</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">STOP</span><span class="p">:</span>
+        <span class="k">break</span>
+      <span class="k">if</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="p">[]</span>
+          <span class="p">(</span><span class="n">_etype42</span><span class="p">,</span> <span class="n">_size39</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readListBegin</span><span class="p">()</span>
+          <span class="k">for</span> <span class="n">_i43</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">_size39</span><span class="p">):</span>
+            <span class="n">_elem44</span> <span class="o">=</span> <span class="n">damn_types</span><span class="o">.</span><span class="n">ttypes</span><span class="o">.</span><span class="n">File</span><span class="p">()</span>
+            <span class="n">_elem44</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_elem44</span><span class="p">)</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">readListEnd</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">te</span> <span class="o">=</span> <span class="n">TranscoderException</span><span class="p">()</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">te</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="n">iprot</span><span class="o">.</span><span class="n">readFieldEnd</span><span class="p">()</span>
+    <span class="n">iprot</span><span class="o">.</span><span class="n">readStructEnd</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="transcode_result.write"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.transcode_result.write">[docs]</a>  <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oprot</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">oprot</span><span class="o">.</span><span class="n">__class__</span> <span class="o">==</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocolAccelerated</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">fastbinary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">trans</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fastbinary</span><span class="o">.</span><span class="n">encode_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)))</span>
+      <span class="k">return</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">writeStructBegin</span><span class="p">(</span><span class="s">&#39;transcode_result&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;success&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeListBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">iter45</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+        <span class="n">iter45</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeListEnd</span><span class="p">()</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">te</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;te&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">te</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldStop</span><span class="p">()</span>
+    <span class="n">oprot</span><span class="o">.</span><span class="n">writeStructEnd</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="transcode_result.validate"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn.html#damn_at.thrift.generated.damn.DamnService.transcode_result.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span>
 
 </div>

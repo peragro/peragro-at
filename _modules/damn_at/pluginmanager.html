@@ -96,7 +96,17 @@
 </div></div>
 <div class="viewcode-block" id="ITranscoder"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.ITranscoder">[docs]</a><span class="k">class</span> <span class="nc">ITranscoder</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Interface class for an Transcoder&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ITranscoder.analyze"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.ITranscoder.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
+    
+    <span class="n">convert_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The mimetypes this transocder can handle.</span>
+<span class="sd">    Example::</span>
+<span class="sd">    convert_map = {&quot;image/tiff&quot; : {&quot;image/jpeg&quot;: [IntVectorOption(name=&#39;size&#39;, description=&#39;The target size of the image&#39;, size=2, default=(-1,-1))], </span>
+<span class="sd">                                   &quot;image/png&quot;: []</span>
+<span class="sd">                                   }, }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ITranscoder.transcode"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.ITranscoder.transcode">[docs]</a>    <span class="k">def</span> <span class="nf">transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; blah &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;isValidPlugin&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
 
