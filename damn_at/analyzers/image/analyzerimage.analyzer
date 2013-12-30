@@ -1,0 +1,9 @@
+[Core]
+Name = Image analyzer
+Module = analyzerimage
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = Image analyzer

@@ -60,6 +60,12 @@ class ITranscoder(IPlugin):
         raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self)        
 
 
+class IMetaDataStore(IPlugin):
+    def get_metadata(self, an_hash):
+        """ blah """
+        raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self) 
+    
+
 class DAMNPluginManager(PluginManager):
     """Loads all analyzers and transcoders."""
     def __init__(self):
@@ -69,6 +75,7 @@ class DAMNPluginManager(PluginManager):
             categories_filter={
            "Analyzer" : IAnalyzer,
            "Transcoder" : ITranscoder,
+           "MetaDataStore" : IMetaDataStore,
            },
            plugin_info_ext=('analyzer', 'transcoder', )
         )

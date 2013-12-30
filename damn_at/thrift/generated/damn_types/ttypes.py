@@ -438,15 +438,18 @@ class FileId:
   """
   Attributes:
    - filename
+   - hash
   """
 
   thrift_spec = (
     None, # 0
     (1, TType.STRING, 'filename', None, None, ), # 1
+    (2, TType.STRING, 'hash', None, None, ), # 2
   )
 
-  def __init__(self, filename=None,):
+  def __init__(self, filename=None, hash=None,):
     self.filename = filename
+    self.hash = hash
 
   def read(self, iprot):
     if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
@@ -462,6 +465,11 @@ class FileId:
           self.filename = iprot.readString();
         else:
           iprot.skip(ftype)
+      elif fid == 2:
+        if ftype == TType.STRING:
+          self.hash = iprot.readString();
+        else:
+          iprot.skip(ftype)
       else:
         iprot.skip(ftype)
       iprot.readFieldEnd()
@@ -475,6 +483,10 @@ class FileId:
     if self.filename is not None:
       oprot.writeFieldBegin('filename', TType.STRING, 1)
       oprot.writeString(self.filename)
+      oprot.writeFieldEnd()
+    if self.hash is not None:
+      oprot.writeFieldBegin('hash', TType.STRING, 2)
+      oprot.writeString(self.hash)
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
     oprot.writeStructEnd()
@@ -688,20 +700,17 @@ class FileReference:
   """
   Attributes:
    - file
-   - hash
    - assets
   """
 
   thrift_spec = (
     None, # 0
     (1, TType.STRUCT, 'file', (FileId, FileId.thrift_spec), None, ), # 1
-    (2, TType.STRING, 'hash', None, None, ), # 2
-    (3, TType.LIST, 'assets', (TType.STRUCT,(AssetReference, AssetReference.thrift_spec)), None, ), # 3
+    (2, TType.LIST, 'assets', (TType.STRUCT,(AssetReference, AssetReference.thrift_spec)), None, ), # 2
   )
 
-  def __init__(self, file=None, hash=None, assets=None,):
+  def __init__(self, file=None, assets=None,):
     self.file = file
-    self.hash = hash
     self.assets = assets
 
   def read(self, iprot):
@@ -720,11 +729,6 @@ class FileReference:
         else:
           iprot.skip(ftype)
       elif fid == 2:
-        if ftype == TType.STRING:
-          self.hash = iprot.readString();
-        else:
-          iprot.skip(ftype)
-      elif fid == 3:
         if ftype == TType.LIST:
           self.assets = []
           (_etype26, _size23) = iprot.readListBegin()
@@ -749,12 +753,8 @@ class FileReference:
       oprot.writeFieldBegin('file', TType.STRUCT, 1)
       self.file.write(oprot)
       oprot.writeFieldEnd()
-    if self.hash is not None:
-      oprot.writeFieldBegin('hash', TType.STRING, 2)
-      oprot.writeString(self.hash)
-      oprot.writeFieldEnd()
     if self.assets is not None:
-      oprot.writeFieldBegin('assets', TType.LIST, 3)
+      oprot.writeFieldBegin('assets', TType.LIST, 2)
       oprot.writeListBegin(TType.STRUCT, len(self.assets))
       for iter29 in self.assets:
         iter29.write(oprot)

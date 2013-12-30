@@ -9,6 +9,11 @@ from thrift.protocol import TBinaryProtocol
 from damn_at.thrift.generated.damn_types.ttypes import FileReference, FileId, AssetReference, AssetId
 from damn_at.thrift.serialization import SerializeThriftMsg
 
+def relpath(path, start=None):
+    path = bpy.path.relpath(path, start)
+    path = path[2:] # Strip leading //
+    return path
+
 
 def main(): # pylint: disable=R0914,R0912,R0915
     """The main method"""
@@ -27,7 +32,7 @@ def main(): # pylint: disable=R0914,R0912,R0915
     def get_file_id(obj):
         """If the object is in a library, return a file for it, else return this fileid."""
         if obj.library:
-            return FileId(filename = bpy.path.abspath(obj.library.filepath))
+            return FileId(filename = relpath(obj.library.filepath))
         return fileid
 
     """
@@ -38,7 +43,7 @@ def main(): # pylint: disable=R0914,R0912,R0915
         image_fileid = get_file_id(image)
         image_mimetype = mimetypes.guess_type(image.filepath)[0]
         if image.source == 'FILE' and not image.packed_file:
-            image_fileid = FileId(filename = bpy.path.abspath(image.filepath, library=image.library))
+            image_fileid = FileId(filename = relpath(image.filepath, start=image.library.filepath if image.library else None))
         if image.packed_file:
             image_mimetype = 'application/x-blender.image'
         assetref = AssetReference(asset = AssetId(subname = image.name, mimetype = image_mimetype, file = image_fileid))
@@ -124,7 +129,7 @@ def main(): # pylint: disable=R0914,R0912,R0915
         text_fileid = get_file_id(text)
         text_mimetype = 'application/x-blender.text'
         if not text.is_in_memory:
-            text_fileid = FileId(filename = bpy.path.abspath(text.filepath, library=text.library))
+            text_fileid = FileId(filename = relpath(text.filepath, start=text.library.filepath if text.library else None))
             text_mimetype = mimetypes.guess_type(text.filepath)[0]
         assetref = AssetReference(asset = AssetId(subname = text.name, mimetype = text_mimetype, file = text_fileid))
         fileref.assets.append(assetref) 

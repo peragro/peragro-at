@@ -4,10 +4,25 @@ General utilities.
 import os
 import subprocess
 import glob
+import hashlib
+
+def calculate_hash_for_file(an_uri):
+    """Returns a sha1 hexdigest for the given file.
+    :param an_uri: the URI pointing to the file
+    :rtype: string
+    """
+    chksum = hashlib.sha1()
+    with open(an_uri, 'rb') as fh:
+        while True:
+            buf = fh.read(4096)
+            if not buf : break
+            chksum.update(buf)
+    return chksum.hexdigest()
+
 
 def is_existing_file(an_uri):
     """Returns whether the file exists and it is an actual file. 
-    :param an_uri: the URI pointing to the file to be analyzed
+    :param an_uri: the URI pointing to the file
     :rtype: bool
     """
     return os.path.exists(an_uri) and not os.path.isdir(an_uri)
@@ -55,3 +70,30 @@ def collect_python3_paths():
                     paths.append(include_path)
                     
     return paths
+
+
+def get_referenced_file_ids(file_ref):
+    """Collect all FileIds in a FileReference"""
+    file_ids = []
+    def analyze_dependency(asset_id):
+        file_ids.append(asset_id.file)
+   
+    def analyze_asset_ref(asset_ref):
+        file_ids.append(asset_ref.asset.file)
+        if asset_ref.dependencies:
+            for dependency in asset_ref.dependencies:
+                analyze_dependency(dependency)
+                
+    def analyze_file_ref(file_ref):
+        file_ids.append(file_ref.file)
+        if file_ref.assets:
+            for asset in file_ref.assets:
+                analyze_asset_ref(asset)
+                
+    analyze_file_ref(file_ref)
+    return file_ids
+    
+def abspath(path, file_ref=None):
+    if file_ref:
+        path = os.path.normpath(os.path.join(os.path.dirname(file_ref.file.filename), path))
+    return path

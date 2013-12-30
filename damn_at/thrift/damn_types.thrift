@@ -34,7 +34,8 @@ struct File {
 }
 
 struct FileId {
-    1:string filename
+    1:string filename,
+    2:optional string hash,
 }
 
 struct AssetId {
@@ -51,6 +52,5 @@ struct AssetReference {
  
 struct FileReference {
     1:FileId file,
-    2:string hash,
-    3:list<AssetReference> assets
+    2:list<AssetReference> assets
 }

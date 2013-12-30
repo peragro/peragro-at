@@ -4,12 +4,15 @@ Role
 Analyzer convience class to find the right plugin for a mimetype
 and address it.
 """
+import os
+import sys
 
 from metrology.instruments.gauge import Gauge
 
 from . import registry
 from .pluginmanager import DAMNPluginManagerSingleton
-from .utilities import is_existing_file
+from .utilities import is_existing_file, calculate_hash_for_file, get_referenced_file_ids, abspath
+from .metadatastore import MetaDataStore
 
 from . import mimetypes
 
@@ -76,4 +79,57 @@ class Analyzer(object):
             file_ref = self.analyzers[mimetype].analyze(an_uri)
             return file_ref
         else:
-            raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(format, an_uri))
+            raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(mimetype, an_uri))
+
+
+
+def main():
+    import logging
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+    
+    file_name = sys.argv[1]
+    a = Analyzer()
+    m = MetaDataStore()
+    
+    def hash_file_ref(file_ref):
+        CACHE = {}
+        def cached_calculate_hash_for_file(file_name):
+            if file_name not in CACHE:
+                path = abspath(file_name, file_ref)
+                CACHE[file_name] = calculate_hash_for_file(path)
+            return CACHE[file_name]
+        file_ids = get_referenced_file_ids(file_ref)
+        for file_id in file_ids:
+            file_id.hash = cached_calculate_hash_for_file(file_id.filename)
+        
+    def analyze_file(file_name, file_ref=None):
+        file_name = abspath(file_name, file_ref)
+        hashid = calculate_hash_for_file(file_name)
+        if m.is_in_store('/tmp/damn', hashid):
+            print('Fetching from store...')
+            ref = m.get_metadata('/tmp/damn', hashid)
+            return ref, True
+        else:
+            print(a.get_supported_mimetypes())
+            print('Analyzing file...')
+            ref = a.analyze_file(file_name)
+            hash_file_ref(ref)
+            m.write_metadata('/tmp/damn', hashid, ref)
+            return ref, False
+
+    ref, from_store = analyze_file(file_name)
+
+    file_ids = get_referenced_file_ids(ref)
+    paths = set([x.filename for x in file_ids])
+    for path in paths:
+        if path != file_name:
+            print('Analyzing', path)
+            try:
+                _, from_store = analyze_file(path, ref)
+                print(_)
+            except AnalyzerUnknownTypeException as e:
+                print(e)
+
+if __name__ == '__main__': 
+    sys.argv[1] = '/home/sueastside/dev/blenderassets/cube1.blend'
+    main()
