@@ -17,6 +17,14 @@ damn_at Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`metadatastore` Module
+---------------------------
+
+.. automodule:: damn_at.metadatastore
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`mimetypes` Module
 -----------------------
 
@@ -63,5 +71,6 @@ Subpackages
 .. toctree::
 
     damn_at.analyzers
+    damn_at.damnfs
     damn_at.thrift
 

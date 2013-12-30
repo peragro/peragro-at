@@ -14,5 +14,6 @@ Subpackages
 
 .. toctree::
 
+    damn_at.analyzers.image
     damn_at.analyzers.mesh
 

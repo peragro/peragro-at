@@ -489,15 +489,18 @@
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Attributes:</span>
 <span class="sd">   - filename</span>
+<span class="sd">   - hash</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
   <span class="n">thrift_spec</span> <span class="o">=</span> <span class="p">(</span>
     <span class="bp">None</span><span class="p">,</span> <span class="c"># 0</span>
     <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="s">&#39;filename&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 1</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="s">&#39;hash&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 2</span>
   <span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="nb">hash</span>
 
 <div class="viewcode-block" id="FileId.read"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn_types.html#damn_at.thrift.generated.damn_types.ttypes.FileId.read">[docs]</a>  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprot</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">iprot</span><span class="o">.</span><span class="n">__class__</span> <span class="o">==</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocolAccelerated</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iprot</span><span class="o">.</span><span class="n">trans</span><span class="p">,</span> <span class="n">TTransport</span><span class="o">.</span><span class="n">CReadableTransport</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrift_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">fastbinary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -513,6 +516,11 @@
           <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
         <span class="k">else</span><span class="p">:</span>
           <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
       <span class="k">else</span><span class="p">:</span>
         <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
       <span class="n">iprot</span><span class="o">.</span><span class="n">readFieldEnd</span><span class="p">()</span>
@@ -526,6 +534,10 @@
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;hash&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
     <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldStop</span><span class="p">()</span>
     <span class="n">oprot</span><span class="o">.</span><span class="n">writeStructEnd</span><span class="p">()</span>
@@ -739,20 +751,17 @@
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Attributes:</span>
 <span class="sd">   - file</span>
-<span class="sd">   - hash</span>
 <span class="sd">   - assets</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
   <span class="n">thrift_spec</span> <span class="o">=</span> <span class="p">(</span>
     <span class="bp">None</span><span class="p">,</span> <span class="c"># 0</span>
     <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="s">&#39;file&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">FileId</span><span class="p">,</span> <span class="n">FileId</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 1</span>
-    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="s">&#39;hash&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 2</span>
-    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">AssetReference</span><span class="p">,</span> <span class="n">AssetReference</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 3</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">AssetReference</span><span class="p">,</span> <span class="n">AssetReference</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 2</span>
   <span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">assets</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">assets</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="nb">file</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="nb">hash</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">assets</span> <span class="o">=</span> <span class="n">assets</span>
 
 <div class="viewcode-block" id="FileReference.read"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn_types.html#damn_at.thrift.generated.damn_types.ttypes.FileReference.read">[docs]</a>  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprot</span><span class="p">):</span>
@@ -771,11 +780,6 @@
         <span class="k">else</span><span class="p">:</span>
           <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
       <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
-        <span class="k">else</span><span class="p">:</span>
-          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
-      <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">:</span>
           <span class="bp">self</span><span class="o">.</span><span class="n">assets</span> <span class="o">=</span> <span class="p">[]</span>
           <span class="p">(</span><span class="n">_etype26</span><span class="p">,</span> <span class="n">_size23</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readListBegin</span><span class="p">()</span>
@@ -800,12 +804,8 @@
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;file&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;hash&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-      <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
-      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeListBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">))</span>
       <span class="k">for</span> <span class="n">iter29</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
         <span class="n">iter29</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>

@@ -1,0 +1,19 @@
+damnfs Package
+==============
+
+:mod:`damnfs` Module
+--------------------
+
+.. automodule:: damn_at.damnfs.damnfs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`path` Module
+------------------
+
+.. automodule:: damn_at.damnfs.path
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

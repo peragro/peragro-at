@@ -138,7 +138,53 @@ and address it.</p>
 <p>Unknown type</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="damn_at.analyzer.main">
+<tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
+</div>
+<div class="section" id="module-damn_at.metadatastore">
+<span id="metadatastore-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">metadatastore</span></tt> Module<a class="headerlink" href="#module-damn_at.metadatastore" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="damn_at.metadatastore.MetaDataStore">
+<em class="property">class </em><tt class="descclassname">damn_at.metadatastore.</tt><tt class="descname">MetaDataStore</tt><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="damn_at.metadatastore.MetaDataStore.get_metadata">
+<tt class="descname">get_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.get_metadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.metadatastore.MetaDataStore.is_in_store">
+<tt class="descname">is_in_store</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.is_in_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.is_in_store" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.metadatastore.MetaDataStore.plugin_mgr">
+<tt class="descname">plugin_mgr</tt><em class="property"> = None</em><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.plugin_mgr" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>for plugin in plugin_mgr.getPluginsOfCategory(&#8216;MetaDataStore&#8217;):</dt>
+<dd><dl class="first last docutils">
+<dt>if plugin.plugin_object.is_activated:</dt>
+<dd><dl class="first last docutils">
+<dt>for mimetype in plugin.plugin_object.handled_types:</dt>
+<dd>self.analyzers[mimetype] = plugin.plugin_object</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.metadatastore.MetaDataStore.write_metadata">
+<tt class="descname">write_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em>, <em>a_file_ref</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.write_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.write_metadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-damn_at.mimetypes">
 <span id="mimetypes-module"></span><h2><a class="reference external" href="http://docs.python.org/library/mimetypes.html#mimetypes" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">mimetypes</span></tt></a> Module<a class="headerlink" href="#module-damn_at.mimetypes" title="Permalink to this headline">¶</a></h2>
@@ -324,6 +370,18 @@ handled_types = [&#8220;application/x-blender&#8221;]</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="damn_at.pluginmanager.IMetaDataStore">
+<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">IMetaDataStore</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
+<dl class="method">
+<dt id="damn_at.pluginmanager.IMetaDataStore.get_metadata">
+<tt class="descname">get_metadata</tt><big>(</big><em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.get_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>blah</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="damn_at.pluginmanager.ITranscoder">
 <em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">ITranscoder</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#ITranscoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
@@ -415,16 +473,35 @@ and address it.</p>
 <span id="utilities-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">utilities</span></tt> Module<a class="headerlink" href="#module-damn_at.utilities" title="Permalink to this headline">¶</a></h2>
 <p>General utilities.</p>
 <dl class="function">
+<dt id="damn_at.utilities.abspath">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">abspath</tt><big>(</big><em>path</em>, <em>file_ref=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#abspath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.abspath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.calculate_hash_for_file">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">calculate_hash_for_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#calculate_hash_for_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.calculate_hash_for_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a sha1 hexdigest for the given file.
+:param an_uri: the URI pointing to the file
+:rtype: string</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="damn_at.utilities.collect_python3_paths">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">collect_python3_paths</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#collect_python3_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.collect_python3_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect python3&#8217;s &#8216;dist-packages&#8217; paths to create PYTHONPATH with</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="damn_at.utilities.get_referenced_file_ids">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">get_referenced_file_ids</tt><big>(</big><em>file_ref</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#get_referenced_file_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.get_referenced_file_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect all FileIds in a FileReference</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="damn_at.utilities.is_existing_file">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">is_existing_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#is_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.is_existing_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether the file exists and it is an actual file. 
-:param an_uri: the URI pointing to the file to be analyzed
+:param an_uri: the URI pointing to the file
 :rtype: bool</p>
 </dd></dl>
 
@@ -450,6 +527,11 @@ and address it.</p>
 <li class="toctree-l1"><a class="reference internal" href="damn_at.analyzers.html">analyzers Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="damn_at.analyzers.html#id1"><tt class="docutils literal"><span class="pre">analyzers</span></tt> Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="damn_at.analyzers.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.image.html">image Package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#id1"><tt class="docutils literal"><span class="pre">image</span></tt> Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#module-damn_at.analyzers.image.analyzerimage"><tt class="docutils literal"><span class="pre">analyzerimage</span></tt> Module</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.mesh.html">mesh Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#id1"><tt class="docutils literal"><span class="pre">mesh</span></tt> Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#module-damn_at.analyzers.mesh.analyzerblend"><tt class="docutils literal"><span class="pre">analyzerblend</span></tt> Module</a></li>
@@ -458,6 +540,11 @@ and address it.</p>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="damn_at.damnfs.html">damnfs Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.damnfs.html#damnfs-module"><tt class="docutils literal"><span class="pre">damnfs</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.damnfs.html#module-damn_at.damnfs.path"><tt class="docutils literal"><span class="pre">path</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="damn_at.thrift.html">thrift Package</a><ul>
@@ -508,6 +595,7 @@ and address it.</p>
 <li><a class="reference internal" href="#role">Role</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-damn_at.metadatastore"><tt class="docutils literal"><span class="pre">metadatastore</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.mimetypes"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a><ul>
 <li><a class="reference internal" href="#id2">Role</a></li>
 </ul>
