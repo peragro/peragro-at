@@ -18,9 +18,9 @@ from damn_at.thrift.serialization import SerializeThriftMsg, DeserializeThriftMs
 
 from damn_at.thrift.generated.damn_types.ttypes import FileReference
 
-from damn_at.utilities import get_referenced_file_ids
+from damn_at.utilities import get_referenced_file_ids, abspath
 
-from damn_at.damnfs.path import file_ids_as_tree, get_files_for_path, FILE_MARKER
+from damn_at.damnfs.path import file_ids_as_tree, get_files_for_path, FILE_MARKER, parse_path
 
 
 if not hasattr(fuse, '__version__'):
@@ -62,13 +62,13 @@ class MyStat(fuse.Stat):
     self.st_mtime = _file_timestamp  
     self.st_ctime = _file_timestamp  
     
-def get_file_hash(path):
-    paths = path[1:].split('/',1)
-    if len(paths) == 1:
-        return paths[0], None
-    else:
-        file_hash, rest = paths
-        return file_hash, rest
+
+
+def get_file_ref(file_hash):
+    path = os.path.join('/tmp/damn', file_hash)
+    with open(path, 'rb') as metadata:
+        a_file_ref = DeserializeThriftMsg(FileReference(), metadata.read())
+        return a_file_ref
 
 
 class DamnFS(Fuse):
@@ -76,74 +76,143 @@ class DamnFS(Fuse):
     def __init__(self, *args, **kw):
         Fuse.__init__(self, *args, **kw)
         self.root = '/tmp/damn'
+        self.file_class = self.DAMNFile
 
     def fsinit(self):
         os.chdir('/tmp/damn')
 
     def getattr(self, path):
-        print '*** getattr', path
-        if path=='/':
+        #print '*** getattr', path
+        file_hash, action, rest = parse_path(path)
+        if file_hash is None:
             return MyStat(True, 0)
         else:
-            file_hash, rest = get_file_hash(path)
-            #print('file_hash', file_hash)
-            metadata = file(os.path.join('/tmp/damn', file_hash), 'rb')
-            a_file_ref = DeserializeThriftMsg(FileReference(), metadata.read())
-            metadata.close()
-
-            #print('rest', rest)
-            if not rest:
-                rest = ''
-                
-            file_ids = get_referenced_file_ids(a_file_ref)     
-            file_id_paths = set([file_id.filename for file_id in file_ids])  
-            tree = file_ids_as_tree(file_ids, os.path.dirname(a_file_ref.file.filename))
-            files = get_files_for_path(tree, rest)
-            print('files1', files)
-            if isinstance(files, dict):
+            if action is None:
                 return MyStat(True, 0)
-            else:
-                print('file', files)
-                return MyStat(False, 4)
+            elif action == 'mount':
+                return self.getattr_mount(path, file_hash, action, rest)
+            elif action == 'assets':
+                return MyStat(True, 0)
+                #return self.getattr_assets(path, file_hash, action, rest)
+                
+        print('oops', path, file_hash, action)
+        
+    def getattr_mount(self, path, file_hash, action, rest):
+        a_file_ref = get_file_ref(file_hash)
 
+        if not rest:
+            rest = ''
+            
+        if rest == os.path.basename(a_file_ref.file.filename):
+            stat = self.getattr_mount_file(path, file_hash, action, rest, ('', a_file_ref.file), a_file_ref)
+            stat.st_mode = S_IFLNK | 0755
+            return stat
+            
+        file_ids = get_referenced_file_ids(a_file_ref)      
+        tree = file_ids_as_tree(file_ids, os.path.dirname(a_file_ref.file.filename))
+        files = get_files_for_path(tree, rest)
+        if isinstance(files, dict):
+            return MyStat(True, 0)
+        else:
+            return self.getattr_mount_file(path, file_hash, action, rest, files, a_file_ref)
+            
+    def getattr_mount_file(self, path, file_hash, action, rest, files, a_file_ref):
+        abs_path = abspath(files[1].filename, a_file_ref)
+        size = os.stat(abs_path).st_size if os.path.isfile(abs_path) else 0
+        return MyStat(False, size)
+
+    def readlink(self, path):
+        print '*** readlink', path
+        file_hash, action, rest = parse_path(path)
+        a_file_ref = get_file_ref(file_hash)
+        
+        file_ids = get_referenced_file_ids(a_file_ref)      
+        tree = file_ids_as_tree(file_ids, os.path.dirname(a_file_ref.file.filename))
+        
+        path_to = find_path_for_file_id(tree, a_file_ref.file)
+        
+        return path_to
             
     def readdir(self, path, offset):
-        print('***readdir', path) 
-        #if path.startswith('/'):
-        #    path = path[1:]   
-        if path=='/':
+        #print('***readdir', path)   
+        file_hash, action, rest = parse_path(path)
+        
+        if file_hash is None:
             path = os.path.join('/tmp/damn', '')
             for e in os.listdir(path):
                 yield fuse.Direntry(e)
         else:
-            file_hash, rest = get_file_hash(path)
-            #print('file_hash', file_hash)
-            metadata = file(os.path.join('/tmp/damn', file_hash), 'rb')
-            a_file_ref = DeserializeThriftMsg(FileReference(), metadata.read())
-            metadata.close()
+            if action is None:
+                for action in ['mount', 'assets']:
+                    yield fuse.Direntry(action)
+            elif action == 'mount':
+                
+                for entry in self.readdir_mount(path, offset, file_hash, action, rest):
+                    yield entry
+            elif action == 'assets':
+                for entry in self.readdir_assets(path, offset, file_hash, action, rest):
+                    yield entry
+                
+    
+    def readdir_mount(self, path, offset, file_hash, action, rest):
+        #print('file_hash', file_hash)
+        a_file_ref = get_file_ref(file_hash)
 
-            print('rest', rest)
+        print('rest', rest)
+        if not rest:
+            rest = ''
+            
+        if rest == '':
+            yield fuse.Direntry(os.path.basename(a_file_ref.file.filename))
+            
+        file_ids = get_referenced_file_ids(a_file_ref)     
+        file_id_paths = set([file_id.filename for file_id in file_ids])  
+        print(os.path.dirname(a_file_ref.file.filename))
+        print(file_id_paths)
+        tree = file_ids_as_tree(file_ids, os.path.dirname(a_file_ref.file.filename))
+        files = get_files_for_path(tree, rest)
+        print('files', files)
+        for key, value in files.iteritems():
+            if key == FILE_MARKER:
+                for entry in value:
+                    yield fuse.Direntry(entry[0])
+            else:
+                 yield fuse.Direntry(key)
+
+
+    def readdir_assets(self, path, offset, file_hash, action, rest):
+        a_file_ref = get_file_ref(file_hash)
+        if rest is None:
+            for asset_ref in a_file_ref.assets:
+                asset_id = asset_ref.asset
+                mimetype = str(asset_id.mimetype).replace('/', '!')
+                yield fuse.Direntry(asset_id.subname+' ('+str(mimetype)+')')
+
+   
+    class DAMNFile(object):
+        def __init__(self, path, flags, *mode):
+            file_hash, action, rest = parse_path(path)
+        
+            a_file_ref = get_file_ref(file_hash)
+
             if not rest:
                 rest = ''
                 
             file_ids = get_referenced_file_ids(a_file_ref)     
-            file_id_paths = set([file_id.filename for file_id in file_ids])  
-            print(os.path.dirname(a_file_ref.file.filename))
-            print(file_id_paths)
             tree = file_ids_as_tree(file_ids, os.path.dirname(a_file_ref.file.filename))
             files = get_files_for_path(tree, rest)
-            print('files', files)
-            for key, value in files.iteritems():
-                if key == FILE_MARKER:
-                    for entry in value:
-                        yield fuse.Direntry(entry[0])
-                else:
-                     yield fuse.Direntry(key)
-    
-    def utime ( self, path, times ):
-        print '*** utime', path, times
-        return -errno.ENOSYS
-
+            if not isinstance(files, dict):
+                abs_path = abspath(files[1].filename, a_file_ref)
+                
+                self.file = os.fdopen(os.open(abs_path, flags, *mode), flag2mode(flags))
+                self.fd = self.file.fileno()       
+ 
+        def read(self, length, offset):
+            self.file.seek(offset)
+            return self.file.read(length)
+            
+        def release(self, flags):
+            self.file.close()
     
 from threading import Thread
 import time

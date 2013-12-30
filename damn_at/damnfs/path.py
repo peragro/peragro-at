@@ -3,7 +3,6 @@ Path utilities for DAMN FS
 """
 import os
 
-
 FILE_MARKER = '<children>'
 
 def attach(file_id, trunk, branch=None):
@@ -65,8 +64,9 @@ def expand_path(path, relative_path, base_depth):
     """"""
     path = path.replace(relative_path, '')
     path = os.path.normpath(path)
-    path = path.replace('../', '_/', base_depth)
-    if base_depth > path_depth(path):
+    pathdepth = path_depth(path)
+    path = path.replace('../', '', base_depth)
+    if base_depth > pathdepth:
         for x in range(base_depth - path_depth(path)):
            path = '_/' + path 
     return path
@@ -97,11 +97,45 @@ def get_files_for_path(file_ids_tree, path):
             try:
                 entry = entry[part]
             except KeyError as e:
-                print('get_files_for_path', e)
                 files = entry[FILE_MARKER]
                 for entry in files:
                     if entry[0] == part:
                         return entry
-                
+                raise e
             
     return entry
+
+def find_path_for_file_id(file_ids_tree, file_id):
+    """"""
+    for key, value in file_ids_tree.iteritems():
+        if key == FILE_MARKER:
+            for name, fid in value:
+                if fid.hash == file_id.hash:
+                    return name
+        else:
+            if isinstance(value, dict):
+                ret = find_path_for_file_id(value, file_id)
+                if ret:
+                    return key +'/'+ ret
+            
+    
+
+def parse_path(path):
+    """"""
+    if path=='/':
+        return None, None, None
+    paths = path[1:].split('/',1)
+    #Filter Empty strings
+    paths = [p for p in paths if p!='']
+    if len(paths) == 1:
+        return paths[0], None, None
+    else:
+        file_hash, rest = paths
+        paths = rest.split('/',1)
+        #Filter Empty strings
+        paths = [p for p in paths if p!='']
+        if len(paths) == 1:
+            return file_hash, paths[0], None
+        else:
+            action, rest = paths
+            return file_hash, action, rest
