@@ -54,7 +54,6 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-
 <span class="n">FILE_MARKER</span> <span class="o">=</span> <span class="s">&#39;&lt;children&gt;&#39;</span>
 
 <div class="viewcode-block" id="attach"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.attach">[docs]</a><span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">trunk</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -116,8 +115,9 @@
     <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">relative_path</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;../&#39;</span><span class="p">,</span> <span class="s">&#39;_/&#39;</span><span class="p">,</span> <span class="n">base_depth</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">base_depth</span> <span class="o">&gt;</span> <span class="n">path_depth</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">pathdepth</span> <span class="o">=</span> <span class="n">path_depth</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;../&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">base_depth</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">base_depth</span> <span class="o">&gt;</span> <span class="n">pathdepth</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">base_depth</span> <span class="o">-</span> <span class="n">path_depth</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
            <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;_/&#39;</span> <span class="o">+</span> <span class="n">path</span> 
     <span class="k">return</span> <span class="n">path</span>
@@ -148,14 +148,48 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">entry</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s">&#39;get_files_for_path&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
                 <span class="n">files</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="n">FILE_MARKER</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">part</span><span class="p">:</span>
                         <span class="k">return</span> <span class="n">entry</span>
-                
+                <span class="k">raise</span> <span class="n">e</span>
             
-    <span class="k">return</span> <span class="n">entry</span></div>
+    <span class="k">return</span> <span class="n">entry</span>
+</div>
+<div class="viewcode-block" id="find_path_for_file_id"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.find_path_for_file_id">[docs]</a><span class="k">def</span> <span class="nf">find_path_for_file_id</span><span class="p">(</span><span class="n">file_ids_tree</span><span class="p">,</span> <span class="n">file_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">file_ids_tree</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">FILE_MARKER</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">fid</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">fid</span><span class="o">.</span><span class="n">hash</span> <span class="o">==</span> <span class="n">file_id</span><span class="o">.</span><span class="n">hash</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">find_path_for_file_id</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">file_id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">key</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="n">ret</span>
+            
+    
+</div>
+<div class="viewcode-block" id="parse_path"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.parse_path">[docs]</a><span class="k">def</span> <span class="nf">parse_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">==</span><span class="s">&#39;/&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c">#Filter Empty strings</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">if</span> <span class="n">p</span><span class="o">!=</span><span class="s">&#39;&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_hash</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">paths</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c">#Filter Empty strings</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">if</span> <span class="n">p</span><span class="o">!=</span><span class="s">&#39;&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">file_hash</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">paths</span>
+            <span class="k">return</span> <span class="n">file_hash</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rest</span></div>
 </pre></div>
 
           </div>
