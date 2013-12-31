@@ -5,27 +5,28 @@ damn_at-analyze /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.ble
 damn_fs -f /tmp/damnfs/
 '''
 
-import os, sys
+import os
 import time
-from errno import *
-from stat import *
-import fcntl
+import errno
+import stat
+import subprocess
+from threading import Thread
+
 
 import fuse
 from fuse import Fuse
 
-from damn_at.thrift.serialization import SerializeThriftMsg, DeserializeThriftMsg
+from damn_at.thrift.serialization import DeserializeThriftMsg
 
 from damn_at.thrift.generated.damn_types.ttypes import FileReference
 
 from damn_at.utilities import get_referenced_file_ids, abspath
 
-from damn_at.damnfs.path import file_ids_as_tree, get_files_for_path, FILE_MARKER, parse_path
+from damn_at.damnfs.path import file_ids_as_tree, get_files_for_path, FILE_MARKER, parse_path, find_path_for_file_id
 
 
 if not hasattr(fuse, '__version__'):
-    raise RuntimeError, \
-        "your fuse-py doesn't know of fuse.__version__, probably it's too old."
+    raise RuntimeError("your fuse-py doesn't know of fuse.__version__, probably it's too old.")
 
 fuse.fuse_python_api = (0, 2)
 
@@ -44,23 +45,23 @@ def flag2mode(flags):
     
 _file_timestamp = int(time.time())  
 class MyStat(fuse.Stat):  
-  """ 
-  Convenient class for Stat objects. 
-  Set up the stat object with appropriate 
-  values depending on constructor args. 
-  """  
-  def __init__(self, is_dir, size):  
-    fuse.Stat.__init__(self)  
-    if is_dir:  
-      self.st_mode = S_IFDIR | 0555  
-      self.st_nlink = 2  
-    else:  
-      self.st_mode = S_IFREG | 0444  
-      self.st_nlink = 1  
-      self.st_size = size  
-    self.st_atime = _file_timestamp  
-    self.st_mtime = _file_timestamp  
-    self.st_ctime = _file_timestamp  
+    """ 
+    Convenient class for Stat objects. 
+    Set up the stat object with appropriate 
+    values depending on constructor args. 
+    """  
+    def __init__(self, is_dir, size):  
+        fuse.Stat.__init__(self)  
+        if is_dir:  
+            self.st_mode = stat.S_IFDIR | 0555  
+            self.st_nlink = 2  
+        else:  
+            self.st_mode = stat.S_IFREG | 0444  
+            self.st_nlink = 1  
+            self.st_size = size  
+        self.st_atime = _file_timestamp  
+        self.st_mtime = _file_timestamp  
+        self.st_ctime = _file_timestamp  
     
 
 
@@ -102,11 +103,11 @@ class DamnFS(Fuse):
 
         if not rest:
             rest = ''
-            
+
         if rest == os.path.basename(a_file_ref.file.filename):
-            stat = self.getattr_mount_file(path, file_hash, action, rest, ('', a_file_ref.file), a_file_ref)
-            stat.st_mode = S_IFLNK | 0755
-            return stat
+            file_stat = self.getattr_mount_file(path, file_hash, action, rest, ('', a_file_ref.file), a_file_ref)
+            file_stat.st_mode = stat.S_IFLNK | 0755
+            return file_stat
             
         file_ids = get_referenced_file_ids(a_file_ref)      
         tree = file_ids_as_tree(file_ids, os.path.dirname(a_file_ref.file.filename))
@@ -122,7 +123,7 @@ class DamnFS(Fuse):
         return MyStat(False, size)
 
     def readlink(self, path):
-        print '*** readlink', path
+        print('*** readlink', path)
         file_hash, action, rest = parse_path(path)
         a_file_ref = get_file_ref(file_hash)
         
@@ -214,9 +215,7 @@ class DamnFS(Fuse):
         def release(self, flags):
             self.file.close()
     
-from threading import Thread
-import time
-import subprocess
+
 def unmount(path):
     """Unmount the given mount point.
 
@@ -225,9 +224,9 @@ def unmount(path):
     'unmount' method on the MountProcess class if you have it.
     """
     for num_tries in xrange(3):
-        p = subprocess.Popen(["fusermount","-u",path],stderr=subprocess.PIPE)
-        (stdout,stderr) = p.communicate()
-        if p.returncode == 0:
+        process = subprocess.Popen(["fusermount","-u",path],stderr=subprocess.PIPE)
+        (stdout, stderr) = process.communicate()
+        if process.returncode == 0:
             return
         if "not mounted" in stderr:
             return
@@ -242,9 +241,8 @@ def main():
     server.parse(values=server, errex=1)
 
     #server.main()
-    
-    t = Thread(target=server.main)
-    t.start()
+    thread = Thread(target=server.main)
+    thread.start()
     try:
         while True:
             time.sleep(20)
@@ -252,7 +250,6 @@ def main():
     except KeyboardInterrupt:
         print('exitting')
         unmount('/tmp/damnfs')
-        #t.join()
 
 
 if __name__ == '__main__':

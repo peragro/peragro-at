@@ -37,14 +37,14 @@ class IAnalyzer(IPlugin):
         """Returns a FileReference
 
         :param an_uri: the URI pointing to the file to be analyzed
-        :rtype: :py:class:`damn_at.types.FileReference`
+        :rtype: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`
         :raises: :py:class:`damn_at.analyzer.AnalyzerException`
         """
         raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self)        
 
 
 class ITranscoder(IPlugin):
-    """Interface class for an Transcoder"""
+    """Interface class for a Transcoder"""
     
     convert_map = {}
     """
@@ -61,6 +61,7 @@ class ITranscoder(IPlugin):
 
 
 class IMetaDataStore(IPlugin):
+    """Interface class for a MetaDataStore"""
     def get_metadata(self, an_hash):
         """ blah """
         raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self) 

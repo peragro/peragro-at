@@ -69,7 +69,7 @@ class Analyzer(object):
         """Returns a FileReference
         
         :param an_uri: the URI pointing to the file to be analyzed
-        :rtype: :py:class:`damn_at.types.FileReference`
+        :rtype: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`
         :raises: AnalyzerException, AnalyzerFileException, AnalyzerUnknownTypeException
         """
         if not is_existing_file(an_uri):

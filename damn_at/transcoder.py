@@ -10,8 +10,6 @@ from metrology.instruments.gauge import Gauge
 from . import registry
 from .pluginmanager import DAMNPluginManagerSingleton
 
-from . import mimetypes
-
 from damn_at.thrift.generated.damn_types.ttypes import TargetMimetype, TargetMimetypeOption
 from .options import options_to_template
 
@@ -54,9 +52,9 @@ class Transcoder(object):
 
         for plugin in plugin_mgr.getPluginsOfCategory('Transcoder'):
             if plugin.plugin_object.is_activated:
-                for src, dsts in plugin.plugin_object.convert_map.items():
+                for src, _ in plugin.plugin_object.convert_map.items():
                     if not src in self.transcoders:
-                      self.transcoders[src] = []
+                        self.transcoders[src] = []
                     self.transcoders[src].append(plugin)
     
     def get_target_mimetypes(self):
@@ -70,7 +68,11 @@ class Transcoder(object):
                 for dst_mimetype, options in transcoder.plugin_object.convert_map[src_mimetype].items():
                     tmt = TargetMimetype(mimetype=dst_mimetype, description=transcoder.description, template=options_to_template(options))
                     for option in options:
-                        tmto = TargetMimetypeOption(name=option.name, description=option.description, type=option.type_description, constraint=option.constraint_description, default_value=option.default_description)
+                        tmto = TargetMimetypeOption(name=option.name, 
+                                                    description=option.description, 
+                                                    type=option.type_description, 
+                                                    constraint=option.constraint_description, 
+                                                    default_value=option.default_description)
                         tmt.options.append(tmto)
                     if not src_mimetype in target_mimetypes:
                         target_mimetypes[src_mimetype] = []
