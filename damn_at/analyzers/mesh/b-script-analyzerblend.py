@@ -6,7 +6,7 @@ import binascii
 import mimetypes
 
 from thrift.protocol import TBinaryProtocol
-from damn_at.thrift.generated.damn_types.ttypes import FileReference, FileId, AssetReference, AssetId
+from damn_at.thrift.generated.damn_types.ttypes import FileReference, FileId, AssetReference, AssetId, MetaDataValue, MetaDataType
 from damn_at.thrift.serialization import SerializeThriftMsg
 
 def relpath(path, start=None):
@@ -47,7 +47,8 @@ def main(): # pylint: disable=R0914,R0912,R0915
         if image.packed_file:
             image_mimetype = 'application/x-blender.image'
         assetref = AssetReference(asset = AssetId(subname = image.name, mimetype = image_mimetype, file = image_fileid))
-        fileref.assets.append(assetref) 
+        if image.packed_file:
+            fileref.assets.append(assetref) 
         images[image.name] = assetref 
 
 
@@ -93,6 +94,10 @@ def main(): # pylint: disable=R0914,R0912,R0915
             if name in images:
                 dep = images[name].asset
                 assetref.dependencies.append(dep)
+        
+        assetref.metadata = {}
+        assetref.metadata['nr_of_faces'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.tessfaces))
+        assetref.metadata['nr_of_vertices'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.vertices))
                         
         fileref.assets.append(assetref) 
         meshes[mesh.name] = assetref 

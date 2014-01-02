@@ -6,3 +6,6 @@ logger = logging.getLogger('damn_at') # pylint: disable=C0103
 
 from metrology.registry import registry
 #registry = Registry() # pylint: disable=C0103
+
+from .analyzer import Analyzer
+from .metadatastore import MetaDataStore
