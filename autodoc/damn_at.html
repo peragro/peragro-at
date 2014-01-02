@@ -81,7 +81,7 @@ and address it.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.types.FileReference</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#damn_at.thrift.generated.damn_types.ttypes.FileReference" title="damn_at.thrift.generated.damn_types.ttypes.FileReference"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn_types.ttypes.FileReference</span></tt></a></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body">AnalyzerException, AnalyzerFileException, AnalyzerUnknownTypeException</td>
 </tr>
@@ -147,41 +147,29 @@ and address it.</p>
 </div>
 <div class="section" id="module-damn_at.metadatastore">
 <span id="metadatastore-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">metadatastore</span></tt> Module<a class="headerlink" href="#module-damn_at.metadatastore" title="Permalink to this headline">¶</a></h2>
+<p>The MetaDataStore handler.</p>
 <dl class="class">
 <dt id="damn_at.metadatastore.MetaDataStore">
 <em class="property">class </em><tt class="descclassname">damn_at.metadatastore.</tt><tt class="descname">MetaDataStore</tt><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>A filesystem MetaDataStore implementation.</p>
 <dl class="method">
 <dt id="damn_at.metadatastore.MetaDataStore.get_metadata">
 <tt class="descname">get_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.get_metadata" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get the FileReference for the given hash.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="damn_at.metadatastore.MetaDataStore.is_in_store">
 <tt class="descname">is_in_store</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.is_in_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.is_in_store" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.metadatastore.MetaDataStore.plugin_mgr">
-<tt class="descname">plugin_mgr</tt><em class="property"> = None</em><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.plugin_mgr" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>for plugin in plugin_mgr.getPluginsOfCategory(&#8216;MetaDataStore&#8217;):</dt>
-<dd><dl class="first last docutils">
-<dt>if plugin.plugin_object.is_activated:</dt>
-<dd><dl class="first last docutils">
-<dt>for mimetype in plugin.plugin_object.handled_types:</dt>
-<dd>self.analyzers[mimetype] = plugin.plugin_object</dd>
-</dl>
-</dd>
-</dl>
-</dd>
-</dl>
+<dd><p>Check if the given file hash is in the store.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="damn_at.metadatastore.MetaDataStore.write_metadata">
 <tt class="descname">write_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em>, <em>a_file_ref</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.write_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.write_metadata" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Write the FileReference to this store.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -351,7 +339,7 @@ method in the following way:
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.types.FileReference</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#damn_at.thrift.generated.damn_types.ttypes.FileReference" title="damn_at.thrift.generated.damn_types.ttypes.FileReference"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn_types.ttypes.FileReference</span></tt></a></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"><a class="reference internal" href="#damn_at.analyzer.AnalyzerException" title="damn_at.analyzer.AnalyzerException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.analyzer.AnalyzerException</span></tt></a></td>
 </tr>
@@ -373,6 +361,7 @@ handled_types = [&#8220;application/x-blender&#8221;]</p>
 <dt id="damn_at.pluginmanager.IMetaDataStore">
 <em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">IMetaDataStore</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
+<p>Interface class for a MetaDataStore</p>
 <dl class="method">
 <dt id="damn_at.pluginmanager.IMetaDataStore.get_metadata">
 <tt class="descname">get_metadata</tt><big>(</big><em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.get_metadata" title="Permalink to this definition">¶</a></dt>
@@ -385,7 +374,7 @@ handled_types = [&#8220;application/x-blender&#8221;]</p>
 <dt id="damn_at.pluginmanager.ITranscoder">
 <em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">ITranscoder</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#ITranscoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
-<p>Interface class for an Transcoder</p>
+<p>Interface class for a Transcoder</p>
 <dl class="attribute">
 <dt id="damn_at.pluginmanager.ITranscoder.convert_map">
 <tt class="descname">convert_map</tt><em class="property"> = {}</em><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder.convert_map" title="Permalink to this definition">¶</a></dt>
@@ -475,14 +464,23 @@ and address it.</p>
 <dl class="function">
 <dt id="damn_at.utilities.abspath">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">abspath</tt><big>(</big><em>path</em>, <em>file_ref=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#abspath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.abspath" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return an absolute path using the given FileReference as reference.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="damn_at.utilities.calculate_hash_for_file">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">calculate_hash_for_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#calculate_hash_for_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.calculate_hash_for_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a sha1 hexdigest for the given file.
-:param an_uri: the URI pointing to the file
-:rtype: string</p>
+<dd><p>Returns a sha1 hexdigest for the given file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -500,9 +498,17 @@ and address it.</p>
 <dl class="function">
 <dt id="damn_at.utilities.is_existing_file">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">is_existing_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#is_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.is_existing_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether the file exists and it is an actual file. 
-:param an_uri: the URI pointing to the file
-:rtype: bool</p>
+<dd><p>Returns whether the file exists and it is an actual file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -514,9 +520,17 @@ and address it.</p>
 <dl class="function">
 <dt id="damn_at.utilities.script_path">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">script_path</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#script_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.script_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>b-script-&#8216;+__file__+&#8217;.py 
-:param filename: __file__
-:rtype: string</p>
+<dd><p>b-script-&#8216;+__file__+&#8217;.py</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; __file__</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

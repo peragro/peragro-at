@@ -57,12 +57,10 @@
 <span class="n">FILE_MARKER</span> <span class="o">=</span> <span class="s">&#39;&lt;children&gt;&#39;</span>
 
 <div class="viewcode-block" id="attach"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.attach">[docs]</a><span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">trunk</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Insert a branch of directories on its trunk.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Insert a branch of directories on its trunk.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">branch</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">branch</span> <span class="o">=</span> <span class="n">file_id</span><span class="o">.</span><span class="n">filename</span>
-    
+
     <span class="n">parts</span> <span class="o">=</span> <span class="n">branch</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c"># branch is a file</span>
         <span class="k">if</span> <span class="n">file_id</span><span class="p">:</span>
@@ -80,67 +78,83 @@
         <span class="n">attach</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">trunk</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">others</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="prettify"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.prettify">[docs]</a><span class="k">def</span> <span class="nf">prettify</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Print the file tree structure with proper indentation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+<div class="viewcode-block" id="prettify"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.prettify">[docs]</a><span class="k">def</span> <span class="nf">prettify</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Print the file tree structure with proper indentation.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">FILE_MARKER</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;  &#39;</span> <span class="o">*</span> <span class="n">indent</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;  &#39;</span> <span class="o">*</span> <span class="n">indent</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&#39;  &#39;</span> <span class="o">*</span> <span class="n">indent</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;  &#39;</span> <span class="o">*</span> <span class="n">indent</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="n">prettify</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;  &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">indent</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;  &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">indent</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
 </div>
 <div class="viewcode-block" id="normdirpath"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.normdirpath">[docs]</a><span class="k">def</span> <span class="nf">normdirpath</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Make a directory path end with /&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">path</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">+=</span> <span class="s">&#39;/&#39;</span>
     <span class="k">return</span> <span class="n">path</span>
 
- </div>
+</div>
 <div class="viewcode-block" id="path_depth"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.path_depth">[docs]</a><span class="k">def</span> <span class="nf">path_depth</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Give the depth, the number of directories deep, of a path&quot;&quot;&quot;</span>
     <span class="n">parts</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
     <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span> <span class="k">if</span> <span class="n">part</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">]</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">length</span>
 
- </div>
-<div class="viewcode-block" id="expand_path"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.expand_path">[docs]</a><span class="k">def</span> <span class="nf">expand_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">,</span> <span class="n">base_depth</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">relative_path</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="expand_path"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.expand_path">[docs]</a><span class="k">def</span> <span class="nf">expand_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">start_path</span><span class="p">,</span> <span class="n">base_depth</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a path relative to the given starting path and make the path</span>
+<span class="sd">    atleast base_depth deep by prepending &#39;_&#39; directories.</span>
+
+<span class="sd">    :param path: :py:class:`string`: the path to expand</span>
+<span class="sd">    :param start_path: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`: the starting path</span>
+<span class="sd">    :param base_depth: :py:class:`int`: how deep the the base file should be</span>
+<span class="sd">    :rtype: :py:class:`string`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">start_path</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">pathdepth</span> <span class="o">=</span> <span class="n">path_depth</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;../&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">base_depth</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">base_depth</span> <span class="o">&gt;</span> <span class="n">pathdepth</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">base_depth</span> <span class="o">-</span> <span class="n">path_depth</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
-           <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;_/&#39;</span> <span class="o">+</span> <span class="n">path</span> 
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">base_depth</span> <span class="o">-</span> <span class="n">path_depth</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;_/&#39;</span> <span class="o">+</span> <span class="n">path</span>
     <span class="k">return</span> <span class="n">path</span>
 
-    </div>
+</div>
 <div class="viewcode-block" id="file_ids_as_tree"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.file_ids_as_tree">[docs]</a><span class="k">def</span> <span class="nf">file_ids_as_tree</span><span class="p">(</span><span class="n">file_ids</span><span class="p">,</span> <span class="n">start_path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Create a tree like structure using the filenames of the given FileIds.</span>
+<span class="sd">    </span>
+<span class="sd">    :param file_ids: :py:func:`list` of :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileId`</span>
+<span class="sd">    :param start_path: :py:class:`string`: the base path</span>
+<span class="sd">    :rtype: :py:class:`dict` {&#39;adir&#39;:&lt;&gt;, &#39;&lt;files&gt;&#39;:[...]}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">relative_path</span> <span class="o">=</span> <span class="n">normdirpath</span><span class="p">(</span><span class="n">start_path</span><span class="p">)</span>
-    
+
     <span class="n">paths</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">file_id</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">relative_path</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">file_id</span> <span class="ow">in</span> <span class="n">file_ids</span><span class="p">])</span>
     <span class="n">base_depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">path</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;../&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">])</span>
     <span class="c">#print(base_depth)</span>
-    
+
     <span class="n">main_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">FILE_MARKER</span><span class="p">:</span> <span class="p">[]}</span>
     <span class="k">for</span> <span class="n">file_id</span> <span class="ow">in</span> <span class="n">file_ids</span><span class="p">:</span>
         <span class="c">#print(expand_path(file_id.filename, relative_path, base_depth))</span>
         <span class="n">attach</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">main_dict</span><span class="p">,</span> <span class="n">expand_path</span><span class="p">(</span><span class="n">file_id</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">,</span> <span class="n">base_depth</span><span class="p">))</span>
-    
+
     <span class="k">return</span> <span class="n">main_dict</span>
 
 </div>
 <div class="viewcode-block" id="get_files_for_path"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.get_files_for_path">[docs]</a><span class="k">def</span> <span class="nf">get_files_for_path</span><span class="p">(</span><span class="n">file_ids_tree</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Traverse the FileIds tree with the given path and return the sub-tree</span>
+<span class="sd">    at that level or the file if a leaf-node.</span>
+
+<span class="sd">    :param file_ids_tree: :py:class:`dict` {&#39;adir&#39;:&lt;&gt;, &#39;&lt;files&gt;&#39;:[...]}</span>
+<span class="sd">    :param path: :py:class:`string`: the path</span>
+<span class="sd">    :rtype: :py:class:`dict` {&#39;adir&#39;:&lt;&gt;, &#39;&lt;files&gt;&#39;:[...]}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">entry</span> <span class="o">=</span> <span class="n">file_ids_tree</span>
     <span class="n">parts</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
@@ -153,11 +167,16 @@
                     <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">part</span><span class="p">:</span>
                         <span class="k">return</span> <span class="n">entry</span>
                 <span class="k">raise</span> <span class="n">e</span>
-            
+
     <span class="k">return</span> <span class="n">entry</span>
 </div>
 <div class="viewcode-block" id="find_path_for_file_id"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.find_path_for_file_id">[docs]</a><span class="k">def</span> <span class="nf">find_path_for_file_id</span><span class="p">(</span><span class="n">file_ids_tree</span><span class="p">,</span> <span class="n">file_id</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Traverse the FileIds tree to construct a path for the given FileId</span>
+
+<span class="sd">    :param file_ids_tree: :py:class:`dict` {&#39;adir&#39;:&lt;&gt;, &#39;&lt;files&gt;&#39;:[...]}</span>
+<span class="sd">    :param file_id: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileId`: the fileId we&#39;re looking for</span>
+<span class="sd">    :rtype: :py:class:`string`: the path</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">file_ids_tree</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">FILE_MARKER</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">fid</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
@@ -168,23 +187,28 @@
                 <span class="n">ret</span> <span class="o">=</span> <span class="n">find_path_for_file_id</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">file_id</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">key</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="n">ret</span>
-            
-    
+
 </div>
 <div class="viewcode-block" id="parse_path"><a class="viewcode-back" href="../../../autodoc/damn_at.damnfs.html#damn_at.damnfs.path.parse_path">[docs]</a><span class="k">def</span> <span class="nf">parse_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">path</span><span class="o">==</span><span class="s">&#39;/&#39;</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Parse a path of /hash/action/my/path returning a tuple of</span>
+<span class="sd">    (&#39;hash&#39;, &#39;action&#39;, &#39;/my/path&#39;) or None values if a shorter path is</span>
+<span class="sd">    given.</span>
+<span class="sd">    </span>
+<span class="sd">    :param path: :py:class:`string`: the path</span>
+<span class="sd">    :rtype: :py:func:`tuple`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="s">&#39;/&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
-    <span class="n">paths</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c">#Filter Empty strings</span>
-    <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">if</span> <span class="n">p</span><span class="o">!=</span><span class="s">&#39;&#39;</span><span class="p">]</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">file_hash</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">paths</span>
-        <span class="n">paths</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c">#Filter Empty strings</span>
-        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">if</span> <span class="n">p</span><span class="o">!=</span><span class="s">&#39;&#39;</span><span class="p">]</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">file_hash</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">None</span>
         <span class="k">else</span><span class="p">:</span>

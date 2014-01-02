@@ -88,14 +88,14 @@
         <span class="sd">&quot;&quot;&quot;Returns a FileReference</span>
 
 <span class="sd">        :param an_uri: the URI pointing to the file to be analyzed</span>
-<span class="sd">        :rtype: :py:class:`damn_at.types.FileReference`</span>
+<span class="sd">        :rtype: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`</span>
 <span class="sd">        :raises: :py:class:`damn_at.analyzer.AnalyzerException`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;isValidPlugin&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
 
 </div></div>
 <div class="viewcode-block" id="ITranscoder"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.ITranscoder">[docs]</a><span class="k">class</span> <span class="nc">ITranscoder</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Interface class for an Transcoder&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Interface class for a Transcoder&quot;&quot;&quot;</span>
     
     <span class="n">convert_map</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -112,6 +112,7 @@
 
 </div></div>
 <div class="viewcode-block" id="IMetaDataStore"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore">[docs]</a><span class="k">class</span> <span class="nc">IMetaDataStore</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface class for a MetaDataStore&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="IMetaDataStore.get_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.get_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">get_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; blah &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;isValidPlugin&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span> 
