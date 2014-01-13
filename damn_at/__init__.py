@@ -9,3 +9,5 @@ from metrology.registry import registry
 
 from .analyzer import Analyzer
 from .metadatastore import MetaDataStore
+
+from damn_at.thrift.generated.damn_types.ttypes import FileId, FileReference, AssetReference, MetaDataType

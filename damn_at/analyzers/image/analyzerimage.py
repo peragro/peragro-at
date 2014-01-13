@@ -14,7 +14,7 @@ from damn_at.utilities import script_path, run_blender
 
 class GenericImageAnalyzer(IAnalyzer):
     """Generic Image analyzer."""
-    handled_types = ["image/jpeg"]
+    handled_types = ["image/jpeg", "image/png"]
     
     def __init__(self):
         IAnalyzer.__init__(self)

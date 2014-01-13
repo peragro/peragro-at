@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 '''
-damn_at-analyze /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
+mkdir /tmp/damn
+mkdir /tmp/damnfs
+damn_at-analyze /home/sueastside/dev/DAMN/damn-test-files/
 damn_fs -f /tmp/damnfs/
 '''
 
@@ -22,7 +24,7 @@ from damn_at.thrift.generated.damn_types.ttypes import FileReference
 
 from damn_at.utilities import get_referenced_file_ids, abspath
 
-from damn_at.damnfs.path import file_ids_as_tree, get_files_for_path, FILE_MARKER, parse_path, find_path_for_file_id
+from damn_at.damnfs.path import file_ids_as_tree, get_files_for_path, FILE_MARKER, parse_path, find_path_for_file_id, expand_path
 
 
 if not hasattr(fuse, '__version__'):
@@ -103,14 +105,19 @@ class DamnFS(Fuse):
 
         if not rest:
             rest = ''
-
-        if rest == os.path.basename(a_file_ref.file.filename):
-            file_stat = self.getattr_mount_file(path, file_hash, action, rest, ('', a_file_ref.file), a_file_ref)
-            file_stat.st_mode = stat.S_IFLNK | 0755
-            return file_stat
-            
+        
         file_ids = get_referenced_file_ids(a_file_ref)      
         tree = file_ids_as_tree(file_ids, os.path.dirname(a_file_ref.file.filename))
+        
+        if rest == os.path.basename(a_file_ref.file.filename):
+            path_to = find_path_for_file_id(tree, a_file_ref.file)
+            print("REST: ", rest, path_to)
+            file_stat = self.getattr_mount_file(path, file_hash, action, rest, ('', a_file_ref.file), a_file_ref)
+            if path_to.count('/') != 0:
+                file_stat.st_mode = stat.S_IFLNK | 0755
+            return file_stat
+            
+        
         files = get_files_for_path(tree, rest)
         if isinstance(files, dict):
             return MyStat(True, 0)

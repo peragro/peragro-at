@@ -81,16 +81,8 @@ class Analyzer(object):
         else:
             raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(mimetype, an_uri))
 
-
-
-def main():
-    import logging
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
-    
-    file_name = sys.argv[1]
-    a = Analyzer()
-    m = MetaDataStore()
-    
+def analyze(a, m, file_name):
+    """TODO: move hashing to generic function and metadatastore usage to the metadatastore module. """
     def hash_file_ref(file_ref):
         CACHE = {}
         def cached_calculate_hash_for_file(file_name):
@@ -106,30 +98,60 @@ def main():
         file_name = abspath(file_name, file_ref)
         hashid = calculate_hash_for_file(file_name)
         if m.is_in_store('/tmp/damn', hashid):
-            print('Fetching from store...')
+            print('Fetching from store...%s'%(hashid))
             ref = m.get_metadata('/tmp/damn', hashid)
             return ref, True
         else:
             print(a.get_supported_mimetypes())
-            print('Analyzing file...')
+            print('Analyzing...')
             ref = a.analyze_file(file_name)
             hash_file_ref(ref)
             m.write_metadata('/tmp/damn', hashid, ref)
             return ref, False
 
     ref, from_store = analyze_file(file_name)
+    print('Assets: %d'%len(ref.assets))
+    for asset in ref.assets:
+        print('  -->%s  (%s)'%(asset.asset.subname, asset.asset.mimetype))
 
     file_ids = get_referenced_file_ids(ref)
     paths = set([x.filename for x in file_ids])
     for path in paths:
         if path != file_name:
-            print('Analyzing', path)
+            print('Analyzing', path, file_name)
             try:
                 _, from_store = analyze_file(path, ref)
-                print(_)
+                #print(_)
             except AnalyzerUnknownTypeException as e:
                 print(e)
 
+def main():
+    import logging
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+    
+    store_path = sys.argv[1]
+    file_name = sys.argv[2]
+    print('-'*70)
+    print('Analyzing %s into %s'%(file_name, store_path))
+    print('-'*70)
+    a = Analyzer()
+    m = MetaDataStore(store_path)
+    
+    if os.path.isfile(file_name):
+        analyze(a, m, os.path.abspath(file_name))
+    else:
+        for root, dirs, files in os.walk(file_name):
+            if '.git' in dirs:
+                dirs.remove('.git')
+            for f in files:
+                if not f.startswith('.'):
+                    try:
+                        analyze(a, m, os.path.join(root, f))
+                    except AnalyzerUnknownTypeException as e:
+                        print(e)
+    
+    
+
 if __name__ == '__main__': 
-    sys.argv[1] = '/home/sueastside/dev/blenderassets/cube1.blend'
+    sys.argv[1] = '/home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend'
     main()
