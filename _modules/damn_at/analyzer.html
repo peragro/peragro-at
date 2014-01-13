@@ -131,17 +131,9 @@
             <span class="k">return</span> <span class="n">file_ref</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnalyzerUnknownTypeException</span><span class="p">(</span><span class="s">&quot;E: Analyzer: No analyzer for </span><span class="si">%s</span><span class="s"> (file: </span><span class="si">%s</span><span class="s">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">))</span>
-
-
 </div></div>
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="kn">import</span> <span class="nn">logging</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">:</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-    
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">Analyzer</span><span class="p">()</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">MetaDataStore</span><span class="p">()</span>
-    
+<div class="viewcode-block" id="analyze"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.analyze">[docs]</a><span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;TODO: move hashing to generic function and metadatastore usage to the metadatastore module. &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">hash_file_ref</span><span class="p">(</span><span class="n">file_ref</span><span class="p">):</span>
         <span class="n">CACHE</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">def</span> <span class="nf">cached_calculate_hash_for_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
@@ -157,32 +149,62 @@
         <span class="n">file_name</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_ref</span><span class="p">)</span>
         <span class="n">hashid</span> <span class="o">=</span> <span class="n">calculate_hash_for_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">is_in_store</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">):</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Fetching from store...&#39;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Fetching from store...</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">hashid</span><span class="p">))</span>
             <span class="n">ref</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">ref</span><span class="p">,</span> <span class="bp">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get_supported_mimetypes</span><span class="p">())</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Analyzing file...&#39;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Analyzing...&#39;</span><span class="p">)</span>
             <span class="n">ref</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">analyze_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
             <span class="n">hash_file_ref</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
             <span class="n">m</span><span class="o">.</span><span class="n">write_metadata</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">,</span> <span class="n">ref</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">ref</span><span class="p">,</span> <span class="bp">False</span>
 
     <span class="n">ref</span><span class="p">,</span> <span class="n">from_store</span> <span class="o">=</span> <span class="n">analyze_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Assets: </span><span class="si">%d</span><span class="s">&#39;</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">assets</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">ref</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;  --&gt;</span><span class="si">%s</span><span class="s">  (</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">mimetype</span><span class="p">))</span>
 
     <span class="n">file_ids</span> <span class="o">=</span> <span class="n">get_referenced_file_ids</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
     <span class="n">paths</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">filename</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">file_ids</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">path</span> <span class="o">!=</span> <span class="n">file_name</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Analyzing&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Analyzing&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">_</span><span class="p">,</span> <span class="n">from_store</span> <span class="o">=</span> <span class="n">analyze_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">ref</span><span class="p">)</span>
-                <span class="k">print</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+                <span class="c">#print(_)</span>
             <span class="k">except</span> <span class="n">AnalyzerUnknownTypeException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 </div>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">logging</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">:</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    
+    <span class="n">store_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Analyzing </span><span class="si">%s</span><span class="s"> into </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">store_path</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Analyzer</span><span class="p">()</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">MetaDataStore</span><span class="p">(</span><span class="n">store_path</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+        <span class="n">analyze</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s">&#39;.git&#39;</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+                <span class="n">dirs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;.git&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">analyze</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+                    <span class="k">except</span> <span class="n">AnalyzerUnknownTypeException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    
+    
+</div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span> 
-    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/home/sueastside/dev/blenderassets/cube1.blend&#39;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend&#39;</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
