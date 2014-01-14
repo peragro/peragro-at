@@ -1,0 +1,34 @@
+serialization Package
+=====================
+
+:mod:`serialization` Package
+----------------------------
+
+.. automodule:: damn_at.serialization
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`client` Module
+--------------------
+
+.. automodule:: damn_at.serialization.client
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`server` Module
+--------------------
+
+.. automodule:: damn_at.serialization.server
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    damn_at.serialization.generated
+

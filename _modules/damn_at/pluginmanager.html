@@ -91,7 +91,7 @@
 <span class="sd">        :rtype: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`</span>
 <span class="sd">        :raises: :py:class:`damn_at.analyzer.AnalyzerException`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;isValidPlugin&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;analyze&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
 
 </div></div>
 <div class="viewcode-block" id="ITranscoder"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.ITranscoder">[docs]</a><span class="k">class</span> <span class="nc">ITranscoder</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
@@ -108,28 +108,52 @@
     
 <div class="viewcode-block" id="ITranscoder.transcode"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.ITranscoder.transcode">[docs]</a>    <span class="k">def</span> <span class="nf">transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; blah &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;isValidPlugin&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;transcode&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
 
 </div></div>
 <div class="viewcode-block" id="IMetaDataStore"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore">[docs]</a><span class="k">class</span> <span class="nc">IMetaDataStore</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Interface class for a MetaDataStore&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="IMetaDataStore.get_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.get_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">get_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; blah &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;isValidPlugin&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span> 
-    
+<div class="viewcode-block" id="IMetaDataStore.is_in_store"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.is_in_store">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the given file hash is in the store.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;is_in_store&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="IMetaDataStore.get_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.get_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">get_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the FileReference for the given hash.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;get_metadata&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="IMetaDataStore.write_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.write_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">write_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">,</span> <span class="n">a_file_ref</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write the FileReference to this store.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;write_metadata&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="IRepository"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IRepository">[docs]</a><span class="k">class</span> <span class="nc">IRepository</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface class for a Repository&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IRepository.get_meta_data"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IRepository.get_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">,</span> <span class="n">a_file_ref</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;get_meta_data&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+
+            
 </div></div>
 <div class="viewcode-block" id="DAMNPluginManager"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.DAMNPluginManager">[docs]</a><span class="k">class</span> <span class="nc">DAMNPluginManager</span><span class="p">(</span><span class="n">PluginManager</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Loads all analyzers and transcoders.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
         <span class="n">PluginManager</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
-            <span class="n">directories_list</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">&#39;analyzers&#39;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">&#39;transcoders&#39;</span><span class="p">)],</span>
+            <span class="n">directories_list</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">&#39;analyzers&#39;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">&#39;transcoders&#39;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">&#39;repositories&#39;</span><span class="p">)],</span>
             <span class="n">categories_filter</span><span class="o">=</span><span class="p">{</span>
            <span class="s">&quot;Analyzer&quot;</span> <span class="p">:</span> <span class="n">IAnalyzer</span><span class="p">,</span>
            <span class="s">&quot;Transcoder&quot;</span> <span class="p">:</span> <span class="n">ITranscoder</span><span class="p">,</span>
            <span class="s">&quot;MetaDataStore&quot;</span> <span class="p">:</span> <span class="n">IMetaDataStore</span><span class="p">,</span>
+           <span class="s">&quot;Repository&quot;</span> <span class="p">:</span> <span class="n">IRepository</span><span class="p">,</span>
            <span class="p">},</span>
-           <span class="n">plugin_info_ext</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;analyzer&#39;</span><span class="p">,</span> <span class="s">&#39;transcoder&#39;</span><span class="p">,</span> <span class="p">)</span>
+           <span class="n">plugin_info_ext</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;analyzer&#39;</span><span class="p">,</span> <span class="s">&#39;transcoder&#39;</span><span class="p">,</span> <span class="s">&#39;repository&#39;</span><span class="p">,</span> <span class="p">)</span>
         <span class="p">)</span>
         
 <div class="viewcode-block" id="DAMNPluginManager.collect_plugins"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.DAMNPluginManager.collect_plugins">[docs]</a>    <span class="k">def</span> <span class="nf">collect_plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

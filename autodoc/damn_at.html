@@ -81,7 +81,7 @@ and address it.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#damn_at.thrift.generated.damn_types.ttypes.FileReference" title="damn_at.thrift.generated.damn_types.ttypes.FileReference"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn_types.ttypes.FileReference</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn_types.ttypes.FileReference</span></tt></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body">AnalyzerException, AnalyzerFileException, AnalyzerUnknownTypeException</td>
 </tr>
@@ -345,7 +345,7 @@ method in the following way:
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#damn_at.thrift.generated.damn_types.ttypes.FileReference" title="damn_at.thrift.generated.damn_types.ttypes.FileReference"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn_types.ttypes.FileReference</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn_types.ttypes.FileReference</span></tt></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"><a class="reference internal" href="#damn_at.analyzer.AnalyzerException" title="damn_at.analyzer.AnalyzerException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.analyzer.AnalyzerException</span></tt></a></td>
 </tr>
@@ -370,9 +370,33 @@ handled_types = [&#8220;application/x-blender&#8221;]</p>
 <p>Interface class for a MetaDataStore</p>
 <dl class="method">
 <dt id="damn_at.pluginmanager.IMetaDataStore.get_metadata">
-<tt class="descname">get_metadata</tt><big>(</big><em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.get_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>blah</p>
+<tt class="descname">get_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.get_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the FileReference for the given hash.</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="damn_at.pluginmanager.IMetaDataStore.is_in_store">
+<tt class="descname">is_in_store</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.is_in_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.is_in_store" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the given file hash is in the store.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.pluginmanager.IMetaDataStore.write_metadata">
+<tt class="descname">write_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em>, <em>a_file_ref</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.write_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.write_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the FileReference to this store.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.pluginmanager.IRepository">
+<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">IRepository</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IRepository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IRepository" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
+<p>Interface class for a Repository</p>
+<dl class="method">
+<dt id="damn_at.pluginmanager.IRepository.get_meta_data">
+<tt class="descname">get_meta_data</tt><big>(</big><em>an_uri</em>, <em>a_file_ref</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IRepository.get_meta_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IRepository.get_meta_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -401,6 +425,9 @@ convert_map = {&#8220;image/tiff&#8221; : {&#8220;image/jpeg&#8221;: [IntVectorO
 </dd></dl>
 
 </div>
+</div>
+<div class="section" id="repository-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">repository</span></tt> Module<a class="headerlink" href="#repository-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-damn_at.transcoder">
 <span id="transcoder-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">transcoder</span></tt> Module<a class="headerlink" href="#module-damn_at.transcoder" title="Permalink to this headline">¶</a></h2>
@@ -549,7 +576,7 @@ and address it.</p>
 <li class="toctree-l2"><a class="reference internal" href="damn_at.analyzers.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.image.html">image Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#id1"><tt class="docutils literal"><span class="pre">image</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#module-damn_at.analyzers.image.analyzerimage"><tt class="docutils literal"><span class="pre">analyzerimage</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#analyzerimage-module"><tt class="docutils literal"><span class="pre">analyzerimage</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.mesh.html">mesh Package</a><ul>
@@ -567,25 +594,24 @@ and address it.</p>
 <li class="toctree-l2"><a class="reference internal" href="damn_at.damnfs.html#module-damn_at.damnfs.path"><tt class="docutils literal"><span class="pre">path</span></tt> Module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="damn_at.thrift.html">thrift Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#id1"><tt class="docutils literal"><span class="pre">thrift</span></tt> Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#client-module"><tt class="docutils literal"><span class="pre">client</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#module-damn_at.thrift.serialization"><tt class="docutils literal"><span class="pre">serialization</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#module-damn_at.thrift.server"><tt class="docutils literal"><span class="pre">server</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="damn_at.thrift.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="damn_at.thrift.generated.html">generated Package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.thrift.generated.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="damn_at.thrift.generated.damn.html">damn Package</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn.html#id1"><tt class="docutils literal"><span class="pre">damn</span></tt> Package</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn.html#module-damn_at.thrift.generated.damn.DamnService"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn.html#module-damn_at.thrift.generated.damn.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn.html#module-damn_at.thrift.generated.damn.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="damn_at.serialization.html">serialization Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.serialization.html#id1"><tt class="docutils literal"><span class="pre">serialization</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.serialization.html#client-module"><tt class="docutils literal"><span class="pre">client</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.serialization.html#server-module"><tt class="docutils literal"><span class="pre">server</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.serialization.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="damn_at.serialization.generated.html">generated Package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="damn_at.serialization.generated.damn.html">damn Package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#id1"><tt class="docutils literal"><span class="pre">damn</span></tt> Package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.DamnService"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
 </ul>
 </li>
-<li class="toctree-l5"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html">damn_types Package</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#id1"><tt class="docutils literal"><span class="pre">damn_types</span></tt> Package</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#module-damn_at.thrift.generated.damn_types.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.thrift.generated.damn_types.html#module-damn_at.thrift.generated.damn_types.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html">damn_types Package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#id1"><tt class="docutils literal"><span class="pre">damn_types</span></tt> Package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#module-damn_at.serialization.generated.damn_types.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#module-damn_at.serialization.generated.damn_types.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -625,6 +651,7 @@ and address it.</p>
 <li><a class="reference internal" href="#id3">Role</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#repository-module"><tt class="docutils literal"><span class="pre">repository</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.transcoder"><tt class="docutils literal"><span class="pre">transcoder</span></tt> Module</a><ul>
 <li><a class="reference internal" href="#id4">Role</a></li>
 </ul>

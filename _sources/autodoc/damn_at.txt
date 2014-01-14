@@ -49,6 +49,14 @@ damn_at Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`repository` Module
+------------------------
+
+.. automodule:: damn_at.repository
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`transcoder` Module
 ------------------------
 
@@ -72,5 +80,5 @@ Subpackages
 
     damn_at.analyzers
     damn_at.damnfs
-    damn_at.thrift
+    damn_at.serialization
 
