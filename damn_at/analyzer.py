@@ -6,10 +6,13 @@ and address it.
 """
 import os
 import sys
+import pwd
+import grp
+import time
 
 from metrology.instruments.gauge import Gauge
 
-from . import registry
+from . import registry, MetaDataValue, MetaDataType
 from .pluginmanager import DAMNPluginManagerSingleton
 from .utilities import is_existing_file, calculate_hash_for_file, get_referenced_file_ids, abspath
 from .metadatastore import MetaDataStore
@@ -64,6 +67,18 @@ class Analyzer(object):
         :rtype: list<string>
         """
         return self.analyzers.keys()
+        
+    def _file_metadata(self, an_uri, file_ref):
+        stat = os.stat(an_uri)
+        if file_ref.metadata is None:
+            file_ref.metadata = {}
+        file_ref.metadata['pw_name'] = MetaDataValue(type=MetaDataType.STRING, string_value=pwd.getpwuid(stat.st_uid).pw_name)
+        file_ref.metadata['gr_name'] = MetaDataValue(type=MetaDataType.STRING, string_value=grp.getgrgid(stat.st_gid).gr_name)
+        file_ref.metadata['st_size'] = MetaDataValue(type=MetaDataType.INT, int_value=stat.st_size)
+        
+        file_ref.metadata['st_ctime'] = MetaDataValue(type=MetaDataType.STRING, string_value=time.asctime(time.localtime(stat.st_ctime)))
+        file_ref.metadata['st_mtime'] = MetaDataValue(type=MetaDataType.STRING, string_value=time.asctime(time.localtime(stat.st_mtime)))
+          
           
     def analyze_file(self, an_uri):
         """Returns a FileReference
@@ -77,6 +92,8 @@ class Analyzer(object):
         mimetype = mimetypes.guess_type(an_uri, False)[0]
         if mimetype in self.analyzers:
             file_ref = self.analyzers[mimetype].analyze(an_uri)
+            file_ref.mimetype = mimetype
+            self._file_metadata(an_uri, file_ref)
             return file_ref
         else:
             raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(mimetype, an_uri))
@@ -110,9 +127,10 @@ def analyze(a, m, file_name):
             return ref, False
 
     ref, from_store = analyze_file(file_name)
-    print('Assets: %d'%len(ref.assets))
-    for asset in ref.assets:
-        print('  -->%s  (%s)'%(asset.asset.subname, asset.asset.mimetype))
+    if ref.assets:
+        print('Assets: %d'%len(ref.assets))
+        for asset in ref.assets:
+            print('  -->%s  (%s)'%(asset.asset.subname, asset.asset.mimetype))
 
     file_ids = get_referenced_file_ids(ref)
     paths = set([x.filename for x in file_ids])

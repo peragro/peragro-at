@@ -700,17 +700,23 @@ class FileReference:
   """
   Attributes:
    - file
+   - mimetype
+   - metadata
    - assets
   """
 
   thrift_spec = (
     None, # 0
     (1, TType.STRUCT, 'file', (FileId, FileId.thrift_spec), None, ), # 1
-    (2, TType.LIST, 'assets', (TType.STRUCT,(AssetReference, AssetReference.thrift_spec)), None, ), # 2
+    (2, TType.STRING, 'mimetype', None, None, ), # 2
+    (3, TType.MAP, 'metadata', (TType.STRING,None,TType.STRUCT,(MetaDataValue, MetaDataValue.thrift_spec)), None, ), # 3
+    (4, TType.LIST, 'assets', (TType.STRUCT,(AssetReference, AssetReference.thrift_spec)), None, ), # 4
   )
 
-  def __init__(self, file=None, assets=None,):
+  def __init__(self, file=None, mimetype=None, metadata=None, assets=None,):
     self.file = file
+    self.mimetype = mimetype
+    self.metadata = metadata
     self.assets = assets
 
   def read(self, iprot):
@@ -729,13 +735,30 @@ class FileReference:
         else:
           iprot.skip(ftype)
       elif fid == 2:
+        if ftype == TType.STRING:
+          self.mimetype = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      elif fid == 3:
+        if ftype == TType.MAP:
+          self.metadata = {}
+          (_ktype24, _vtype25, _size23 ) = iprot.readMapBegin() 
+          for _i27 in xrange(_size23):
+            _key28 = iprot.readString();
+            _val29 = MetaDataValue()
+            _val29.read(iprot)
+            self.metadata[_key28] = _val29
+          iprot.readMapEnd()
+        else:
+          iprot.skip(ftype)
+      elif fid == 4:
         if ftype == TType.LIST:
           self.assets = []
-          (_etype26, _size23) = iprot.readListBegin()
-          for _i27 in xrange(_size23):
-            _elem28 = AssetReference()
-            _elem28.read(iprot)
-            self.assets.append(_elem28)
+          (_etype33, _size30) = iprot.readListBegin()
+          for _i34 in xrange(_size30):
+            _elem35 = AssetReference()
+            _elem35.read(iprot)
+            self.assets.append(_elem35)
           iprot.readListEnd()
         else:
           iprot.skip(ftype)
@@ -753,11 +776,23 @@ class FileReference:
       oprot.writeFieldBegin('file', TType.STRUCT, 1)
       self.file.write(oprot)
       oprot.writeFieldEnd()
+    if self.mimetype is not None:
+      oprot.writeFieldBegin('mimetype', TType.STRING, 2)
+      oprot.writeString(self.mimetype)
+      oprot.writeFieldEnd()
+    if self.metadata is not None:
+      oprot.writeFieldBegin('metadata', TType.MAP, 3)
+      oprot.writeMapBegin(TType.STRING, TType.STRUCT, len(self.metadata))
+      for kiter36,viter37 in self.metadata.items():
+        oprot.writeString(kiter36)
+        viter37.write(oprot)
+      oprot.writeMapEnd()
+      oprot.writeFieldEnd()
     if self.assets is not None:
-      oprot.writeFieldBegin('assets', TType.LIST, 2)
+      oprot.writeFieldBegin('assets', TType.LIST, 4)
       oprot.writeListBegin(TType.STRUCT, len(self.assets))
-      for iter29 in self.assets:
-        iter29.write(oprot)
+      for iter38 in self.assets:
+        iter38.write(oprot)
       oprot.writeListEnd()
       oprot.writeFieldEnd()
     oprot.writeFieldStop()

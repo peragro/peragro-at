@@ -52,5 +52,7 @@ struct AssetReference {
  
 struct FileReference {
     1:FileId file,
-    2:list<AssetReference> assets
+    2:string mimetype,
+    3:map<string,MetaDataValue> metadata,
+    4:list<AssetReference> assets
 }
