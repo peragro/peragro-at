@@ -1,9 +1,12 @@
 """
 The MetaDataStore handler.
 """
+import os
 from git import Repo
 
 from damn_at.pluginmanager import IRepository
+
+from damn_at import MetaDataType, MetaDataValue
 
 
 class Repository(IRepository):
@@ -14,14 +17,21 @@ class Repository(IRepository):
         self.path = path
         self.repo = Repo(path)
         
-    def get_meta_data(self, an_uri, a_file_ref):
+    def get_meta_data(self, an_uri, file_ref):
         """
         """
-        commit = repo.heads.master.commit
-        path = an_uri.replace(self.path, '')
-        blob = c.tree/path
+        commit = self.repo.heads.master.commit
+        path = os.path.relpath(an_uri, self.path)
+        blob = commit.tree/path
+        print('==>', dir(commit.author))
+        file_ref.metadata['git.author.name'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.author.name)
+        file_ref.metadata['git.author.email'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.author.email)
+        file_ref.metadata['git.message'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.message)
+        file_ref.metadata['git.committer.name'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.committer.name)
+        file_ref.metadata['git.committer.email'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.committer.email)
+        file_ref.metadata['git.name_rev'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.name_rev)
         
-        raise NotImplementedError("'get_meta_data' must be reimplemented by %s" % self)
+        return file_ref
 
 
 if __name__ == '__main__':

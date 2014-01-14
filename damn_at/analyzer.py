@@ -78,6 +78,11 @@ class Analyzer(object):
         
         file_ref.metadata['st_ctime'] = MetaDataValue(type=MetaDataType.STRING, string_value=time.asctime(time.localtime(stat.st_ctime)))
         file_ref.metadata['st_mtime'] = MetaDataValue(type=MetaDataType.STRING, string_value=time.asctime(time.localtime(stat.st_mtime)))
+        
+        from repository import Repository
+        repo = Repository('/home/sueastside/dev/DAMN/damn-test-files')
+        
+        repo.get_meta_data(an_uri, file_ref)
           
           
     def analyze_file(self, an_uri):
@@ -97,6 +102,7 @@ class Analyzer(object):
             return file_ref
         else:
             raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(mimetype, an_uri))
+
 
 def analyze(a, m, file_name):
     """TODO: move hashing to generic function and metadatastore usage to the metadatastore module. """

@@ -7,7 +7,7 @@ import mimetypes
 
 from damn_at import logger
 from damn_at.analyzer import AnalyzerException
-from damn_at.thrift.generated.damn_types.ttypes import FileId, FileReference, AssetReference, AssetId
+from damn_at import FileId, FileReference, AssetReference, AssetId
 
 from damn_at.pluginmanager import IAnalyzer
 from damn_at.utilities import script_path, run_blender
