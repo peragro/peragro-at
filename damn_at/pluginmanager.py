@@ -40,7 +40,7 @@ class IAnalyzer(IPlugin):
         :rtype: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`
         :raises: :py:class:`damn_at.analyzer.AnalyzerException`
         """
-        raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self)        
+        raise NotImplementedError("'analyze' must be reimplemented by %s" % self)        
 
 
 class ITranscoder(IPlugin):
@@ -57,28 +57,52 @@ class ITranscoder(IPlugin):
     
     def transcode(self, an_uri):
         """ blah """
-        raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self)        
+        raise NotImplementedError("'transcode' must be reimplemented by %s" % self)        
 
 
 class IMetaDataStore(IPlugin):
     """Interface class for a MetaDataStore"""
-    def get_metadata(self, an_hash):
-        """ blah """
-        raise NotImplementedError("'isValidPlugin' must be reimplemented by %s" % self) 
+    def is_in_store(self, store_id, an_hash):
+        """
+        Check if the given file hash is in the store.
+        """
+        raise NotImplementedError("'is_in_store' must be reimplemented by %s" % self)
+        
+    def get_metadata(self, store_id, an_hash):
+        """
+        Get the FileReference for the given hash.
+        """
+        raise NotImplementedError("'get_metadata' must be reimplemented by %s" % self)
     
+    def write_metadata(self, store_id, an_hash, a_file_ref):
+        """
+        Write the FileReference to this store.
+        """
+        raise NotImplementedError("'write_metadata' must be reimplemented by %s" % self)
+
+
+class IRepository(IPlugin):
+    """Interface class for a Repository"""
+    def get_meta_data(self, an_uri, a_file_ref):
+        """
+        """
+        raise NotImplementedError("'get_meta_data' must be reimplemented by %s" % self)
+
+            
 
 class DAMNPluginManager(PluginManager):
     """Loads all analyzers and transcoders."""
     def __init__(self):
         directory = os.path.dirname(os.path.abspath(__file__))
         PluginManager.__init__(self, 
-            directories_list=[os.path.join(directory, 'analyzers'), os.path.join(directory, 'transcoders')],
+            directories_list=[os.path.join(directory, 'analyzers'), os.path.join(directory, 'transcoders'), os.path.join(directory, 'repositories')],
             categories_filter={
            "Analyzer" : IAnalyzer,
            "Transcoder" : ITranscoder,
            "MetaDataStore" : IMetaDataStore,
+           "Repository" : IRepository,
            },
-           plugin_info_ext=('analyzer', 'transcoder', )
+           plugin_info_ext=('analyzer', 'transcoder', 'repository', )
         )
         
     def collect_plugins(self):

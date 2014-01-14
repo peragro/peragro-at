@@ -4,9 +4,9 @@ The MetaDataStore handler.
 import os
 from .utilities import is_existing_file
 
-from damn_at.thrift.serialization import SerializeThriftMsg, DeserializeThriftMsg
+from damn_at.serialization import SerializeThriftMsg, DeserializeThriftMsg
 
-from damn_at.thrift.generated.damn_types.ttypes import FileReference
+from damn_at import FileReference
 
 
 class MetaDataStore(object):

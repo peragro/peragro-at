@@ -12,12 +12,12 @@ import time
 
 from metrology.instruments.gauge import Gauge
 
-from . import registry, MetaDataValue, MetaDataType
-from .pluginmanager import DAMNPluginManagerSingleton
-from .utilities import is_existing_file, calculate_hash_for_file, get_referenced_file_ids, abspath
-from .metadatastore import MetaDataStore
+from damn_at import registry, MetaDataValue, MetaDataType
+from damn_at.pluginmanager import DAMNPluginManagerSingleton
+from damn_at.utilities import is_existing_file, calculate_hash_for_file, get_referenced_file_ids, abspath
+from damn_at.metadatastore import MetaDataStore
 
-from . import mimetypes
+from damn_at import mimetypes
 
 
 class AnalyzerException(Exception):

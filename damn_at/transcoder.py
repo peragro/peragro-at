@@ -10,7 +10,7 @@ from metrology.instruments.gauge import Gauge
 from . import registry
 from .pluginmanager import DAMNPluginManagerSingleton
 
-from damn_at.thrift.generated.damn_types.ttypes import TargetMimetype, TargetMimetypeOption
+from damn_at import TargetMimetype, TargetMimetypeOption
 from .options import options_to_template
 
 

@@ -6,8 +6,8 @@ import binascii
 import mimetypes
 
 from thrift.protocol import TBinaryProtocol
-from damn_at.thrift.generated.damn_types.ttypes import FileReference, FileId, AssetReference, AssetId, MetaDataValue, MetaDataType
-from damn_at.thrift.serialization import SerializeThriftMsg
+from damn_at import FileReference, FileId, AssetReference, AssetId, MetaDataValue, MetaDataType
+from damn_at.serialization import SerializeThriftMsg
 
 def relpath(path, start=None):
     path = bpy.path.relpath(path, start)

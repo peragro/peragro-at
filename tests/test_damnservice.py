@@ -3,9 +3,9 @@ import unittest
 
 from thrift.protocol import TJSONProtocol, TBinaryProtocol
 
-from damn_at.thrift.serialization import SerializeThriftMsg, DeserializeThriftMsg
+from damn_at.serialization import SerializeThriftMsg, DeserializeThriftMsg
 
-from damn_at.thrift.generated.damn_types.ttypes import FileId, AssetId, AssetReference
+from damn_at import FileId, AssetId, AssetReference
 
 class DAMNServiceTest(unittest.TestCase):
     """DAMNServiceTest"""   

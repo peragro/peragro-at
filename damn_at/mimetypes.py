@@ -5,9 +5,19 @@ Role
 Replacement for system's mimetype, adding some new types
 and cleaning up reverse map for cleaner file extensions.
 """
+import sys
+import imp
 
-from __future__ import absolute_import
-import mimetypes as sys_mimetypes
+#The following might conflict
+#from __future__ import absolute_import
+#import mimetypes as sys_mimetypes
+
+#...so let's load it with some more magic.
+search_paths = [path for path in sys.path[:] if path.find('damn_at')==-1]
+file_handle, pathname, desc = imp.find_module('mimetypes', search_paths)
+sys_mimetypes = imp.load_module('mimetypes', file_handle, pathname, desc)
+
+
 sys_mimetypes.add_type("application/x-blender", ".blend")
 sys_mimetypes.add_type("image/tga", ".tga")
 sys_mimetypes.add_type("application/x-crystalspace.library+xml", ".xml")

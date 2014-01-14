@@ -6,7 +6,7 @@ import unittest
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
-from damn_at.thrift.generated.damn_types.ttypes import FileId
+from damn_at import FileId
 
 from damn_at.damnfs.path import file_ids_as_tree, prettify, get_files_for_path, parse_path, find_path_for_file_id
 
