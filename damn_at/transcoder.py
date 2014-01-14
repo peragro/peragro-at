@@ -79,3 +79,38 @@ class Transcoder(object):
                     target_mimetypes[src_mimetype].append(tmt)
         return target_mimetypes
 
+
+def main():
+    import sys
+    from optparse import OptionParser
+    import logging
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+    
+    from damn_at.metadatastore import MetaDataStore
+    
+    store_path = sys.argv[1]
+    file_name = sys.argv[2]
+    mime_type = sys.argv[3]
+    
+    m = MetaDataStore(store_path)
+    t = Transcoder()
+    
+    target_mimetypes = t.get_target_mimetypes()
+    
+    if mime_type not in target_mimetypes:
+        raise TranscoderUnknownTypeException(mime_type+' needs to be one of '+str(target_mimetypes.keys()))
+        
+    target_mimetype = target_mimetypes[mime_type]
+
+    usage = "usage: %prog <store_path> <file_path> <mime_type> [options] "
+    parser = OptionParser(usage=usage)
+    for option in target_mimetype[0].options:
+        parser.add_option("--"+option.name, dest=option.name, default=option.default_value, help='%s (%s)'%(option.description, option.constraint))
+
+    (options, args) = parser.parse_args(sys.argv[3:])
+    print(options)
+    
+    
+if __name__ == '__main__': 
+    main()
+    #damn_at-transcode /tmp/damn 1 image/jpeg -h

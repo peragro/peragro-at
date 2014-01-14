@@ -23,7 +23,7 @@ class Repository(IRepository):
         commit = self.repo.heads.master.commit
         path = os.path.relpath(an_uri, self.path)
         blob = commit.tree/path
-        print('==>', dir(commit.author))
+
         file_ref.metadata['git.author.name'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.author.name)
         file_ref.metadata['git.author.email'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.author.email)
         file_ref.metadata['git.message'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.message)
@@ -31,12 +31,25 @@ class Repository(IRepository):
         file_ref.metadata['git.committer.email'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.committer.email)
         file_ref.metadata['git.name_rev'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.name_rev)
         
+        file_ref.metadata['git.remotes.origin.url'] = MetaDataValue(type=MetaDataType.STRING, string_value=self.repo.remotes.origin.config_reader.get('url'))
+        
         return file_ref
 
 
 if __name__ == '__main__':
 
     repo = Repo("/home/sueastside/dev/DAMN/damn-test-files")
+    
+    print(dir(repo))
+    print(dir(repo.remotes[0]))
+    print(repo.remotes[0].name)
+    
+    origin = repo.remotes.origin
+    print(dir(origin))
+    print(origin.refs[0].name)
+    print(origin.refs[0].path)
+    print(origin.refs[0].remote_name)
+    print(origin.config_reader.get('url'))
 
     commit = repo.heads.master.commit
 

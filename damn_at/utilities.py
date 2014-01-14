@@ -106,4 +106,6 @@ def abspath(path, file_ref=None):
     """Return an absolute path using the given FileReference as reference."""
     if file_ref:
         path = os.path.normpath(os.path.join(os.path.dirname(file_ref.file.filename), path))
+    else:
+        path = os.path.normpath(os.path.abspath(path))
     return path

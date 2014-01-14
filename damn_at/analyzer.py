@@ -119,6 +119,7 @@ def analyze(a, m, file_name):
         
     def analyze_file(file_name, file_ref=None):
         file_name = abspath(file_name, file_ref)
+
         hashid = calculate_hash_for_file(file_name)
         if m.is_in_store('/tmp/damn', hashid):
             print('Fetching from store...%s'%(hashid))
@@ -131,7 +132,7 @@ def analyze(a, m, file_name):
             hash_file_ref(ref)
             m.write_metadata('/tmp/damn', hashid, ref)
             return ref, False
-
+    
     ref, from_store = analyze_file(file_name)
     if ref.assets:
         print('Assets: %d'%len(ref.assets))
@@ -142,7 +143,7 @@ def analyze(a, m, file_name):
     paths = set([x.filename for x in file_ids])
     for path in paths:
         if path != file_name:
-            print('Analyzing', path, file_name)
+            #print('Analyzing', path, file_name)
             try:
                 _, from_store = analyze_file(path, ref)
                 #print(_)
@@ -177,5 +178,4 @@ def main():
     
 
 if __name__ == '__main__': 
-    sys.argv[1] = '/home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend'
     main()

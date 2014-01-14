@@ -19,6 +19,7 @@ config = {
     'entry_points':{
           'console_scripts':['damn_at-server = damn_at.thrift.server:main',
                              'damn_at-analyze = damn_at.analyzer:main',
+                             'damn_at-transcode = damn_at.transcoder:main',
                              'damn_fs = damn_at.damnfs.damnfs:main']
     }
 }
