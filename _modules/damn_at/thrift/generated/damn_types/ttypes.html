@@ -751,17 +751,23 @@
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Attributes:</span>
 <span class="sd">   - file</span>
+<span class="sd">   - mimetype</span>
+<span class="sd">   - metadata</span>
 <span class="sd">   - assets</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
   <span class="n">thrift_spec</span> <span class="o">=</span> <span class="p">(</span>
     <span class="bp">None</span><span class="p">,</span> <span class="c"># 0</span>
     <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="s">&#39;file&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">FileId</span><span class="p">,</span> <span class="n">FileId</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 1</span>
-    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">AssetReference</span><span class="p">,</span> <span class="n">AssetReference</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 2</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="s">&#39;mimetype&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 2</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">,</span> <span class="s">&#39;metadata&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">MetaDataValue</span><span class="p">,</span> <span class="n">MetaDataValue</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 3</span>
+    <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,(</span><span class="n">AssetReference</span><span class="p">,</span> <span class="n">AssetReference</span><span class="o">.</span><span class="n">thrift_spec</span><span class="p">)),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">),</span> <span class="c"># 4</span>
   <span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">assets</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mimetype</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">assets</span><span class="o">=</span><span class="bp">None</span><span class="p">,):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="nb">file</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">=</span> <span class="n">mimetype</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">assets</span> <span class="o">=</span> <span class="n">assets</span>
 
 <div class="viewcode-block" id="FileReference.read"><a class="viewcode-back" href="../../../../../autodoc/damn_at.thrift.generated.damn_types.html#damn_at.thrift.generated.damn_types.ttypes.FileReference.read">[docs]</a>  <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprot</span><span class="p">):</span>
@@ -780,13 +786,30 @@
         <span class="k">else</span><span class="p">:</span>
           <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
       <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+          <span class="p">(</span><span class="n">_ktype24</span><span class="p">,</span> <span class="n">_vtype25</span><span class="p">,</span> <span class="n">_size23</span> <span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readMapBegin</span><span class="p">()</span> 
+          <span class="k">for</span> <span class="n">_i27</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">_size23</span><span class="p">):</span>
+            <span class="n">_key28</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readString</span><span class="p">();</span>
+            <span class="n">_val29</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">()</span>
+            <span class="n">_val29</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="n">_key28</span><span class="p">]</span> <span class="o">=</span> <span class="n">_val29</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">readMapEnd</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">fid</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">ftype</span> <span class="o">==</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">:</span>
           <span class="bp">self</span><span class="o">.</span><span class="n">assets</span> <span class="o">=</span> <span class="p">[]</span>
-          <span class="p">(</span><span class="n">_etype26</span><span class="p">,</span> <span class="n">_size23</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readListBegin</span><span class="p">()</span>
-          <span class="k">for</span> <span class="n">_i27</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">_size23</span><span class="p">):</span>
-            <span class="n">_elem28</span> <span class="o">=</span> <span class="n">AssetReference</span><span class="p">()</span>
-            <span class="n">_elem28</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_elem28</span><span class="p">)</span>
+          <span class="p">(</span><span class="n">_etype33</span><span class="p">,</span> <span class="n">_size30</span><span class="p">)</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="n">readListBegin</span><span class="p">()</span>
+          <span class="k">for</span> <span class="n">_i34</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">_size30</span><span class="p">):</span>
+            <span class="n">_elem35</span> <span class="o">=</span> <span class="n">AssetReference</span><span class="p">()</span>
+            <span class="n">_elem35</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">iprot</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_elem35</span><span class="p">)</span>
           <span class="n">iprot</span><span class="o">.</span><span class="n">readListEnd</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
           <span class="n">iprot</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span>
@@ -804,11 +827,23 @@
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;file&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;mimetype&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;metadata&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">MAP</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeMapBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">kiter36</span><span class="p">,</span><span class="n">viter37</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="n">kiter36</span><span class="p">)</span>
+        <span class="n">viter37</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeMapEnd</span><span class="p">()</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+      <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldBegin</span><span class="p">(</span><span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="n">TType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeListBegin</span><span class="p">(</span><span class="n">TType</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">))</span>
-      <span class="k">for</span> <span class="n">iter29</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
-        <span class="n">iter29</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">iter38</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
+        <span class="n">iter38</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">oprot</span><span class="p">)</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeListEnd</span><span class="p">()</span>
       <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldEnd</span><span class="p">()</span>
     <span class="n">oprot</span><span class="o">.</span><span class="n">writeFieldStop</span><span class="p">()</span>
