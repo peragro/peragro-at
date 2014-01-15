@@ -26,7 +26,7 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print '  void ping()'
   print '   get_supported_mimetypes()'
   print '   get_target_mimetypes()'
-  print '  FileReference analyze(File file)'
+  print '  FileDescription analyze(File file)'
   print '   transcode( files, AssetId asset, Mimetype mimetype,  options)'
   print ''
   sys.exit(0)

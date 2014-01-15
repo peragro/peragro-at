@@ -44,15 +44,15 @@ struct AssetId {
     3:FileId file,
 }
 
-struct AssetReference {
+struct AssetDescription {
     1:AssetId asset,
     2:map<string,MetaDataValue> metadata,
     3:list<AssetId> dependencies
 }
  
-struct FileReference {
+struct FileDescription {
     1:FileId file,
     2:string mimetype,
     3:map<string,MetaDataValue> metadata,
-    4:list<AssetReference> assets
+    4:list<AssetDescription> assets
 }

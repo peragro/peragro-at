@@ -5,7 +5,7 @@ from thrift.protocol import TJSONProtocol, TBinaryProtocol
 
 from damn_at.serialization import SerializeThriftMsg, DeserializeThriftMsg
 
-from damn_at import FileId, AssetId, AssetReference
+from damn_at import FileId, AssetId, AssetDescription
 
 class SerializationTest(unittest.TestCase):
     """SerializationTest"""   
@@ -37,18 +37,18 @@ class SerializationTest(unittest.TestCase):
         self.assertEqual(SerializationTest.subname, msg.subname)
         self.assertEqual(SerializationTest.mimetype, msg.mimetype)
     
-    def test_AssetReference(self): # pylint: disable=C0103
-        """test_AssetReference"""
+    def test_AssetDescription(self): # pylint: disable=C0103
+        """test_AssetDescription"""
         fileid = FileId(filename = SerializationTest.filename)
         assetid = AssetId(subname = SerializationTest.subname, mimetype = SerializationTest.mimetype, file = fileid)
-        assetreference = AssetReference(asset = assetid)
+        asset_descr = AssetDescription(asset = assetid)
         
         dep = AssetId(subname = SerializationTest.subname, mimetype = SerializationTest.mimetype, file = fileid)
-        assetreference.dependencies = [dep]
+        asset_descr.dependencies = [dep]
         
-        data = SerializeThriftMsg(assetreference, self.protocol)
+        data = SerializeThriftMsg(asset_descr, self.protocol)
 
-        msg = DeserializeThriftMsg(AssetReference(), data, self.protocol)
+        msg = DeserializeThriftMsg(AssetDescription(), data, self.protocol)
         
         self.assertEqual(SerializationTest.filename, msg.asset.file.filename)
         self.assertEqual(SerializationTest.subname, msg.asset.subname)

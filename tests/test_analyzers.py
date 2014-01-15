@@ -11,11 +11,11 @@ from damn_at.pluginmanager import DAMNPluginManagerSingleton
 from damn_at.analyzer import Analyzer
 from damn_at import registry
 
-def pretty_print(fileref):
-    """Pretty print the fileref"""
-    print(fileref.file.filename)
-    if fileref.assets:
-        for asset in fileref.assets:
+def pretty_print(file_descr):
+    """Pretty print the file_descr"""
+    print(file_descr.file.filename)
+    if file_descr.assets:
+        for asset in file_descr.assets:
             print('', asset.asset.subname, asset.asset.mimetype, asset.asset.file.filename)
             if asset.dependencies:
                 for dep in asset.dependencies:
@@ -39,8 +39,8 @@ class TestCase(unittest.TestCase):
         
     def test_analyze(self):
         """Test say"""
-        ref = Analyzer().analyze_file('/home/sueastside/dev/blenderassets/cube1.blend')
-        pretty_print(ref)
+        descr = Analyzer().analyze_file('/home/sueastside/dev/blenderassets/cube1.blend')
+        pretty_print(descr)
         assert True
         
     def test_registry(self):

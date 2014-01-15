@@ -60,7 +60,7 @@ class Transcoder(object):
     def get_target_mimetypes(self):
         """Returns a list of supported mimetypes, 'handled_types' of all analyzers
         
-        :rtype: list<string>
+        :rtype: map<string, list<TargetMimetype>>
         """
         target_mimetypes = {}
         for src_mimetype, transcoders in self.transcoders.items():
@@ -105,7 +105,7 @@ def main():
     usage = "usage: %prog <store_path> <file_path> <mime_type> [options] "
     parser = OptionParser(usage=usage)
     for option in target_mimetype[0].options:
-        parser.add_option("--"+option.name, dest=option.name, default=option.default_value, help='%s (%s)'%(option.description, option.constraint))
+        parser.add_option("--"+option.name, dest=option.name, default=option.default_value, help='%s (%s) [default: %s]'%(option.description, option.constraint, option.default_value))
 
     (options, args) = parser.parse_args(sys.argv[3:])
     print(options)
@@ -113,4 +113,4 @@ def main():
     
 if __name__ == '__main__': 
     main()
-    #damn_at-transcode /tmp/damn 1 image/jpeg -h
+    #damn_at-transcode /tmp/damn  path/myfile.png image/jpeg -h

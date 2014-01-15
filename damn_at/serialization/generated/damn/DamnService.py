@@ -667,7 +667,7 @@ class analyze_result:
   """
 
   thrift_spec = (
-    (0, TType.STRUCT, 'success', (damn_types.ttypes.FileReference, damn_types.ttypes.FileReference.thrift_spec), None, ), # 0
+    (0, TType.STRUCT, 'success', (damn_types.ttypes.FileDescription, damn_types.ttypes.FileDescription.thrift_spec), None, ), # 0
     (1, TType.STRUCT, 'ae', (AnalyzerException, AnalyzerException.thrift_spec), None, ), # 1
   )
 
@@ -686,7 +686,7 @@ class analyze_result:
         break
       if fid == 0:
         if ftype == TType.STRUCT:
-          self.success = damn_types.ttypes.FileReference()
+          self.success = damn_types.ttypes.FileDescription()
           self.success.read(iprot)
         else:
           iprot.skip(ftype)

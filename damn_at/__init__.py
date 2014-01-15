@@ -11,8 +11,8 @@ from metrology.registry import registry
 
 from damn_at.serialization.generated.damn_types.ttypes import TargetMimetype, TargetMimetypeOption
 from damn_at.serialization.generated.damn_types.ttypes import MetaDataType, MetaDataValue
-from damn_at.serialization.generated.damn_types.ttypes import FileId, FileReference
-from damn_at.serialization.generated.damn_types.ttypes import AssetId, AssetReference
+from damn_at.serialization.generated.damn_types.ttypes import FileId, FileDescription
+from damn_at.serialization.generated.damn_types.ttypes import AssetId, AssetDescription
 
 from damn_at.analyzer import Analyzer
 from damn_at.metadatastore import MetaDataStore

@@ -7,7 +7,7 @@ from thrift.protocol import TBinaryProtocol
 
 from damn_at import logger
 from damn_at.analyzer import AnalyzerException
-from damn_at import FileReference
+from damn_at import FileDescription
 from damn_at.serialization import DeserializeThriftMsg
 
 from damn_at.pluginmanager import IAnalyzer
@@ -35,9 +35,9 @@ class BlendAnalyzer(IAnalyzer):
         data = str(stdoutdata).split('-**-')[1].replace('\n', '').replace('\r', '').replace("b'", '').replace("'", '')
         data = binascii.unhexlify(data)
         
-        fileref = DeserializeThriftMsg(FileReference(), data, TBinaryProtocol.TBinaryProtocol)
+        file_descr = DeserializeThriftMsg(FileDescription(), data, TBinaryProtocol.TBinaryProtocol)
         
-        return fileref
+        return file_descr
         
         
 

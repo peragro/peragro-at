@@ -1,1 +1,1 @@
-thrift -out damn_at/thrift/generated -r --gen py damn_at/thrift/damn.thrift
+thrift -out damn_at/serialization/generated -r --gen py damn_at/serialization/damn.thrift

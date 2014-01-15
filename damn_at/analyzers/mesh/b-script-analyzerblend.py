@@ -6,7 +6,7 @@ import binascii
 import mimetypes
 
 from thrift.protocol import TBinaryProtocol
-from damn_at import FileReference, FileId, AssetReference, AssetId, MetaDataValue, MetaDataType
+from damn_at import FileDescription, FileId, AssetDescription, AssetId, MetaDataValue, MetaDataType
 from damn_at.serialization import SerializeThriftMsg
 
 def relpath(path, start=None):
@@ -23,10 +23,10 @@ def main(): # pylint: disable=R0914,R0912,R0915
     objects = {}
     texts = {}
     
-    # Set up our FileReference
+    # Set up our FileDescription
     fileid = FileId(filename = bpy.path.abspath(bpy.data.filepath))
-    fileref = FileReference(file=fileid)
-    fileref.assets = []
+    file_descr = FileDescription(file=fileid)
+    file_descr.assets = []
     
     
     def get_file_id(obj):
@@ -46,10 +46,10 @@ def main(): # pylint: disable=R0914,R0912,R0915
             image_fileid = FileId(filename = relpath(image.filepath, start=image.library.filepath if image.library else None))
         if image.packed_file:
             image_mimetype = 'application/x-blender.image'
-        assetref = AssetReference(asset = AssetId(subname = image.name, mimetype = image_mimetype, file = image_fileid))
+        asset_descr = AssetDescription(asset = AssetId(subname = image.name, mimetype = image_mimetype, file = image_fileid))
         if image.packed_file:
-            fileref.assets.append(assetref) 
-        images[image.name] = assetref 
+            file_descr.assets.append(asset_descr) 
+        images[image.name] = asset_descr 
 
 
     """
@@ -57,8 +57,8 @@ def main(): # pylint: disable=R0914,R0912,R0915
     Have images as dependency.
     """
     for material in bpy.data.materials:
-        assetref = AssetReference(asset = AssetId(subname = material.name, mimetype = 'application/x-blender.material', file = get_file_id(material)))
-        assetref.dependencies = []
+        asset_descr = AssetDescription(asset = AssetId(subname = material.name, mimetype = 'application/x-blender.material', file = get_file_id(material)))
+        asset_descr.dependencies = []
         image_names = {}
         for slot in material.texture_slots:
             if slot and slot.texture and slot.texture.type == 'IMAGE' and slot.texture.image:
@@ -66,9 +66,9 @@ def main(): # pylint: disable=R0914,R0912,R0915
         for name in image_names:
             if name in images:
                 dep = images[name].asset
-                assetref.dependencies.append(dep)
-        fileref.assets.append(assetref) 
-        materials[material.name] = assetref 
+                asset_descr.dependencies.append(dep)
+        file_descr.assets.append(asset_descr) 
+        materials[material.name] = asset_descr 
 
 
     """
@@ -77,13 +77,13 @@ def main(): # pylint: disable=R0914,R0912,R0915
     And the images assigned its faces.
     """
     for mesh in bpy.data.meshes:
-        assetref = AssetReference(asset = AssetId(subname = mesh.name, mimetype = 'application/x-blender.mesh', file = get_file_id(mesh)))
-        assetref.dependencies = []
+        asset_descr = AssetDescription(asset = AssetId(subname = mesh.name, mimetype = 'application/x-blender.mesh', file = get_file_id(mesh)))
+        asset_descr.dependencies = []
         # Collect materials from the mesh
         for material in mesh.materials:
             if material.name in materials:
                 dep = materials[material.name].asset
-                assetref.dependencies.append(dep)
+                asset_descr.dependencies.append(dep)
         # Collect images from the faces
         image_names = {}
         for face in mesh.uv_textures:
@@ -93,14 +93,14 @@ def main(): # pylint: disable=R0914,R0912,R0915
         for name in image_names:
             if name in images:
                 dep = images[name].asset
-                assetref.dependencies.append(dep)
+                asset_descr.dependencies.append(dep)
         
-        assetref.metadata = {}
-        assetref.metadata['nr_of_faces'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.tessfaces))
-        assetref.metadata['nr_of_vertices'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.vertices))
+        asset_descr.metadata = {}
+        asset_descr.metadata['nr_of_faces'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.tessfaces))
+        asset_descr.metadata['nr_of_vertices'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.vertices))
                         
-        fileref.assets.append(assetref) 
-        meshes[mesh.name] = assetref 
+        file_descr.assets.append(asset_descr) 
+        meshes[mesh.name] = asset_descr 
 
 
     """
@@ -109,21 +109,21 @@ def main(): # pylint: disable=R0914,R0912,R0915
     And materials assigned to the object
     """
     for obj in bpy.data.objects:
-        assetref = AssetReference(asset = AssetId(subname = obj.name, mimetype = 'application/x-blender.object', file = get_file_id(obj)))
-        assetref.dependencies = []
+        asset_descr = AssetDescription(asset = AssetId(subname = obj.name, mimetype = 'application/x-blender.object', file = get_file_id(obj)))
+        asset_descr.dependencies = []
         # Add the mesh as dependency
         if obj.data.name in meshes:
             dep = meshes[obj.data.name].asset
-            assetref.dependencies.append(dep)
+            asset_descr.dependencies.append(dep)
         # Now the materials
         for slot in obj.material_slots:
             if slot and slot.material and slot.link == 'OBJECT':
                 if slot.material.name in materials:
                     dep = materials[slot.material.name].asset
-                    assetref.dependencies.append(dep)
+                    asset_descr.dependencies.append(dep)
                 
-        fileref.assets.append(assetref) 
-        objects[obj.name] = assetref 
+        file_descr.assets.append(asset_descr) 
+        objects[obj.name] = asset_descr 
      
 
     """
@@ -136,11 +136,11 @@ def main(): # pylint: disable=R0914,R0912,R0915
         if not text.is_in_memory:
             text_fileid = FileId(filename = relpath(text.filepath, start=text.library.filepath if text.library else None))
             text_mimetype = mimetypes.guess_type(text.filepath)[0]
-        assetref = AssetReference(asset = AssetId(subname = text.name, mimetype = text_mimetype, file = text_fileid))
-        fileref.assets.append(assetref) 
-        texts[text.name] = assetref
+        asset_descr = AssetDescription(asset = AssetId(subname = text.name, mimetype = text_mimetype, file = text_fileid))
+        file_descr.assets.append(asset_descr) 
+        texts[text.name] = asset_descr
             
-    data = SerializeThriftMsg(fileref, TBinaryProtocol.TBinaryProtocol)
+    data = SerializeThriftMsg(file_descr, TBinaryProtocol.TBinaryProtocol)
     print('-**-')
     print(binascii.hexlify(data))
     print('-**-')

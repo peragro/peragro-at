@@ -591,7 +591,7 @@ class AssetId:
   def __ne__(self, other):
     return not (self == other)
 
-class AssetReference:
+class AssetDescription:
   """
   Attributes:
    - asset
@@ -658,7 +658,7 @@ class AssetReference:
     if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
-    oprot.writeStructBegin('AssetReference')
+    oprot.writeStructBegin('AssetDescription')
     if self.asset is not None:
       oprot.writeFieldBegin('asset', TType.STRUCT, 1)
       self.asset.write(oprot)
@@ -696,7 +696,7 @@ class AssetReference:
   def __ne__(self, other):
     return not (self == other)
 
-class FileReference:
+class FileDescription:
   """
   Attributes:
    - file
@@ -710,7 +710,7 @@ class FileReference:
     (1, TType.STRUCT, 'file', (FileId, FileId.thrift_spec), None, ), # 1
     (2, TType.STRING, 'mimetype', None, None, ), # 2
     (3, TType.MAP, 'metadata', (TType.STRING,None,TType.STRUCT,(MetaDataValue, MetaDataValue.thrift_spec)), None, ), # 3
-    (4, TType.LIST, 'assets', (TType.STRUCT,(AssetReference, AssetReference.thrift_spec)), None, ), # 4
+    (4, TType.LIST, 'assets', (TType.STRUCT,(AssetDescription, AssetDescription.thrift_spec)), None, ), # 4
   )
 
   def __init__(self, file=None, mimetype=None, metadata=None, assets=None,):
@@ -756,7 +756,7 @@ class FileReference:
           self.assets = []
           (_etype33, _size30) = iprot.readListBegin()
           for _i34 in xrange(_size30):
-            _elem35 = AssetReference()
+            _elem35 = AssetDescription()
             _elem35.read(iprot)
             self.assets.append(_elem35)
           iprot.readListEnd()
@@ -771,7 +771,7 @@ class FileReference:
     if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
-    oprot.writeStructBegin('FileReference')
+    oprot.writeStructBegin('FileDescription')
     if self.file is not None:
       oprot.writeFieldBegin('file', TType.STRUCT, 1)
       self.file.write(oprot)

@@ -77,35 +77,35 @@ def collect_python3_paths():
     return paths
 
 
-def get_referenced_file_ids(file_ref):
-    """Collect all FileIds in a FileReference"""
+def get_referenced_file_ids(file_descr):
+    """Collect all FileIds in a FileDescription"""
     file_ids = []
     def analyze_dependency(asset_id):
         """Fetch the fileIds of an asset"""
         file_ids.append(asset_id.file)
 
-    def analyze_asset_ref(asset_ref):
-        """Fetch the fileIds of an assetref and its dependencies"""
-        file_ids.append(asset_ref.asset.file)
-        if asset_ref.dependencies:
-            for dependency in asset_ref.dependencies:
+    def analyze_asset_descr(asset_descr):
+        """Fetch the fileIds of an asset_descr and its dependencies"""
+        file_ids.append(asset_descr.asset.file)
+        if asset_descr.dependencies:
+            for dependency in asset_descr.dependencies:
                 analyze_dependency(dependency)
 
-    def analyze_file_ref(file_ref):
-        """Fetch the fileIds of a file_ref and its assets"""
-        file_ids.append(file_ref.file)
-        if file_ref.assets:
-            for asset in file_ref.assets:
-                analyze_asset_ref(asset)
+    def analyze_file_descr(file_descr):
+        """Fetch the fileIds of a file_descr and its assets"""
+        file_ids.append(file_descr.file)
+        if file_descr.assets:
+            for asset in file_descr.assets:
+                analyze_asset_descr(asset)
 
-    analyze_file_ref(file_ref)
+    analyze_file_descr(file_descr)
     return file_ids
 
 
-def abspath(path, file_ref=None):
-    """Return an absolute path using the given FileReference as reference."""
-    if file_ref:
-        path = os.path.normpath(os.path.join(os.path.dirname(file_ref.file.filename), path))
+def abspath(path, file_descr=None):
+    """Return an absolute path using the given FileDescription as reference."""
+    if file_descr:
+        path = os.path.normpath(os.path.join(os.path.dirname(file_descr.file.filename), path))
     else:
         path = os.path.normpath(os.path.abspath(path))
     return path

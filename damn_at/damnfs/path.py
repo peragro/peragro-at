@@ -61,7 +61,7 @@ def expand_path(path, start_path, base_depth):
     atleast base_depth deep by prepending '_' directories.
 
     :param path: :py:class:`string`: the path to expand
-    :param start_path: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`: the starting path
+    :param start_path: :py:class:`damn_at.FileDescription`: the starting path
     :param base_depth: :py:class:`int`: how deep the the base file should be
     :rtype: :py:class:`string`
     """

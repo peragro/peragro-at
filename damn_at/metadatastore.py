@@ -6,7 +6,7 @@ from .utilities import is_existing_file
 
 from damn_at.serialization import SerializeThriftMsg, DeserializeThriftMsg
 
-from damn_at import FileReference
+from damn_at import FileDescription
 
 
 class MetaDataStore(object):
@@ -26,17 +26,17 @@ class MetaDataStore(object):
         
     def get_metadata(self, store_id, an_hash):
         """
-        Get the FileReference for the given hash.
+        Get the FileDescription for the given hash.
         """
         with open(os.path.join(self.store_path, an_hash), 'rb') as metadata:
-            a_file_ref = DeserializeThriftMsg(FileReference(), metadata.read())
-            return a_file_ref
+            a_file_descr = DeserializeThriftMsg(FileDescription(), metadata.read())
+            return a_file_descr
         
-    def write_metadata(self, store_id, an_hash, a_file_ref):
+    def write_metadata(self, store_id, an_hash, a_file_descr):
         """
-        Write the FileReference to this store.
+        Write the FileDescription to this store.
         """
-        data = SerializeThriftMsg(a_file_ref)
+        data = SerializeThriftMsg(a_file_descr)
         with open(os.path.join(self.store_path, an_hash), 'wb') as metadata:
             metadata.write(data)
-        return a_file_ref
+        return a_file_descr

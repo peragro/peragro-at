@@ -34,10 +34,10 @@ class IAnalyzer(IPlugin):
     """
     
     def analyze(self, an_uri):
-        """Returns a FileReference
+        """Returns a FileDescription
 
         :param an_uri: the URI pointing to the file to be analyzed
-        :rtype: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`
+        :rtype: :py:class:`damn_at.FileDescription`
         :raises: :py:class:`damn_at.analyzer.AnalyzerException`
         """
         raise NotImplementedError("'analyze' must be reimplemented by %s" % self)        
@@ -70,20 +70,20 @@ class IMetaDataStore(IPlugin):
         
     def get_metadata(self, store_id, an_hash):
         """
-        Get the FileReference for the given hash.
+        Get the FileDescription for the given hash.
         """
         raise NotImplementedError("'get_metadata' must be reimplemented by %s" % self)
     
-    def write_metadata(self, store_id, an_hash, a_file_ref):
+    def write_metadata(self, store_id, an_hash, a_file_descr):
         """
-        Write the FileReference to this store.
+        Write the FileDescription to this store.
         """
         raise NotImplementedError("'write_metadata' must be reimplemented by %s" % self)
 
 
 class IRepository(IPlugin):
     """Interface class for a Repository"""
-    def get_meta_data(self, an_uri, a_file_ref):
+    def get_meta_data(self, an_uri, a_file_descr):
         """
         """
         raise NotImplementedError("'get_meta_data' must be reimplemented by %s" % self)
