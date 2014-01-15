@@ -111,7 +111,7 @@
 <div class="viewcode-block" id="Transcoder.get_target_mimetypes"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.Transcoder.get_target_mimetypes">[docs]</a>    <span class="k">def</span> <span class="nf">get_target_mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a list of supported mimetypes, &#39;handled_types&#39; of all analyzers</span>
 <span class="sd">        </span>
-<span class="sd">        :rtype: list&lt;string&gt;</span>
+<span class="sd">        :rtype: map&lt;string, list&lt;TargetMimetype&gt;&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target_mimetypes</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">src_mimetype</span><span class="p">,</span> <span class="n">transcoders</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcoders</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -156,7 +156,7 @@
     <span class="n">usage</span> <span class="o">=</span> <span class="s">&quot;usage: %prog &lt;store_path&gt; &lt;file_path&gt; &lt;mime_type&gt; [options] &quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">usage</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">target_mimetype</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="o">+</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">constraint</span><span class="p">))</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="o">+</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">) [default: </span><span class="si">%s</span><span class="s">]&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">))</span>
 
     <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
     <span class="k">print</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
@@ -164,7 +164,7 @@
     </div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span> 
     <span class="n">main</span><span class="p">()</span>
-    <span class="c">#damn_at-transcode /tmp/damn 1 image/jpeg -h</span>
+    <span class="c">#damn_at-transcode /tmp/damn  path/myfile.png image/jpeg -h</span>
 </pre></div>
 
           </div>

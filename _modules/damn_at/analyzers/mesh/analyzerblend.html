@@ -58,7 +58,7 @@
 
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">logger</span>
 <span class="kn">from</span> <span class="nn">damn_at.analyzer</span> <span class="kn">import</span> <span class="n">AnalyzerException</span>
-<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">FileReference</span>
+<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">FileDescription</span>
 <span class="kn">from</span> <span class="nn">damn_at.serialization</span> <span class="kn">import</span> <span class="n">DeserializeThriftMsg</span>
 
 <span class="kn">from</span> <span class="nn">damn_at.pluginmanager</span> <span class="kn">import</span> <span class="n">IAnalyzer</span>
@@ -86,9 +86,9 @@
         <span class="n">data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">stdoutdata</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-**-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\r</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;b&#39;&quot;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         
-        <span class="n">fileref</span> <span class="o">=</span> <span class="n">DeserializeThriftMsg</span><span class="p">(</span><span class="n">FileReference</span><span class="p">(),</span> <span class="n">data</span><span class="p">,</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocol</span><span class="p">)</span>
+        <span class="n">file_descr</span> <span class="o">=</span> <span class="n">DeserializeThriftMsg</span><span class="p">(</span><span class="n">FileDescription</span><span class="p">(),</span> <span class="n">data</span><span class="p">,</span> <span class="n">TBinaryProtocol</span><span class="o">.</span><span class="n">TBinaryProtocol</span><span class="p">)</span>
         
-        <span class="k">return</span> <span class="n">fileref</span>
+        <span class="k">return</span> <span class="n">file_descr</span>
         
         
 </pre></div></div></div>

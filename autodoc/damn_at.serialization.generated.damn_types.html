@@ -69,6 +69,40 @@
 <div class="section" id="module-damn_at.serialization.generated.damn_types.ttypes">
 <span id="ttypes-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ttypes</span></tt> Module<a class="headerlink" href="#module-damn_at.serialization.generated.damn_types.ttypes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetDescription">
+<em class="property">class </em><tt class="descclassname">damn_at.serialization.generated.damn_types.ttypes.</tt><tt class="descname">AssetDescription</tt><big>(</big><em>asset=None</em>, <em>metadata=None</em>, <em>dependencies=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetDescription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetDescription" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>asset</li>
+<li>metadata</li>
+<li>dependencies</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetDescription.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetDescription.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetDescription.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetDescription.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 12, 'asset', (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetId at 0x2f9f738&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x2f9f6d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None))), None), (2, 13, 'metadata', (11, None, 12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.MetaDataValue at 0x2f9f4c8&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (3, 15, 'dependencies', (12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetId at 0x2f9f738&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x2f9f6d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None)))), None))</em><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetDescription.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetDescription.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetDescription.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetDescription.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetDescription.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetDescription.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetDescription.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="damn_at.serialization.generated.damn_types.ttypes.AssetId">
 <em class="property">class </em><tt class="descclassname">damn_at.serialization.generated.damn_types.ttypes.</tt><tt class="descname">AssetId</tt><big>(</big><em>subname=None</em>, <em>mimetype=None</em>, <em>file=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetId" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
@@ -87,7 +121,7 @@
 
 <dl class="attribute">
 <dt id="damn_at.serialization.generated.damn_types.ttypes.AssetId.thrift_spec">
-<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x38506d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None))</em><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetId.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x2f9f6d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None))</em><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetId.thrift_spec" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -98,40 +132,6 @@
 <dl class="method">
 <dt id="damn_at.serialization.generated.damn_types.ttypes.AssetId.write">
 <tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetId.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetId.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetReference">
-<em class="property">class </em><tt class="descclassname">damn_at.serialization.generated.damn_types.ttypes.</tt><tt class="descname">AssetReference</tt><big>(</big><em>asset=None</em>, <em>metadata=None</em>, <em>dependencies=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetReference" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Attributes:</dt>
-<dd><ul class="first last simple">
-<li>asset</li>
-<li>metadata</li>
-<li>dependencies</li>
-</ul>
-</dd>
-</dl>
-<dl class="method">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetReference.read">
-<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetReference.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetReference.read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetReference.thrift_spec">
-<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 12, 'asset', (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetId at 0x3850738&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x38506d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None))), None), (2, 13, 'metadata', (11, None, 12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.MetaDataValue at 0x38504c8&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (3, 15, 'dependencies', (12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetId at 0x3850738&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x38506d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None)))), None))</em><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetReference.thrift_spec" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetReference.validate">
-<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetReference.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetReference.validate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.AssetReference.write">
-<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#AssetReference.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.AssetReference.write" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -170,6 +170,41 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.FileDescription">
+<em class="property">class </em><tt class="descclassname">damn_at.serialization.generated.damn_types.ttypes.</tt><tt class="descname">FileDescription</tt><big>(</big><em>file=None</em>, <em>mimetype=None</em>, <em>metadata=None</em>, <em>assets=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileDescription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileDescription" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>file</li>
+<li>mimetype</li>
+<li>metadata</li>
+<li>assets</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.FileDescription.read">
+<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileDescription.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileDescription.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.FileDescription.thrift_spec">
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x2f9f6d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None), (2, 11, 'mimetype', None, None), (3, 13, 'metadata', (11, None, 12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.MetaDataValue at 0x2f9f4c8&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (4, 15, 'assets', (12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetDescription at 0x2f9f7a0&gt;, (None, (1, 12, 'asset', (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetId at 0x2f9f738&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x2f9f6d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None))), None), (2, 13, 'metadata', (11, None, 12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.MetaDataValue at 0x2f9f4c8&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (3, 15, 'dependencies', (12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetId at 0x2f9f738&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x2f9f6d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None)))), None)))), None))</em><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileDescription.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.FileDescription.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileDescription.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileDescription.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.serialization.generated.damn_types.ttypes.FileDescription.write">
+<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileDescription.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileDescription.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="damn_at.serialization.generated.damn_types.ttypes.FileId">
 <em class="property">class </em><tt class="descclassname">damn_at.serialization.generated.damn_types.ttypes.</tt><tt class="descname">FileId</tt><big>(</big><em>filename=None</em>, <em>hash=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileId" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
@@ -198,41 +233,6 @@
 <dl class="method">
 <dt id="damn_at.serialization.generated.damn_types.ttypes.FileId.write">
 <tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileId.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileId.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.FileReference">
-<em class="property">class </em><tt class="descclassname">damn_at.serialization.generated.damn_types.ttypes.</tt><tt class="descname">FileReference</tt><big>(</big><em>file=None</em>, <em>mimetype=None</em>, <em>metadata=None</em>, <em>assets=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileReference" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Attributes:</dt>
-<dd><ul class="first last simple">
-<li>file</li>
-<li>mimetype</li>
-<li>metadata</li>
-<li>assets</li>
-</ul>
-</dd>
-</dl>
-<dl class="method">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.FileReference.read">
-<tt class="descname">read</tt><big>(</big><em>iprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileReference.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileReference.read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.FileReference.thrift_spec">
-<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x38506d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None), (2, 11, 'mimetype', None, None), (3, 13, 'metadata', (11, None, 12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.MetaDataValue at 0x38504c8&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (4, 15, 'assets', (12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetReference at 0x38507a0&gt;, (None, (1, 12, 'asset', (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetId at 0x3850738&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x38506d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None))), None), (2, 13, 'metadata', (11, None, 12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.MetaDataValue at 0x38504c8&gt;, (None, (1, 8, 'type', None, None), (2, 2, 'bool_value', None, None), (3, 10, 'int_value', None, None), (4, 4, 'double_value', None, None), (5, 11, 'string_value', None, None)))), None), (3, 15, 'dependencies', (12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.AssetId at 0x3850738&gt;, (None, (1, 11, 'subname', None, None), (2, 11, 'mimetype', None, None), (3, 12, 'file', (&lt;class damn_at.serialization.generated.damn_types.ttypes.FileId at 0x38506d0&gt;, (None, (1, 11, 'filename', None, None), (2, 11, 'hash', None, None))), None)))), None)))), None))</em><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileReference.thrift_spec" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.FileReference.validate">
-<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileReference.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileReference.validate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.serialization.generated.damn_types.ttypes.FileReference.write">
-<tt class="descname">write</tt><big>(</big><em>oprot</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization/generated/damn_types/ttypes.html#FileReference.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.FileReference.write" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -318,7 +318,7 @@
 
 <dl class="attribute">
 <dt id="damn_at.serialization.generated.damn_types.ttypes.TargetMimetype.thrift_spec">
-<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 11, 'mimetype', None, None), (2, 11, 'description', None, None), (3, 11, 'template', None, None), (4, 15, 'options', (12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.TargetMimetypeOption at 0x3850598&gt;, (None, (1, 11, 'name', None, None), (2, 11, 'description', None, None), (3, 11, 'type', None, None), (4, 11, 'constraint', None, None), (5, 11, 'default_value', None, None)))), []))</em><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.TargetMimetype.thrift_spec" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">thrift_spec</tt><em class="property"> = (None, (1, 11, 'mimetype', None, None), (2, 11, 'description', None, None), (3, 11, 'template', None, None), (4, 15, 'options', (12, (&lt;class damn_at.serialization.generated.damn_types.ttypes.TargetMimetypeOption at 0x2f9f598&gt;, (None, (1, 11, 'name', None, None), (2, 11, 'description', None, None), (3, 11, 'type', None, None), (4, 11, 'constraint', None, None), (5, 11, 'default_value', None, None)))), []))</em><a class="headerlink" href="#damn_at.serialization.generated.damn_types.ttypes.TargetMimetype.thrift_spec" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">

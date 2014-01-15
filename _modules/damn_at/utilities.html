@@ -128,35 +128,35 @@
     <span class="k">return</span> <span class="n">paths</span>
 
 </div>
-<div class="viewcode-block" id="get_referenced_file_ids"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.get_referenced_file_ids">[docs]</a><span class="k">def</span> <span class="nf">get_referenced_file_ids</span><span class="p">(</span><span class="n">file_ref</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Collect all FileIds in a FileReference&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="get_referenced_file_ids"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.get_referenced_file_ids">[docs]</a><span class="k">def</span> <span class="nf">get_referenced_file_ids</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Collect all FileIds in a FileDescription&quot;&quot;&quot;</span>
     <span class="n">file_ids</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">def</span> <span class="nf">analyze_dependency</span><span class="p">(</span><span class="n">asset_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fetch the fileIds of an asset&quot;&quot;&quot;</span>
         <span class="n">file_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">analyze_asset_ref</span><span class="p">(</span><span class="n">asset_ref</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Fetch the fileIds of an assetref and its dependencies&quot;&quot;&quot;</span>
-        <span class="n">file_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_ref</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">asset_ref</span><span class="o">.</span><span class="n">dependencies</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">dependency</span> <span class="ow">in</span> <span class="n">asset_ref</span><span class="o">.</span><span class="n">dependencies</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">analyze_asset_descr</span><span class="p">(</span><span class="n">asset_descr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch the fileIds of an asset_descr and its dependencies&quot;&quot;&quot;</span>
+        <span class="n">file_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_descr</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">asset_descr</span><span class="o">.</span><span class="n">dependencies</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">dependency</span> <span class="ow">in</span> <span class="n">asset_descr</span><span class="o">.</span><span class="n">dependencies</span><span class="p">:</span>
                 <span class="n">analyze_dependency</span><span class="p">(</span><span class="n">dependency</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">analyze_file_ref</span><span class="p">(</span><span class="n">file_ref</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Fetch the fileIds of a file_ref and its assets&quot;&quot;&quot;</span>
-        <span class="n">file_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_ref</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">file_ref</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">file_ref</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
-                <span class="n">analyze_asset_ref</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">analyze_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch the fileIds of a file_descr and its assets&quot;&quot;&quot;</span>
+        <span class="n">file_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_descr</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
+                <span class="n">analyze_asset_descr</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
 
-    <span class="n">analyze_file_ref</span><span class="p">(</span><span class="n">file_ref</span><span class="p">)</span>
+    <span class="n">analyze_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">file_ids</span>
 
 </div>
-<div class="viewcode-block" id="abspath"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.abspath">[docs]</a><span class="k">def</span> <span class="nf">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file_ref</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return an absolute path using the given FileReference as reference.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">file_ref</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_ref</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">),</span> <span class="n">path</span><span class="p">))</span>
+<div class="viewcode-block" id="abspath"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.abspath">[docs]</a><span class="k">def</span> <span class="nf">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file_descr</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return an absolute path using the given FileDescription as reference.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">file_descr</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_descr</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">),</span> <span class="n">path</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">path</span></div>

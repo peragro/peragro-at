@@ -85,10 +85,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     
 <div class="viewcode-block" id="IAnalyzer.analyze"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.IAnalyzer.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a FileReference</span>
+        <span class="sd">&quot;&quot;&quot;Returns a FileDescription</span>
 
 <span class="sd">        :param an_uri: the URI pointing to the file to be analyzed</span>
-<span class="sd">        :rtype: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileReference`</span>
+<span class="sd">        :rtype: :py:class:`damn_at.FileDescription`</span>
 <span class="sd">        :raises: :py:class:`damn_at.analyzer.AnalyzerException`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;analyze&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
@@ -121,20 +121,20 @@
         </div>
 <div class="viewcode-block" id="IMetaDataStore.get_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.get_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">get_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the FileReference for the given hash.</span>
+<span class="sd">        Get the FileDescription for the given hash.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;get_metadata&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
     </div>
-<div class="viewcode-block" id="IMetaDataStore.write_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.write_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">write_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">,</span> <span class="n">a_file_ref</span><span class="p">):</span>
+<div class="viewcode-block" id="IMetaDataStore.write_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.write_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">write_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">,</span> <span class="n">a_file_descr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Write the FileReference to this store.</span>
+<span class="sd">        Write the FileDescription to this store.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;write_metadata&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
 
 </div></div>
 <div class="viewcode-block" id="IRepository"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IRepository">[docs]</a><span class="k">class</span> <span class="nc">IRepository</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Interface class for a Repository&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="IRepository.get_meta_data"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IRepository.get_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">,</span> <span class="n">a_file_ref</span><span class="p">):</span>
+<div class="viewcode-block" id="IRepository.get_meta_data"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IRepository.get_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">,</span> <span class="n">a_file_descr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;get_meta_data&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
