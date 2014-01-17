@@ -3,7 +3,7 @@
 '''
 mkdir /tmp/damn
 mkdir /tmp/damnfs
-damn_at-analyze /home/sueastside/dev/DAMN/damn-test-files/
+damn_at-analyze /tmp/damn /home/sueastside/dev/DAMN/damn-test-files/
 damn_fs -f /tmp/damnfs/
 '''
 
