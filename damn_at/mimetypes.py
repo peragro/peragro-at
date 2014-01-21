@@ -31,3 +31,5 @@ except (ValueError, ImportError, ):
     pass
 
 guess_type = sys_mimetypes.guess_type
+
+guess_extension = sys_mimetypes.guess_extension

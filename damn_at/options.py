@@ -3,6 +3,10 @@ Options
 """
 import os
 import sys
+from string import Template
+
+from damn_at import mimetypes
+from damn_at import utilities
 
 class OptionException(Exception):
     """Base Option Exception"""
@@ -58,10 +62,12 @@ class VectorOption(BaseOption):
             raise OptionParseException('%s not of size %d!'%(a_string, self.size))
         return_value = []
         for val in splits:
-            value = self.type(a_string) #Todo:catch
+            value = self.type(val) #Todo:catch
             if value < self.min or value > self.max:
                 raise OptionConstraintException('%d < %d < %d failed!' % (self.min, value, self.max))
             return_value.append(value)
+        if self.size==1:
+            return return_value[0]
         return return_value
 
     @property
@@ -91,4 +97,18 @@ def options_to_template(options):
     for option in options:
         path = os.path.join(path, '${'+str(option.name)+'}')
     return os.path.join('assets', '${uuid}', '${dstFormat}', path, '${uuid}${extension}')
+
     
+def parse_options(convert_map_entry, **options):
+    opts = {}
+    entries = dict([(option.name, option) for option in convert_map_entry])
+    for name, value in options.items():
+        if name in entries:
+            opts[name] = entries[name].parse_from_string(value)
+    return opts
+
+
+def expand_path_template(template, mimetype, asset_id, **options):
+    t = Template(template)
+    uuid = utilities.unique_asset_id_reference(asset_id)
+    return t.safe_substitute(uuid=uuid, dstFormat=mimetype, extension=str(mimetypes.guess_extension(mimetype)), **options)

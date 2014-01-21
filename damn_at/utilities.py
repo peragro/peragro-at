@@ -6,6 +6,7 @@ import os
 import subprocess
 import glob
 import hashlib
+import urllib
 
 def calculate_hash_for_file(an_uri):
     """Returns a sha1 hexdigest for the given file.
@@ -179,3 +180,33 @@ def pretty_print_file_description(file_descr):
             pretty_print_asset_descr(asset)
             print('-'*80)
     print('\n')
+
+
+def find_asset_id_in_file_descr(file_descr, asset_name):
+    """Find an AssetId by name in the given FileDescription
+
+    :param file_descr: :py:class:`damn_at.FileDescription` 
+    :param asset_name: string the asset to look for
+    :rtype: :py:class:`damn_at.AssetId` 
+    """
+    if file_descr.assets:
+        for asset in file_descr.assets:
+            if asset.asset.subname == asset_name:
+                return asset.asset
+
+
+def get_asset_names_in_file_descr(file_descr):
+    """Get all asset names in the given FileDescription
+
+    :param file_descr: :py:class:`damn_at.FileDescription` 
+    :rtype: list<string> of asset names contained 
+    """
+    if file_descr.assets:
+        return [asset.asset.subname for asset in file_descr.assets]
+    else:
+        return []
+
+
+def unique_asset_id_reference(asset_id):
+    name = '%s%s%s' % (asset_id.file.hash, asset_id.subname, asset_id.mimetype)
+    return urllib.quote(name.replace('/', '|'))

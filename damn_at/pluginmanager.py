@@ -55,7 +55,7 @@ class ITranscoder(IPlugin):
                                    }, }
     """
     
-    def transcode(self, an_uri):
+    def transcode(self, dest_path, file_descr, asset_id, target_mimetype, **options):
         """ blah """
         raise NotImplementedError("'transcode' must be reimplemented by %s" % self)        
 
