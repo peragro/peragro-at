@@ -2,7 +2,7 @@
 The MetaDataStore handler.
 """
 import os
-from .utilities import is_existing_file
+from .utilities import is_existing_file, pretty_print_file_description
 
 from damn_at.serialization import SerializeThriftMsg, DeserializeThriftMsg
 
@@ -40,3 +40,30 @@ class MetaDataStore(object):
         with open(os.path.join(self.store_path, an_hash), 'wb') as metadata:
             metadata.write(data)
         return a_file_descr
+
+
+
+def main():
+    import sys
+    from optparse import OptionParser
+    import logging
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+    
+    file_path = sys.argv[1]
+
+    m = MetaDataStore(os.path.dirname(file_path))
+    
+    from damn_at import _CMD_DESCRIPTION
+
+    usage = "usage: %prog <file_path> [options] " + _CMD_DESCRIPTION
+    parser = OptionParser(usage=usage)
+    (options, args) = parser.parse_args(sys.argv[1:])
+
+    file_descr = m.get_metadata('', os.path.basename(file_path))
+    print(_CMD_DESCRIPTION)
+    print('Inspecting "%s"\n'%file_path)
+    pretty_print_file_description(file_descr)
+    
+    
+if __name__ == '__main__': 
+    main()

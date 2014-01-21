@@ -109,3 +109,73 @@ def abspath(path, file_descr=None):
     else:
         path = os.path.normpath(os.path.abspath(path))
     return path
+
+
+def pretty_print_metadatavalue(key, value, indent=0):
+    """Pretty print a given MetaDataValue
+
+    :param key: the name of the MetaDataValue
+    :param value: :py:class:`damn_at.MetaDataValue` 
+    :param indent: indentation level
+    """
+    whitespace = ' '*indent
+    from damn_at import MetaDataType
+    field = MetaDataType._VALUES_TO_NAMES[value.type].lower()+'_value'
+    print(whitespace+'* '+key+': '+str(getattr(value, field, None)))
+   
+
+def pretty_print_asset_id(asset_id, indent=0):
+    """Pretty print a given AssetId
+
+    :param asset_id: :py:class:`damn_at.AssetId` 
+    :param indent: indentation level
+    """
+    whitespace = ' '*indent
+    print(whitespace+'* %s (%s)'%(asset_id.subname, asset_id.mimetype))
+    pretty_print_file_id(asset_id.file, indent+2)
+ 
+    
+def pretty_print_asset_descr(asset_descr, indent=0):
+    """Pretty print a given AssetDescription
+
+    :param asset_id: :py:class:`damn_at.AssetDescription` 
+    :param indent: indentation level
+    """
+    whitespace = ' '*indent
+    #print(whitespace+''+str(asset_descr))
+    pretty_print_asset_id(asset_descr.asset)
+    if asset_descr.dependencies:
+        print(whitespace+'  Dependencies (%d):'%len(asset_descr.dependencies))
+        for dep in asset_descr.dependencies:
+            pretty_print_asset_id(dep, indent+4)
+    if asset_descr.metadata:
+        print(whitespace+'  MetaData (%d):'%len(asset_descr.metadata))
+        for key, value in asset_descr.metadata.items():
+            pretty_print_metadatavalue(key, value, indent+4)
+
+    
+def pretty_print_file_id(file_id, indent=0):
+    """Pretty print a given FileId
+
+    :param asset_id: :py:class:`damn_at.FileId` 
+    :param indent: indentation level
+    """
+    whitespace = ' '*indent
+    print(whitespace+'hash: '+file_id.hash)
+    print(whitespace+'filename: '+file_id.filename)
+ 
+
+def pretty_print_file_description(file_descr):
+    """Pretty print a given FileDescription
+
+    :param asset_id: :py:class:`damn_at.FileDescription` 
+    :param indent: indentation level
+    """
+    pretty_print_file_id(file_descr.file)
+    print('%d Assets: '%len(file_descr.assets) if file_descr.assets else 0)
+    print('='*80)
+    if file_descr.assets:
+        for asset in file_descr.assets:
+            pretty_print_asset_descr(asset)
+            print('-'*80)
+    print('\n')

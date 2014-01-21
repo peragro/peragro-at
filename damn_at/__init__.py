@@ -18,3 +18,10 @@ from damn_at.analyzer import Analyzer
 from damn_at.metadatastore import MetaDataStore
 
 
+_CMD_DESCRIPTION = '''
+ ___   _   __  __ _  _ 
+|   \ /_\ |  \/  | \| |
+| |) / _ \| |\/| | .` |
+|___/_/ \_\_|  |_|_|\_|
+    Digital Assets Managed Neatly.
+'''
