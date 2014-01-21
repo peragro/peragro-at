@@ -55,6 +55,7 @@
 <span class="sd">Transcoder convience class to find the right plugin for a mimetype</span>
 <span class="sd">and address it.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">metrology.instruments.gauge</span> <span class="kn">import</span> <span class="n">Gauge</span>
 
@@ -62,7 +63,11 @@
 <span class="kn">from</span> <span class="nn">.pluginmanager</span> <span class="kn">import</span> <span class="n">DAMNPluginManagerSingleton</span>
 
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">TargetMimetype</span><span class="p">,</span> <span class="n">TargetMimetypeOption</span>
-<span class="kn">from</span> <span class="nn">.options</span> <span class="kn">import</span> <span class="n">options_to_template</span>
+<span class="kn">from</span> <span class="nn">.options</span> <span class="kn">import</span> <span class="n">options_to_template</span><span class="p">,</span> <span class="n">parse_options</span>
+
+<span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">find_asset_id_in_file_descr</span><span class="p">,</span> <span class="n">get_asset_names_in_file_descr</span>
+
+<span class="kn">from</span> <span class="nn">.mimetypes</span> <span class="kn">import</span> <span class="n">guess_type</span>
 
 
 <div class="viewcode-block" id="TranscoderException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.TranscoderException">[docs]</a><span class="k">class</span> <span class="nc">TranscoderException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -107,13 +112,12 @@
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">src</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcoders</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">transcoders</span><span class="p">[</span><span class="n">src</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">transcoders</span><span class="p">[</span><span class="n">src</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plugin</span><span class="p">)</span>
-    
-<div class="viewcode-block" id="Transcoder.get_target_mimetypes"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.Transcoder.get_target_mimetypes">[docs]</a>    <span class="k">def</span> <span class="nf">get_target_mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a list of supported mimetypes, &#39;handled_types&#39; of all analyzers</span>
-<span class="sd">        </span>
-<span class="sd">        :rtype: map&lt;string, list&lt;TargetMimetype&gt;&gt;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">target_mimetypes</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_target_mimetypes</span><span class="p">()</span>
+                    
+    <span class="k">def</span> <span class="nf">_build_target_mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes_transcoders</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">src_mimetype</span><span class="p">,</span> <span class="n">transcoders</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcoders</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">transcoder</span> <span class="ow">in</span> <span class="n">transcoders</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">dst_mimetype</span><span class="p">,</span> <span class="n">options</span> <span class="ow">in</span> <span class="n">transcoder</span><span class="o">.</span><span class="n">plugin_object</span><span class="o">.</span><span class="n">convert_map</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -125,11 +129,52 @@
                                                     <span class="n">constraint</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">constraint_description</span><span class="p">,</span> 
                                                     <span class="n">default_value</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">default_description</span><span class="p">)</span>
                         <span class="n">tmt</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmto</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_mimetype</span> <span class="ow">in</span> <span class="n">target_mimetypes</span><span class="p">:</span>
-                        <span class="n">target_mimetypes</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-                    <span class="n">target_mimetypes</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmt</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">target_mimetypes</span>
-
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_mimetype</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes_transcoders</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmt</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes_transcoders</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tmt</span><span class="p">,</span> <span class="n">transcoder</span><span class="p">,))</span>
+ 
+    <span class="k">def</span> <span class="nf">_get_transcoder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_mimetype</span><span class="p">,</span> <span class="n">target_mimetype</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a transcoder</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target_mimetpes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes_transcoders</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">target</span><span class="p">,</span> <span class="n">transcoder</span> <span class="ow">in</span> <span class="n">target_mimetpes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="n">target_mimetype</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">transcoder</span>
+                
+                
+<div class="viewcode-block" id="Transcoder.get_target_mimetypes"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.Transcoder.get_target_mimetypes">[docs]</a>    <span class="k">def</span> <span class="nf">get_target_mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of supported mimetypes, &#39;handled_types&#39; of all analyzers</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: map&lt;string, list&lt;TargetMimetype&gt;&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes</span>
+        </div>
+<div class="viewcode-block" id="Transcoder.get_target_mimetype"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.Transcoder.get_target_mimetype">[docs]</a>    <span class="k">def</span> <span class="nf">get_target_mimetype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_mimetype</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="c"># TODO: Need some clever way to select the right transcoder in </span>
+        <span class="c"># the list based on options passed.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_mimetypes</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> 
+        </div>
+<div class="viewcode-block" id="Transcoder.parse_options"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.Transcoder.parse_options">[docs]</a>    <span class="k">def</span> <span class="nf">parse_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_mimetype</span><span class="p">,</span> <span class="n">target_mimetype</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="n">transcoder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_transcoder</span><span class="p">(</span><span class="n">src_mimetype</span><span class="p">,</span> <span class="n">target_mimetype</span><span class="p">)</span>
+        <span class="n">convert_map_entry</span> <span class="o">=</span> <span class="n">transcoder</span><span class="o">.</span><span class="n">plugin_object</span><span class="o">.</span><span class="n">convert_map</span><span class="p">[</span><span class="n">src_mimetype</span><span class="p">][</span><span class="n">target_mimetype</span><span class="o">.</span><span class="n">mimetype</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">parse_options</span><span class="p">(</span><span class="n">convert_map_entry</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Transcoder.transcode"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.Transcoder.transcode">[docs]</a>    <span class="k">def</span> <span class="nf">transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Transcode the given AssetId in FileDescription to the specified mimetype </span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: list&lt;string&gt; file paths</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">src_mimetype</span> <span class="o">=</span> <span class="n">guess_type</span><span class="p">(</span><span class="n">file_descr</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">target_mimetype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_target_mimetype</span><span class="p">(</span><span class="n">src_mimetype</span><span class="p">)</span>
+        <span class="n">transcoder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_transcoder</span><span class="p">(</span><span class="n">src_mimetype</span><span class="p">,</span> <span class="n">target_mimetype</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">transcoder</span><span class="o">.</span><span class="n">plugin_object</span><span class="o">.</span><span class="n">transcode</span><span class="p">(</span><span class="s">&#39;/tmp/transcoded/&#39;</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="n">target_mimetype</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        
 </div></div>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">sys</span>
@@ -139,32 +184,51 @@
     
     <span class="kn">from</span> <span class="nn">damn_at.metadatastore</span> <span class="kn">import</span> <span class="n">MetaDataStore</span>
     
-    <span class="n">store_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">store_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">asset_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">mime_type</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     
     <span class="n">m</span> <span class="o">=</span> <span class="n">MetaDataStore</span><span class="p">(</span><span class="n">store_path</span><span class="p">)</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">Transcoder</span><span class="p">()</span>
     
-    <span class="n">target_mimetypes</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get_target_mimetypes</span><span class="p">()</span>
+    <span class="n">target_mimetype</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get_target_mimetype</span><span class="p">(</span><span class="n">mime_type</span><span class="p">)</span>
     
-    <span class="k">if</span> <span class="n">mime_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">target_mimetypes</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">TranscoderUnknownTypeException</span><span class="p">(</span><span class="n">mime_type</span><span class="o">+</span><span class="s">&#39; needs to be one of &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">target_mimetypes</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-        
-    <span class="n">target_mimetype</span> <span class="o">=</span> <span class="n">target_mimetypes</span><span class="p">[</span><span class="n">mime_type</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">target_mimetype</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">TranscoderUnknownTypeException</span><span class="p">(</span><span class="n">mime_type</span><span class="o">+</span><span class="s">&#39; needs to be one of &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">get_target_mimetypes</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 
-    <span class="n">usage</span> <span class="o">=</span> <span class="s">&quot;usage: %prog &lt;store_path&gt; &lt;file_path&gt; &lt;mime_type&gt; [options] &quot;</span>
+    
+    <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">_CMD_DESCRIPTION</span>
+
+    <span class="n">usage</span> <span class="o">=</span> <span class="s">&quot;usage: %prog &lt;store_path&gt; &lt;file_path&gt; &lt;mime_type&gt; [options] &quot;</span> <span class="o">+</span><span class="n">_CMD_DESCRIPTION</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">usage</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">target_mimetype</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">target_mimetype</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="o">+</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">) [default: </span><span class="si">%s</span><span class="s">]&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">))</span>
 
     <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    
+    <span class="n">file_descr</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+            
+    <span class="k">if</span> <span class="n">asset_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">TranscoderFileException</span><span class="p">(</span><span class="n">asset_name</span><span class="o">+</span><span class="s">&#39; not in file_descr &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">)))</span>
+        
+    <span class="n">asset_id</span> <span class="o">=</span> <span class="n">find_asset_id_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_name</span><span class="p">)</span>
+    
+    <span class="n">options</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">parse_options</span><span class="p">(</span><span class="n">mime_type</span><span class="p">,</span> <span class="n">target_mimetype</span><span class="p">,</span> <span class="o">**</span><span class="nb">vars</span><span class="p">(</span><span class="n">options</span><span class="p">))</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="n">_CMD_DESCRIPTION</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Transcoding &quot;</span><span class="si">%s</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">%</span><span class="n">file_descr</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Using: </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">target_mimetype</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;with: &#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">option_name</span><span class="p">,</span> <span class="n">option_value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;* </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s"> &#39;</span><span class="o">%</span><span class="p">(</span><span class="n">option_name</span><span class="p">,</span> <span class="n">option_value</span><span class="p">))</span>
+    <span class="n">file_paths</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">transcode</span><span class="p">(</span><span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="n">mime_type</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">file_paths</span><span class="p">)</span>
     
     </div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span> 
     <span class="n">main</span><span class="p">()</span>
-    <span class="c">#damn_at-transcode /tmp/damn  path/myfile.png image/jpeg -h</span>
+    <span class="c">#damn_at-transcode /tmp/damn/4bf0356127a51d7e2167433b7e78cedff3f8953a b2csmaterialpanel.png image/jpeg --size=128,128 -h</span>
 </pre></div>
 
           </div>

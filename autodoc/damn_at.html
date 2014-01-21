@@ -179,6 +179,11 @@ and address it.</p>
 
 </dd></dl>
 
+<dl class="function">
+<dt id="damn_at.metadatastore.main">
+<tt class="descclassname">damn_at.metadatastore.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-damn_at.mimetypes">
 <span id="mimetypes-module"></span><h2><a class="reference external" href="http://docs.python.org/library/mimetypes.html#mimetypes" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">mimetypes</span></tt></a> Module<a class="headerlink" href="#module-damn_at.mimetypes" title="Permalink to this headline">¶</a></h2>
@@ -279,8 +284,18 @@ and cleaning up reverse map for cleaner file extensions.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="damn_at.options.expand_path_template">
+<tt class="descclassname">damn_at.options.</tt><tt class="descname">expand_path_template</tt><big>(</big><em>template</em>, <em>mimetype</em>, <em>asset_id</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#expand_path_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.expand_path_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="damn_at.options.options_to_template">
 <tt class="descclassname">damn_at.options.</tt><tt class="descname">options_to_template</tt><big>(</big><em>options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#options_to_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.options_to_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="damn_at.options.parse_options">
+<tt class="descclassname">damn_at.options.</tt><tt class="descname">parse_options</tt><big>(</big><em>convert_map_entry</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#parse_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.parse_options" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -418,7 +433,7 @@ convert_map = {&#8220;image/tiff&#8221; : {&#8220;image/jpeg&#8221;: [IntVectorO
 
 <dl class="method">
 <dt id="damn_at.pluginmanager.ITranscoder.transcode">
-<tt class="descname">transcode</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#ITranscoder.transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder.transcode" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">transcode</tt><big>(</big><em>dest_path</em>, <em>file_descr</em>, <em>asset_id</em>, <em>target_mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#ITranscoder.transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder.transcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>blah</p>
 </dd></dl>
 
@@ -441,6 +456,11 @@ and address it.</p>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Analyze files and tries to find known assets types in it.</p>
 <dl class="method">
+<dt id="damn_at.transcoder.Transcoder.get_target_mimetype">
+<tt class="descname">get_target_mimetype</tt><big>(</big><em>src_mimetype</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.get_target_mimetype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.get_target_mimetype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="damn_at.transcoder.Transcoder.get_target_mimetypes">
 <tt class="descname">get_target_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.get_target_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.get_target_mimetypes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of supported mimetypes, &#8216;handled_types&#8217; of all analyzers</p>
@@ -449,6 +469,25 @@ and address it.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">map&lt;string, list&lt;TargetMimetype&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="damn_at.transcoder.Transcoder.parse_options">
+<tt class="descname">parse_options</tt><big>(</big><em>src_mimetype</em>, <em>target_mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.parse_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.parse_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.transcoder.Transcoder.transcode">
+<tt class="descname">transcode</tt><big>(</big><em>file_descr</em>, <em>asset_id</em>, <em>mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.transcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcode the given AssetId in FileDescription to the specified mimetype</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;string&gt; file paths</td>
 </tr>
 </tbody>
 </table>
@@ -528,6 +567,43 @@ and address it.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="damn_at.utilities.find_asset_id_in_file_descr">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">find_asset_id_in_file_descr</tt><big>(</big><em>file_descr</em>, <em>asset_name</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#find_asset_id_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.find_asset_id_in_file_descr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find an AssetId by name in the given FileDescription</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_descr</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></li>
+<li><strong>asset_name</strong> &#8211; string the asset to look for</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetId</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.get_asset_names_in_file_descr">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">get_asset_names_in_file_descr</tt><big>(</big><em>file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#get_asset_names_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.get_asset_names_in_file_descr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all asset names in the given FileDescription</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_descr</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;string&gt; of asset names contained</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="damn_at.utilities.get_referenced_file_ids">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">get_referenced_file_ids</tt><big>(</big><em>file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#get_referenced_file_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.get_referenced_file_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect all FileIds in a FileDescription</p>
@@ -544,6 +620,97 @@ and address it.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.pretty_print_asset_descr">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_asset_descr</tt><big>(</big><em>asset_descr</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_asset_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_asset_descr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty print a given AssetDescription</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>asset_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetDescription</span></tt></li>
+<li><strong>indent</strong> &#8211; indentation level</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.pretty_print_asset_id">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_asset_id</tt><big>(</big><em>asset_id</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_asset_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_asset_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty print a given AssetId</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>asset_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetId</span></tt></li>
+<li><strong>indent</strong> &#8211; indentation level</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.pretty_print_file_description">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_file_description</tt><big>(</big><em>file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_file_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty print a given FileDescription</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>asset_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></li>
+<li><strong>indent</strong> &#8211; indentation level</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.pretty_print_file_id">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_file_id</tt><big>(</big><em>file_id</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_file_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_file_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty print a given FileId</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>asset_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileId</span></tt></li>
+<li><strong>indent</strong> &#8211; indentation level</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.pretty_print_metadatavalue">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_metadatavalue</tt><big>(</big><em>key</em>, <em>value</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_metadatavalue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_metadatavalue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty print a given MetaDataValue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> &#8211; the name of the MetaDataValue</li>
+<li><strong>value</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.MetaDataValue</span></tt></li>
+<li><strong>indent</strong> &#8211; indentation level</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -570,6 +737,11 @@ and address it.</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.unique_asset_id_reference">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">unique_asset_id_reference</tt><big>(</big><em>asset_id</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#unique_asset_id_reference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.unique_asset_id_reference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="subpackages">

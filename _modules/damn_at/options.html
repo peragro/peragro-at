@@ -54,6 +54,10 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">Template</span>
+
+<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">mimetypes</span>
+<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">utilities</span>
 
 <div class="viewcode-block" id="OptionException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.OptionException">[docs]</a><span class="k">class</span> <span class="nc">OptionException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base Option Exception&quot;&quot;&quot;</span>
@@ -109,10 +113,12 @@
             <span class="k">raise</span> <span class="n">OptionParseException</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> not of size </span><span class="si">%d</span><span class="s">!&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">a_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
         <span class="n">return_value</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">a_string</span><span class="p">)</span> <span class="c">#Todo:catch</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="c">#Todo:catch</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">OptionConstraintException</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%d</span><span class="s"> &lt; </span><span class="si">%d</span><span class="s"> &lt; </span><span class="si">%d</span><span class="s"> failed!&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">))</span>
             <span class="n">return_value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">return_value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">return_value</span>
 </div>
     <span class="nd">@property</span>
@@ -142,7 +148,21 @@
     <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;${&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;}&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;assets&#39;</span><span class="p">,</span> <span class="s">&#39;${uuid}&#39;</span><span class="p">,</span> <span class="s">&#39;${dstFormat}&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s">&#39;${uuid}${extension}&#39;</span><span class="p">)</span>
+
     </div>
+<div class="viewcode-block" id="parse_options"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.parse_options">[docs]</a><span class="k">def</span> <span class="nf">parse_options</span><span class="p">(</span><span class="n">convert_map_entry</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">convert_map_entry</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+            <span class="n">opts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">parse_from_string</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">opts</span>
+
+</div>
+<div class="viewcode-block" id="expand_path_template"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.expand_path_template">[docs]</a><span class="k">def</span> <span class="nf">expand_path_template</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+    <span class="n">uuid</span> <span class="o">=</span> <span class="n">utilities</span><span class="o">.</span><span class="n">unique_asset_id_reference</span><span class="p">(</span><span class="n">asset_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">safe_substitute</span><span class="p">(</span><span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span> <span class="n">dstFormat</span><span class="o">=</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_extension</span><span class="p">(</span><span class="n">mimetype</span><span class="p">)),</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
