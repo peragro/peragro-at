@@ -130,11 +130,14 @@
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;st_ctime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">stat</span><span class="o">.</span><span class="n">st_ctime</span><span class="p">)))</span>
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;st_mtime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">stat</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">)))</span>
         
-        <span class="kn">from</span> <span class="nn">repository</span> <span class="kn">import</span> <span class="n">Repository</span>
-        <span class="n">repo</span> <span class="o">=</span> <span class="n">Repository</span><span class="p">(</span><span class="s">&#39;/home/sueastside/dev/DAMN/damn-test-files&#39;</span><span class="p">)</span>
-        
-        <span class="n">repo</span><span class="o">.</span><span class="n">get_meta_data</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">)</span>
-          
+        <span class="c">#TODO:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">repository</span> <span class="kn">import</span> <span class="n">Repository</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="n">Repository</span><span class="p">(</span><span class="s">&#39;/home/sueastside/dev/DAMN/damn-test-files&#39;</span><span class="p">)</span>
+            
+            <span class="n">repo</span><span class="o">.</span><span class="n">get_meta_data</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+          <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
           
 <div class="viewcode-block" id="Analyzer.analyze_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.Analyzer.analyze_file">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a FileDescription</span>

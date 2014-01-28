@@ -224,6 +224,39 @@ and cleaning up reverse map for cleaner file extensions.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="damn_at.options.EnumOption">
+<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">EnumOption</tt><big>(</big><em>name</em>, <em>description</em>, <em>choices</em>, <em>default</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#damn_at.options.BaseOption" title="damn_at.options.BaseOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.BaseOption</span></tt></a></p>
+<p>Class for enum options</p>
+<dl class="attribute">
+<dt id="damn_at.options.EnumOption.constraint_description">
+<tt class="descname">constraint_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption.constraint_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption.constraint_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.options.EnumOption.default_description">
+<tt class="descname">default_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption.default_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption.default_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="damn_at.options.EnumOption.parse_from_string">
+<tt class="descname">parse_from_string</tt><big>(</big><em>a_string</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption.parse_from_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption.parse_from_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="damn_at.options.EnumOption.type_description">
+<tt class="descname">type_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption.type_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption.type_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="damn_at.options.FloatArrayOption">
+<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">FloatArrayOption</tt><big>(</big><em>name=''</em>, <em>description=''</em>, <em>default=0.0</em>, <em>min=2.2250738585072014e-308</em>, <em>max=1.7976931348623157e+308</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#FloatArrayOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.FloatArrayOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#damn_at.options.VectorOption" title="damn_at.options.VectorOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.VectorOption</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
 <dt id="damn_at.options.FloatOption">
 <em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">FloatOption</tt><big>(</big><em>name=''</em>, <em>description=''</em>, <em>default=0.0</em>, <em>min=2.2250738585072014e-308</em>, <em>max=1.7976931348623157e+308</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#FloatOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.FloatOption" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#damn_at.options.VectorOption" title="damn_at.options.VectorOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.VectorOption</span></tt></a></p>
@@ -457,7 +490,7 @@ and address it.</p>
 <p>Analyze files and tries to find known assets types in it.</p>
 <dl class="method">
 <dt id="damn_at.transcoder.Transcoder.get_target_mimetype">
-<tt class="descname">get_target_mimetype</tt><big>(</big><em>src_mimetype</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.get_target_mimetype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.get_target_mimetype" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_target_mimetype</tt><big>(</big><em>src_mimetype</em>, <em>mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.get_target_mimetype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.get_target_mimetype" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -718,7 +751,7 @@ and address it.</p>
 
 <dl class="function">
 <dt id="damn_at.utilities.run_blender">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">run_blender</tt><big>(</big><em>an_uri</em>, <em>script_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#run_blender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.run_blender" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">run_blender</tt><big>(</big><em>an_uri</em>, <em>script_uri</em>, <em>arguments=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#run_blender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.run_blender" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs blender with the given file and script</p>
 </dd></dl>
 
