@@ -56,9 +56,16 @@ class VectorOption(BaseOption):
         self.min = min
         self.max = max
         
+    def _clean(self, a_string):
+        if a_string.startswith('('):
+            a_string = a_string[1:]
+        if a_string.startswith(')'):
+            a_string = a_string[:-1]
+        return a_string
+        
     def parse_from_string(self, a_string):
-        splits = a_string.split(',')
-        if len(splits)!=self.size:
+        splits = self._clean(a_string).split(',')
+        if self.size and len(splits)!=self.size:
             raise OptionParseException('%s not of size %d!'%(a_string, self.size))
         return_value = []
         for val in splits:
@@ -72,7 +79,11 @@ class VectorOption(BaseOption):
 
     @property
     def type_description(self):
-        return '%s%s' % (self.type.__name__, self.size if self.size > 1 else '')
+        if self.size:
+            size = self.size if self.size > 1 else ''
+        else:
+            size = '*'
+        return '%s%s' % (self.type.__name__, size)
 
     @property        
     def constraint_description(self):
@@ -80,7 +91,13 @@ class VectorOption(BaseOption):
 
     @property
     def default_description(self):
-        return str(self.default)
+        try:
+            iterator = iter(self.default)
+            return ','.join(self.default)
+        except TypeError:
+            # not iterable
+            return str(self.default)
+            
 
 
 class IntVectorOption(VectorOption):
@@ -91,7 +108,35 @@ class FloatOption(VectorOption):
     def __init__(self, name="", description="", default=0.0, min=sys.float_info.min, max=sys.float_info.max):
         VectorOption.__init__(self, type=float, name=name, description=description, default=default, min=min, max=max, size=1)
 
+class FloatArrayOption(VectorOption):
+    def __init__(self, name="", description="", default=0.0, min=sys.float_info.min, max=sys.float_info.max):
+        VectorOption.__init__(self, type=float, name=name, description=description, default=default, min=min, max=max, size=None)
+
+
+class EnumOption(BaseOption):
+    """Class for enum options"""
+    def __init__(self, name, description, choices, default):
+        BaseOption.__init__(self, name, description, default)
+        self.choices = choices
         
+    def parse_from_string(self, a_string):
+        if a_string not in self.choices:
+            raise OptionConstraintException('%s not in %s' % (a_string, str(self.choices)))
+        return a_string
+
+    @property
+    def type_description(self):
+        return 'enum'
+
+    @property        
+    def constraint_description(self):
+        return 'Value needs to be one of %s' % (str(self.choices))
+
+    @property
+    def default_description(self):
+        return str(self.default)        
+
+
 def options_to_template(options):
     path = ''
     for option in options:
@@ -104,7 +149,10 @@ def parse_options(convert_map_entry, **options):
     entries = dict([(option.name, option) for option in convert_map_entry])
     for name, value in options.items():
         if name in entries:
-            opts[name] = entries[name].parse_from_string(value)
+            if value != entries[name].default_description:
+                opts[name] = entries[name].parse_from_string(value)
+            else:
+                opts[name] = entries[name].default
     return opts
 
 

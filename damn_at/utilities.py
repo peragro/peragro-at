@@ -44,7 +44,7 @@ def script_path(filename):
     return os.path.join(dirname, 'b-script-'+fnoext+'.py')
 
 
-def run_blender(an_uri, script_uri):
+def run_blender(an_uri, script_uri, arguments=[]):
     """Runs blender with the given file and script"""
     paths = collect_python3_paths()
 
@@ -54,6 +54,7 @@ def run_blender(an_uri, script_uri):
     env = dict(os.environ)
     env['PYTHONPATH'] = os.pathsep.join(paths)
     args = ['blender', "-b", an_uri, '-P', script_uri]
+    args.extend(arguments)
 
     process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
     stdout, stderr = process.communicate()

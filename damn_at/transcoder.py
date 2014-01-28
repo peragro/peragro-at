@@ -88,8 +88,8 @@ class Transcoder(object):
         """Returns a transcoder
         
         """
-        target_mimetpes = self.target_mimetypes_transcoders[src_mimetype]
-        for target, transcoder in target_mimetpes:
+        target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
+        for target, transcoder in target_mimetypes:
             if target == target_mimetype:
                 return transcoder
                 
@@ -101,11 +101,14 @@ class Transcoder(object):
         """
         return self.target_mimetypes
         
-    def get_target_mimetype(self, src_mimetype):
+    def get_target_mimetype(self, src_mimetype, mimetype, **options):
         """"""
         # TODO: Need some clever way to select the right transcoder in 
         # the list based on options passed.
-        return self.target_mimetypes[src_mimetype][0] 
+        target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
+        for target, transcoder in target_mimetypes:
+            if target.mimetype == mimetype:
+                return target
         
     def parse_options(self, src_mimetype, target_mimetype, **options):
         """"""
@@ -118,52 +121,66 @@ class Transcoder(object):
         
         :rtype: list<string> file paths
         """
-        src_mimetype = guess_type(file_descr.file.filename)[0]
-        target_mimetype = self.get_target_mimetype(src_mimetype)
-        transcoder = self._get_transcoder(src_mimetype, target_mimetype)
+        target_mimetype = self.get_target_mimetype(asset_id.mimetype, mimetype)
+        transcoder = self._get_transcoder(asset_id.mimetype, target_mimetype)
         
         return transcoder.plugin_object.transcode('/tmp/transcoded/', file_descr, asset_id, target_mimetype, **options)
         
 
 def main():
     import sys
-    from optparse import OptionParser
+    import argparse
     import logging
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
     
     from damn_at.metadatastore import MetaDataStore
+    from damn_at import _CMD_DESCRIPTION
     
-    store_path = os.path.dirname(sys.argv[1])
-    file_name = os.path.basename(sys.argv[1])
-    asset_name = sys.argv[2]
-    mime_type = sys.argv[3]
-    
-    m = MetaDataStore(store_path)
     t = Transcoder()
     
-    target_mimetype = t.get_target_mimetype(mime_type)
+    epilog='Supported mimetypes: \n'
+    for mime, targets in t.get_target_mimetypes().items():
+        epilog +=' * %s -> %s \n'%(mime, str(map(lambda x: x.mimetype, targets)))
+
+    #Process the positional arguments
+    parser = argparse.ArgumentParser(add_help=False, epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter,)
+    parser.add_argument('path')
+    parser.add_argument('assetname')
+    parser.add_argument('mimetype')
+    
+    try:
+        args = parser.parse_args(sys.argv[1:4])
+    except:
+        parser.print_help()
+        sys.exit(1)
+        
+    store_path = os.path.dirname(args.path)
+    file_name = os.path.basename(args.path)
+    
+    m = MetaDataStore(store_path)
+    
+    
+    file_descr = m.get_metadata('', file_name)
+
+    if args.assetname not in get_asset_names_in_file_descr(file_descr):
+        raise TranscoderFileException(args.assetname+' not in file_descr '+str(get_asset_names_in_file_descr(file_descr)))
+        
+    asset_id = find_asset_id_in_file_descr(file_descr, args.assetname)
+    
+    target_mimetype = t.get_target_mimetype(asset_id.mimetype, args.mimetype)
     
     if not target_mimetype:
         raise TranscoderUnknownTypeException(mime_type+' needs to be one of '+str(t.get_target_mimetypes().keys()))
-
     
-    from damn_at import _CMD_DESCRIPTION
-
-    usage = "usage: %prog <store_path> <file_path> <mime_type> [options] " +_CMD_DESCRIPTION
-    parser = OptionParser(usage=usage)
+    #Process the optional arguments
+    parser = argparse.ArgumentParser()    
     for option in target_mimetype.options:
-        parser.add_option("--"+option.name, dest=option.name, default=option.default_value, help='%s (%s) [default: %s]'%(option.description, option.constraint, option.default_value))
+        parser.add_argument("--"+option.name, dest=option.name, default=option.default_value, help='%s (%s) [default: %s]'%(option.description, option.constraint, option.default_value))
 
-    (options, args) = parser.parse_args(sys.argv[3:])
+    options = parser.parse_args(sys.argv[4:])
     
-    file_descr = m.get_metadata('', file_name)
-            
-    if asset_name not in get_asset_names_in_file_descr(file_descr):
-        raise TranscoderFileException(asset_name+' not in file_descr '+str(get_asset_names_in_file_descr(file_descr)))
-        
-    asset_id = find_asset_id_in_file_descr(file_descr, asset_name)
-    
-    options = t.parse_options(mime_type, target_mimetype, **vars(options))
+    # Parse the options using the convert_map of the transcoder
+    options = t.parse_options(asset_id.mimetype, target_mimetype, **vars(options))
     
     print(_CMD_DESCRIPTION)
     print('Transcoding "%s"\n'%file_descr.file.filename)
@@ -171,7 +188,7 @@ def main():
     print('with: ')
     for option_name, option_value in options.items():
         print('* %s: %s '%(option_name, option_value))
-    file_paths = t.transcode(file_descr, asset_id, mime_type, **options)
+    file_paths = t.transcode(file_descr, asset_id, args.mimetype, **options)
     print(file_paths)
     
     

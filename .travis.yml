@@ -13,9 +13,12 @@ before_install:
  - sudo apt-get install -qq pylint
 install: 
 - pip install -r requirements.txt
+- pip install coveralls
 script: 
 - python setup.py test
 - sudo python setup.py develop
+- coverage run --source=damn_at setup.py test
 after_script:
 - ./bin/update-gh-pages.sh
-- python bin/run-pylint.py
+after_success:
+  coveralls

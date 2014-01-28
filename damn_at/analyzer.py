@@ -79,11 +79,14 @@ class Analyzer(object):
         file_descr.metadata['st_ctime'] = MetaDataValue(type=MetaDataType.STRING, string_value=time.asctime(time.localtime(stat.st_ctime)))
         file_descr.metadata['st_mtime'] = MetaDataValue(type=MetaDataType.STRING, string_value=time.asctime(time.localtime(stat.st_mtime)))
         
-        from repository import Repository
-        repo = Repository('/home/sueastside/dev/DAMN/damn-test-files')
-        
-        repo.get_meta_data(an_uri, file_descr)
-          
+        #TODO:
+        try:
+            from repository import Repository
+            repo = Repository('/home/sueastside/dev/DAMN/damn-test-files')
+            
+            repo.get_meta_data(an_uri, file_descr)
+        except Exception as e:
+          print(e)
           
     def analyze_file(self, an_uri):
         """Returns a FileDescription
