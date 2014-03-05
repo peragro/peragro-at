@@ -1,3 +1,4 @@
+#!/bin/bash
 git checkout --orphan gh-pages
 git rm -rf .
 echo "Test" > index.html

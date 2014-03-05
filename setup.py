@@ -11,7 +11,7 @@ config = {
     'author_email': 'No, thanks',
     'version': '0.1',
     'test_suite': 'tests.suite',
-    'install_requires': ['Yapsy', 'pylint', 'thrift', 'metrology'],
+    'install_requires': ['Yapsy', 'Image', 'pylint', 'thrift', 'metrology', 'gitpython'],
     'test_requires': [],
     'packages': ['damn_at'],
     'scripts': [],

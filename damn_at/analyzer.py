@@ -125,12 +125,12 @@ def analyze(a, m, file_name):
 
         hashid = calculate_hash_for_file(file_name)
         if m.is_in_store('/tmp/damn', hashid):
-            print('Fetching from store...%s'%(hashid))
+            #print('Fetching from store...%s'%(hashid))
             descr = m.get_metadata('/tmp/damn', hashid)
             return descr, True
         else:
             print(a.get_supported_mimetypes())
-            print('Analyzing...')
+            #print('Analyzing...')
             descr = a.analyze_file(file_name)
             hash_file_descr(descr)
             m.write_metadata('/tmp/damn', hashid, descr)
@@ -138,6 +138,8 @@ def analyze(a, m, file_name):
     
     descr, from_store = analyze_file(file_name)
     if descr.assets:
+        print('\n%s %s'%(descr.file.hash, '(From store)' if from_store else '' ))
+        print('-'*40)
         print('Assets: %d'%len(descr.assets))
         for asset in descr.assets:
             print('  -->%s  (%s)'%(asset.asset.subname, asset.asset.mimetype))

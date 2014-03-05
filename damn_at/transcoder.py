@@ -170,7 +170,11 @@ def main():
     target_mimetype = t.get_target_mimetype(asset_id.mimetype, args.mimetype)
     
     if not target_mimetype:
-        raise TranscoderUnknownTypeException(mime_type+' needs to be one of '+str(t.get_target_mimetypes().keys()))
+        if asset_id.mimetype not in t.get_target_mimetypes():
+            raise TranscoderUnknownTypeException(asset_id.mimetype+' needs to be one of '+str(t.get_target_mimetypes().keys()))
+        else:
+            targets = [x.mimetype for x in t.get_target_mimetypes()[asset_id.mimetype]]
+            raise TranscoderUnknownTypeException(args.mimetype+' needs to be one of '+str(targets))
     
     #Process the optional arguments
     parser = argparse.ArgumentParser()    
