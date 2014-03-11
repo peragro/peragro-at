@@ -1,0 +1,19 @@
+audio Package
+=============
+
+:mod:`audio` Package
+--------------------
+
+.. automodule:: damn_at.analyzers.audio
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`soxanalyzer` Module
+-------------------------
+
+.. automodule:: damn_at.analyzers.audio.soxanalyzer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
