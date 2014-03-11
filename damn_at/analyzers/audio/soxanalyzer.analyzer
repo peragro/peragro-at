@@ -1,0 +1,9 @@
+[Core]
+Name = SOX audio analyzer
+Module = soxanalyzer
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = SOX based audio analyzer
