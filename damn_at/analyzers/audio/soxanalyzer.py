@@ -22,8 +22,8 @@ def get_sox_types():
             print("E: GetSoxTypes failed with error code %d! "%(pro.returncode),
                     out, err)
             return []
-    except OSError:
-        print("E: GetSoxTypes failed!", out, err)
+    except OSError as oserror:
+        print("E: GetSoxTypes failed!", oserror)
         return []
 
     match = re.search(r'AUDIO FILE FORMATS:(.*)PLAYLIST FORMATS',
