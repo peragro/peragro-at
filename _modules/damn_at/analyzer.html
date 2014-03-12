@@ -69,7 +69,7 @@
 <span class="kn">from</span> <span class="nn">damn_at.metadatastore</span> <span class="kn">import</span> <span class="n">MetaDataStore</span>
 
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">mimetypes</span>
-
+<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">logger</span>
 
 <div class="viewcode-block" id="AnalyzerException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.AnalyzerException">[docs]</a><span class="k">class</span> <span class="nc">AnalyzerException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base Analyzer Exception&quot;&quot;&quot;</span>
@@ -120,6 +120,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">analyzers</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         </div>
     <span class="k">def</span> <span class="nf">_file_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get metadata about the actual file and add it to the FileDescription</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stat</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">an_uri</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
@@ -132,12 +134,12 @@
         
         <span class="c">#TODO:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">repository</span> <span class="kn">import</span> <span class="n">Repository</span>
+            <span class="kn">from</span> <span class="nn">damn_at.repository</span> <span class="kn">import</span> <span class="n">Repository</span>
             <span class="n">repo</span> <span class="o">=</span> <span class="n">Repository</span><span class="p">(</span><span class="s">&#39;/home/sueastside/dev/DAMN/damn-test-files&#39;</span><span class="p">)</span>
             
             <span class="n">repo</span><span class="o">.</span><span class="n">get_meta_data</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-          <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">repo_exception</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Unable to extract repository information: </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo_exception</span><span class="p">))</span>
           
 <div class="viewcode-block" id="Analyzer.analyze_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.Analyzer.analyze_file">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a FileDescription</span>
@@ -158,11 +160,13 @@
             <span class="k">raise</span> <span class="n">AnalyzerUnknownTypeException</span><span class="p">(</span><span class="s">&quot;E: Analyzer: No analyzer for </span><span class="si">%s</span><span class="s"> (file: </span><span class="si">%s</span><span class="s">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">))</span>
 
 </div></div>
-<div class="viewcode-block" id="analyze"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.analyze">[docs]</a><span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+<div class="viewcode-block" id="analyze"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.analyze">[docs]</a><span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="n">analyzer</span><span class="p">,</span> <span class="n">metadatastore</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;TODO: move hashing to generic function and metadatastore usage to the metadatastore module. &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">hash_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate the hashes for all FileIds in a given FileDescription&quot;&quot;&quot;</span>
         <span class="n">CACHE</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">def</span> <span class="nf">cached_calculate_hash_for_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Calculate and cache the hash for a given file&quot;&quot;&quot;</span>
             <span class="k">if</span> <span class="n">file_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CACHE</span><span class="p">:</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">)</span>
                 <span class="n">CACHE</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">calculate_hash_for_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -172,28 +176,28 @@
             <span class="n">file_id</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">cached_calculate_hash_for_file</span><span class="p">(</span><span class="n">file_id</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">analyze_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_descr</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Analyze or fetch from metadatastorage a given filename&quot;&quot;&quot;</span>
         <span class="n">file_name</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">)</span>
 
         <span class="n">hashid</span> <span class="o">=</span> <span class="n">calculate_hash_for_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">is_in_store</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">metadatastore</span><span class="o">.</span><span class="n">is_in_store</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">):</span>
             <span class="c">#print(&#39;Fetching from store...%s&#39;%(hashid))</span>
-            <span class="n">descr</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">)</span>
+            <span class="n">descr</span> <span class="o">=</span> <span class="n">metadatastore</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">descr</span><span class="p">,</span> <span class="bp">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get_supported_mimetypes</span><span class="p">())</span>
             <span class="c">#print(&#39;Analyzing...&#39;)</span>
-            <span class="n">descr</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">analyze_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="n">descr</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
             <span class="n">hash_file_descr</span><span class="p">(</span><span class="n">descr</span><span class="p">)</span>
-            <span class="n">m</span><span class="o">.</span><span class="n">write_metadata</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">,</span> <span class="n">descr</span><span class="p">)</span>
+            <span class="n">metadatastore</span><span class="o">.</span><span class="n">write_metadata</span><span class="p">(</span><span class="s">&#39;/tmp/damn&#39;</span><span class="p">,</span> <span class="n">hashid</span><span class="p">,</span> <span class="n">descr</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">descr</span><span class="p">,</span> <span class="bp">False</span>
     
     <span class="n">descr</span><span class="p">,</span> <span class="n">from_store</span> <span class="o">=</span> <span class="n">analyze_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">descr</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">descr</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="s">&#39;(From store)&#39;</span> <span class="k">if</span> <span class="n">from_store</span> <span class="k">else</span> <span class="s">&#39;&#39;</span> <span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Assets: </span><span class="si">%d</span><span class="s">&#39;</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">descr</span><span class="o">.</span><span class="n">assets</span><span class="p">))</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">descr</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="s">&#39;(From store)&#39;</span> <span class="k">if</span> <span class="n">from_store</span> <span class="k">else</span> <span class="s">&#39;&#39;</span> <span class="p">))</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Assets: </span><span class="si">%d</span><span class="s">&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">descr</span><span class="o">.</span><span class="n">assets</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">descr</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;  --&gt;</span><span class="si">%s</span><span class="s">  (</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">mimetype</span><span class="p">))</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;  --&gt;</span><span class="si">%s</span><span class="s">  (</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">mimetype</span><span class="p">))</span>
 
     <span class="n">file_ids</span> <span class="o">=</span> <span class="n">get_referenced_file_ids</span><span class="p">(</span><span class="n">descr</span><span class="p">)</span>
     <span class="n">paths</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">filename</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">file_ids</span><span class="p">])</span>
@@ -203,33 +207,42 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">_</span><span class="p">,</span> <span class="n">from_store</span> <span class="o">=</span> <span class="n">analyze_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">descr</span><span class="p">)</span>
                 <span class="c">#print(_)</span>
-            <span class="k">except</span> <span class="n">AnalyzerUnknownTypeException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">AnalyzerUnknownTypeException</span> <span class="k">as</span> <span class="n">aute</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Unknown type exception: </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">aute</span><span class="p">))</span>
 </div>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Main function&quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">logging</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">:</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
     
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;damn-at_analyzer&#39;</span><span class="p">)</span>
+    <span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">stream_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">propagate</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span>
+    
     <span class="n">store_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">file_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Analyzing </span><span class="si">%s</span><span class="s"> into </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">store_path</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">Analyzer</span><span class="p">()</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">MetaDataStore</span><span class="p">(</span><span class="n">store_path</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Analyzing </span><span class="si">%s</span><span class="s"> into </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">store_path</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="n">analyzer</span> <span class="o">=</span> <span class="n">Analyzer</span><span class="p">()</span>
+    <span class="n">metadatastore</span> <span class="o">=</span> <span class="n">MetaDataStore</span><span class="p">(</span><span class="n">store_path</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
-        <span class="n">analyze</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
+        <span class="n">analyze</span><span class="p">(</span><span class="n">analyzer</span><span class="p">,</span> <span class="n">metadatastore</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file_name</span><span class="p">),</span> <span class="n">output</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
             <span class="k">if</span> <span class="s">&#39;.git&#39;</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
                 <span class="n">dirs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;.git&#39;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">file_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="n">analyze</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
-                    <span class="k">except</span> <span class="n">AnalyzerUnknownTypeException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                        <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                        <span class="n">analyze</span><span class="p">(</span><span class="n">analyzer</span><span class="p">,</span> <span class="n">metadatastore</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">output</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="n">AnalyzerUnknownTypeException</span> <span class="k">as</span> <span class="n">aute</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Unknown type exception: </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">aute</span><span class="p">))</span>
     
     
 </div>

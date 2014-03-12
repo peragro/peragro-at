@@ -56,25 +56,22 @@
 
 <span class="kn">import</span> <span class="nn">mimetypes</span>
 
-<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">logger</span>
-<span class="kn">from</span> <span class="nn">damn_at.analyzer</span> <span class="kn">import</span> <span class="n">AnalyzerException</span>
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">FileId</span><span class="p">,</span> <span class="n">FileDescription</span><span class="p">,</span> <span class="n">AssetDescription</span><span class="p">,</span> <span class="n">AssetId</span>
 
 <span class="kn">from</span> <span class="nn">damn_at.pluginmanager</span> <span class="kn">import</span> <span class="n">IAnalyzer</span>
-<span class="kn">from</span> <span class="nn">damn_at.utilities</span> <span class="kn">import</span> <span class="n">script_path</span><span class="p">,</span> <span class="n">run_blender</span>
 
 <div class="viewcode-block" id="GenericImageAnalyzer"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.image.html#damn_at.analyzers.image.analyzerimage.GenericImageAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">GenericImageAnalyzer</span><span class="p">(</span><span class="n">IAnalyzer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generic Image analyzer.&quot;&quot;&quot;</span>
     <span class="n">handled_types</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s">&quot;image/png&quot;</span><span class="p">]</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">IAnalyzer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GenericImageAnalyzer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
       
 <div class="viewcode-block" id="GenericImageAnalyzer.activate"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.image.html#damn_at.analyzers.image.analyzerimage.GenericImageAnalyzer.activate">[docs]</a>    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="GenericImageAnalyzer.analyze"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.image.html#damn_at.analyzers.image.analyzerimage.GenericImageAnalyzer.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
-    	<span class="n">fileid</span> <span class="o">=</span> <span class="n">FileId</span><span class="p">(</span><span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">an_uri</span><span class="p">))</span>
+        <span class="n">fileid</span> <span class="o">=</span> <span class="n">FileId</span><span class="p">(</span><span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">an_uri</span><span class="p">))</span>
         <span class="n">file_descr</span> <span class="o">=</span> <span class="n">FileDescription</span><span class="p">(</span><span class="nb">file</span> <span class="o">=</span> <span class="n">fileid</span><span class="p">)</span>
         <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span> <span class="o">=</span> <span class="p">[]</span>
         

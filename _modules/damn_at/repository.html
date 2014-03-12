@@ -52,7 +52,6 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">The MetaDataStore handler.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">git</span> <span class="kn">import</span> <span class="n">Repo</span>
 
 <span class="kn">from</span> <span class="nn">damn_at.pluginmanager</span> <span class="kn">import</span> <span class="n">IRepository</span>
@@ -67,13 +66,15 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Repository</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         
 <div class="viewcode-block" id="Repository.get_meta_data"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.repository.Repository.get_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get git commit metadata for the specified file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">heads</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">commit</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">blob</span> <span class="o">=</span> <span class="n">commit</span><span class="o">.</span><span class="n">tree</span><span class="o">/</span><span class="n">path</span>
+        <span class="c">#path = os.path.relpath(an_uri, self.path)</span>
+        <span class="c">#blob = commit.tree/path</span>
 
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;git.author.name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="n">commit</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;git.author.email&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="n">commit</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
@@ -84,37 +85,7 @@
         
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;git.remotes.origin.url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">config_reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;url&#39;</span><span class="p">))</span>
         
-        <span class="k">return</span> <span class="n">file_descr</span>
-
-</div></div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-
-    <span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="s">&quot;/home/sueastside/dev/DAMN/damn-test-files&quot;</span><span class="p">)</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">repo</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    
-    <span class="n">origin</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span>
-    <span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">origin</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">origin</span><span class="o">.</span><span class="n">refs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">origin</span><span class="o">.</span><span class="n">refs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">origin</span><span class="o">.</span><span class="n">refs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">remote_name</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">origin</span><span class="o">.</span><span class="n">config_reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;url&#39;</span><span class="p">))</span>
-
-    <span class="n">commit</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">heads</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">commit</span>
-
-    <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;mesh/blender/cube1.blend&#39;</span>
-
-    <span class="n">commits</span> <span class="o">=</span> <span class="p">[</span><span class="n">commit</span><span class="p">]</span>
-    <span class="n">commits</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">commit</span><span class="o">.</span><span class="n">iter_parents</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-
-    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commits</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-        <span class="n">blob</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">tree</span><span class="o">/</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">blob</span><span class="p">,</span> <span class="n">blob</span><span class="o">.</span><span class="n">data_stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-        <span class="c">#print dir(c)</span>
-        <span class="k">print</span> <span class="n">c</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">authored_date</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">committed_date</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">committer</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">name_rev</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">summary</span>
+        <span class="k">return</span> <span class="n">file_descr</span></div></div>
 </pre></div>
 
           </div>
