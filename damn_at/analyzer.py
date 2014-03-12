@@ -18,7 +18,7 @@ from damn_at.utilities import is_existing_file, calculate_hash_for_file, get_ref
 from damn_at.metadatastore import MetaDataStore
 
 from damn_at import mimetypes
-
+from damn_at import logger
 
 class AnalyzerException(Exception):
     """Base Analyzer Exception"""
@@ -69,6 +69,8 @@ class Analyzer(object):
         return self.analyzers.keys()
         
     def _file_metadata(self, an_uri, file_descr):
+        """Get metadata about the actual file and add it to the FileDescription
+        """
         stat = os.stat(an_uri)
         if file_descr.metadata is None:
             file_descr.metadata = {}
@@ -81,12 +83,12 @@ class Analyzer(object):
         
         #TODO:
         try:
-            from repository import Repository
+            from damn_at.repository import Repository
             repo = Repository('/home/sueastside/dev/DAMN/damn-test-files')
             
             repo.get_meta_data(an_uri, file_descr)
-        except Exception as e:
-          print(e)
+        except Exception as repo_exception:
+            logger.warn("Unable to extract repository information: %s", str(repo_exception))
           
     def analyze_file(self, an_uri):
         """Returns a FileDescription
@@ -107,11 +109,13 @@ class Analyzer(object):
             raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(mimetype, an_uri))
 
 
-def analyze(a, m, file_name):
+def analyze(analyzer, metadatastore, file_name, output):
     """TODO: move hashing to generic function and metadatastore usage to the metadatastore module. """
     def hash_file_descr(file_descr):
+        """Calculate the hashes for all FileIds in a given FileDescription"""
         CACHE = {}
         def cached_calculate_hash_for_file(file_name):
+            """Calculate and cache the hash for a given file"""
             if file_name not in CACHE:
                 path = abspath(file_name, file_descr)
                 CACHE[file_name] = calculate_hash_for_file(path)
@@ -121,28 +125,28 @@ def analyze(a, m, file_name):
             file_id.hash = cached_calculate_hash_for_file(file_id.filename)
         
     def analyze_file(file_name, file_descr=None):
+        """Analyze or fetch from metadatastorage a given filename"""
         file_name = abspath(file_name, file_descr)
 
         hashid = calculate_hash_for_file(file_name)
-        if m.is_in_store('/tmp/damn', hashid):
+        if metadatastore.is_in_store('/tmp/damn', hashid):
             #print('Fetching from store...%s'%(hashid))
-            descr = m.get_metadata('/tmp/damn', hashid)
+            descr = metadatastore.get_metadata('/tmp/damn', hashid)
             return descr, True
         else:
-            print(a.get_supported_mimetypes())
             #print('Analyzing...')
-            descr = a.analyze_file(file_name)
+            descr = analyzer.analyze_file(file_name)
             hash_file_descr(descr)
-            m.write_metadata('/tmp/damn', hashid, descr)
+            metadatastore.write_metadata('/tmp/damn', hashid, descr)
             return descr, False
     
     descr, from_store = analyze_file(file_name)
     if descr.assets:
-        print('\n%s %s'%(descr.file.hash, '(From store)' if from_store else '' ))
-        print('-'*40)
-        print('Assets: %d'%len(descr.assets))
+        output.info('\n%s %s'%(descr.file.hash, '(From store)' if from_store else '' ))
+        output.info('-'*40)
+        output.info('Assets: %d', len(descr.assets))
         for asset in descr.assets:
-            print('  -->%s  (%s)'%(asset.asset.subname, asset.asset.mimetype))
+            output.info('  -->%s  (%s)'%(asset.asset.subname, asset.asset.mimetype))
 
     file_ids = get_referenced_file_ids(descr)
     paths = set([x.filename for x in file_ids])
@@ -152,33 +156,42 @@ def analyze(a, m, file_name):
             try:
                 _, from_store = analyze_file(path, descr)
                 #print(_)
-            except AnalyzerUnknownTypeException as e:
-                print(e)
+            except AnalyzerUnknownTypeException as aute:
+                logger.warn("Unknown type exception: %s", str(aute))
 
 def main():
+    """Main function"""
     import logging
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
     
+    formatter = logging.Formatter('%(message)s')
+    output = logging.getLogger('damn-at_analyzer')
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(formatter)
+    output.propagate = False
+    output.handlers = []
+    output.addHandler(stream_handler)
+    
     store_path = sys.argv[1]
     file_name = sys.argv[2]
-    print('-'*70)
-    print('Analyzing %s into %s'%(file_name, store_path))
-    print('-'*70)
-    a = Analyzer()
-    m = MetaDataStore(store_path)
+    output.info('-'*70)
+    output.info('Analyzing %s into %s', file_name, store_path)
+    output.info('-'*70)
+    analyzer = Analyzer()
+    metadatastore = MetaDataStore(store_path)
     
     if os.path.isfile(file_name):
-        analyze(a, m, os.path.abspath(file_name))
+        analyze(analyzer, metadatastore, os.path.abspath(file_name), output)
     else:
         for root, dirs, files in os.walk(file_name):
             if '.git' in dirs:
                 dirs.remove('.git')
-            for f in files:
-                if not f.startswith('.'):
+            for file_name in files:
+                if not file_name.startswith('.'):
                     try:
-                        analyze(a, m, os.path.join(root, f))
-                    except AnalyzerUnknownTypeException as e:
-                        print(e)
+                        analyze(analyzer, metadatastore, os.path.join(root, file_name), output)
+                    except AnalyzerUnknownTypeException as aute:
+                        logger.warn("Unknown type exception: %s", str(aute))
     
     
 
