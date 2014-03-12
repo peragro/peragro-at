@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>damn_at.analyzers.audio.soxanalyzer &mdash; damn-at 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="damn-at 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">damn-at 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for damn_at.analyzers.audio.soxanalyzer</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;Analyzer for audio files using sox&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">mimetypes</span>
+
+<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">AssetId</span><span class="p">,</span> <span class="n">FileId</span><span class="p">,</span> <span class="n">FileDescription</span><span class="p">,</span> <span class="n">AssetDescription</span>
+<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">MetaDataValue</span><span class="p">,</span> <span class="n">MetaDataType</span>
+<span class="kn">from</span> <span class="nn">damn_at.pluginmanager</span> <span class="kn">import</span> <span class="n">IAnalyzer</span>
+<span class="c">#from damn.util import ExecutableDependencies</span>
+
+<span class="c">#ExecutableDependencies([&#39;sox&#39;])</span>
+
+<div class="viewcode-block" id="get_sox_types"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.audio.html#damn_at.analyzers.audio.soxanalyzer.get_sox_types">[docs]</a><span class="k">def</span> <span class="nf">get_sox_types</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;Extract all possible formats for the audio file and store their mime</span>
+<span class="sd">    types&#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;sox&#39;</span><span class="p">,</span> <span class="s">&#39;-h&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">pro</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">pro</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;E: GetSoxTypes failed with error code </span><span class="si">%d</span><span class="s">! &quot;</span><span class="o">%</span><span class="p">(</span><span class="n">pro</span><span class="o">.</span><span class="n">returncode</span><span class="p">),</span>
+                    <span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">oserror</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;E: GetSoxTypes failed!&quot;</span><span class="p">,</span> <span class="n">oserror</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">r&#39;AUDIO FILE FORMATS:(.*)PLAYLIST FORMATS&#39;</span><span class="p">,</span>
+            <span class="n">out</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;E: GetSoxTypes failed to parse output!&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">extensions</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+    <span class="n">mimes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">:</span>
+        <span class="n">mime</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="s">&#39;file.&#39;</span><span class="o">+</span><span class="n">ext</span><span class="p">,</span> <span class="bp">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">mime</span><span class="p">:</span> <span class="n">mimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mime</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mimes</span>
+</div>
+<div class="viewcode-block" id="SoundAnalyzer"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.audio.html#damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">SoundAnalyzer</span><span class="p">(</span><span class="n">IAnalyzer</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;class for sound analyzer called in the analyzer&#39;&#39;&#39;</span>
+    
+    <span class="n">handled_types</span> <span class="o">=</span> <span class="n">get_sox_types</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">IAnalyzer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SoundAnalyzer.activate"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.audio.html#damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer.activate">[docs]</a>    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="SoundAnalyzer.analyze"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.audio.html#damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anURI</span><span class="p">):</span>
+        <span class="n">fileid</span> <span class="o">=</span> <span class="n">FileId</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">anURI</span><span class="p">))</span> 
+        <span class="n">file_descr</span> <span class="o">=</span> <span class="n">FileDescription</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">fileid</span><span class="p">)</span>
+        <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">asset_descr</span> <span class="o">=</span> <span class="n">AssetDescription</span><span class="p">(</span><span class="n">asset</span><span class="o">=</span>
+        <span class="n">AssetId</span><span class="p">(</span><span class="n">subname</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">anURI</span><span class="p">),</span> 
+            <span class="n">mimetype</span><span class="o">=</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">anURI</span><span class="p">,</span> <span class="bp">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">file</span><span class="o">=</span><span class="n">fileid</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;sox&#39;</span><span class="p">,</span> <span class="s">&#39;--i&#39;</span><span class="p">,</span> <span class="n">anURI</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> 
+                    <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">pro</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">pro</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;E: SoundAnalyzer failed </span><span class="si">%s</span><span class="s">with error code </span><span class="si">%d</span><span class="s">! &quot;</span><span class="o">%</span><span class="p">(</span><span class="n">anURI</span><span class="p">,</span>
+                    <span class="n">pro</span><span class="o">.</span><span class="n">returncode</span><span class="p">),</span> <span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;E: SoundAnalyzer failed </span><span class="si">%s</span><span class="s">!&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">anURI</span><span class="p">),</span> <span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;Input File&#39;</span><span class="p">,</span> <span class="s">&#39;Comment&#39;</span><span class="p">]:</span> <span class="k">continue</span>
+            <span class="n">meta</span><span class="p">[</span><span class="s">&#39;Sox-&#39;</span><span class="o">+</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;Sox-&#39;</span><span class="o">+</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span>
+                    <span class="n">string_value</span><span class="o">=</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_descr</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">file_descr</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">damn-at 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, sueastside.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
