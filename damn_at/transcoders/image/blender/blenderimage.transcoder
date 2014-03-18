@@ -1,0 +1,9 @@
+[Core]
+Name = Blender image-transcoder
+Module = blenderimage
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = Blender image transcoder

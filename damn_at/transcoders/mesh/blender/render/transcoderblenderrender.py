@@ -37,7 +37,9 @@ class BlenderTranscoder(ITranscoder):
             file_path = expand_path_template(target_mimetype.template, target_mimetype.mimetype, asset_id, **opts)
             file_paths.append(file_path)
             
-        arguments = ['--', asset_id.subname, path_template]
+        datatype = 'mesh' if target_mimetype.mimetype == 'application/x-blender.mesh' else 'object'
+            
+        arguments = ['--', datatype, asset_id.subname, path_template]
         arguments.extend(map(str, angles))
         arguments.append('--format=PNG')#TODO
         arguments.append('--camera_type=PERSPECTIVE')
