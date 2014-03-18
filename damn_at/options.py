@@ -33,6 +33,7 @@ class BaseOption(object):
         self.name = name
         self.description = description
         self.default = default
+        self.is_array = False
         
     def parse_from_string(self, a_string):    
         raise NotImplementedError("'parse_from_string' must be reimplemented by %s" % self)
@@ -68,10 +69,11 @@ class VectorOption(BaseOption):
         if self.size and len(splits)!=self.size:
             raise OptionParseException('%s not of size %d!'%(a_string, self.size))
         return_value = []
-        for val in splits:
+        for i, val in enumerate(splits):
             value = self.type(val) #Todo:catch
-            if value < self.min or value > self.max:
-                raise OptionConstraintException('%d < %d < %d failed!' % (self.min, value, self.max))
+            if value != self.default[i]:
+                if value < self.min or value > self.max:
+                    raise OptionConstraintException('%d < %d < %d failed!' % (self.min, value, self.max))
             return_value.append(value)
         if self.size==1:
             return return_value[0]
@@ -92,9 +94,9 @@ class VectorOption(BaseOption):
     @property
     def default_description(self):
         try:
-            iterator = iter(self.default)
-            return ','.join(self.default)
-        except TypeError:
+            iterator = map(lambda x: str(x), iter(self.default))
+            return ','.join(iterator)
+        except TypeError as e:
             # not iterable
             return str(self.default)
             
@@ -111,6 +113,7 @@ class FloatOption(VectorOption):
 class FloatArrayOption(VectorOption):
     def __init__(self, name="", description="", default=0.0, min=sys.float_info.min, max=sys.float_info.max):
         VectorOption.__init__(self, type=float, name=name, description=description, default=default, min=min, max=max, size=None)
+        self.is_array = True
 
 
 class EnumOption(BaseOption):
@@ -147,6 +150,17 @@ def options_to_template(options):
 def parse_options(convert_map_entry, **options):
     opts = {}
     entries = dict([(option.name, option) for option in convert_map_entry])
+    for name, option in entries.items():
+        if name in options:
+            opts[name] = entries[name].parse_from_string(options[name])
+        else:
+            opts[name] = entries[name].default
+    return opts
+
+
+def parse_options2(convert_map_entry, **options): #TODO: remove
+    opts = {}
+    entries = dict([(option.name, option) for option in convert_map_entry])
     for name, value in options.items():
         if name in entries:
             if value != entries[name].default_description:
@@ -154,7 +168,6 @@ def parse_options(convert_map_entry, **options):
             else:
                 opts[name] = entries[name].default
     return opts
-
 
 def expand_path_template(template, mimetype, asset_id, **options):
     t = Template(template)

@@ -158,6 +158,8 @@ def analyze(analyzer, metadatastore, file_name, output):
                 #print(_)
             except AnalyzerUnknownTypeException as aute:
                 logger.warn("Unknown type exception: %s", str(aute))
+    
+    return descr
 
 def main():
     """Main function"""
