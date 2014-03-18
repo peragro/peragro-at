@@ -50,8 +50,9 @@ class Transcoder(object):
     """
     Analyze files and tries to find known assets types in it.
     """
-    def __init__(self):
-        registry.gauge('damn_at.transcoder.number_of_transcoders', TranscoderGauge(self))
+    def __init__(self, path):
+        self._path = path
+        #registry.gauge('damn_at.transcoder.number_of_transcoders', TranscoderGauge(self))
         self.transcoders = {}
         plugin_mgr = DAMNPluginManagerSingleton.get()
 
@@ -105,16 +106,46 @@ class Transcoder(object):
         """"""
         # TODO: Need some clever way to select the right transcoder in 
         # the list based on options passed.
-        target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
-        for target, transcoder in target_mimetypes:
-            if target.mimetype == mimetype:
-                return target
+        if src_mimetype in self.target_mimetypes_transcoders:
+            target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
+            for target, transcoder in target_mimetypes:
+                if target.mimetype == mimetype:
+                    return target
         
     def parse_options(self, src_mimetype, target_mimetype, **options):
         """"""
         transcoder = self._get_transcoder(src_mimetype, target_mimetype)
         convert_map_entry = transcoder.plugin_object.convert_map[src_mimetype][target_mimetype.mimetype]
         return parse_options(convert_map_entry, **options)
+        
+    def get_paths(self, asset_id, target_mimetype, **options):
+        """"""
+        transcoder = self._get_transcoder(asset_id.mimetype, target_mimetype)
+        convert_map_entry = transcoder.plugin_object.convert_map[asset_id.mimetype][target_mimetype.mimetype]
+        
+        path_templates = []
+        single_options = dict([(option.name, option) for option in convert_map_entry if not option.is_array])
+        single_options = dict([(option, value) for option, value in options.items() if option in single_options])
+        array_options = dict([(option.name, option) for option in convert_map_entry if option.is_array])
+        array_options = dict([(option, value) for option, value in options.items() if option in array_options])
+        
+        from damn_at.options import expand_path_template
+        path_template = expand_path_template(target_mimetype.template, target_mimetype.mimetype, asset_id, **single_options)
+        
+        #TODO: does not work for multiple arrays.
+        if len(array_options):
+            for key, values in array_options.items():
+                from string import Template
+                for value in values:
+                    t = Template(path_template)
+                    file_path = t.safe_substitute(**{key:value})
+                    path_templates.append(file_path)
+        else:
+            path_templates.append(path_template)
+        
+        #print path_template
+        #print path_templates
+        return path_templates
 
     def transcode(self, file_descr, asset_id, mimetype, **options):
         """Transcode the given AssetId in FileDescription to the specified mimetype 
@@ -124,7 +155,7 @@ class Transcoder(object):
         target_mimetype = self.get_target_mimetype(asset_id.mimetype, mimetype)
         transcoder = self._get_transcoder(asset_id.mimetype, target_mimetype)
         
-        return transcoder.plugin_object.transcode('/tmp/transcoded/', file_descr, asset_id, target_mimetype, **options)
+        return transcoder.plugin_object.transcode(self._path, file_descr, asset_id, target_mimetype, **options)
         
 
 def main():
@@ -136,7 +167,7 @@ def main():
     from damn_at.metadatastore import MetaDataStore
     from damn_at import _CMD_DESCRIPTION
     
-    t = Transcoder()
+    t = Transcoder('/tmp/transcoded/')
     
     epilog='Supported mimetypes: \n'
     for mime, targets in t.get_target_mimetypes().items():
