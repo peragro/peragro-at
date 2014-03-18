@@ -8,6 +8,13 @@ from string import Template
 from damn_at import mimetypes
 from damn_at import utilities
 
+class Sizes():
+    try:
+        maxint = sys.maxint
+    except:
+        maxint = sys.maxsize
+
+
 class OptionException(Exception):
     """Base Option Exception"""
     def __init__(self, msg):
@@ -103,7 +110,7 @@ class VectorOption(BaseOption):
 
 
 class IntVectorOption(VectorOption):
-    def __init__(self, name="", description="", default=(0, 0, 0), min=-sys.maxint, max=sys.maxint, size=3):
+    def __init__(self, name="", description="", default=(0, 0, 0), min=-Sizes.maxint, max=Sizes.maxint, size=3):
         VectorOption.__init__(self, type=int, name=name, description=description, default=default, min=min, max=max, size=size)
 
 class FloatOption(VectorOption):

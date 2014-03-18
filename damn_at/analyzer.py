@@ -52,7 +52,7 @@ class Analyzer(object):
     Analyze files and tries to find known assets types in it.
     """
     def __init__(self):
-        registry.gauge('damn_at.analyzer.number_of_analyzers', AnalyzerGauge(self))
+        #registry.gauge('damn_at.analyzer.number_of_analyzers', AnalyzerGauge(self))
         self.analyzers = {}
         plugin_mgr = DAMNPluginManagerSingleton.get()
 

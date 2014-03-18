@@ -5,7 +5,6 @@ import bpy # pylint: disable=F0401
 import binascii
 import mimetypes
 
-from thrift.protocol import TBinaryProtocol
 from damn_at import FileDescription, FileId, AssetDescription, AssetId, MetaDataValue, MetaDataType
 from damn_at.serialization import SerializeThriftMsg
 
@@ -77,6 +76,7 @@ def main(): # pylint: disable=R0914,R0912,R0915
     And the images assigned its faces.
     """
     for mesh in bpy.data.meshes:
+        mesh.update(calc_tessface=True)
         asset_descr = AssetDescription(asset = AssetId(subname = mesh.name, mimetype = 'application/x-blender.mesh', file = get_file_id(mesh)))
         asset_descr.dependencies = []
         # Collect materials from the mesh
@@ -98,7 +98,8 @@ def main(): # pylint: disable=R0914,R0912,R0915
         asset_descr.metadata = {}
         asset_descr.metadata['nr_of_faces'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.tessfaces))
         asset_descr.metadata['nr_of_vertices'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.vertices))
-                        
+        asset_descr.metadata['nr_of_polygons'] = MetaDataValue(type=MetaDataType.INT, int_value=len(mesh.polygons))               
+        
         file_descr.assets.append(asset_descr) 
         meshes[mesh.name] = asset_descr 
 
@@ -140,7 +141,7 @@ def main(): # pylint: disable=R0914,R0912,R0915
         file_descr.assets.append(asset_descr) 
         texts[text.name] = asset_descr
             
-    data = SerializeThriftMsg(file_descr, TBinaryProtocol.TBinaryProtocol)
+    data = SerializeThriftMsg(file_descr)
     print('-**-')
     print(binascii.hexlify(data))
     print('-**-')
