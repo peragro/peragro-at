@@ -2,6 +2,8 @@
 from thrift.protocol import TBinaryProtocol
 from thrift.transport import TTransport
 
+from thrift.protocol.TJSONProtocol import TSimpleJSONProtocol
+
 
 def SerializeThriftMsg(msg, protocol_type=TBinaryProtocol.TBinaryProtocol):
     """Serialize a thrift message using the given protocol.

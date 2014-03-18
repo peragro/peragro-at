@@ -15,7 +15,7 @@ from damn_at.serialization.generated.damn_types.ttypes import AssetId, AssetDesc
 
 from damn_at.analyzer import Analyzer # pylint: disable=W0611
 from damn_at.metadatastore import MetaDataStore # pylint: disable=W0611
-
+from damn_at.transcoder import Transcoder # pylint: disable=W0611
 
 _CMD_DESCRIPTION = r'''
  ___   _   __  __ _  _ 

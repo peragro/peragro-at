@@ -210,4 +210,4 @@ def get_asset_names_in_file_descr(file_descr):
 
 def unique_asset_id_reference(asset_id):
     name = '%s%s%s' % (asset_id.file.hash, asset_id.subname, asset_id.mimetype)
-    return urllib.quote(name.replace('/', '|'))
+    return urllib.quote(name.replace('/', '__'))
