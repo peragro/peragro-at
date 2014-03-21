@@ -6,9 +6,6 @@ and address it.
 """
 import os
 
-from metrology.instruments.gauge import Gauge
-
-from . import registry
 from .pluginmanager import DAMNPluginManagerSingleton
 
 from damn_at import TargetMimetype, TargetMimetypeOption
@@ -38,21 +35,12 @@ class TranscoderUnknownTypeException(TranscoderException):
     pass
 
 
-class TranscoderGauge(Gauge):
-    """Gauge that returns the number of transcoder-plugins"""
-    def __init__(self, analyzer):
-        self.analyzer = analyzer
-    def value(self):
-        return len(self.analyzer.analyzers)
-
-
 class Transcoder(object):
     """
     Analyze files and tries to find known assets types in it.
     """
     def __init__(self, path):
         self._path = path
-        #registry.gauge('damn_at.transcoder.number_of_transcoders', TranscoderGauge(self))
         self.transcoders = {}
         plugin_mgr = DAMNPluginManagerSingleton.get()
 

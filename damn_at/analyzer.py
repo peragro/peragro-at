@@ -10,9 +10,7 @@ import pwd
 import grp
 import time
 
-from metrology.instruments.gauge import Gauge
-
-from damn_at import registry, MetaDataValue, MetaDataType
+from damn_at import MetaDataValue, MetaDataType
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
 from damn_at.utilities import is_existing_file, calculate_hash_for_file, get_referenced_file_ids, abspath
 from damn_at.metadatastore import MetaDataStore
@@ -39,20 +37,11 @@ class AnalyzerUnknownTypeException(AnalyzerException):
     pass
 
 
-class AnalyzerGauge(Gauge):
-    """Gauge that returns the number of analyzer-plugins"""
-    def __init__(self, analyzer):
-        self.analyzer = analyzer
-    def value(self):
-        return len(self.analyzer.analyzers)
-
-
 class Analyzer(object):
     """
     Analyze files and tries to find known assets types in it.
     """
     def __init__(self):
-        #registry.gauge('damn_at.analyzer.number_of_analyzers', AnalyzerGauge(self))
         self.analyzers = {}
         plugin_mgr = DAMNPluginManagerSingleton.get()
 

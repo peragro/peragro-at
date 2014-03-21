@@ -5,8 +5,6 @@ from __future__ import absolute_import
 import logging
 logger = logging.getLogger('damn_at') # pylint: disable=C0103
 
-from metrology.registry import registry # pylint: disable=W0611
-#registry = Registry() # pylint: disable=C0103
 
 from damn_at.serialization.generated.damn_types.ttypes import TargetMimetype, TargetMimetypeOption # pylint: disable=W0611
 from damn_at.serialization.generated.damn_types.ttypes import MetaDataType, MetaDataValue # pylint: disable=W0611
