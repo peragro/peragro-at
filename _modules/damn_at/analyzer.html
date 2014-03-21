@@ -61,9 +61,7 @@
 <span class="kn">import</span> <span class="nn">grp</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">from</span> <span class="nn">metrology.instruments.gauge</span> <span class="kn">import</span> <span class="n">Gauge</span>
-
-<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">registry</span><span class="p">,</span> <span class="n">MetaDataValue</span><span class="p">,</span> <span class="n">MetaDataType</span>
+<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">MetaDataValue</span><span class="p">,</span> <span class="n">MetaDataType</span>
 <span class="kn">from</span> <span class="nn">damn_at.pluginmanager</span> <span class="kn">import</span> <span class="n">DAMNPluginManagerSingleton</span>
 <span class="kn">from</span> <span class="nn">damn_at.utilities</span> <span class="kn">import</span> <span class="n">is_existing_file</span><span class="p">,</span> <span class="n">calculate_hash_for_file</span><span class="p">,</span> <span class="n">get_referenced_file_ids</span><span class="p">,</span> <span class="n">abspath</span>
 <span class="kn">from</span> <span class="nn">damn_at.metadatastore</span> <span class="kn">import</span> <span class="n">MetaDataStore</span>
@@ -90,20 +88,11 @@
     <span class="k">pass</span>
 
 </div>
-<div class="viewcode-block" id="AnalyzerGauge"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.AnalyzerGauge">[docs]</a><span class="k">class</span> <span class="nc">AnalyzerGauge</span><span class="p">(</span><span class="n">Gauge</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Gauge that returns the number of analyzer-plugins&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">analyzer</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">analyzer</span>
-<div class="viewcode-block" id="AnalyzerGauge.value"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.AnalyzerGauge.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="o">.</span><span class="n">analyzers</span><span class="p">)</span>
-
-</div></div>
 <div class="viewcode-block" id="Analyzer"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.Analyzer">[docs]</a><span class="k">class</span> <span class="nc">Analyzer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Analyze files and tries to find known assets types in it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">registry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s">&#39;damn_at.analyzer.number_of_analyzers&#39;</span><span class="p">,</span> <span class="n">AnalyzerGauge</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">analyzers</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">plugin_mgr</span> <span class="o">=</span> <span class="n">DAMNPluginManagerSingleton</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
@@ -209,6 +198,10 @@
                 <span class="c">#print(_)</span>
             <span class="k">except</span> <span class="n">AnalyzerUnknownTypeException</span> <span class="k">as</span> <span class="n">aute</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Unknown type exception: </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">aute</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">AnalyzerFileException</span> <span class="k">as</span> <span class="n">afe</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;No such file: </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">afe</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">descr</span>
 </div>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.analyzer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Main function&quot;&quot;&quot;</span>

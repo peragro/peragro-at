@@ -38,6 +38,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="damn_at.serialization.generated.html" title="generated Package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -57,6 +60,36 @@
 <h1>serialization Package<a class="headerlink" href="#serialization-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">serialization</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-damn_at.serialization"></span><p>Serialization helpers</p>
+<dl class="function">
+<dt id="damn_at.serialization.DeserializeThriftMsg">
+<tt class="descclassname">damn_at.serialization.</tt><tt class="descname">DeserializeThriftMsg</tt><big>(</big><em>msg</em>, <em>data</em>, <em>protocol_type=&lt;class thrift.protocol.TBinaryProtocol.TBinaryProtocol at 0x283cc80&gt;</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization.html#DeserializeThriftMsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.DeserializeThriftMsg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize a thrift message using the given protocol.</p>
+<p>The default protocol is binary.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>msg: the Thrift object to serialize.
+data: the data to read from.
+protocol_type: the Thrift protocol class to use.</dd>
+<dt>Returns:</dt>
+<dd>Message object passed in (post-parsing).</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.serialization.SerializeThriftMsg">
+<tt class="descclassname">damn_at.serialization.</tt><tt class="descname">SerializeThriftMsg</tt><big>(</big><em>msg</em>, <em>protocol_type=&lt;class thrift.protocol.TBinaryProtocol.TBinaryProtocol at 0x283cc80&gt;</em><big>)</big><a class="reference internal" href="../_modules/damn_at/serialization.html#SerializeThriftMsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.serialization.SerializeThriftMsg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize a thrift message using the given protocol.</p>
+<p>The default protocol is binary.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>msg: the Thrift object to serialize.
+protocol_type: the Thrift protocol class to use.</dd>
+<dt>Returns:</dt>
+<dd>A string of the serialized object.</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="client-module">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">client</span></tt> Module<a class="headerlink" href="#client-module" title="Permalink to this headline">¶</a></h2>
@@ -72,15 +105,15 @@
 <li class="toctree-l2"><a class="reference internal" href="damn_at.serialization.generated.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.serialization.generated.damn.html">damn Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn.html#id1"><tt class="docutils literal"><span class="pre">damn</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn.html#damnservice-module"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn.html#constants-module"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn.html#ttypes-module"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.DamnService"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html">damn_types Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#id1"><tt class="docutils literal"><span class="pre">damn_types</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#constants-module"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#ttypes-module"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#module-damn_at.serialization.generated.damn_types.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#module-damn_at.serialization.generated.damn_types.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -145,6 +178,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="damn_at.serialization.generated.html" title="generated Package"
              >next</a> |</li>
