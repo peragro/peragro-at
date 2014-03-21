@@ -52,6 +52,6 @@ class BlenderTranscoder(ITranscoder):
         
         #print(stdoutdata)
         #print(stderrdata)
-        print(returncode) #Todo: check return code
+        #print(returncode) #Todo: check return code
         
         return file_paths

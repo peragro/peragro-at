@@ -14,14 +14,17 @@ def calculate_hash_for_file(an_uri):
     :param an_uri: the URI pointing to the file
     :rtype: string
     """
-    chksum = hashlib.sha1()
-    with open(an_uri, 'rb') as filehandle:
-        while True:
-            buf = filehandle.read(4096)
-            if not buf: 
-                break
-            chksum.update(buf)
-    return chksum.hexdigest()
+    try:
+        chksum = hashlib.sha1()
+        with open(an_uri, 'rb') as filehandle:
+            while True:
+                buf = filehandle.read(4096)
+                if not buf: 
+                    break
+                chksum.update(buf)
+        return chksum.hexdigest()
+    except IOError as io_error:
+        return 'NOT_FOUND(%s)'%an_uri
 
 
 def is_existing_file(an_uri):
