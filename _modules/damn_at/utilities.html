@@ -104,6 +104,8 @@
 
     <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
     <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s">&#39;..&#39;</span><span class="p">))</span>
+    
+    <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">script_uri</span><span class="p">))</span>
 
     <span class="n">env</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
     <span class="n">env</span><span class="p">[</span><span class="s">&#39;PYTHONPATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
@@ -166,6 +168,18 @@
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">path</span>
 
+    </div>
+<div class="viewcode-block" id="get_metadatavalue_type"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.get_metadatavalue_type">[docs]</a><span class="k">def</span> <span class="nf">get_metadatavalue_type</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the name of the type and the value of the MetaDataValue</span>
+
+<span class="sd">    :param value: :py:class:`damn_at.MetaDataValue` </span>
+<span class="sd">    :rtype: tuple&lt;string,string&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">MetaDataType</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">MetaDataType</span><span class="o">.</span><span class="n">_VALUES_TO_NAMES</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s">&#39;_value&#39;</span>
+    <span class="k">return</span> <span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span>
+
 </div>
 <div class="viewcode-block" id="pretty_print_metadatavalue"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.pretty_print_metadatavalue">[docs]</a><span class="k">def</span> <span class="nf">pretty_print_metadatavalue</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Pretty print a given MetaDataValue</span>
@@ -175,9 +189,8 @@
 <span class="sd">    :param indent: indentation level</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">*</span><span class="n">indent</span>
-    <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">MetaDataType</span>
-    <span class="n">field</span> <span class="o">=</span> <span class="n">MetaDataType</span><span class="o">.</span><span class="n">_VALUES_TO_NAMES</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">type</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s">&#39;_value&#39;</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span><span class="o">+</span><span class="s">&#39;* &#39;</span><span class="o">+</span><span class="n">key</span><span class="o">+</span><span class="s">&#39;: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="bp">None</span><span class="p">)))</span>
+    <span class="nb">type</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">get_metadatavalue_type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span><span class="o">+</span><span class="s">&#39;* &#39;</span><span class="o">+</span><span class="n">key</span><span class="o">+</span><span class="s">&#39;: &#39;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s">&#39; (&#39;</span><span class="o">+</span><span class="nb">type</span><span class="o">+</span><span class="s">&#39;)&#39;</span><span class="p">)</span>
    
 </div>
 <div class="viewcode-block" id="pretty_print_asset_id"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.pretty_print_asset_id">[docs]</a><span class="k">def</span> <span class="nf">pretty_print_asset_id</span><span class="p">(</span><span class="n">asset_id</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>

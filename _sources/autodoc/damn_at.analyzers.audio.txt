@@ -9,6 +9,14 @@ audio Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`metadata` Module
+----------------------
+
+.. automodule:: damn_at.analyzers.audio.metadata
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`soxanalyzer` Module
 -------------------------
 

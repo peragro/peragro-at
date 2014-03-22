@@ -25,3 +25,11 @@ mesh Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`metadata` Module
+----------------------
+
+.. automodule:: damn_at.analyzers.mesh.metadata
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

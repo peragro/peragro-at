@@ -17,6 +17,14 @@ damn_at Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`metadata` Module
+----------------------
+
+.. automodule:: damn_at.metadata
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`metadatastore` Module
 ---------------------------
 

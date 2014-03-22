@@ -90,6 +90,20 @@ and address it.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="damn_at.analyzer.Analyzer.get_supported_metadata">
+<tt class="descname">get_supported_metadata</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#Analyzer.get_supported_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.Analyzer.get_supported_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of supported metada, per mimetype.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">map&lt;string, list&lt;tuple&lt;string,MetaDataType&gt;&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="damn_at.analyzer.Analyzer.get_supported_mimetypes">
 <tt class="descname">get_supported_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#Analyzer.get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.Analyzer.get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of supported mimetypes, &#8216;handled_types&#8217; of all analyzers</p>
@@ -128,7 +142,7 @@ and address it.</p>
 
 <dl class="function">
 <dt id="damn_at.analyzer.analyze">
-<tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">analyze</tt><big>(</big><em>analyzer</em>, <em>metadatastore</em>, <em>file_name</em>, <em>output</em><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.analyze" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">analyze</tt><big>(</big><em>analyzer</em>, <em>metadatastore</em>, <em>file_name</em>, <em>output</em>, <em>forcereanalyze=False</em><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.analyze" title="Permalink to this definition">¶</a></dt>
 <dd><p>TODO: move hashing to generic function and metadatastore usage to the metadatastore module.</p>
 </dd></dl>
 
@@ -139,6 +153,25 @@ and address it.</p>
 </dd></dl>
 
 </div>
+</div>
+<div class="section" id="module-damn_at.metadata">
+<span id="metadata-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">metadata</span></tt> Module<a class="headerlink" href="#module-damn_at.metadata" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="damn_at.metadata.MetaDataExtractor">
+<em class="property">class </em><tt class="descclassname">damn_at.metadata.</tt><tt class="descname">MetaDataExtractor</tt><a class="reference internal" href="../_modules/damn_at/metadata.html#MetaDataExtractor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadata.MetaDataExtractor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="classmethod">
+<dt id="damn_at.metadata.MetaDataExtractor.extract">
+<em class="property">classmethod </em><tt class="descname">extract</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadata.html#MetaDataExtractor.extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadata.MetaDataExtractor.extract" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="damn_at.metadata.MetaDataExtractor.fields">
+<em class="property">classmethod </em><tt class="descname">fields</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/metadata.html#MetaDataExtractor.fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadata.MetaDataExtractor.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-damn_at.metadatastore">
 <span id="metadatastore-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">metadatastore</span></tt> Module<a class="headerlink" href="#module-damn_at.metadatastore" title="Permalink to this headline">¶</a></h2>
@@ -648,6 +681,22 @@ and address it.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="damn_at.utilities.get_metadatavalue_type">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">get_metadatavalue_type</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#get_metadatavalue_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.get_metadatavalue_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the type and the value of the MetaDataValue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.MetaDataValue</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple&lt;string,string&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="damn_at.utilities.get_referenced_file_ids">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">get_referenced_file_ids</tt><big>(</big><em>file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#get_referenced_file_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.get_referenced_file_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect all FileIds in a FileDescription</p>
@@ -797,6 +846,7 @@ and address it.</p>
 <li class="toctree-l2"><a class="reference internal" href="damn_at.analyzers.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.audio.html">audio Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.audio.html#id1"><tt class="docutils literal"><span class="pre">audio</span></tt> Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.audio.html#module-damn_at.analyzers.audio.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.audio.html#module-damn_at.analyzers.audio.soxanalyzer"><tt class="docutils literal"><span class="pre">soxanalyzer</span></tt> Module</a></li>
 </ul>
 </li>
@@ -809,6 +859,7 @@ and address it.</p>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#id1"><tt class="docutils literal"><span class="pre">mesh</span></tt> Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#module-damn_at.analyzers.mesh.analyzerblend"><tt class="docutils literal"><span class="pre">analyzerblend</span></tt> Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#b-script-analyzerblend-module"><tt class="docutils literal"><span class="pre">b-script-analyzerblend</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#module-damn_at.analyzers.mesh.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -867,6 +918,7 @@ and address it.</p>
 <li><a class="reference internal" href="#role">Role</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-damn_at.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.metadatastore"><tt class="docutils literal"><span class="pre">metadatastore</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.mimetypes"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a><ul>
 <li><a class="reference internal" href="#id2">Role</a></li>
