@@ -32,9 +32,6 @@ class BlendAnalyzer(IAnalyzer):
         logger.debug(stdoutdata)
         logger.debug(stderrdata)
         
-        print 'GAH', stdoutdata
-        print 'GAH', stderrdata
-        
         data = str(stdoutdata).split('-**-')[1].replace('\n', '').replace('\r', '').replace("b'", '').replace("'", '')
         data = binascii.unhexlify(data)
         

@@ -12,7 +12,7 @@ import time
 
 from damn_at import MetaDataValue, MetaDataType
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
-from damn_at.utilities import is_existing_file, calculate_hash_for_file, get_referenced_file_ids, abspath
+from damn_at.utilities import is_existing_file, calculate_hash_for_file, get_referenced_file_ids, abspath, get_metadatavalue_type
 from damn_at.metadatastore import MetaDataStore
 
 from damn_at import mimetypes
@@ -48,7 +48,7 @@ class Analyzer(object):
         for plugin in plugin_mgr.getPluginsOfCategory('Analyzer'):
             if plugin.plugin_object.is_activated:
                 for mimetype in plugin.plugin_object.handled_types:
-                    self.analyzers[mimetype] = plugin.plugin_object
+                    self.analyzers[mimetype] = plugin
     
     def get_supported_mimetypes(self):
         """Returns a list of supported mimetypes, 'handled_types' of all analyzers
@@ -56,6 +56,30 @@ class Analyzer(object):
         :rtype: list<string>
         """
         return self.analyzers.keys()
+        
+    def get_supported_metadata(self):
+        """Returns a list of supported metada, per mimetype.
+        
+        :rtype: map<string, list<tuple<string,MetaDataType>>>
+        """
+        import imp, inspect
+        from damn_at.metadata import MetaDataExtractor
+            
+        metadata = {}
+        for mimetype, analyzer in self.analyzers.items():
+            try:
+                module = imp.load_source('damn_at.metadata.'+(mimetype.replace('.', '__')), os.path.join(os.path.dirname(analyzer.path), 'metadata.py'))
+                for name in dir(module):
+                    cls = getattr(module, name)
+                    if inspect.isclass(cls) and not MetaDataExtractor==cls and issubclass(cls, MetaDataExtractor):
+                        if hasattr(cls, '__mimetype__'):
+                            metadata[cls.__mimetype__] = cls.fields()
+                        else:
+                            for mimetype in analyzer.plugin_object.handled_types:
+                                metadata[mimetype] = cls.fields()
+            except IOError as ioe:
+                pass
+        return metadata
         
     def _file_metadata(self, an_uri, file_descr):
         """Get metadata about the actual file and add it to the FileDescription
@@ -90,7 +114,7 @@ class Analyzer(object):
             raise AnalyzerFileException('E: Analyzer: No such file "%s"!'%(an_uri))
         mimetype = mimetypes.guess_type(an_uri, False)[0]
         if mimetype in self.analyzers:
-            file_descr = self.analyzers[mimetype].analyze(an_uri)
+            file_descr = self.analyzers[mimetype].plugin_object.analyze(an_uri)
             file_descr.mimetype = mimetype
             self._file_metadata(an_uri, file_descr)
             return file_descr
@@ -98,7 +122,7 @@ class Analyzer(object):
             raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(mimetype, an_uri))
 
 
-def analyze(analyzer, metadatastore, file_name, output):
+def analyze(analyzer, metadatastore, file_name, output, forcereanalyze=False):
     """TODO: move hashing to generic function and metadatastore usage to the metadatastore module. """
     def hash_file_descr(file_descr):
         """Calculate the hashes for all FileIds in a given FileDescription"""
@@ -118,7 +142,7 @@ def analyze(analyzer, metadatastore, file_name, output):
         file_name = abspath(file_name, file_descr)
 
         hashid = calculate_hash_for_file(file_name)
-        if metadatastore.is_in_store('/tmp/damn', hashid):
+        if not forcereanalyze and metadatastore.is_in_store('/tmp/damn', hashid):
             #print('Fetching from store...%s'%(hashid))
             descr = metadatastore.get_metadata('/tmp/damn', hashid)
             return descr, True
@@ -136,7 +160,11 @@ def analyze(analyzer, metadatastore, file_name, output):
         output.info('Assets: %d', len(descr.assets))
         for asset in descr.assets:
             output.info('  -->%s  (%s)'%(asset.asset.subname, asset.asset.mimetype))
-
+            if asset.metadata:
+                for key, val in asset.metadata.items():
+                    type, val = get_metadatavalue_type(val)
+                    output.info('    - %s  %s (%s)'%(key, val, type))
+    
     file_ids = get_referenced_file_ids(descr)
     paths = set([x.filename for x in file_ids])
     for path in paths:
@@ -154,8 +182,34 @@ def analyze(analyzer, metadatastore, file_name, output):
 
 def main():
     """Main function"""
+    
+    import sys
+    import argparse
     import logging
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+    
+    from damn_at import _CMD_DESCRIPTION
+    
+    analyzer = Analyzer()
+    
+    epilog = _CMD_DESCRIPTION+'\nSupported mimetypes: \n'
+    for mime, meta in analyzer.get_supported_metadata().items():
+        epilog +=' * %s:\n'%mime
+        for key, type in meta:
+            epilog +='   - %s (%s)\n'%(key,type)
+
+    #Process the positional arguments
+    parser = argparse.ArgumentParser(epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter,)
+    parser.add_argument('metadatastore', help='path to the metadata store')
+    parser.add_argument('path', help='path to a file or a directory to analyze recursively')
+    parser.add_argument('--force', action='store_true', help='foo the bars before frobbling')
+
+    if len(sys.argv) < 2:
+        parser.print_help()
+        parser.exit(1)
+
+    args = parser.parse_args()
+    
     
     formatter = logging.Formatter('%(message)s')
     output = logging.getLogger('damn-at_analyzer')
@@ -165,18 +219,17 @@ def main():
     output.handlers = []
     output.addHandler(stream_handler)
     
-    store_path = sys.argv[1]
-    file_name = sys.argv[2]
     output.info('-'*70)
-    output.info('Analyzing %s into %s', file_name, store_path)
+    output.info('Analyzing %s into %s', args.path, args.metadatastore)
+    output.info('%s','(using cache if available)' if not args.force else '(ignoring cache)')
     output.info('-'*70)
     analyzer = Analyzer()
-    metadatastore = MetaDataStore(store_path)
+    metadatastore = MetaDataStore(args.metadatastore)
     
-    if os.path.isfile(file_name):
-        analyze(analyzer, metadatastore, os.path.abspath(file_name), output)
-    else:
-        for root, dirs, files in os.walk(file_name):
+    if os.path.isfile(args.path):
+        analyze(analyzer, metadatastore, os.path.abspath(args.path), output, forcereanalyze=args.force)
+    elif os.path.isdir(args.path):
+        for root, dirs, files in os.walk(args.path):
             if '.git' in dirs:
                 dirs.remove('.git')
             for file_name in files:
@@ -185,7 +238,8 @@ def main():
                         analyze(analyzer, metadatastore, os.path.join(root, file_name), output)
                     except AnalyzerUnknownTypeException as aute:
                         logger.warn("Unknown type exception: %s", str(aute))
-    
+    else:
+        logger.warn("No such file: %s", args.path)
     
 
 if __name__ == '__main__': 

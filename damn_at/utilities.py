@@ -53,6 +53,8 @@ def run_blender(an_uri, script_uri, arguments=[]):
 
     dirname = os.path.dirname(__file__)
     paths.append(os.path.join(dirname, '..'))
+    
+    paths.append(os.path.dirname(script_uri))
 
     env = dict(os.environ)
     env['PYTHONPATH'] = os.pathsep.join(paths)
@@ -115,6 +117,18 @@ def abspath(path, file_descr=None):
         path = os.path.normpath(os.path.abspath(path))
     return path
 
+    
+def get_metadatavalue_type(value):
+    """Return the name of the type and the value of the MetaDataValue
+
+    :param value: :py:class:`damn_at.MetaDataValue` 
+    :rtype: tuple<string,string>
+    """
+    from damn_at import MetaDataType
+    name = MetaDataType._VALUES_TO_NAMES[value.type]
+    field = name.lower()+'_value'
+    return name, str(getattr(value, field, None))
+
 
 def pretty_print_metadatavalue(key, value, indent=0):
     """Pretty print a given MetaDataValue
@@ -124,9 +138,8 @@ def pretty_print_metadatavalue(key, value, indent=0):
     :param indent: indentation level
     """
     whitespace = ' '*indent
-    from damn_at import MetaDataType
-    field = MetaDataType._VALUES_TO_NAMES[value.type].lower()+'_value'
-    print(whitespace+'* '+key+': '+str(getattr(value, field, None)))
+    type, val = get_metadatavalue_type(value)
+    print(whitespace+'* '+key+': '+val+' ('+type+')')
    
 
 def pretty_print_asset_id(asset_id, indent=0):

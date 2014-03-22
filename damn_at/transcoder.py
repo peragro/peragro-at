@@ -157,7 +157,7 @@ def main():
     
     t = Transcoder('/tmp/transcoded/')
     
-    epilog='Supported mimetypes: \n'
+    epilog = 'Supported mimetypes: \n'
     for mime, targets in t.get_target_mimetypes().items():
         epilog +=' * %s -> %s \n'%(mime, str(map(lambda x: x.mimetype, targets)))
 
