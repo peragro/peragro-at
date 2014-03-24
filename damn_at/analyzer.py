@@ -82,7 +82,7 @@ class Analyzer(object):
         #TODO:
         try:
             from repository import Repository
-            repo = Repository('/home/sueastside/dev/DAMN/damn-test-files')
+            repo = Repository('/home/ayush/GSOC14/damn-at/damn-test-files')
             
             repo.get_meta_data(an_uri, file_descr)
         except Exception as e:
@@ -102,6 +102,7 @@ class Analyzer(object):
             file_descr = self.analyzers[mimetype].analyze(an_uri)
             file_descr.mimetype = mimetype
             self._file_metadata(an_uri, file_descr)
+            #print file_descr
             return file_descr
         else:
             raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(mimetype, an_uri))
@@ -124,6 +125,7 @@ def analyze(a, m, file_name):
         file_name = abspath(file_name, file_descr)
 
         hashid = calculate_hash_for_file(file_name)
+        #print "HASH "+hashid
         if m.is_in_store('/tmp/damn', hashid):
             print('Fetching from store...%s'%(hashid))
             descr = m.get_metadata('/tmp/damn', hashid)
