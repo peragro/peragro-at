@@ -9,7 +9,7 @@ from string import Template
 def create_scene(args):
     """ Create the preview scene"""
     scene = bpy.data.scenes.new('Preview_scene')
-    bpy.data.screens['Default'].scene = scene
+    bpy.context.screen.scene = scene
 
     scene.world = None
     scene.render.image_settings.file_format = args.format
@@ -156,6 +156,7 @@ def main():
     args = sys.argv[sys.argv.index('--')+1:]
 
     parser = argparse.ArgumentParser(description='Render.')
+    parser.add_argument('type')
     parser.add_argument('object')
     parser.add_argument('path_template')
     parser.add_argument('angles', metavar='N', type=float, nargs='+',
@@ -171,7 +172,11 @@ def main():
     
     scene = create_scene(args)
 
-    obj = bpy.data.objects[args.object]
+    if args.type == 'mesh':
+        mesh = bpy.data.meshes[args.object]
+        obj = bpy.data.objects.new(args.object, mesh)
+    else:
+        obj = bpy.data.objects[args.object]
 
     scene.objects.link(obj)
 

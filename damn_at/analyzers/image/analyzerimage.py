@@ -5,25 +5,22 @@ import os
 
 import mimetypes
 
-from damn_at import logger
-from damn_at.analyzer import AnalyzerException
 from damn_at import FileId, FileDescription, AssetDescription, AssetId
 
 from damn_at.pluginmanager import IAnalyzer
-from damn_at.utilities import script_path, run_blender
 
 class GenericImageAnalyzer(IAnalyzer):
     """Generic Image analyzer."""
     handled_types = ["image/x-ms-bmp", "image/jpeg", "image/png"]
     
     def __init__(self):
-        IAnalyzer.__init__(self)
+        super(GenericImageAnalyzer, self).__init__()
       
     def activate(self):
         pass
 
     def analyze(self, an_uri):
-    	fileid = FileId(filename = os.path.abspath(an_uri))
+        fileid = FileId(filename = os.path.abspath(an_uri))
         file_descr = FileDescription(file = fileid)
         file_descr.assets = []
         

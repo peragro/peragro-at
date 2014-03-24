@@ -2,23 +2,20 @@
 The DAMN AT module.
 """
 from __future__ import absolute_import
-import sys
 import logging
 logger = logging.getLogger('damn_at') # pylint: disable=C0103
 
-from metrology.registry import registry
-#registry = Registry() # pylint: disable=C0103
 
-from damn_at.serialization.generated.damn_types.ttypes import TargetMimetype, TargetMimetypeOption
-from damn_at.serialization.generated.damn_types.ttypes import MetaDataType, MetaDataValue
-from damn_at.serialization.generated.damn_types.ttypes import FileId, FileDescription
-from damn_at.serialization.generated.damn_types.ttypes import AssetId, AssetDescription
+from damn_at.serialization.generated.damn_types.ttypes import TargetMimetype, TargetMimetypeOption # pylint: disable=W0611
+from damn_at.serialization.generated.damn_types.ttypes import MetaDataType, MetaDataValue # pylint: disable=W0611
+from damn_at.serialization.generated.damn_types.ttypes import FileId, FileDescription # pylint: disable=W0611
+from damn_at.serialization.generated.damn_types.ttypes import AssetId, AssetDescription # pylint: disable=W0611
 
-from damn_at.analyzer import Analyzer
-from damn_at.metadatastore import MetaDataStore
+from damn_at.analyzer import Analyzer # pylint: disable=W0611
+from damn_at.metadatastore import MetaDataStore # pylint: disable=W0611
+from damn_at.transcoder import Transcoder # pylint: disable=W0611
 
-
-_CMD_DESCRIPTION = '''
+_CMD_DESCRIPTION = r'''
  ___   _   __  __ _  _ 
 |   \ /_\ |  \/  | \| |
 | |) / _ \| |\/| | .` |

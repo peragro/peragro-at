@@ -38,19 +38,3 @@ class BlendAnalyzer(IAnalyzer):
         file_descr = DeserializeThriftMsg(FileDescription(), data, TBinaryProtocol.TBinaryProtocol)
         
         return file_descr
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-

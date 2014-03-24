@@ -22,8 +22,8 @@ def get_sox_types():
             print("E: GetSoxTypes failed with error code %d! "%(pro.returncode),
                     out, err)
             return []
-    except OSError:
-        print("E: GetSoxTypes failed!", out, err)
+    except OSError as oserror:
+        print("E: GetSoxTypes failed!", oserror)
         return []
 
     match = re.search(r'AUDIO FILE FORMATS:(.*)PLAYLIST FORMATS',
@@ -36,7 +36,7 @@ def get_sox_types():
     mimes = []
     for ext in extensions:
         mime = mimetypes.guess_type('file.'+ext, False)[0]
-        if mime: mimes.append(mime)
+        if mime and mime.startswith('audio/'): mimes.append(mime)
     return mimes
 
 class SoundAnalyzer(IAnalyzer):
@@ -69,7 +69,7 @@ class SoundAnalyzer(IAnalyzer):
         except OSError:
             print("E: SoundAnalyzer failed %s!"%(anURI), out, err)
             return False
-        asset_descr.metadata = {}
+
         meta = {}
         lines = out.strip().split('\n')
         for line in lines:
@@ -78,10 +78,17 @@ class SoundAnalyzer(IAnalyzer):
                 line = line[0].split('=')
             line = [l.strip() for l in line]
             if line[0] in ['Input File', 'Comment']: continue
-            meta['Sox-'+line[0]] = line[1]
-            asset_descr.metadata['Sox-'+line[0]] = MetaDataValue(type=MetaDataType.STRING,
-                    string_value=line[1])
+            meta[line[0].lower().replace(' ', '_')] = line[1]
 
+        
+        from damn_at.analyzers.audio import metadata
+        asset_descr.metadata = metadata.MetaDataSox.extract(meta)
+        for key, value in meta.items():
+            #Add none default metadata.
+            if key not in asset_descr.metadata:
+                asset_descr.metadata['Sox-'+key] = MetaDataValue(type=MetaDataType.STRING, string_value=value)
+        
+        
         file_descr.assets.append(asset_descr)
 
         return file_descr

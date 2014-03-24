@@ -9,7 +9,6 @@ damn_fs -f /tmp/damnfs/
 
 import os
 import time
-import errno
 import stat
 import subprocess
 from threading import Thread
@@ -18,7 +17,7 @@ from threading import Thread
 import fuse
 from fuse import Fuse
 
-from damn_at.thrift.serialization import DeserializeThriftMsg
+from damn_at.serialization import DeserializeThriftMsg
 
 from damn_at import FileDescription
 
@@ -240,6 +239,7 @@ def unmount(path):
         if "not found" in stderr:
             return
     raise OSError("filesystem could not be unmounted: %s (%s) " % (path, str(stderr).rstrip(),))
+
 
 def main():
     server = DamnFS(version="%prog " + fuse.__version__,
