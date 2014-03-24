@@ -51,8 +51,18 @@
   <h1>Source code for damn_at.analyzers.mesh.metadata</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">damn_at.metadata</span> <span class="kn">import</span> <span class="n">MetaDataExtractor</span>
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">MetaDataType</span>
-        
+
+
+<div class="viewcode-block" id="MetaDataBlenderImage"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.mesh.html#damn_at.analyzers.mesh.metadata.MetaDataBlenderImage">[docs]</a><span class="k">class</span> <span class="nc">MetaDataBlenderImage</span><span class="p">(</span><span class="n">MetaDataExtractor</span><span class="p">):</span>
+    <span class="n">__mimetype__</span> <span class="o">=</span> <span class="s">&#39;application/x-blender.image&#39;</span>
     
+    <span class="n">channels</span> <span class="o">=</span> <span class="n">MetaDataType</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">channels</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="n">MetaDataType</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">depth</span>
+    <span class="n">file_format</span> <span class="o">=</span> <span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">file_format</span><span class="p">)</span>
+    <span class="c">#resolution = MetaDataType.STRING, lambda context: &#39;{}x{}&#39;.format(*list(context[&#39;image&#39;].resolution[:]))</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="s">&#39;{}x{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">[:]))</span>
+    
+</div>
 <div class="viewcode-block" id="MetaDataBlenderMesh"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.mesh.html#damn_at.analyzers.mesh.metadata.MetaDataBlenderMesh">[docs]</a><span class="k">class</span> <span class="nc">MetaDataBlenderMesh</span><span class="p">(</span><span class="n">MetaDataExtractor</span><span class="p">):</span>
     <span class="n">__mimetype__</span> <span class="o">=</span> <span class="s">&#39;application/x-blender.mesh&#39;</span>
     
