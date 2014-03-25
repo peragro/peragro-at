@@ -1,0 +1,9 @@
+[Core]
+Name = Blender camera render-transcoder
+Module = transcoderblendercamera
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = Blender camera render transcoder
