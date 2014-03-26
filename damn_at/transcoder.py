@@ -203,7 +203,6 @@ def main():
     asset_subname = match.group(1)
     asset_mimetype = match.group(3)
     
-    print asset_subname, asset_mimetype
     
     if asset_subname not in get_asset_names_in_file_descr(file_descr):
         raise TranscoderUnknownAssetException(asset_subname+' not in file_descr '+str(get_asset_names_in_file_descr(file_descr)))

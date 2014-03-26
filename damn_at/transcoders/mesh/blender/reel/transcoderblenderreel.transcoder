@@ -1,0 +1,9 @@
+[Core]
+Name = Blender reel-transcoder
+Module = transcoderblenderreel
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = Blender object reel transcoder
