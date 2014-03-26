@@ -254,7 +254,6 @@
     <span class="n">asset_subname</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">asset_mimetype</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
     
-    <span class="k">print</span> <span class="n">asset_subname</span><span class="p">,</span> <span class="n">asset_mimetype</span>
     
     <span class="k">if</span> <span class="n">asset_subname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">TranscoderUnknownAssetException</span><span class="p">(</span><span class="n">asset_subname</span><span class="o">+</span><span class="s">&#39; not in file_descr &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">)))</span>
