@@ -62,7 +62,7 @@
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">TargetMimetype</span><span class="p">,</span> <span class="n">TargetMimetypeOption</span>
 <span class="kn">from</span> <span class="nn">.options</span> <span class="kn">import</span> <span class="n">options_to_template</span><span class="p">,</span> <span class="n">parse_options</span>
 
-<span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">find_asset_id_in_file_descr</span><span class="p">,</span> <span class="n">get_asset_names_in_file_descr</span>
+<span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">find_asset_ids_in_file_descr</span><span class="p">,</span> <span class="n">get_asset_names_in_file_descr</span>
 
 <span class="kn">from</span> <span class="nn">.mimetypes</span> <span class="kn">import</span> <span class="n">guess_type</span>
 
@@ -84,7 +84,10 @@
 <div class="viewcode-block" id="TranscoderUnknownTypeException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.TranscoderUnknownTypeException">[docs]</a><span class="k">class</span> <span class="nc">TranscoderUnknownTypeException</span><span class="p">(</span><span class="n">TranscoderException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Unknown type&quot;&quot;&quot;</span>
     <span class="k">pass</span>
-
+</div>
+<div class="viewcode-block" id="TranscoderUnknownAssetException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.TranscoderUnknownAssetException">[docs]</a><span class="k">class</span> <span class="nc">TranscoderUnknownAssetException</span><span class="p">(</span><span class="n">TranscoderException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Unknown asset&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Transcoder"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.transcoder.Transcoder">[docs]</a><span class="k">class</span> <span class="nc">Transcoder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -201,7 +204,7 @@
     <span class="kn">import</span> <span class="nn">sys</span>
     <span class="kn">import</span> <span class="nn">argparse</span>
     <span class="kn">import</span> <span class="nn">logging</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">:</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    
     
     <span class="kn">from</span> <span class="nn">damn_at.metadatastore</span> <span class="kn">import</span> <span class="n">MetaDataStore</span>
     <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">_CMD_DESCRIPTION</span>
@@ -214,15 +217,26 @@
 
     <span class="c">#Process the positional arguments</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span> <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;assetname&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;mimetype&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;The path to the FileDescription file&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;assetname&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;The subname of the asset to transcoder&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;mimetype&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;The destination mimetype&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-d&#39;</span><span class="p">,</span><span class="s">&#39;--debug&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Print lots of debugging statements&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_const&quot;</span><span class="p">,</span><span class="n">dest</span><span class="o">=</span><span class="s">&quot;loglevel&quot;</span><span class="p">,</span><span class="n">const</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">,</span><span class="s">&#39;--verbose&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Be verbose&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_const&quot;</span><span class="p">,</span><span class="n">dest</span><span class="o">=</span><span class="s">&quot;loglevel&quot;</span><span class="p">,</span><span class="n">const</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+    <span class="p">)</span>
     
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">options_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">:</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">loglevel</span><span class="p">)</span>
         
     <span class="n">store_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -232,10 +246,33 @@
     
     <span class="n">file_descr</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">assetname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">TranscoderFileException</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">assetname</span><span class="o">+</span><span class="s">&#39; not in file_descr &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">)))</span>
+    <span class="kn">import</span> <span class="nn">re</span>
+    
+    <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^(.+?)(\((.+?)\))?$&#39;</span><span class="p">)</span> 
+    <span class="n">match</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">assetname</span><span class="p">)</span>  
+    
+    <span class="n">asset_subname</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">asset_mimetype</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    
+    <span class="k">print</span> <span class="n">asset_subname</span><span class="p">,</span> <span class="n">asset_mimetype</span>
+    
+    <span class="k">if</span> <span class="n">asset_subname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">TranscoderUnknownAssetException</span><span class="p">(</span><span class="n">asset_subname</span><span class="o">+</span><span class="s">&#39; not in file_descr &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">)))</span>
         
-    <span class="n">asset_id</span> <span class="o">=</span> <span class="n">find_asset_id_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">assetname</span><span class="p">)</span>
+    <span class="n">asset_ids</span> <span class="o">=</span> <span class="n">find_asset_ids_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_subname</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">asset_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">asset_id</span> <span class="o">=</span> <span class="n">asset_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">asset_mimetype</span><span class="p">:</span>
+        <span class="n">nasset_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">asset_id</span> <span class="k">for</span> <span class="n">asset_id</span> <span class="ow">in</span> <span class="n">asset_ids</span> <span class="k">if</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">==</span> <span class="n">asset_mimetype</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nasset_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">asset_id</span> <span class="o">=</span> <span class="n">nasset_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">assets</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span><span class="p">)</span> <span class="k">for</span> <span class="n">asset_id</span> <span class="ow">in</span> <span class="n">asset_ids</span><span class="p">]</span>
+            <span class="k">raise</span> <span class="n">TranscoderUnknownAssetException</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">assetname</span><span class="o">+</span><span class="s">&#39; not in file_descr. Please specify one of </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">assets</span><span class="p">))</span> 
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mimes</span> <span class="o">=</span> <span class="p">[</span><span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span> <span class="k">for</span> <span class="n">asset_id</span> <span class="ow">in</span> <span class="n">asset_ids</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="n">TranscoderUnknownAssetException</span><span class="p">(</span><span class="n">asset_subname</span><span class="o">+</span><span class="s">&#39; ambigious in file_descr. Please specify &quot;</span><span class="si">%s</span><span class="s">(&lt;mimetype&gt;)&quot; with &lt;mimetype&gt; one of </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">asset_subname</span><span class="p">,</span> <span class="n">mimes</span><span class="p">))</span> 
     
     <span class="n">target_mimetype</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get_target_mimetype</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">mimetype</span><span class="p">)</span>
     
@@ -247,11 +284,11 @@
             <span class="k">raise</span> <span class="n">TranscoderUnknownTypeException</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">mimetype</span><span class="o">+</span><span class="s">&#39; needs to be one of &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">targets</span><span class="p">))</span>
     
     <span class="c">#Process the optional arguments</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>    
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">parser</span><span class="p">])</span>    
     <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">target_mimetype</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="o">+</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">) [default: </span><span class="si">%s</span><span class="s">]&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">))</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="o">+</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">) [default: </span><span class="si">%s</span><span class="s">] (</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">default_value</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
 
-    <span class="n">options</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">4</span><span class="p">:])</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     
     <span class="c"># Parse the options using the convert_map of the transcoder</span>
     <span class="n">options</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">parse_options</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">target_mimetype</span><span class="p">,</span> <span class="o">**</span><span class="nb">vars</span><span class="p">(</span><span class="n">options</span><span class="p">))</span>

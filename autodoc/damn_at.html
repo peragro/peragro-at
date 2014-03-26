@@ -599,6 +599,13 @@ and address it.</p>
 </dd></dl>
 
 <dl class="exception">
+<dt id="damn_at.transcoder.TranscoderUnknownAssetException">
+<em class="property">exception </em><tt class="descclassname">damn_at.transcoder.</tt><tt class="descname">TranscoderUnknownAssetException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#TranscoderUnknownAssetException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.TranscoderUnknownAssetException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#damn_at.transcoder.TranscoderException" title="damn_at.transcoder.TranscoderException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.transcoder.TranscoderException</span></tt></a></p>
+<p>Unknown asset</p>
+</dd></dl>
+
+<dl class="exception">
 <dt id="damn_at.transcoder.TranscoderUnknownTypeException">
 <em class="property">exception </em><tt class="descclassname">damn_at.transcoder.</tt><tt class="descname">TranscoderUnknownTypeException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#TranscoderUnknownTypeException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.TranscoderUnknownTypeException" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#damn_at.transcoder.TranscoderException" title="damn_at.transcoder.TranscoderException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.transcoder.TranscoderException</span></tt></a></p>
@@ -644,8 +651,8 @@ and address it.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="damn_at.utilities.find_asset_id_in_file_descr">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">find_asset_id_in_file_descr</tt><big>(</big><em>file_descr</em>, <em>asset_name</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#find_asset_id_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.find_asset_id_in_file_descr" title="Permalink to this definition">¶</a></dt>
+<dt id="damn_at.utilities.find_asset_ids_in_file_descr">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">find_asset_ids_in_file_descr</tt><big>(</big><em>file_descr</em>, <em>asset_name</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#find_asset_ids_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.find_asset_ids_in_file_descr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find an AssetId by name in the given FileDescription</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -657,7 +664,7 @@ and address it.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetId</span></tt></p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of <tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetId</span></tt></p>
 </td>
 </tr>
 </tbody>
