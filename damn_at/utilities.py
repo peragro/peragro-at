@@ -73,6 +73,7 @@ def collect_python3_paths():
     process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, _ = process.communicate()
     for path in stdout.split('\n'):
+        paths.append(path)
         for include in glob.glob(path+'/*.egg'):
             paths.append(include)
         for include in glob.glob(path+'/*.egg-link'):
