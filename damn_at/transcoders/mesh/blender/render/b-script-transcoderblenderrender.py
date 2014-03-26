@@ -135,6 +135,33 @@ def reset_materials():
         for f in mesh.tessfaces:
           f.material_index = m2i
 
+def bounding_box_for_empty(empty):
+    bbox = [[0.0,0.0,0.0]]*8
+
+    min = [99999]*3
+    max = [-99999]*3
+
+    for obj in empty.dupli_group.objects:
+        bound_box = [x for x in map(lambda v: obj.matrix_world*Vector(v), obj.bound_box)]
+        #bound_box = obj.bound_box
+        for coord in bound_box:
+            for i in range(3):
+                if coord[i] < min[i]:
+                    min[i] = coord[i]
+                if coord[i] > max[i]:
+                    max[i] = coord[i]
+                
+    bbox[0] = min[0], min[1], min[2]
+    bbox[1] = min[0], min[1], max[2]
+    bbox[2] = min[0], max[1], max[2]
+    bbox[3] = min[0], max[1], min[2]
+
+    bbox[4] = max[0], min[1], min[2]
+    bbox[5] = max[0], min[1], max[2]
+    bbox[6] = max[0], max[1], max[2]
+    bbox[7] = max[0], max[1], min[2]
+    
+    return bbox
 
 def render(obj, scene, path, angle=None):
     if angle:
@@ -170,14 +197,21 @@ def main():
     
     template = Template(args.path_template)
     
-    scene = create_scene(args)
-
+    
     if args.type == 'mesh':
         mesh = bpy.data.meshes[args.object]
         obj = bpy.data.objects.new(args.object, mesh)
-    else:
+    elif args.type == 'object':
         obj = bpy.data.objects[args.object]
+    elif args.type == 'group':
+        obj = bpy.data.objects.new(args.object, None)
+        obj.dupli_group = bpy.data.groups[args.object]
+        obj.dupli_type = 'GROUP'
+    else:
+        raise Exception('Unsupported type %s!'%args.type)
 
+    scene = create_scene(args)
+    
     scene.objects.link(obj)
 
     scene.objects.active = obj
@@ -188,9 +222,11 @@ def main():
     obj.location = (0,0,0)
     scene.update()
 
-    bbox = obj.bound_box
-
-    bbox =  [x for x in map(lambda v: obj.matrix_world*Vector(v), bbox)]
+    if args.type == 'group':
+        bbox = bounding_box_for_empty(obj)
+    else:
+        bbox = obj.bound_box
+        bbox =  [x for x in map(lambda v: obj.matrix_world*Vector(v), bbox)]
 
 
     cameraob, camdata  = create_camera(scene)

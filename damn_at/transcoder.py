@@ -178,7 +178,7 @@ def main():
         args = parser.parse_args(sys.argv[1:4])
     except:
         parser.print_help()
-        sys.exit(1)
+        parser.exit(1)
         
     store_path = os.path.dirname(args.path)
     file_name = os.path.basename(args.path)

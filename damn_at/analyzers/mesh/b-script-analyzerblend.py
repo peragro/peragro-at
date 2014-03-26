@@ -22,6 +22,7 @@ def main(): # pylint: disable=R0914,R0912,R0915
     materials = {}
     meshes = {}
     objects = {}
+    groups = {}
     texts = {}
     
     # Set up our FileDescription
@@ -49,6 +50,7 @@ def main(): # pylint: disable=R0914,R0912,R0915
             image_mimetype = 'application/x-blender.image'
         asset_descr = AssetDescription(asset = AssetId(subname = image.name, mimetype = image_mimetype, file = image_fileid))
         if image.packed_file:
+            asset_descr.metadata = metadata.MetaDataBlenderImage.extract({'image': image})
             file_descr.assets.append(asset_descr) 
         images[image.name] = asset_descr 
 
@@ -109,10 +111,15 @@ def main(): # pylint: disable=R0914,R0912,R0915
     And materials assigned to the object
     """
     for obj in bpy.data.objects:
-        asset_descr = AssetDescription(asset = AssetId(subname = obj.name, mimetype = 'application/x-blender.object', file = get_file_id(obj)))
+        if obj.type == 'MESH':
+            object_type = ''
+        else:
+            object_type = '-'+str(obj.type).lower()
+        type = obj.type.lower()
+        asset_descr = AssetDescription(asset = AssetId(subname = obj.name, mimetype = 'application/x-blender.object'+object_type, file = get_file_id(obj)))
         asset_descr.dependencies = []
         # Add the mesh as dependency
-        if obj.data.name in meshes:
+        if obj.data and obj.data.name in meshes:
             dep = meshes[obj.data.name].asset
             asset_descr.dependencies.append(dep)
         # Now the materials
@@ -126,7 +133,23 @@ def main(): # pylint: disable=R0914,R0912,R0915
                 
         file_descr.assets.append(asset_descr) 
         objects[obj.name] = asset_descr 
-     
+
+
+    """
+    Group:
+    Has its objects as a dependencies.
+    """
+    for group in bpy.data.groups:
+        asset_descr = AssetDescription(asset = AssetId(subname = group.name, mimetype = 'application/x-blender.group', file = get_file_id(group)))
+        asset_descr.dependencies = []
+        # Add the objects as dependencies
+        for obj in group.objects:
+            dep = objects[obj.name].asset
+            asset_descr.dependencies.append(dep)
+                
+        file_descr.assets.append(asset_descr) 
+        groups[group.name] = asset_descr 
+
 
     """
     Texts:

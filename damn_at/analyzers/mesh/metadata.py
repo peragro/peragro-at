@@ -1,7 +1,17 @@
 from damn_at.metadata import MetaDataExtractor
 from damn_at import MetaDataType
-        
+
+
+class MetaDataBlenderImage(MetaDataExtractor):
+    __mimetype__ = 'application/x-blender.image'
     
+    channels = MetaDataType.INT, lambda context: context['image'].channels
+    depth = MetaDataType.INT, lambda context: context['image'].depth
+    file_format = MetaDataType.STRING, lambda context: str(context['image'].file_format)
+    #resolution = MetaDataType.STRING, lambda context: '{}x{}'.format(*list(context['image'].resolution[:]))
+    size = MetaDataType.STRING, lambda context: '{}x{}'.format(*list(context['image'].size[:]))
+    
+
 class MetaDataBlenderMesh(MetaDataExtractor):
     __mimetype__ = 'application/x-blender.mesh'
     

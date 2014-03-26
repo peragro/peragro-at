@@ -15,7 +15,9 @@ class BlenderTranscoder(ITranscoder):
     convert_map = {"application/x-blender.object" : {"image/jpg": options},
                    "application/x-blender.object" : {"image/png": options},
                    "application/x-blender.mesh" : {"image/jpg": options},
-                   "application/x-blender.mesh" : {"image/png": options},}
+                   "application/x-blender.mesh" : {"image/png": options},
+                   "application/x-blender.group" : {"image/jpg": options},
+                   "application/x-blender.group" : {"image/png": options},}
     
     def __init__(self):
         ITranscoder.__init__(self)
@@ -37,7 +39,12 @@ class BlenderTranscoder(ITranscoder):
             file_path = expand_path_template(target_mimetype.template, target_mimetype.mimetype, asset_id, **opts)
             file_paths.append(file_path)
             
-        datatype = 'mesh' if target_mimetype.mimetype == 'application/x-blender.mesh' else 'object'
+        if asset_id.mimetype == 'application/x-blender.mesh':
+            datatype = 'mesh' 
+        elif asset_id.mimetype == 'application/x-blender.group':
+            datatype = 'group' 
+        else:
+            datatype = 'object' 
             
         arguments = ['--', datatype, asset_id.subname, path_template]
         arguments.extend(map(str, angles))
@@ -50,8 +57,9 @@ class BlenderTranscoder(ITranscoder):
             
         stdoutdata, stderrdata, returncode = run_blender(file_descr.file.filename, script_path(__file__), arguments)
         
-        #print(stdoutdata)
-        #print(stderrdata)
+        logger.debug(stdoutdata)
+        logger.debug(stderrdata)
+        logger.debug(returncode)
         #print(returncode) #Todo: check return code
         
         return file_paths
