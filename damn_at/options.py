@@ -96,7 +96,8 @@ class VectorOption(BaseOption):
 
     @property        
     def constraint_description(self):
-        return 'Value needs to be between %s and %s' % (self.min, self.max)
+        size = 's' if not self.size or self.size > 1 else ''
+        return 'Value%s needs to be between %s and %s' % (size, self.min, self.max)
 
     @property
     def default_description(self):

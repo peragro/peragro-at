@@ -11,7 +11,7 @@ from .pluginmanager import DAMNPluginManagerSingleton
 from damn_at import TargetMimetype, TargetMimetypeOption
 from .options import options_to_template, parse_options
 
-from .utilities import find_asset_id_in_file_descr, get_asset_names_in_file_descr
+from .utilities import find_asset_ids_in_file_descr, get_asset_names_in_file_descr
 
 from .mimetypes import guess_type
 
@@ -34,6 +34,9 @@ class TranscoderUnknownTypeException(TranscoderException):
     """Unknown type"""
     pass
 
+class TranscoderUnknownAssetException(TranscoderException):
+    """Unknown asset"""
+    pass
 
 class Transcoder(object):
     """
@@ -150,7 +153,7 @@ def main():
     import sys
     import argparse
     import logging
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+    
     
     from damn_at.metadatastore import MetaDataStore
     from damn_at import _CMD_DESCRIPTION
@@ -163,15 +166,26 @@ def main():
 
     #Process the positional arguments
     parser = argparse.ArgumentParser(add_help=False, epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter,)
-    parser.add_argument('path')
-    parser.add_argument('assetname')
-    parser.add_argument('mimetype')
+    parser.add_argument('path', help='The path to the FileDescription file')
+    parser.add_argument('assetname', help='The subname of the asset to transcoder')
+    parser.add_argument('mimetype', help='The destination mimetype')
+    parser.add_argument('-d','--debug',
+        help='Print lots of debugging statements',
+        action="store_const",dest="loglevel",const=logging.DEBUG,
+        default=logging.WARNING
+    )
+    parser.add_argument('-v','--verbose',
+        help='Be verbose',
+        action="store_const",dest="loglevel",const=logging.INFO
+    )
     
     try:
-        args = parser.parse_args(sys.argv[1:4])
+        args, options_args = parser.parse_known_args()
     except:
         parser.print_help()
         parser.exit(1)
+        
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=args.loglevel)
         
     store_path = os.path.dirname(args.path)
     file_name = os.path.basename(args.path)
@@ -181,10 +195,33 @@ def main():
     
     file_descr = m.get_metadata('', file_name)
 
-    if args.assetname not in get_asset_names_in_file_descr(file_descr):
-        raise TranscoderFileException(args.assetname+' not in file_descr '+str(get_asset_names_in_file_descr(file_descr)))
+    import re
+    
+    regexp = re.compile(r'^(.+?)(\((.+?)\))?$') 
+    match = regexp.match(args.assetname)  
+    
+    asset_subname = match.group(1)
+    asset_mimetype = match.group(3)
+    
+    print asset_subname, asset_mimetype
+    
+    if asset_subname not in get_asset_names_in_file_descr(file_descr):
+        raise TranscoderUnknownAssetException(asset_subname+' not in file_descr '+str(get_asset_names_in_file_descr(file_descr)))
         
-    asset_id = find_asset_id_in_file_descr(file_descr, args.assetname)
+    asset_ids = find_asset_ids_in_file_descr(file_descr, asset_subname)
+    
+    if len(asset_ids) == 1:
+        asset_id = asset_ids[0]
+    elif asset_mimetype:
+        nasset_ids = [asset_id for asset_id in asset_ids if asset_id.mimetype == asset_mimetype]
+        if len(nasset_ids) == 1:
+            asset_id = nasset_ids[0]
+        else:
+            assets = ['%s(%s)'%(asset_id.subname, asset_id.mimetype) for asset_id in asset_ids]
+            raise TranscoderUnknownAssetException(args.assetname+' not in file_descr. Please specify one of %s'%(assets)) 
+    else:
+        mimes = [asset_id.mimetype for asset_id in asset_ids]
+        raise TranscoderUnknownAssetException(asset_subname+' ambigious in file_descr. Please specify "%s(<mimetype>)" with <mimetype> one of %s'%(asset_subname, mimes)) 
     
     target_mimetype = t.get_target_mimetype(asset_id.mimetype, args.mimetype)
     
@@ -196,11 +233,11 @@ def main():
             raise TranscoderUnknownTypeException(args.mimetype+' needs to be one of '+str(targets))
     
     #Process the optional arguments
-    parser = argparse.ArgumentParser()    
+    parser = argparse.ArgumentParser(parents=[parser])    
     for option in target_mimetype.options:
-        parser.add_argument("--"+option.name, dest=option.name, default=option.default_value, help='%s (%s) [default: %s]'%(option.description, option.constraint, option.default_value))
+        parser.add_argument("--"+option.name, dest=option.name, default=option.default_value, help='%s (%s) [default: %s] (%s)'%(option.description, option.constraint, option.default_value, option.type))
 
-    options = parser.parse_args(sys.argv[4:])
+    options = parser.parse_args()
     
     # Parse the options using the convert_map of the transcoder
     options = t.parse_options(asset_id.mimetype, target_mimetype, **vars(options))

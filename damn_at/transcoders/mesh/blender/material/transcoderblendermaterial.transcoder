@@ -1,0 +1,9 @@
+[Core]
+Name = Blender material render-transcoder
+Module = transcoderblendermaterial
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = Blender material render transcoder

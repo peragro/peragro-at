@@ -199,17 +199,19 @@ def pretty_print_file_description(file_descr):
     print('\n')
 
 
-def find_asset_id_in_file_descr(file_descr, asset_name):
+def find_asset_ids_in_file_descr(file_descr, asset_name):
     """Find an AssetId by name in the given FileDescription
 
     :param file_descr: :py:class:`damn_at.FileDescription` 
     :param asset_name: string the asset to look for
-    :rtype: :py:class:`damn_at.AssetId` 
+    :rtype: list of :py:class:`damn_at.AssetId` 
     """
+    asset_ids = []
     if file_descr.assets:
         for asset in file_descr.assets:
             if asset.asset.subname == asset_name:
-                return asset.asset
+                asset_ids.append(asset.asset)
+    return asset_ids
 
 
 def get_asset_names_in_file_descr(file_descr):
