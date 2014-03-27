@@ -171,7 +171,7 @@ def render(obj, scene, path, angle=None):
         #obj.matrix_world = mw*rot
         obj.matrix_world = rot*mw
         scene.update()
-        
+    
     bpy.ops.render.render()
     #bpy.ops.render.opengl()
     img = bpy.data.images['Render Result']
@@ -239,8 +239,9 @@ def main():
     for angle in args.angles:
         new_angle = previous_angle - angle
         previous_angle = angle
-        
-        render(obj, scene, template.safe_substitute(angles=angle), new_angle)
+        path = template.safe_substitute(angles=angle)
+        print('Render %s angle to %s'%(str(angle), path))   
+        render(obj, scene, path, new_angle)
 
     
 

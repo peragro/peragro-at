@@ -23,6 +23,9 @@ sys_mimetypes.add_type("image/tga", ".tga")
 sys_mimetypes.add_type("application/x-crystalspace.library+xml", ".xml")
 sys_mimetypes.add_type("image/x-dds", ".dds")
 
+sys_mimetypes.add_type("image/jpg-reel", ".jpg")
+sys_mimetypes.add_type("image/png-reel", ".png")
+
 try:
     # Remove .jpe from mimetype extensions, cause it annoys people.
     sys_mimetypes._db.types_map_inv[True].get("image/jpeg", []).remove('.jpe')

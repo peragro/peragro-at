@@ -78,7 +78,8 @@ class VectorOption(BaseOption):
         return_value = []
         for i, val in enumerate(splits):
             value = self.type(val) #Todo:catch
-            if value != self.default[i]:
+            default = self.default[i] if self.size is None or self.size > 1 else self.default
+            if value != default:
                 if value < self.min or value > self.max:
                     raise OptionConstraintException('%d < %d < %d failed!' % (self.min, value, self.max))
             return_value.append(value)
@@ -96,7 +97,8 @@ class VectorOption(BaseOption):
 
     @property        
     def constraint_description(self):
-        return 'Value needs to be between %s and %s' % (self.min, self.max)
+        size = 's' if not self.size or self.size > 1 else ''
+        return 'Value%s needs to be between %s and %s' % (size, self.min, self.max)
 
     @property
     def default_description(self):
@@ -112,6 +114,10 @@ class VectorOption(BaseOption):
 class IntVectorOption(VectorOption):
     def __init__(self, name="", description="", default=(0, 0, 0), min=-Sizes.maxint, max=Sizes.maxint, size=3):
         VectorOption.__init__(self, type=int, name=name, description=description, default=default, min=min, max=max, size=size)
+
+class IntOption(VectorOption):
+    def __init__(self, name="", description="", default=0.0, min=-Sizes.maxint, max=Sizes.maxint):
+        VectorOption.__init__(self, type=int, name=name, description=description, default=default, min=min, max=max, size=1)
 
 class FloatOption(VectorOption):
     def __init__(self, name="", description="", default=0.0, min=sys.float_info.min, max=sys.float_info.max):
@@ -177,6 +183,7 @@ def parse_options2(convert_map_entry, **options): #TODO: remove
     return opts
 
 def expand_path_template(template, mimetype, asset_id, **options):
+    extension = str(mimetypes.guess_extension(mimetype))
     t = Template(template)
     uuid = utilities.unique_asset_id_reference(asset_id)
-    return t.safe_substitute(uuid=uuid, dstFormat=mimetype, extension=str(mimetypes.guess_extension(mimetype)), **options)
+    return t.safe_substitute(uuid=uuid, dstFormat=mimetype, extension=extension, **options)
