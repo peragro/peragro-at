@@ -114,10 +114,15 @@ class Analyzer(object):
             raise AnalyzerFileException('E: Analyzer: No such file "%s"!'%(an_uri))
         mimetype = mimetypes.guess_type(an_uri, False)[0]
         if mimetype in self.analyzers:
-            file_descr = self.analyzers[mimetype].plugin_object.analyze(an_uri)
-            file_descr.mimetype = mimetype
-            self._file_metadata(an_uri, file_descr)
-            return file_descr
+            try:
+                file_descr = self.analyzers[mimetype].plugin_object.analyze(an_uri)
+                file_descr.mimetype = mimetype
+                self._file_metadata(an_uri, file_descr)
+                return file_descr
+            except Exception as ex:
+                import traceback
+                traceback.print_exc()
+                raise AnalyzerException("E: Failed to analyze %s because of %s"%(an_uri, str(ex)))
         else:
             raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)"%(mimetype, an_uri))
 
