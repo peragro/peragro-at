@@ -65,25 +65,27 @@
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">logger</span>
 
+
 <div class="viewcode-block" id="ActivationFailedException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.ActivationFailedException">[docs]</a><span class="k">class</span> <span class="nc">ActivationFailedException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Plugin activation failed exception &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="ne">Exception</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="IAnalyzer"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.IAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">IAnalyzer</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Interface class for an Analyzer&quot;&quot;&quot;</span> 
-    
+    <span class="sd">&quot;&quot;&quot;Interface class for an Analyzer&quot;&quot;&quot;</span>
+
     <span class="n">handled_types</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The mimetypes this analyzer can handle.</span>
 <span class="sd">    Example::</span>
 <span class="sd">    handled_types = [&quot;application/x-blender&quot;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
 <div class="viewcode-block" id="IAnalyzer.analyze"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.IAnalyzer.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a FileDescription</span>
 
@@ -91,24 +93,24 @@
 <span class="sd">        :rtype: :py:class:`damn_at.FileDescription`</span>
 <span class="sd">        :raises: :py:class:`damn_at.analyzer.AnalyzerException`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;analyze&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;analyze&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
 
 </div></div>
 <div class="viewcode-block" id="ITranscoder"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.ITranscoder">[docs]</a><span class="k">class</span> <span class="nc">ITranscoder</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Interface class for a Transcoder&quot;&quot;&quot;</span>
-    
+
     <span class="n">convert_map</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The mimetypes this transocder can handle.</span>
 <span class="sd">    Example::</span>
-<span class="sd">    convert_map = {&quot;image/tiff&quot; : {&quot;image/jpeg&quot;: [IntVectorOption(name=&#39;size&#39;, description=&#39;The target size of the image&#39;, size=2, default=(-1,-1))], </span>
+<span class="sd">    convert_map = {&quot;image/tiff&quot; : {&quot;image/jpeg&quot;: [IntVectorOption(name=&#39;size&#39;, description=&#39;The target size of the image&#39;, size=2, default=(-1,-1))],</span>
 <span class="sd">                                   &quot;image/png&quot;: []</span>
 <span class="sd">                                   }, }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
 <div class="viewcode-block" id="ITranscoder.transcode"><a class="viewcode-back" href="../../index.html#damn_at.pluginmanager.ITranscoder.transcode">[docs]</a>    <span class="k">def</span> <span class="nf">transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest_path</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="n">target_mimetype</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; blah &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;transcode&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>        
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;transcode&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
 
 </div></div>
 <div class="viewcode-block" id="IMetaDataStore"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore">[docs]</a><span class="k">class</span> <span class="nc">IMetaDataStore</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">):</span>
@@ -118,13 +120,13 @@
 <span class="sd">        Check if the given file hash is in the store.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;is_in_store&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
-        </div>
+</div>
 <div class="viewcode-block" id="IMetaDataStore.get_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.get_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">get_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the FileDescription for the given hash.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;get_metadata&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
-    </div>
+</div>
 <div class="viewcode-block" id="IMetaDataStore.write_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.IMetaDataStore.write_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">write_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">,</span> <span class="n">a_file_descr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write the FileDescription to this store.</span>
@@ -139,38 +141,38 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;&#39;get_meta_data&#39; must be reimplemented by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
 
-            
 </div></div>
 <div class="viewcode-block" id="DAMNPluginManager"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.DAMNPluginManager">[docs]</a><span class="k">class</span> <span class="nc">DAMNPluginManager</span><span class="p">(</span><span class="n">PluginManager</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Loads all analyzers and transcoders.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
-        <span class="n">PluginManager</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+        <span class="n">PluginManager</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
             <span class="n">directories_list</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">&#39;analyzers&#39;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">&#39;transcoders&#39;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">&#39;repositories&#39;</span><span class="p">)],</span>
             <span class="n">categories_filter</span><span class="o">=</span><span class="p">{</span>
-           <span class="s">&quot;Analyzer&quot;</span> <span class="p">:</span> <span class="n">IAnalyzer</span><span class="p">,</span>
-           <span class="s">&quot;Transcoder&quot;</span> <span class="p">:</span> <span class="n">ITranscoder</span><span class="p">,</span>
-           <span class="s">&quot;MetaDataStore&quot;</span> <span class="p">:</span> <span class="n">IMetaDataStore</span><span class="p">,</span>
-           <span class="s">&quot;Repository&quot;</span> <span class="p">:</span> <span class="n">IRepository</span><span class="p">,</span>
-           <span class="p">},</span>
-           <span class="n">plugin_info_ext</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;analyzer&#39;</span><span class="p">,</span> <span class="s">&#39;transcoder&#39;</span><span class="p">,</span> <span class="s">&#39;repository&#39;</span><span class="p">,</span> <span class="p">)</span>
+                <span class="s">&quot;Analyzer&quot;</span><span class="p">:</span> <span class="n">IAnalyzer</span><span class="p">,</span>
+                <span class="s">&quot;Transcoder&quot;</span><span class="p">:</span> <span class="n">ITranscoder</span><span class="p">,</span>
+                <span class="s">&quot;MetaDataStore&quot;</span><span class="p">:</span> <span class="n">IMetaDataStore</span><span class="p">,</span>
+                <span class="s">&quot;Repository&quot;</span><span class="p">:</span> <span class="n">IRepository</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">plugin_info_ext</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;analyzer&#39;</span><span class="p">,</span> <span class="s">&#39;transcoder&#39;</span><span class="p">,</span> <span class="s">&#39;repository&#39;</span><span class="p">,)</span>
         <span class="p">)</span>
-        
+
 <div class="viewcode-block" id="DAMNPluginManager.collect_plugins"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.DAMNPluginManager.collect_plugins">[docs]</a>    <span class="k">def</span> <span class="nf">collect_plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Walk through the plugins&#39; places and look for plugins. Then</span>
 <span class="sd">        for each plugin candidate look for its category, load it and</span>
 <span class="sd">        stores it in the appropriate slot of the category_mapping.</span>
-<span class="sd">        &quot;&quot;&quot;</span>              
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">locatePlugins</span><span class="p">()</span>
         <span class="n">all_plugins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loadPlugins</span><span class="p">()</span>
-   
+
         <span class="c"># Collect plugins with an error in the &#39;Failed&#39;-category</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">category_mapping</span><span class="p">[</span><span class="s">&quot;Failed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">plugin_info_reference</span> <span class="ow">in</span> <span class="n">all_plugins</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">plugin_info_reference</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">category_mapping</span><span class="p">[</span><span class="s">&quot;Failed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plugin_info_reference</span><span class="p">)</span>
-        
+
         <span class="c"># Activate all plugins</span>
         <span class="k">for</span> <span class="n">plugin_info_reference</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAllPlugins</span><span class="p">():</span>
             <span class="n">plugin_to_activate</span> <span class="o">=</span> <span class="n">plugin_info_reference</span><span class="o">.</span><span class="n">plugin_object</span>
@@ -180,7 +182,7 @@
                     <span class="n">plugin_to_activate</span><span class="o">.</span><span class="n">is_activated</span> <span class="o">=</span> <span class="bp">True</span>
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="n">ActivationFailedException</span><span class="p">(</span><span class="s">&#39;Failed to activate </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">plugin_info_reference</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                        <span class="k">raise</span> <span class="n">ActivationFailedException</span><span class="p">(</span><span class="s">&#39;Failed to activate </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">plugin_info_reference</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
                     <span class="k">except</span> <span class="n">ActivationFailedException</span><span class="p">:</span>
                         <span class="n">exc_info</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Unable to activate plugin: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">plugin_info_reference</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">exc_info</span><span class="p">)</span>
@@ -199,9 +201,9 @@
 <span class="sd">    method in the following way:</span>
 <span class="sd">    ``DAMNPluginManagerSingleton.get().themethodname(theargs)``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">__instance</span> <span class="o">=</span> <span class="bp">None</span>
-    
+
     <span class="n">__decoration_chain</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -211,19 +213,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Singleton can&#39;t be created twice !&quot;</span><span class="p">)</span>
-                            
+
 <div class="viewcode-block" id="DAMNPluginManagerSingleton.get"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.pluginmanager.DAMNPluginManagerSingleton.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Actually create an instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">cls</span><span class="o">.</span><span class="n">__instance</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c"># initialise the &#39;inner&#39; PluginManagerDecorator</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">__instance</span> <span class="o">=</span> <span class="n">DAMNPluginManager</span><span class="p">()</span>        
-            <span class="n">cls</span><span class="o">.</span><span class="n">__instance</span><span class="o">.</span><span class="n">collect_plugins</span><span class="p">()</span>                
+            <span class="n">cls</span><span class="o">.</span><span class="n">__instance</span> <span class="o">=</span> <span class="n">DAMNPluginManager</span><span class="p">()</span>
+            <span class="n">cls</span><span class="o">.</span><span class="n">__instance</span><span class="o">.</span><span class="n">collect_plugins</span><span class="p">()</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;PluginManagerSingleton initialised&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">__instance</span></div>
-    <span class="n">get</span> <span class="o">=</span> <span class="nb">classmethod</span><span class="p">(</span><span class="n">get</span><span class="p">)</span>
-</pre></div></div>
+    <span class="n">get</span> <span class="o">=</span> <span class="nb">classmethod</span><span class="p">(</span><span class="n">get</span><span class="p">)</span></div>
+</pre></div>
 
           </div>
         </div>

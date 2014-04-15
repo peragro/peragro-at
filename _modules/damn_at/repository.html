@@ -67,7 +67,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Repository</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
-        
+
 <div class="viewcode-block" id="Repository.get_meta_data"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.repository.Repository.get_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">,</span> <span class="n">file_descr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get git commit metadata for the specified file.</span>
@@ -82,9 +82,9 @@
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;git.committer.name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="n">commit</span><span class="o">.</span><span class="n">committer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;git.committer.email&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="n">commit</span><span class="o">.</span><span class="n">committer</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;git.name_rev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="n">commit</span><span class="o">.</span><span class="n">name_rev</span><span class="p">)</span>
-        
+
         <span class="n">file_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;git.remotes.origin.url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">config_reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;url&#39;</span><span class="p">))</span>
-        
+
         <span class="k">return</span> <span class="n">file_descr</span></div></div>
 </pre></div>
 

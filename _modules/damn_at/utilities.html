@@ -57,7 +57,7 @@
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">urllib</span>
+
 
 <div class="viewcode-block" id="calculate_hash_for_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.calculate_hash_for_file">[docs]</a><span class="k">def</span> <span class="nf">calculate_hash_for_file</span><span class="p">(</span><span class="n">an_uri</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns a sha1 hexdigest for the given file.</span>
@@ -70,16 +70,16 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filehandle</span><span class="p">:</span>
             <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
                 <span class="n">buf</span> <span class="o">=</span> <span class="n">filehandle</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">buf</span><span class="p">:</span> 
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">buf</span><span class="p">:</span>
                     <span class="k">break</span>
                 <span class="n">chksum</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">chksum</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">io_error</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&#39;NOT_FOUND(</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="n">an_uri</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;NOT_FOUND(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">an_uri</span>
 
 </div>
 <div class="viewcode-block" id="is_existing_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.is_existing_file">[docs]</a><span class="k">def</span> <span class="nf">is_existing_file</span><span class="p">(</span><span class="n">an_uri</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Returns whether the file exists and it is an actual file. </span>
+    <span class="sd">&quot;&quot;&quot;Returns whether the file exists and it is an actual file.</span>
 
 <span class="sd">    :param an_uri: the URI pointing to the file</span>
 <span class="sd">    :rtype: bool</span>
@@ -88,14 +88,14 @@
 
 </div>
 <div class="viewcode-block" id="script_path"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.script_path">[docs]</a><span class="k">def</span> <span class="nf">script_path</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;b-script-&#39;+__file__+&#39;.py </span>
+    <span class="sd">&quot;&quot;&quot;b-script-&#39;+__file__+&#39;.py</span>
 
 <span class="sd">    :param filename: __file__</span>
 <span class="sd">    :rtype: string</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">fnoext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s">&#39;b-script-&#39;</span><span class="o">+</span><span class="n">fnoext</span><span class="o">+</span><span class="s">&#39;.py&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s">&#39;b-script-&#39;</span> <span class="o">+</span> <span class="n">fnoext</span> <span class="o">+</span> <span class="s">&#39;.py&#39;</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="run_blender"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.run_blender">[docs]</a><span class="k">def</span> <span class="nf">run_blender</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">script_uri</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="p">[]):</span>
@@ -104,7 +104,7 @@
 
     <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
     <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s">&#39;..&#39;</span><span class="p">))</span>
-    
+
     <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">script_uri</span><span class="p">))</span>
 
     <span class="n">env</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
@@ -125,9 +125,9 @@
     <span class="n">stdout</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">stdout</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
         <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s">&#39;/*.egg&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;/*.egg&#39;</span><span class="p">):</span>
             <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">include</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s">&#39;/*.egg-link&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;/*.egg-link&#39;</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">include</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">include_path</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
                     <span class="n">include_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">include</span><span class="p">,</span> <span class="n">include_path</span><span class="p">)</span>
@@ -139,6 +139,7 @@
 <div class="viewcode-block" id="get_referenced_file_ids"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.get_referenced_file_ids">[docs]</a><span class="k">def</span> <span class="nf">get_referenced_file_ids</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Collect all FileIds in a FileDescription&quot;&quot;&quot;</span>
     <span class="n">file_ids</span> <span class="o">=</span> <span class="p">[]</span>
+
     <span class="k">def</span> <span class="nf">analyze_dependency</span><span class="p">(</span><span class="n">asset_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fetch the fileIds of an asset&quot;&quot;&quot;</span>
         <span class="n">file_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
@@ -169,16 +170,16 @@
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">path</span>
 
-    </div>
+</div>
 <div class="viewcode-block" id="get_metadatavalue_type"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.get_metadatavalue_type">[docs]</a><span class="k">def</span> <span class="nf">get_metadatavalue_type</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return the name of the type and the value of the MetaDataValue</span>
 
-<span class="sd">    :param value: :py:class:`damn_at.MetaDataValue` </span>
+<span class="sd">    :param value: :py:class:`damn_at.MetaDataValue`</span>
 <span class="sd">    :rtype: tuple&lt;string,string&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">MetaDataType</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">MetaDataType</span><span class="o">.</span><span class="n">_VALUES_TO_NAMES</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
-    <span class="n">field</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s">&#39;_value&#39;</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39;_value&#39;</span>
     <span class="k">return</span> <span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span>
 
 </div>
@@ -186,77 +187,77 @@
     <span class="sd">&quot;&quot;&quot;Pretty print a given MetaDataValue</span>
 
 <span class="sd">    :param key: the name of the MetaDataValue</span>
-<span class="sd">    :param value: :py:class:`damn_at.MetaDataValue` </span>
+<span class="sd">    :param value: :py:class:`damn_at.MetaDataValue`</span>
 <span class="sd">    :param indent: indentation level</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">*</span><span class="n">indent</span>
+    <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span> <span class="o">*</span> <span class="n">indent</span>
     <span class="nb">type</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">get_metadatavalue_type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span><span class="o">+</span><span class="s">&#39;* &#39;</span><span class="o">+</span><span class="n">key</span><span class="o">+</span><span class="s">&#39;: &#39;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s">&#39; (&#39;</span><span class="o">+</span><span class="nb">type</span><span class="o">+</span><span class="s">&#39;)&#39;</span><span class="p">)</span>
-   
+    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span> <span class="o">+</span> <span class="s">&#39;* &#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&#39;: &#39;</span> <span class="o">+</span> <span class="n">val</span> <span class="o">+</span> <span class="s">&#39; (&#39;</span> <span class="o">+</span> <span class="nb">type</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span><span class="p">)</span>
+
 </div>
 <div class="viewcode-block" id="pretty_print_asset_id"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.pretty_print_asset_id">[docs]</a><span class="k">def</span> <span class="nf">pretty_print_asset_id</span><span class="p">(</span><span class="n">asset_id</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Pretty print a given AssetId</span>
 
-<span class="sd">    :param asset_id: :py:class:`damn_at.AssetId` </span>
+<span class="sd">    :param asset_id: :py:class:`damn_at.AssetId`</span>
 <span class="sd">    :param indent: indentation level</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">*</span><span class="n">indent</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span><span class="o">+</span><span class="s">&#39;* </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span><span class="p">))</span>
-    <span class="n">pretty_print_file_id</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
- 
-    </div>
+    <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span> <span class="o">*</span> <span class="n">indent</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span> <span class="o">+</span> <span class="s">&#39;* </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span><span class="p">))</span>
+    <span class="n">pretty_print_file_id</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">indent</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+
+</div>
 <div class="viewcode-block" id="pretty_print_asset_descr"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.pretty_print_asset_descr">[docs]</a><span class="k">def</span> <span class="nf">pretty_print_asset_descr</span><span class="p">(</span><span class="n">asset_descr</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Pretty print a given AssetDescription</span>
 
-<span class="sd">    :param asset_id: :py:class:`damn_at.AssetDescription` </span>
+<span class="sd">    :param asset_id: :py:class:`damn_at.AssetDescription`</span>
 <span class="sd">    :param indent: indentation level</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">*</span><span class="n">indent</span>
+    <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span> <span class="o">*</span> <span class="n">indent</span>
     <span class="c">#print(whitespace+&#39;&#39;+str(asset_descr))</span>
     <span class="n">pretty_print_asset_id</span><span class="p">(</span><span class="n">asset_descr</span><span class="o">.</span><span class="n">asset</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">asset_descr</span><span class="o">.</span><span class="n">dependencies</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span><span class="o">+</span><span class="s">&#39;  Dependencies (</span><span class="si">%d</span><span class="s">):&#39;</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">asset_descr</span><span class="o">.</span><span class="n">dependencies</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span> <span class="o">+</span> <span class="s">&#39;  Dependencies (</span><span class="si">%d</span><span class="s">):&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">asset_descr</span><span class="o">.</span><span class="n">dependencies</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">dep</span> <span class="ow">in</span> <span class="n">asset_descr</span><span class="o">.</span><span class="n">dependencies</span><span class="p">:</span>
-            <span class="n">pretty_print_asset_id</span><span class="p">(</span><span class="n">dep</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">pretty_print_asset_id</span><span class="p">(</span><span class="n">dep</span><span class="p">,</span> <span class="n">indent</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span><span class="o">+</span><span class="s">&#39;  MetaData (</span><span class="si">%d</span><span class="s">):&#39;</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span> <span class="o">+</span> <span class="s">&#39;  MetaData (</span><span class="si">%d</span><span class="s">):&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">pretty_print_metadatavalue</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">pretty_print_metadatavalue</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">indent</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
 
-    </div>
+</div>
 <div class="viewcode-block" id="pretty_print_file_id"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.pretty_print_file_id">[docs]</a><span class="k">def</span> <span class="nf">pretty_print_file_id</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Pretty print a given FileId</span>
 
-<span class="sd">    :param asset_id: :py:class:`damn_at.FileId` </span>
+<span class="sd">    :param asset_id: :py:class:`damn_at.FileId`</span>
 <span class="sd">    :param indent: indentation level</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">*</span><span class="n">indent</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span><span class="o">+</span><span class="s">&#39;hash: &#39;</span><span class="o">+</span><span class="n">file_id</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span><span class="o">+</span><span class="s">&#39;filename: &#39;</span><span class="o">+</span><span class="n">file_id</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
- 
+    <span class="n">whitespace</span> <span class="o">=</span> <span class="s">&#39; &#39;</span> <span class="o">*</span> <span class="n">indent</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span> <span class="o">+</span> <span class="s">&#39;hash: &#39;</span> <span class="o">+</span> <span class="n">file_id</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">whitespace</span> <span class="o">+</span> <span class="s">&#39;filename: &#39;</span> <span class="o">+</span> <span class="n">file_id</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+
 </div>
 <div class="viewcode-block" id="pretty_print_file_description"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.pretty_print_file_description">[docs]</a><span class="k">def</span> <span class="nf">pretty_print_file_description</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Pretty print a given FileDescription</span>
 
-<span class="sd">    :param asset_id: :py:class:`damn_at.FileDescription` </span>
+<span class="sd">    :param asset_id: :py:class:`damn_at.FileDescription`</span>
 <span class="sd">    :param indent: indentation level</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pretty_print_file_id</span><span class="p">(</span><span class="n">file_descr</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%d</span><span class="s"> Assets: &#39;</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">)</span> <span class="k">if</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%d</span><span class="s"> Assets: &#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">)</span> <span class="k">if</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
             <span class="n">pretty_print_asset_descr</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="find_asset_ids_in_file_descr"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.find_asset_ids_in_file_descr">[docs]</a><span class="k">def</span> <span class="nf">find_asset_ids_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Find an AssetId by name in the given FileDescription</span>
 
-<span class="sd">    :param file_descr: :py:class:`damn_at.FileDescription` </span>
+<span class="sd">    :param file_descr: :py:class:`damn_at.FileDescription`</span>
 <span class="sd">    :param asset_name: string the asset to look for</span>
-<span class="sd">    :rtype: list of :py:class:`damn_at.AssetId` </span>
+<span class="sd">    :rtype: list of :py:class:`damn_at.AssetId`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">asset_ids</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
@@ -269,8 +270,8 @@
 <div class="viewcode-block" id="get_asset_names_in_file_descr"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.get_asset_names_in_file_descr">[docs]</a><span class="k">def</span> <span class="nf">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get all asset names in the given FileDescription</span>
 
-<span class="sd">    :param file_descr: :py:class:`damn_at.FileDescription` </span>
-<span class="sd">    :rtype: list&lt;string&gt; of asset names contained </span>
+<span class="sd">    :param file_descr: :py:class:`damn_at.FileDescription`</span>
+<span class="sd">    :rtype: list&lt;string&gt; of asset names contained</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">subname</span> <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="p">]</span>
