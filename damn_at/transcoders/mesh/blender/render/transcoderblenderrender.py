@@ -12,12 +12,9 @@ class BlenderTranscoder(ITranscoder):
     options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(64,64)),
                EnumOption(name='camera_type', description='The camera type', choices=('ORTHO', 'PERSPECTIVE'), default='PERSPECTIVE'),
                FloatArrayOption(name='angles', description='The angles', min=0.0, max=3.1415, default=(0.0,))]
-    convert_map = {"application/x-blender.object" : {"image/jpg": options},
-                   "application/x-blender.object" : {"image/png": options},
-                   "application/x-blender.mesh" : {"image/jpg": options},
-                   "application/x-blender.mesh" : {"image/png": options},
-                   "application/x-blender.group" : {"image/jpg": options},
-                   "application/x-blender.group" : {"image/png": options},}
+    convert_map = {"application/x-blender.object" : {"image/jpg": options, "image/png": options},
+                   "application/x-blender.mesh" : {"image/jpg": options, "image/png": options},
+                   "application/x-blender.group" : {"image/jpg": options, "image/png": options},}
     
     def __init__(self):
         ITranscoder.__init__(self)
