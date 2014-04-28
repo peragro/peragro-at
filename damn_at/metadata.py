@@ -8,7 +8,7 @@ class MetaDataExtractor(object):
         for field in dir(cls):
             if not field.startswith('__') and field not in ['extract', 'fields']:
                 type, func = getattr(cls, field)
-                type_name = MetaDataType._VALUES_TO_NAMES[type].lower()+'_value'
+                type_name = MetaDataType._VALUES_TO_NAMES[type].lower() + '_value'
                 kwargs = {'type': type}
                 kwargs[type_name] = func(context)
                 metadata[field] = MetaDataValue(**kwargs)
