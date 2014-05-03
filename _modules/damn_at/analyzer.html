@@ -251,7 +251,6 @@
     <span class="kn">import</span> <span class="nn">sys</span>
     <span class="kn">import</span> <span class="nn">argparse</span>
     <span class="kn">import</span> <span class="nn">logging</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">:</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 
     <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">_CMD_DESCRIPTION</span>
 
@@ -268,16 +267,35 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;metadatastore&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;path to the metadata store&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;path to a file or a directory to analyze recursively&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--force&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;foo the bars before frobbling&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&#39;-d&#39;</span><span class="p">,</span>
+        <span class="s">&#39;--debug&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Print lots of debugging statements&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_const&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s">&quot;loglevel&quot;</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&#39;-v&#39;</span><span class="p">,</span>
+        <span class="s">&#39;--verbose&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Be verbose&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_const&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s">&quot;loglevel&quot;</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+    <span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-
+    
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">:</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">loglevel</span><span class="p">)</span>
     <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;damn-at_analyzer&#39;</span><span class="p">)</span>
     <span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
     <span class="n">stream_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
     <span class="n">output</span><span class="o">.</span><span class="n">propagate</span> <span class="o">=</span> <span class="bp">False</span>
     <span class="n">output</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span>
