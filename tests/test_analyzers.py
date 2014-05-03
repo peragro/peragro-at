@@ -9,7 +9,6 @@ import unittest
 
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
 from damn_at.analyzer import Analyzer
-from damn_at import registry
 
 def pretty_print(file_descr):
     """Pretty print the file_descr"""
@@ -43,10 +42,6 @@ class TestCase(unittest.TestCase):
         pretty_print(descr)
         assert True
         
-    def test_registry(self):
-        """Test say"""
-        print(registry.get('damn_at.analyzer.number_of_analyzers').value())
-        assert True
 
 def test_suite():
     """Return a list of tests"""
