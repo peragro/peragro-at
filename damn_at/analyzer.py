@@ -386,7 +386,6 @@ def main():
     import sys
     import argparse
     import logging
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
     from damn_at import _CMD_DESCRIPTION
 
@@ -403,16 +402,35 @@ def main():
     parser.add_argument('metadatastore', help='path to the metadata store')
     parser.add_argument('path', help='path to a file or a directory to analyze recursively')
     parser.add_argument('--force', action='store_true', help='foo the bars before frobbling')
+    parser.add_argument(
+        '-d',
+        '--debug',
+        help='Print lots of debugging statements',
+        action="store_const",
+        dest="loglevel",
+        const=logging.DEBUG,
+        default=logging.WARNING
+    )
+    parser.add_argument(
+        '-v',
+        '--verbose',
+        help='Be verbose',
+        action="store_const",
+        dest="loglevel",
+        const=logging.INFO
+    )
 
     if len(sys.argv) < 2:
         parser.print_help()
         parser.exit(1)
 
     args = parser.parse_args()
-
+    
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=args.loglevel)
     formatter = logging.Formatter('%(message)s')
     output = logging.getLogger('damn-at_analyzer')
     stream_handler = logging.StreamHandler()
+    output.setLevel(logging.INFO)
     stream_handler.setFormatter(formatter)
     output.propagate = False
     output.handlers = []
