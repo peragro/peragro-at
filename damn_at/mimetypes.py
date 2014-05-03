@@ -13,7 +13,7 @@ import imp
 #import mimetypes as sys_mimetypes
 
 #...so let's load it with some more magic.
-search_paths = [path for path in sys.path[:] if path.find('damn_at')==-1]
+search_paths = [path for path in sys.path[:] if path.find('damn_at') == -1]
 file_handle, pathname, desc = imp.find_module('mimetypes', search_paths)
 sys_mimetypes = imp.load_module('mimetypes', file_handle, pathname, desc)
 

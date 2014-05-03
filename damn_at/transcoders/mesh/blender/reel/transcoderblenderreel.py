@@ -14,12 +14,9 @@ class BlenderTranscoder(ITranscoder):
     options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(128,128)),
                IntOption(name='frames', description='Total number of frames.', min=1, max=4096, default=12),
                IntOption(name='footage', description='Number of frames per line', min=1, max=4096, default=4),]
-    convert_map = {"application/x-blender.object" : {"image/jpg-reel": options},
-                   "application/x-blender.object" : {"image/png-reel": options},
-                   "application/x-blender.mesh" : {"image/jpg-reel": options},
-                   "application/x-blender.mesh" : {"image/png-reel": options},
-                   "application/x-blender.group" : {"image/jpg-reel": options},
-                   "application/x-blender.group" : {"image/png-reel": options},}
+    convert_map = {"application/x-blender.object" : {"image/jpg-reel": options, "image/png-reel": options},
+                   "application/x-blender.mesh" : {"image/jpg-reel": options, "image/png-reel": options},
+                   "application/x-blender.group" : {"image/jpg-reel": options, "image/png-reel": options},}
     
     def __init__(self):
         ITranscoder.__init__(self)

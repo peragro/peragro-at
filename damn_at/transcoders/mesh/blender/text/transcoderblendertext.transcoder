@@ -1,0 +1,9 @@
+[Core]
+Name = Blender text-transcoder
+Module = transcoderblendertext
+
+[Documentation]
+Author = 
+Version = 0.1
+Website = 
+Description = Blender text transcoder

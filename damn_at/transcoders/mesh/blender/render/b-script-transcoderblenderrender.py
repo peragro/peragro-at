@@ -19,6 +19,10 @@ def create_scene(args):
     scene.render.resolution_y = args.height
     scene.render.resolution_percentage = 100
     
+    # Remove sky to make the render transparant
+    for layer in scene.render.layers:
+        layer.use_sky = False
+    
     #scene.render.engine = 'CYCLES'
     scene.render.engine = 'BLENDER_RENDER'
     

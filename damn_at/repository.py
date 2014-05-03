@@ -16,7 +16,7 @@ class Repository(IRepository):
         self.path = path
         self.repo = Repo(path)
         super(Repository, self).__init__()
-        
+
     def get_meta_data(self, an_uri, file_descr):
         """
         Get git commit metadata for the specified file.
@@ -31,7 +31,7 @@ class Repository(IRepository):
         file_descr.metadata['git.committer.name'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.committer.name)
         file_descr.metadata['git.committer.email'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.committer.email)
         file_descr.metadata['git.name_rev'] = MetaDataValue(type=MetaDataType.STRING, string_value=commit.name_rev)
-        
+
         file_descr.metadata['git.remotes.origin.url'] = MetaDataValue(type=MetaDataType.STRING, string_value=self.repo.remotes.origin.config_reader.get('url'))
-        
+
         return file_descr
