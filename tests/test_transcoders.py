@@ -9,7 +9,6 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
 from damn_at.transcoder import Transcoder
-from damn_at import registry
 
 
 class TestCase(unittest.TestCase):
