@@ -57,11 +57,6 @@ class Transcoder(object):
                     if not src in self.transcoders:
                         self.transcoders[src] = []
                     self.transcoders[src].append(plugin)
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/master
-        self._build_target_mimetypes()
 
     def _build_target_mimetypes(self):
         self.target_mimetypes = {}
@@ -82,11 +77,7 @@ class Transcoder(object):
                         self.target_mimetypes_transcoders[src_mimetype] = []
                     self.target_mimetypes[src_mimetype].append(tmt)
                     self.target_mimetypes_transcoders[src_mimetype].append((tmt, transcoder,))
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> upstream/master
     def _get_transcoder(self, src_mimetype, target_mimetype):
         """Returns a transcoder
 
@@ -108,24 +99,19 @@ class Transcoder(object):
         """"""
         # TODO: Need some clever way to select the right transcoder in
         # the list based on options passed.
-<<<<<<< HEAD
+
         target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
         #print self.target_mimetypes_transcoders['image/png']
         for target, transcoder in target_mimetypes:
             if target.mimetype == mimetype:
                 return target
-=======
+
         if src_mimetype in self.target_mimetypes_transcoders:
             target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
             for target, transcoder in target_mimetypes:
                 if target.mimetype == mimetype:
                     return target
-<<<<<<< HEAD
->>>>>>> upstream/master
-        
-=======
 
->>>>>>> upstream/master
     def parse_options(self, src_mimetype, target_mimetype, **options):
         """"""
         transcoder = self._get_transcoder(src_mimetype, target_mimetype)
@@ -249,11 +235,11 @@ def main():
         raise TranscoderUnknownAssetException(asset_subname + ' ambigious in file_descr. Please specify "%s(<mimetype>)" with <mimetype> one of %s' % (asset_subname, mimes))
 
     target_mimetype = t.get_target_mimetype(asset_id.mimetype, args.mimetype)
-<<<<<<< HEAD
-    print t.get_target_mimetypes().keys() 
-=======
 
->>>>>>> upstream/master
+    print t.get_target_mimetypes().keys() 
+
+
+
     if not target_mimetype:
         if asset_id.mimetype not in t.get_target_mimetypes():
             raise TranscoderUnknownTypeException(asset_id.mimetype + ' needs to be one of ' + str(t.get_target_mimetypes().keys()))

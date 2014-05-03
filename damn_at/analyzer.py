@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 Role
 ====
@@ -13,7 +12,7 @@ import time
 
 from metrology.instruments.gauge import Gauge
 
-from damn_at import registry, MetaDataValue, MetaDataType
+from damn_at import MetaDataValue, MetaDataType
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
 from damn_at.utilities import is_existing_file, calculate_hash_for_file, get_referenced_file_ids, abspath
 from damn_at.metadatastore import MetaDataStore
@@ -185,7 +184,6 @@ def main():
 
 if __name__ == '__main__': 
     main()
-=======
 """
 Role
 ====
@@ -445,4 +443,3 @@ def main():
 
 if __name__ == '__main__':
     main()
->>>>>>> upstream/master
