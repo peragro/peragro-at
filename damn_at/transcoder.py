@@ -236,7 +236,7 @@ def main():
 
     target_mimetype = t.get_target_mimetype(asset_id.mimetype, args.mimetype)
 
-    print t.get_target_mimetypes().keys() 
+    print(t.get_target_mimetypes().keys()) 
 
 
 

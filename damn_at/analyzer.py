@@ -10,7 +10,6 @@ import pwd
 import grp
 import time
 
-from metrology.instruments.gauge import Gauge
 
 from damn_at import MetaDataValue, MetaDataType
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
