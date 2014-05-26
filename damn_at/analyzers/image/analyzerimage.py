@@ -11,7 +11,7 @@ from damn_at.pluginmanager import IAnalyzer
 
 class GenericImageAnalyzer(IAnalyzer):
     """Generic Image analyzer."""
-    handled_types = ["image/x-ms-bmp", "image/jpeg", "image/png"]
+    handled_types = ["image/x-ms-bmp", "image/jpeg", "image/png", "image/gif", "image/x-photoshop", "image/tiff"]
     
     def __init__(self):
         super(GenericImageAnalyzer, self).__init__()

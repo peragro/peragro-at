@@ -38,13 +38,6 @@ class AnalyzerUnknownTypeException(AnalyzerException):
     pass
 
 
-class AnalyzerGauge(Gauge):
-    """Gauge that returns the number of analyzer-plugins"""
-    def __init__(self, analyzer):
-        self.analyzer = analyzer
-    def value(self):
-        return len(self.analyzer.analyzers)
-
 
 class Analyzer(object):
     """
