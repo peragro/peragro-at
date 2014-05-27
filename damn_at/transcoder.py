@@ -58,6 +58,8 @@ class Transcoder(object):
                         self.transcoders[src] = []
                     self.transcoders[src].append(plugin)
 
+        self._build_target_mimetypes()
+
     def _build_target_mimetypes(self):
         self.target_mimetypes = {}
         self.target_mimetypes_transcoders = {}
@@ -99,13 +101,6 @@ class Transcoder(object):
         """"""
         # TODO: Need some clever way to select the right transcoder in
         # the list based on options passed.
-
-        target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
-        #print self.target_mimetypes_transcoders['image/png']
-        for target, transcoder in target_mimetypes:
-            if target.mimetype == mimetype:
-                return target
-
         if src_mimetype in self.target_mimetypes_transcoders:
             target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
             for target, transcoder in target_mimetypes:
@@ -235,10 +230,6 @@ def main():
         raise TranscoderUnknownAssetException(asset_subname + ' ambigious in file_descr. Please specify "%s(<mimetype>)" with <mimetype> one of %s' % (asset_subname, mimes))
 
     target_mimetype = t.get_target_mimetype(asset_id.mimetype, args.mimetype)
-
-    print(t.get_target_mimetypes().keys()) 
-
-
 
     if not target_mimetype:
         if asset_id.mimetype not in t.get_target_mimetypes():

@@ -17,15 +17,12 @@ search_paths = [path for path in sys.path[:] if path.find('damn_at') == -1]
 file_handle, pathname, desc = imp.find_module('mimetypes', search_paths)
 sys_mimetypes = imp.load_module('mimetypes', file_handle, pathname, desc)
 
-
 # Add mimetypes that don't seem to be present by default
 sys_mimetypes.add_type("application/x-blender", ".blend")
 sys_mimetypes.add_type("image/tga", ".tga")
 sys_mimetypes.add_type("application/x-crystalspace.library+xml", ".xml")
 sys_mimetypes.add_type("image/x-dds", ".dds")
 
-#sys_mimetypes.add_type("image/jpg-reel", ".jpg")
-#sys_mimetypes.add_type("image/png-reel", ".png")
 # Add special purpose meta-mimetypes for transcoding, only add them 
 # to the inverse lookup table (mimetype->extension) and not to the
 # (extension->mimetype) so they're never returned for extension lookups! 
