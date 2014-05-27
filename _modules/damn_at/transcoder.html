@@ -209,13 +209,9 @@
 
     <span class="kn">from</span> <span class="nn">damn_at.metadatastore</span> <span class="kn">import</span> <span class="n">MetaDataStore</span>
     <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">_CMD_DESCRIPTION</span>
-
-    <span class="n">t</span> <span class="o">=</span> <span class="n">Transcoder</span><span class="p">(</span><span class="s">&#39;/tmp/transcoded/&#39;</span><span class="p">)</span>
-
+    
     <span class="n">epilog</span> <span class="o">=</span> <span class="s">&#39;Supported mimetypes: </span><span class="se">\n</span><span class="s">&#39;</span>
-    <span class="k">for</span> <span class="n">mime</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">get_target_mimetypes</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">epilog</span> <span class="o">+=</span> <span class="s">&#39; * </span><span class="si">%s</span><span class="s"> -&gt; </span><span class="si">%s</span><span class="s"> </span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">mime</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">targets</span><span class="p">)))</span>
-
+    
     <span class="c">#Process the positional arguments</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span> <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;The path to the FileDescription file&#39;</span><span class="p">)</span>
@@ -242,10 +238,16 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">args</span><span class="p">,</span> <span class="n">options_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
     <span class="k">except</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Transcoder</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mime</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">get_target_mimetypes</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">epilog</span> <span class="o">+=</span> <span class="s">&#39; * </span><span class="si">%s</span><span class="s"> -&gt; </span><span class="si">%s</span><span class="s"> </span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">mime</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">targets</span><span class="p">)))</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">epilog</span> <span class="o">=</span> <span class="n">epilog</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">:</span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">loglevel</span><span class="p">)</span>
+    
+    <span class="n">t</span> <span class="o">=</span> <span class="n">Transcoder</span><span class="p">(</span><span class="s">&#39;/tmp/transcoded/&#39;</span><span class="p">)</span>
 
     <span class="n">store_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
