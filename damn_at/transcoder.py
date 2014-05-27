@@ -158,13 +158,9 @@ def main():
 
     from damn_at.metadatastore import MetaDataStore
     from damn_at import _CMD_DESCRIPTION
-
-    t = Transcoder('/tmp/transcoded/')
-
+    
     epilog = 'Supported mimetypes: \n'
-    for mime, targets in t.get_target_mimetypes().items():
-        epilog += ' * %s -> %s \n' % (mime, str(map(lambda x: x.mimetype, targets)))
-
+    
     #Process the positional arguments
     parser = argparse.ArgumentParser(add_help=False, epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter,)
     parser.add_argument('path', help='The path to the FileDescription file')
@@ -191,10 +187,16 @@ def main():
     try:
         args, options_args = parser.parse_known_args()
     except:
+        t = Transcoder('')
+        for mime, targets in t.get_target_mimetypes().items():
+            epilog += ' * %s -> %s \n' % (mime, str(map(lambda x: x.mimetype, targets)))
+        parser.epilog = epilog
         parser.print_help()
         parser.exit(1)
 
     logging.basicConfig(format='%(levelname)s:%(message)s', level=args.loglevel)
+    
+    t = Transcoder('/tmp/transcoded/')
 
     store_path = os.path.dirname(args.path)
     file_name = os.path.basename(args.path)
