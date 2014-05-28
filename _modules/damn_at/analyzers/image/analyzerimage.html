@@ -56,13 +56,16 @@
 
 <span class="kn">import</span> <span class="nn">mimetypes</span>
 
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">FileId</span><span class="p">,</span> <span class="n">FileDescription</span><span class="p">,</span> <span class="n">AssetDescription</span><span class="p">,</span> <span class="n">AssetId</span>
 
 <span class="kn">from</span> <span class="nn">damn_at.pluginmanager</span> <span class="kn">import</span> <span class="n">IAnalyzer</span>
 
+
 <div class="viewcode-block" id="GenericImageAnalyzer"><a class="viewcode-back" href="../../../../autodoc/damn_at.analyzers.image.html#damn_at.analyzers.image.analyzerimage.GenericImageAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">GenericImageAnalyzer</span><span class="p">(</span><span class="n">IAnalyzer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generic Image analyzer.&quot;&quot;&quot;</span>
-    <span class="n">handled_types</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s">&quot;image/png&quot;</span><span class="p">]</span>
+    <span class="n">handled_types</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;image/x-ms-bmp&quot;</span><span class="p">,</span> <span class="s">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s">&quot;image/png&quot;</span><span class="p">,</span> <span class="s">&quot;image/gif&quot;</span><span class="p">,</span> <span class="s">&quot;image/x-photoshop&quot;</span><span class="p">,</span> <span class="s">&quot;image/tiff&quot;</span><span class="p">]</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">GenericImageAnalyzer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
@@ -78,12 +81,26 @@
         <span class="n">image_mimetype</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">an_uri</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         
         <span class="n">asset_descr</span> <span class="o">=</span> <span class="n">AssetDescription</span><span class="p">(</span><span class="n">asset</span> <span class="o">=</span> <span class="n">AssetId</span><span class="p">(</span><span class="n">subname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">an_uri</span><span class="p">),</span> <span class="n">mimetype</span> <span class="o">=</span> <span class="n">image_mimetype</span><span class="p">,</span> <span class="nb">file</span> <span class="o">=</span> <span class="n">fileid</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;exiftool&#39;</span><span class="p">,</span><span class="n">an_uri</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                    <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">pro</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">pro</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;E: ImageAnalyzer failed </span><span class="si">%s</span><span class="s"> with error code </span><span class="si">%d</span><span class="s">! &quot;</span>
+                        <span class="o">%</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">pro</span><span class="o">.</span><span class="n">returncode</span><span class="p">),</span> <span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;E: ImageAnalyzer failed </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">an_uri</span><span class="p">),</span> <span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">False</span>
+            
+        <span class="n">meta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
         <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_descr</span><span class="p">)</span> 
         
-        <span class="k">return</span> <span class="n">file_descr</span>
-        
-        
-</pre></div></div></div>
+        <span class="k">return</span> <span class="n">file_descr</span></div></div>
+</pre></div>
 
           </div>
         </div>
