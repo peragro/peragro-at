@@ -63,7 +63,7 @@ class SoundAnalyzer(IAnalyzer):
                     stderr=subprocess.PIPE)
             out, err = pro.communicate()
             if pro.returncode != 0:
-                print("E: SoundAnalyzer failed %swith error code %d! "%(anURI,
+                print("E: SoundAnalyzer failed %s with error code %d! "%(anURI,
                     pro.returncode), out, err)
                 return False
         except OSError:
@@ -79,7 +79,6 @@ class SoundAnalyzer(IAnalyzer):
             line = [l.strip() for l in line]
             if line[0] in ['Input File', 'Comment']: continue
             meta[line[0].lower().replace(' ', '_')] = line[1]
-
         
         from damn_at.analyzers.audio import metadata
         asset_descr.metadata = metadata.MetaDataSox.extract(meta)

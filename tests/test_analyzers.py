@@ -38,7 +38,7 @@ class TestCase(unittest.TestCase):
         
     def test_analyze(self):
         """Test say"""
-        descr = Analyzer().analyze_file('/home/sueastside/dev/blenderassets/cube1.blend')
+        descr =Analyzer().analyze_file('/home/ayush/GSOC14/damn-at/damn-test-files/mesh/blender/cube1.blend')
         pretty_print(descr)
         assert True
         

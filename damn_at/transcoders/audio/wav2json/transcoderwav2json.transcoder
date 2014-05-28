@@ -1,0 +1,9 @@
+[Core]
+Name = wav2png Transcoder
+Module = transcoderwav2json
+
+[Documentation]
+Author = Ayush Garg
+Version = 0.1
+Website = 
+Description = Python based audio to json transcoder
