@@ -1,6 +1,7 @@
 import os
 from PIL import Image
 
+from damn_at import logger
 from damn_at.transcoder import TranscoderException
 
 from damn_at.pluginmanager import ITranscoder
