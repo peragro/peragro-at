@@ -58,6 +58,7 @@
 
 <span class="kn">import</span> <span class="nn">subprocess</span>
 
+<span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">MetaDataType</span><span class="p">,</span> <span class="n">MetaDataValue</span>
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">FileId</span><span class="p">,</span> <span class="n">FileDescription</span><span class="p">,</span> <span class="n">AssetDescription</span><span class="p">,</span> <span class="n">AssetId</span>
 
 <span class="kn">from</span> <span class="nn">damn_at.pluginmanager</span> <span class="kn">import</span> <span class="n">IAnalyzer</span>
@@ -95,7 +96,32 @@
             <span class="k">return</span> <span class="bp">False</span>
             
         <span class="n">meta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;MIME Type&#39;</span> <span class="p">:</span> <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;MIME Type&#39;</span><span class="p">,</span> <span class="s">&#39;Image Size&#39;</span><span class="p">]:</span>
+                <span class="n">meta</span><span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="kn">from</span> <span class="nn">damn_at.analyzers.image</span> <span class="kn">import</span> <span class="n">metadata</span>
+        
+        <span class="n">extractor_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;image/png&#39;</span> <span class="p">:</span> <span class="n">metadata</span><span class="o">.</span><span class="n">MetaDataPNG</span><span class="p">,</span>
+                <span class="s">&#39;image/jpeg&#39;</span> <span class="p">:</span> <span class="n">metadata</span><span class="o">.</span><span class="n">MetaDataJPG</span><span class="p">,</span>
+                <span class="s">&#39;image/x-ms-bmp&#39;</span> <span class="p">:</span> <span class="n">metadata</span><span class="o">.</span><span class="n">MetaDataBMP</span><span class="p">,</span>
+                <span class="s">&#39;image/x-photoshop&#39;</span> <span class="p">:</span> <span class="n">metadata</span><span class="o">.</span><span class="n">MetaDataPSD</span><span class="p">}</span>
+        
+        <span class="k">if</span> <span class="n">image_mimetype</span> <span class="ow">in</span> <span class="n">extractor_mapping</span><span class="p">:</span>
+            <span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">extractor_mapping</span><span class="p">[</span><span class="n">image_mimetype</span><span class="p">]</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">meta</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+                <span class="n">asset_descr</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s">&#39;exif-&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">MetaDataValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">MetaDataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">string_value</span> <span class="o">=</span> <span class="n">value</span><span class="p">)</span>
 
         <span class="n">file_descr</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_descr</span><span class="p">)</span> 
         

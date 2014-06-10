@@ -17,3 +17,11 @@ image Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`metadata` Module
+----------------------
+
+.. automodule:: damn_at.analyzers.image.metadata
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
