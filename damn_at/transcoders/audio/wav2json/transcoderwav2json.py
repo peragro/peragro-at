@@ -8,7 +8,10 @@ from damn_at.pluginmanager import ITranscoder
 from damn_at.options import IntOption, FloatOption, expand_path_template
 
 class Audio2ImageTranscoder(ITranscoder):
-    options = [IntOption(name = 'channels', description = 'Number of channels to output', default = 2, min=1, max=2)]
+    options = [IntOption(name = 'channels', description = 'Number of channels to output', default = 2, min=1, max=2),
+        IntOption(name = 'samplerate', description = 'Samples per second each channel', default = 800, min = 200),
+        IntOption(name = 'precision', description = 'Decimal Precision', default = 2, min = 1)]
+    
     convert_map = {"audio/x-wav" : {"application/json" : options},
             "audio/mpeg" : {"application/json" : options}}
 
@@ -27,7 +30,7 @@ class Audio2ImageTranscoder(ITranscoder):
         audio_mimetype = mimetypes.guess_type(file_descr.file.filename)[0]
         if audio_mimetype != "audio/x-wav":
             try:
-                pro = subprocess.Popen(["sox", file_descr.file.filename, "-t", "wav", "tmp.wav"], 
+                pro = subprocess.Popen(["sox", file_descr.file.filename, "-t", "wav", "-r", "800", "tmp.wav"], 
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 out, err = pro.communicate()
                 if pro.returncode != 0:
@@ -60,8 +63,10 @@ class Audio2ImageTranscoder(ITranscoder):
 
         if sample_width == 1:
             fmt = "%iB" % total_samples # read unsigned chars
+            round_with = 256.0
         elif sample_width == 2:
             fmt = "%ih" % total_samples # read signed 2 byte shorts
+            round_with = 32768.0
         else:
             raise ValueError("Only supports 8 and 16 bit audio formats.")
 
@@ -72,7 +77,7 @@ class Audio2ImageTranscoder(ITranscoder):
 
         for index, value in enumerate(integer_data):
             bucket = index % num_channels
-            channels[bucket].append(value)
+            channels[bucket].append(round(value/round_with, 2))
 
         if num_channels == options['channels']:
             if options['channels'] == 1:
