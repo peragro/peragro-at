@@ -1,13 +1,14 @@
-import os
-import wave, struct, json, mimetypes, subprocess
+import os, tempfile
+import json, mimetypes, subprocess
 
 from damn_at import logger
 from damn_at.transcoder import TranscoderException
+from damn_at.utilities import WaveData
 
 from damn_at.pluginmanager import ITranscoder
-from damn_at.options import IntOption, FloatOption, expand_path_template
+from damn_at.options import IntOption, expand_path_template
 
-class Audio2ImageTranscoder(ITranscoder):
+class Audio2JsonTranscoder(ITranscoder):
     options = [IntOption(name = 'channels', description = 'Number of channels to output', default = 2, min=1, max=2),
         IntOption(name = 'samplerate', description = 'Samples per second each channel', default = 800, min = 200),
         IntOption(name = 'precision', description = 'Decimal Precision', default = 2, min = 1)]
@@ -28,58 +29,26 @@ class Audio2ImageTranscoder(ITranscoder):
                 target_mimetype.mimetype, asset_id, **options)
         
         audio_mimetype = mimetypes.guess_type(file_descr.file.filename)[0]
-        if audio_mimetype != "audio/x-wav":
-            try:
-                pro = subprocess.Popen(["sox", file_descr.file.filename, "-t", "wav", "-r", "800", "tmp.wav"], 
-                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                out, err = pro.communicate()
-                if pro.returncode != 0:
-                    print("Sox failed %s with error code %d!" %(file_decrs.file.filename, pro.returncode), 
-                            out, err)
-                    return False
-                else:
-                    toopen = 'tmp.wav'
-            except OSError:
-                print("Sox failed %s!" %(file_descr.file.filename), out, err)
-                return False
-        else:
-            toopen = file_descr.file.filename
-
         try:
-            stream = wave.open(toopen, "rb")
-        except IOError:
-            print "cannot open", toopen
+            tmp = tempfile.NamedTemporaryFile()
+            pro = subprocess.Popen(["sox", file_descr.file.filename, "-t", "wav", "-r", str(options['samplerate']), tmp.name], 
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            out, err = pro.communicate()
+            if pro.returncode != 0:
+                print("Sox failed %s with error code %d!" %(file_decrs.file.filename, pro.returncode), 
+                        out, err)
+                return False
+            else:
+                toopen = tmp.name
+        except OSError:
+            print("Sox failed %s!" %(file_descr.file.filename), out, err)
             return False
-        
-        num_channels = stream.getnchannels()
-        sample_width = stream.getsampwidth()
-        num_frames = stream.getnframes()
 
-        raw_data = stream.readframes(num_frames)
-        stream.close()
-        if toopen == 'tmp.wav': os.remove(toopen)
-        
-        total_samples = num_channels*num_frames
+        wavedata = WaveData()
+        wavedata.extractData(toopen, options['precision'])
+        channels = wavedata.getData()
 
-        if sample_width == 1:
-            fmt = "%iB" % total_samples # read unsigned chars
-            round_with = 256.0
-        elif sample_width == 2:
-            fmt = "%ih" % total_samples # read signed 2 byte shorts
-            round_with = 32768.0
-        else:
-            raise ValueError("Only supports 8 and 16 bit audio formats.")
-
-        integer_data = struct.unpack(fmt, raw_data)
-        del raw_data # Keep memory tidy
-
-        channels = [ [] for time in range(num_channels) ]
-
-        for index, value in enumerate(integer_data):
-            bucket = index % num_channels
-            channels[bucket].append(round(value/round_with, 2))
-
-        if num_channels == options['channels']:
+        if wavedata.nchannels == options['channels']:
             if options['channels'] == 1:
                 transcoded = json.dumps({"mono": channels[0]})
             elif options['channels'] ==2:
