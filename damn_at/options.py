@@ -74,6 +74,8 @@ class VectorOption(BaseOption):
         return a_string
 
     def parse_from_string(self, a_string):
+        if self.type == str:
+            return "".join(a_string.split(','))
         splits = self._clean(a_string).split(',')
         if self.size and len(splits) != self.size:
             raise OptionParseException('%s not of size %d!' % (a_string, self.size))

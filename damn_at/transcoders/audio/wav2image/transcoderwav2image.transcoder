@@ -1,0 +1,9 @@
+[Core]
+Name = wav2iamge Transcoder
+Module = transcoderwav2image
+
+[Documentation]
+Author = Ayush Garg
+Version = 0.1
+Website = 
+Description = Python based audio to image transcoder
