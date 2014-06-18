@@ -3,6 +3,7 @@ Options
 """
 import os
 import sys
+import re
 from string import Template
 
 from damn_at import mimetypes
@@ -155,6 +156,31 @@ class EnumOption(BaseOption):
     @property
     def default_description(self):
         return str(self.default)
+
+class HexColorOption(BaseOption):
+    """Class for #rrggbb Option"""
+
+    def __init__(self, name, description, default):
+        BaseOption.__init__(self, name, description, default)
+
+    def parse_from_string(self, a_string):
+        matcher = re.compile(r'^#?(([0-9a-fA-F]{2}){3})')
+        m = matcher.match(a_string)
+        if not m or len(m.groups()) != 2:
+            raise OptionConstraintException('%s not of #rrggbb format!' %(a_string))
+        return '#'+m.group(1)
+
+    @property
+    def type_description(self):
+        return '#rrggbb'
+
+    @property
+    def constraint_description(self):
+        return 'Value%s needs to be of format #rrggbb'
+
+    @property
+    def default_description(self):
+        return self.default
 
 
 def options_to_template(options):
