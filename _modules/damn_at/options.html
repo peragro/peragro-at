@@ -54,6 +54,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">Template</span>
 
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">mimetypes</span>
@@ -206,6 +207,31 @@
     <span class="nd">@property</span>
 <div class="viewcode-block" id="EnumOption.default_description"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.EnumOption.default_description">[docs]</a>    <span class="k">def</span> <span class="nf">default_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="HexColorOption"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.HexColorOption">[docs]</a><span class="k">class</span> <span class="nc">HexColorOption</span><span class="p">(</span><span class="n">BaseOption</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class for #rrggbb Option&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+        <span class="n">BaseOption</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HexColorOption.parse_from_string"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.HexColorOption.parse_from_string">[docs]</a>    <span class="k">def</span> <span class="nf">parse_from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_string</span><span class="p">):</span>
+        <span class="n">matcher</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^#?(([0-9a-fA-F]{2}){3})&#39;</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">a_string</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OptionConstraintException</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> not of #rrggbb format!&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">a_string</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s">&#39;#&#39;</span><span class="o">+</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="HexColorOption.type_description"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.HexColorOption.type_description">[docs]</a>    <span class="k">def</span> <span class="nf">type_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;#rrggbb&#39;</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="HexColorOption.constraint_description"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.HexColorOption.constraint_description">[docs]</a>    <span class="k">def</span> <span class="nf">constraint_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;Value</span><span class="si">%s</span><span class="s"> needs to be of format #rrggbb&#39;</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="HexColorOption.default_description"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.HexColorOption.default_description">[docs]</a>    <span class="k">def</span> <span class="nf">default_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span>
 
 </div></div>
 <div class="viewcode-block" id="options_to_template"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.options.options_to_template">[docs]</a><span class="k">def</span> <span class="nf">options_to_template</span><span class="p">(</span><span class="n">options</span><span class="p">):</span>

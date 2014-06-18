@@ -57,7 +57,7 @@
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">hashlib</span>
-
+<span class="kn">import</span> <span class="nn">wave</span><span class="o">,</span> <span class="nn">struct</span>
 
 <div class="viewcode-block" id="calculate_hash_for_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.calculate_hash_for_file">[docs]</a><span class="k">def</span> <span class="nf">calculate_hash_for_file</span><span class="p">(</span><span class="n">an_uri</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns a sha1 hexdigest for the given file.</span>
@@ -282,7 +282,46 @@
 <div class="viewcode-block" id="unique_asset_id_reference"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.unique_asset_id_reference">[docs]</a><span class="k">def</span> <span class="nf">unique_asset_id_reference</span><span class="p">(</span><span class="n">asset_id</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s%s%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span><span class="p">)</span>
     <span class="c">#return urllib.quote(name.replace(&#39;/&#39;, &#39;__&#39;))</span>
-    <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;__&#39;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;__&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="WaveData"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.WaveData">[docs]</a><span class="k">class</span> <span class="nc">WaveData</span><span class="p">():</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nchannels</span> <span class="o">=</span> <span class="bp">None</span>
+    
+<div class="viewcode-block" id="WaveData.extractData"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.WaveData.extractData">[docs]</a>    <span class="k">def</span> <span class="nf">extractData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">precision</span><span class="p">):</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nchannels</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">getnchannels</span><span class="p">()</span>
+        <span class="n">sample_width</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">getsampwidth</span><span class="p">()</span>
+        <span class="n">num_frames</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">getnframes</span><span class="p">()</span>
+
+        <span class="n">raw_data</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">readframes</span><span class="p">(</span><span class="n">num_frames</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">total_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nchannels</span><span class="o">*</span><span class="n">num_frames</span>
+
+        <span class="k">if</span> <span class="n">sample_width</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%i</span><span class="s">B&quot;</span> <span class="o">%</span> <span class="n">total_samples</span> <span class="c"># read unsigned chars</span>
+            <span class="n">round_with</span> <span class="o">=</span> <span class="mf">256.0</span>
+        <span class="k">elif</span> <span class="n">sample_width</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%i</span><span class="s">h&quot;</span> <span class="o">%</span> <span class="n">total_samples</span> <span class="c"># read signed 2 byte shorts</span>
+            <span class="n">round_with</span> <span class="o">=</span> <span class="mf">32768.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Only supports 8 and 16 bit audio formats.&quot;</span><span class="p">)</span>
+
+        <span class="n">integer_data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">raw_data</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">raw_data</span> <span class="c"># Keep Memory Tidy</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nchannels</span><span class="p">)</span> <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">integer_data</span><span class="p">):</span>
+            <span class="n">bucket</span> <span class="o">=</span> <span class="n">index</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">nchannels</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="o">/</span><span class="n">round_with</span><span class="p">,</span> <span class="n">precision</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="WaveData.getData"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.WaveData.getData">[docs]</a>    <span class="k">def</span> <span class="nf">getData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span></div></div>
 </pre></div>
 
           </div>
