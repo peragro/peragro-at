@@ -13,10 +13,8 @@ class Audio2ImageTranscoder(ITranscoder):
     options = [HexColorOption(name = 'color', description = 'Color of the plot', default = '#0000ff'),
             IntOption(name = 'samplerate', description = 'Sample Rate of the audio', default = 800)]
     
-    convert_map = {"audio/x-wav" : {"image/png" : options},
-            "audio/mpeg" : {"image/png" : options},
-            "audio/x-wav" : {"image/jpeg" : options},
-            "audio/mpeg" : {"image/jpeg" : options}}
+    convert_map = {"audio/x-wav" : {"image/png" : options, "image/jpeg" :options},
+            "audio/mpeg" : {"image/png" : options, "image/jpeg" : options}}
 
     def __init__(self):
         ITranscoder.__init__(self)
@@ -27,7 +25,6 @@ class Audio2ImageTranscoder(ITranscoder):
     def transcode(self, dest_path, file_descr, asset_id, target_mimetype,
             **options):
 
-        #options['color']="".join(options['color'])
         file_path = expand_path_template(target_mimetype.template,
                 target_mimetype.mimetype, asset_id, **options)
         
