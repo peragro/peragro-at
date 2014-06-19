@@ -7,10 +7,10 @@ from damn_at.transcoder import TranscoderException
 from damn_at.utilities import WaveData
 
 from damn_at.pluginmanager import ITranscoder
-from damn_at.options import VectorOption, IntOption, expand_path_template
+from damn_at.options import HexColorOption, IntOption, expand_path_template
 
 class Audio2ImageTranscoder(ITranscoder):
-    options = [VectorOption(name = 'color', type = str, description = 'Color of the plot', default = '#0000ff', min = None, max = None, size = 1),
+    options = [HexColorOption(name = 'color', description = 'Color of the plot', default = '#0000ff'),
             IntOption(name = 'samplerate', description = 'Sample Rate of the audio', default = 800)]
     
     convert_map = {"audio/x-wav" : {"image/png" : options},
