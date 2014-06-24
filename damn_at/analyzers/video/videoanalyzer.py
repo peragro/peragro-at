@@ -11,7 +11,8 @@ from damn_at.analyzers.video import metadata
 
 class GenericVideoAnalyzer(IAnalyzer):
     """Generic Video Analyzer"""
-    handled_types = ["video/mp4", "video/x-msvideo"]
+    handled_types = ["video/mp4", "video/x-msvideo", "video/x-matroska",
+            "video/quicktime", "video/mpeg", "video/x-flv"]
 
     def __init__(self):
         IAnalyzer.__init__(self)
@@ -52,6 +53,8 @@ class GenericVideoAnalyzer(IAnalyzer):
                 continue
             if flag:
                 meta[line[0].lower().replace(' ', '_')] = line[1]
+                if line[0] == 'Frame Rate':
+                    meta['video_frame_rate'] = meta.pop('frame_rate')
 
         asset_descr.metadata = metadata.MetaDataExif.extract(meta)
         for key, value in meta.items():
