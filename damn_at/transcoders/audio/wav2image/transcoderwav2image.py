@@ -51,7 +51,7 @@ class Audio2ImageTranscoder(ITranscoder):
         channels = wavedata.getData()
         gcolor = options['color']
 
-        plt.figure(1, figsize = options['size'], dpi = options['dpi'])
+        plt.figure(1, figsize = options['size'])
         if wavedata.nchannels == 2:
             plt.subplot(211)
             plt.plot(channels[0], color = gcolor)
@@ -67,6 +67,6 @@ class Audio2ImageTranscoder(ITranscoder):
         if not os.path.exists(os.path.dirname(full_path)):
             os.makedirs(os.path.dirname(full_path))
 
-        plt.savefig(full_path)
+        plt.savefig(full_path, dpi = options['dpi'])
 
         return [file_path]

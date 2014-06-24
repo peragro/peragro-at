@@ -1,0 +1,9 @@
+[Core]
+Name = exiftool video analyzer
+Module = videoanalyzer
+
+[Documentation]
+Author = Ayush Garg
+Version = 0.1
+Website = 
+Description = Exiftool Based analyzer
