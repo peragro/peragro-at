@@ -21,6 +21,7 @@ Install Blender, Git, Pip and other initial python requirements
     sudo apt-get install -qq python-virtualenv
     sudo apt-get install -qq python-pip
     sudo apt-get install python-software-properties
+    sudo apt-get install python-dev cython libavcodec-dev libavformat-dev libswscale-dev
  ```
  
 Install Thirft globally for python3
