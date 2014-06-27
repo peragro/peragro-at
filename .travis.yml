@@ -11,6 +11,7 @@ before_install:
  - sudo apt-get install -qq python-sphinx
  - sudo apt-get install -qq blender
  - sudo apt-get install -qq pylint
+ - sudo apt-get install -qq python-all-dev
  - sudo apt-get install -qq python-dev cython libavcodec-dev libavformat-dev libswscale-dev
 install: 
 - pip install -r requirements.txt
