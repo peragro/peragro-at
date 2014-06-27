@@ -1,0 +1,9 @@
+[Core]
+Name = Video2Image Transcoder
+Module = transcodervideo2image
+
+[Documentation]
+Author = Ayush Garg
+Version = 0.1
+Website = 
+Description = ffvideo based transcoder

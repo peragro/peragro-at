@@ -70,7 +70,7 @@ class VectorOption(BaseOption):
     def _clean(self, a_string):
         if a_string.startswith('('):
             a_string = a_string[1:]
-        if a_string.startswith(')'):
+        if a_string.endswith(')'):
             a_string = a_string[:-1]
         return a_string
 
@@ -164,6 +164,7 @@ class HexColorOption(BaseOption):
         BaseOption.__init__(self, name, description, default)
 
     def parse_from_string(self, a_string):
+        a_string = a_string.strip()
         matcher = re.compile(r'^#?(([0-9a-fA-F]{2}){3})')
         m = matcher.match(a_string)
         if not m or len(m.groups()) != 2:

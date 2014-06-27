@@ -7,9 +7,7 @@ import mimetypes
 from damn_at import AssetId, FileId, FileDescription, AssetDescription
 from damn_at import MetaDataValue, MetaDataType
 from damn_at.pluginmanager import IAnalyzer
-#from damn.util import ExecutableDependencies
-
-#ExecutableDependencies(['sox'])
+from damn_at.analyzers.audio import metadata
 
 def get_sox_types():
     '''Extract all possible formats for the audio file and store their mime
@@ -80,7 +78,6 @@ class SoundAnalyzer(IAnalyzer):
             if line[0] in ['Input File', 'Comment']: continue
             meta[line[0].lower().replace(' ', '_')] = line[1]
         
-        from damn_at.analyzers.audio import metadata
         asset_descr.metadata = metadata.MetaDataSox.extract(meta)
         for key, value in meta.items():
             #Add none default metadata.

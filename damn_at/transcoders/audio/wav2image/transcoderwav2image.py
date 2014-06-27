@@ -7,11 +7,13 @@ from damn_at.transcoder import TranscoderException
 from damn_at.utilities import WaveData
 
 from damn_at.pluginmanager import ITranscoder
-from damn_at.options import HexColorOption, IntOption, expand_path_template
+from damn_at.options import Sizes, HexColorOption, IntOption, VectorOption, expand_path_template
 
 class Audio2ImageTranscoder(ITranscoder):
     options = [HexColorOption(name = 'color', description = 'Color of the plot', default = '#0000ff'),
-            IntOption(name = 'samplerate', description = 'Sample Rate of the audio', default = 800)]
+            IntOption(name = 'samplerate', description = 'Sample Rate of the audio', default = 800),
+            VectorOption(name = 'size', type = int, description = '(width, height) tuple', default = (8, 6), min = 0, max = Sizes.maxint, size = 2),
+            IntOption(name = 'dpi', description = 'DPI of image', default = 80, min = 0)]
     
     convert_map = {"audio/x-wav" : {"image/png" : options, "image/jpeg" :options},
             "audio/mpeg" : {"image/png" : options, "image/jpeg" : options}}
@@ -49,7 +51,7 @@ class Audio2ImageTranscoder(ITranscoder):
         channels = wavedata.getData()
         gcolor = options['color']
 
-        plt.figure(1)
+        plt.figure(1, figsize = options['size'])
         if wavedata.nchannels == 2:
             plt.subplot(211)
             plt.plot(channels[0], color = gcolor)
@@ -65,6 +67,6 @@ class Audio2ImageTranscoder(ITranscoder):
         if not os.path.exists(os.path.dirname(full_path)):
             os.makedirs(os.path.dirname(full_path))
 
-        plt.savefig(full_path)
+        plt.savefig(full_path, dpi = options['dpi'])
 
         return [file_path]

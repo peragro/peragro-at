@@ -15,7 +15,7 @@ class TestCase(unittest.TestCase):
     """Test case"""
     def test_get_target_mimetypes(self):
         """Test"""
-        mimetypes = Transcoder().get_target_mimetypes()
+        mimetypes = Transcoder('/tmp').get_target_mimetypes()
         for src, dst in mimetypes.items():
             print(src, dst)
         assert True
