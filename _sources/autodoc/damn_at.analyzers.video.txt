@@ -1,0 +1,27 @@
+video Package
+=============
+
+:mod:`video` Package
+--------------------
+
+.. automodule:: damn_at.analyzers.video
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`metadata` Module
+----------------------
+
+.. automodule:: damn_at.analyzers.video.metadata
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`videoanalyzer` Module
+---------------------------
+
+.. automodule:: damn_at.analyzers.video.videoanalyzer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

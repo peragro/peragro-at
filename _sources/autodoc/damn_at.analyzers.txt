@@ -17,4 +17,5 @@ Subpackages
     damn_at.analyzers.audio
     damn_at.analyzers.image
     damn_at.analyzers.mesh
+    damn_at.analyzers.video
 
