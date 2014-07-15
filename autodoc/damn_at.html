@@ -213,6 +213,14 @@ and address it.</p>
 <h3>Role<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Replacement for system&#8217;s mimetype, adding some new types
 and cleaning up reverse map for cleaner file extensions.</p>
+<dl class="function">
+<dt id="damn_at.mimetypes.guess_type">
+<tt class="descclassname">damn_at.mimetypes.</tt><tt class="descname">guess_type</tt><big>(</big><em>url</em>, <em>strict=True</em><big>)</big><a class="reference internal" href="../_modules/damn_at/mimetypes.html#guess_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.mimetypes.guess_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to guess the mimetype for the given file using the 
+standard python mimetypes module. 
+If this fails fallback to libmagic.</p>
+</dd></dl>
+
 </div>
 </div>
 <div class="section" id="module-damn_at.options">
@@ -699,6 +707,27 @@ and address it.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="damn_at.utilities.find_asset_id_in_file_descr">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">find_asset_id_in_file_descr</tt><big>(</big><em>file_descr</em>, <em>asset_name</em>, <em>asset_mimetype</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#find_asset_id_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.find_asset_id_in_file_descr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find an AssetId by name in the given FileDescription</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_descr</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></li>
+<li><strong>asset_name</strong> &#8211; string the asset to look for</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of <tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetId</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="damn_at.utilities.find_asset_ids_in_file_descr">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">find_asset_ids_in_file_descr</tt><big>(</big><em>file_descr</em>, <em>asset_name</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#find_asset_ids_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.find_asset_ids_in_file_descr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find an AssetId by name in the given FileDescription</p>
@@ -889,6 +918,11 @@ and address it.</p>
 <dl class="function">
 <dt id="damn_at.utilities.unique_asset_id_reference">
 <tt class="descclassname">damn_at.utilities.</tt><tt class="descname">unique_asset_id_reference</tt><big>(</big><em>asset_id</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#unique_asset_id_reference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.unique_asset_id_reference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="damn_at.utilities.unique_asset_id_reference_from_fields">
+<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">unique_asset_id_reference_from_fields</tt><big>(</big><em>file_id_hash</em>, <em>subname</em>, <em>mimetype</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#unique_asset_id_reference_from_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.unique_asset_id_reference_from_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

@@ -265,7 +265,19 @@
             <span class="k">if</span> <span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="o">.</span><span class="n">subname</span> <span class="o">==</span> <span class="n">asset_name</span><span class="p">:</span>
                 <span class="n">asset_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset</span><span class="o">.</span><span class="n">asset</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">asset_ids</span>
+</div>
+<div class="viewcode-block" id="find_asset_id_in_file_descr"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.find_asset_id_in_file_descr">[docs]</a><span class="k">def</span> <span class="nf">find_asset_id_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_name</span><span class="p">,</span> <span class="n">asset_mimetype</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find an AssetId by name in the given FileDescription</span>
 
+<span class="sd">    :param file_descr: :py:class:`damn_at.FileDescription`</span>
+<span class="sd">    :param asset_name: string the asset to look for</span>
+<span class="sd">    :rtype: list of :py:class:`damn_at.AssetId`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">asset_ids</span> <span class="o">=</span> <span class="n">find_asset_ids_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">,</span> <span class="n">asset_name</span><span class="p">)</span>
+    <span class="n">asset_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">asset_id</span> <span class="k">for</span> <span class="n">asset_id</span> <span class="ow">in</span> <span class="n">asset_ids</span> <span class="k">if</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">==</span> <span class="n">asset_mimetype</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">asset_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">asset_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span>
 </div>
 <div class="viewcode-block" id="get_asset_names_in_file_descr"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.get_asset_names_in_file_descr">[docs]</a><span class="k">def</span> <span class="nf">get_asset_names_in_file_descr</span><span class="p">(</span><span class="n">file_descr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get all asset names in the given FileDescription</span>
@@ -280,7 +292,11 @@
 
 </div>
 <div class="viewcode-block" id="unique_asset_id_reference"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.unique_asset_id_reference">[docs]</a><span class="k">def</span> <span class="nf">unique_asset_id_reference</span><span class="p">(</span><span class="n">asset_id</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s%s%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">unique_asset_id_reference_from_fields</span><span class="p">(</span><span class="n">asset_id</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">subname</span><span class="p">,</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">mimetype</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="unique_asset_id_reference_from_fields"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.utilities.unique_asset_id_reference_from_fields">[docs]</a><span class="k">def</span> <span class="nf">unique_asset_id_reference_from_fields</span><span class="p">(</span><span class="n">file_id_hash</span><span class="p">,</span> <span class="n">subname</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s%s%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">file_id_hash</span><span class="p">,</span> <span class="n">subname</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">)</span>
     <span class="c">#return urllib.quote(name.replace(&#39;/&#39;, &#39;__&#39;))</span>
     <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;__&#39;</span><span class="p">)</span>
 
