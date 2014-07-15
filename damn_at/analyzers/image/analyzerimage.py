@@ -3,7 +3,7 @@ Generic Image analyzer.
 """
 import os
 
-import mimetypes
+from damn_at import mimetypes
 
 import subprocess
 
@@ -12,6 +12,7 @@ from damn_at import FileId, FileDescription, AssetDescription, AssetId
 
 from damn_at.pluginmanager import IAnalyzer
 
+from damn_at.analyzer import AnalyzerException
 
 class GenericImageAnalyzer(IAnalyzer):
     """Generic Image analyzer."""
@@ -30,7 +31,7 @@ class GenericImageAnalyzer(IAnalyzer):
         
         image_mimetype = mimetypes.guess_type(an_uri)[0]
         
-        asset_descr = AssetDescription(asset = AssetId(subname = os.path.basename(an_uri), mimetype = image_mimetype, file = fileid))
+        asset_descr = AssetDescription(asset = AssetId(subname = 'main layer', mimetype = image_mimetype, file = fileid))
 
         try:
             pro = subprocess.Popen(['exiftool',an_uri], stdout=subprocess.PIPE,
@@ -39,10 +40,10 @@ class GenericImageAnalyzer(IAnalyzer):
             if pro.returncode != 0:
                 print("E: ImageAnalyzer failed %s with error code %d! "
                         %(an_uri, pro.returncode), out, err)
-                return False
-        except OSError:
-            print("E: ImageAnalyzer failed %s" %(an_uri), out, err)
-            return False
+                raise AnalyzerException("ImageAnalyzer failed %s with error code %d! "%(an_uri, pro.returncode))
+        except OSError as e:
+            print("E: ImageAnalyzer failed %s (%s)" %(an_uri, e))
+            raise e
             
         meta = {}
         flag = 0

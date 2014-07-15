@@ -5,8 +5,10 @@ Role
 Replacement for system's mimetype, adding some new types
 and cleaning up reverse map for cleaner file extensions.
 """
+import os
 import sys
 import imp
+import magic
 
 #The following might conflict
 #from __future__ import absolute_import
@@ -37,6 +39,21 @@ try:
 except (ValueError, ImportError, ):
     pass
 
-guess_type = sys_mimetypes.guess_type
+
 
 guess_extension = sys_mimetypes.guess_extension
+
+#guess_type = sys_mimetypes.guess_type
+def guess_type(url, strict=True):
+    """ Try to guess the mimetype for the given file using the 
+	standard python mimetypes module. 
+	If this fails fallback to libmagic.
+    """
+    res = sys_mimetypes.guess_type(url, strict)
+    if res[0] is None:
+	paths = [None]*2
+	paths[0] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'magic.blender')
+	paths[1] = '/usr/share/misc/magic.mgc'
+	with magic.Magic(paths=paths, flags=magic.MAGIC_COMPRESS|magic.MAGIC_MIME_TYPE) as mm:
+	    return (mm.id_filename(url), None)
+    return res

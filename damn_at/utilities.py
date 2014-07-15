@@ -215,6 +215,18 @@ def find_asset_ids_in_file_descr(file_descr, asset_name):
                 asset_ids.append(asset.asset)
     return asset_ids
 
+def find_asset_id_in_file_descr(file_descr, asset_name, asset_mimetype):
+    """Find an AssetId by name in the given FileDescription
+
+    :param file_descr: :py:class:`damn_at.FileDescription`
+    :param asset_name: string the asset to look for
+    :rtype: list of :py:class:`damn_at.AssetId`
+    """
+    asset_ids = find_asset_ids_in_file_descr(file_descr, asset_name)
+    asset_ids = [asset_id for asset_id in asset_ids if asset_id.mimetype == asset_mimetype]
+    if len(asset_ids) == 1:
+        return asset_ids[0]
+    return
 
 def get_asset_names_in_file_descr(file_descr):
     """Get all asset names in the given FileDescription
@@ -229,7 +241,11 @@ def get_asset_names_in_file_descr(file_descr):
 
 
 def unique_asset_id_reference(asset_id):
-    name = '%s%s%s' % (asset_id.file.hash, asset_id.subname, asset_id.mimetype)
+    return unique_asset_id_reference_from_fields(asset_id.file.hash, asset_id.subname, asset_id.mimetype)
+
+
+def unique_asset_id_reference_from_fields(file_id_hash, subname, mimetype):
+    name = '%s%s%s' % (file_id_hash, subname, mimetype)
     #return urllib.quote(name.replace('/', '__'))
     return name.replace('/', '__')
 
