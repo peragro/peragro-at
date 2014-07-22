@@ -11,7 +11,7 @@ class MetaDataPNG(MetaDataExtractor):
     compression = MetaDataType.STRING, lambda context : context['compression']
     interlace = MetaDataType.STRING, lambda context : context['interlace']
     filter = MetaDataType.STRING, lambda context : context['filter']
-    srgb_rendering = MetaDataType.STRING, lambda context :context['srgb_rendering']
+    srgb_rendering = MetaDataType.STRING, lambda context :context.get('srgb_rendering', '')
 
 class MetaDataJPG(MetaDataExtractor):
     __mimetype__ = 'image/jpeg'
