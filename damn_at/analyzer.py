@@ -8,6 +8,7 @@ import os
 import pwd
 import grp
 import time
+from datetime import datetime
 
 from damn_at import MetaDataValue, MetaDataType
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
@@ -91,6 +92,10 @@ class Analyzer(object):
     def _file_metadata(self, an_uri, file_descr):
         """Get metadata about the actual file and add it to the FileDescription
         """
+        def convert_time(st_time):
+            dt = datetime.fromtimestamp(stat.st_mtime)
+            return dt.isoformat()
+            
         stat = os.stat(an_uri)
         if file_descr.metadata is None:
             file_descr.metadata = {}
@@ -98,8 +103,8 @@ class Analyzer(object):
         file_descr.metadata['gr_name'] = MetaDataValue(type=MetaDataType.STRING, string_value=grp.getgrgid(stat.st_gid).gr_name)
         file_descr.metadata['st_size'] = MetaDataValue(type=MetaDataType.INT, int_value=stat.st_size)
 
-        file_descr.metadata['st_ctime'] = MetaDataValue(type=MetaDataType.STRING, string_value=time.asctime(time.localtime(stat.st_ctime)))
-        file_descr.metadata['st_mtime'] = MetaDataValue(type=MetaDataType.STRING, string_value=time.asctime(time.localtime(stat.st_mtime)))
+        file_descr.metadata['st_ctime'] = MetaDataValue(type=MetaDataType.STRING, string_value=convert_time(stat.st_ctime))
+        file_descr.metadata['st_mtime'] = MetaDataValue(type=MetaDataType.STRING, string_value=convert_time(stat.st_mtime))
 
         #TODO:
         try:
