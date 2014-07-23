@@ -9,6 +9,21 @@ from damn_at.serialization import SerializeThriftMsg, DeserializeThriftMsg
 from damn_at import FileDescription
 
 
+class MetaDataStoreException(Exception):
+    """Base MetaDataStore Exception"""
+    def __init__(self, msg, *args, **kwargs):
+        Exception.__init__(self, *args, **kwargs)
+        self.msg = msg
+
+    def __str__(self):
+        return repr(self.msg)
+
+
+class MetaDataStoreFileException(MetaDataStoreException):
+    """Something wrong with the file"""
+    pass
+
+
 class MetaDataStore(object):
     """
     A filesystem MetaDataStore implementation.
@@ -28,9 +43,12 @@ class MetaDataStore(object):
         """
         Get the FileDescription for the given hash.
         """
-        with open(os.path.join(self.store_path, an_hash), 'rb') as metadata:
-            a_file_descr = DeserializeThriftMsg(FileDescription(), metadata.read())
-            return a_file_descr
+        try:
+            with open(os.path.join(self.store_path, an_hash), 'rb') as metadata:
+                a_file_descr = DeserializeThriftMsg(FileDescription(), metadata.read())
+                return a_file_descr
+        except IOError as ioe:
+            raise MetaDataStoreFileException('Failed to open FileDescription with hash %s' % an_hash, ioe)
 
     def write_metadata(self, store_id, an_hash, a_file_descr):
         """
