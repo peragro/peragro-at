@@ -60,6 +60,21 @@
 <span class="kn">from</span> <span class="nn">damn_at</span> <span class="kn">import</span> <span class="n">FileDescription</span>
 
 
+<div class="viewcode-block" id="MetaDataStoreException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.metadatastore.MetaDataStoreException">[docs]</a><span class="k">class</span> <span class="nc">MetaDataStoreException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base MetaDataStore Exception&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="ne">Exception</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="MetaDataStoreFileException"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.metadatastore.MetaDataStoreFileException">[docs]</a><span class="k">class</span> <span class="nc">MetaDataStoreFileException</span><span class="p">(</span><span class="n">MetaDataStoreException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Something wrong with the file&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+</div>
 <div class="viewcode-block" id="MetaDataStore"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.metadatastore.MetaDataStore">[docs]</a><span class="k">class</span> <span class="nc">MetaDataStore</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A filesystem MetaDataStore implementation.</span>
@@ -79,9 +94,12 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the FileDescription for the given hash.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_path</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">),</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">metadata</span><span class="p">:</span>
-            <span class="n">a_file_descr</span> <span class="o">=</span> <span class="n">DeserializeThriftMsg</span><span class="p">(</span><span class="n">FileDescription</span><span class="p">(),</span> <span class="n">metadata</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-            <span class="k">return</span> <span class="n">a_file_descr</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_path</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">),</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">metadata</span><span class="p">:</span>
+                <span class="n">a_file_descr</span> <span class="o">=</span> <span class="n">DeserializeThriftMsg</span><span class="p">(</span><span class="n">FileDescription</span><span class="p">(),</span> <span class="n">metadata</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+                <span class="k">return</span> <span class="n">a_file_descr</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">ioe</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MetaDataStoreFileException</span><span class="p">(</span><span class="s">&#39;Failed to open FileDescription with hash </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">an_hash</span><span class="p">,</span> <span class="n">ioe</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="MetaDataStore.write_metadata"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.metadatastore.MetaDataStore.write_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">write_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">an_hash</span><span class="p">,</span> <span class="n">a_file_descr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
