@@ -8,7 +8,7 @@ import unittest
 #logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 from damn_at.pluginmanager import DAMNPluginManagerSingleton
-from damn_at.analyzer import Analyzer
+from damn_at.analyzer import Analyzer, AnalyzerException, AnalyzerFileException, AnalyzerUnknownTypeException
 
 def pretty_print(file_descr):
     """Pretty print the file_descr"""
@@ -36,11 +36,32 @@ class TestCase(unittest.TestCase):
             print('E: ', plugin_info.name, plugin_info.error)
         assert True
         
+    @unittest.expectedFailure
     def test_analyze(self):
         """Test say"""
-        descr =Analyzer().analyze_file('/home/ayush/GSOC14/damn-at/damn-test-files/mesh/blender/cube1.blend')
-        pretty_print(descr)
+        totest = []
+        print "test Analyze"
+        for root, dirs, files in os.walk('damn-test-files'):
+            if len(files) != 0:
+                totest.append(root+'/'+files[0])
+        for totestfile in totest:         
+            if '.git' not in totestfile:
+                descr = Analyzer().analyze_file(totestfile)
+                pretty_print(descr)
         assert True
+
+    def test_mimetypes(self):
+        descr = Analyzer().get_supported_mimetypes()
+        print str(descr)
+        assert True
+
+    @unittest.expectedFailure
+    def test_analyze_nofile(self):
+        """Test say"""
+        try:
+            descr = Analyzer().analyze_file('../test.jpg')
+        except:
+            raise AnalyzerFileException('No such file test.jpg')
         
 
 def test_suite():

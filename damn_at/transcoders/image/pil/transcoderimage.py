@@ -29,8 +29,8 @@ class ImageTranscoder(ITranscoder):
         except IOError:
           print "cannot open", file_descr.file.fileName
           return False
-  
-        if options['size'] != (-1,-1):
+
+        if options['size'] != [-1,-1]:
           im.thumbnail(options['size'])
         
         if im.mode == 'P':

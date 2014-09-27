@@ -177,7 +177,7 @@ class HexColorOption(BaseOption):
 
     @property
     def constraint_description(self):
-        return 'Value%s needs to be of format #rrggbb'
+        return 'Value needs to be of format #rrggbb'
 
     @property
     def default_description(self):

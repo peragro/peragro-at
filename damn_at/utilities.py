@@ -269,7 +269,7 @@ class WaveData():
 
         if sample_width == 1:
             fmt = "%iB" % total_samples # read unsigned chars
-            round_with = 256.0
+            round_with = 128.0
         elif sample_width == 2:
             fmt = "%ih" % total_samples # read signed 2 byte shorts
             round_with = 32768.0
@@ -280,6 +280,10 @@ class WaveData():
         del raw_data # Keep Memory Tidy
 
         self.channels = [ [] for time in range(self.nchannels) ]
+
+        #As the values are from 0 to 255 for 8 bit files.
+        if sample_width ==1:
+            integer_data = [ val - 128 for val in integer_data ]
 
         for index, value in enumerate(integer_data):
             bucket = index % self.nchannels
