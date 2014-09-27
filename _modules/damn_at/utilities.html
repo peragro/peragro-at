@@ -320,7 +320,7 @@
 
         <span class="k">if</span> <span class="n">sample_width</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">fmt</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%i</span><span class="s">B&quot;</span> <span class="o">%</span> <span class="n">total_samples</span> <span class="c"># read unsigned chars</span>
-            <span class="n">round_with</span> <span class="o">=</span> <span class="mf">256.0</span>
+            <span class="n">round_with</span> <span class="o">=</span> <span class="mf">128.0</span>
         <span class="k">elif</span> <span class="n">sample_width</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">fmt</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%i</span><span class="s">h&quot;</span> <span class="o">%</span> <span class="n">total_samples</span> <span class="c"># read signed 2 byte shorts</span>
             <span class="n">round_with</span> <span class="o">=</span> <span class="mf">32768.0</span>
@@ -331,6 +331,10 @@
         <span class="k">del</span> <span class="n">raw_data</span> <span class="c"># Keep Memory Tidy</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nchannels</span><span class="p">)</span> <span class="p">]</span>
+
+        <span class="c">#As the values are from 0 to 255 for 8 bit files.</span>
+        <span class="k">if</span> <span class="n">sample_width</span> <span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">integer_data</span> <span class="o">=</span> <span class="p">[</span> <span class="n">val</span> <span class="o">-</span> <span class="mi">128</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">integer_data</span> <span class="p">]</span>
 
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">integer_data</span><span class="p">):</span>
             <span class="n">bucket</span> <span class="o">=</span> <span class="n">index</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">nchannels</span>
