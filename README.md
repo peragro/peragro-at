@@ -22,17 +22,24 @@ Install Blender, Git, Pip and other initial python requirements
     sudo apt-get install -qq python-pip
     sudo apt-get install python-software-properties
     sudo apt-get install python-dev cython libavcodec-dev libavformat-dev libswscale-dev
-    sudo apt-get install python-matplotlib
+    sudo apt-get install sox libsox-fmt-mp3
+    sudo apt-get install ffmpeg
+    sudo apt-get build-dep python-matplotlib
  ```
  
 Install Thirft globally for python3
  ```
     git clone https://github.com/wgwang/thrift.git
-    cd thrift/py3/src
+    cd thrift/lib/py3
     python3 setup.py install
     cd ../../..
  ```
- 
+
+Install matplotlib
+```
+    pip install matplotlib
+```
+
 Create a virtualenv and activate it
  ```
     virtualenv env
@@ -132,7 +139,7 @@ Inspect
 
 Transcode
  ```
-    damn_at-transcode /tmp/damn/8c8065ae5590cb5d669426651ce229ed11c5f07d crate10b.jpg image/jpeg -h
+    damn_at-transcode /tmp/damn/8c8065ae5590cb5d669426651ce229ed11c5f07d "main layer" image/jpeg -h
  ```
   Output:
  ```

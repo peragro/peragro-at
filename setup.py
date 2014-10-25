@@ -1,7 +1,14 @@
+import os
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
+
+try:
+    assert 'damn-test-files' in os.listdir('.')
+except:
+    print "Please use git clone https://github.com/ayush1794/damn-test-files"
+    exit(1)
 
 config = {
     'description': 'Digital Assets Managed Neatly: Analyzers and Transcoders',

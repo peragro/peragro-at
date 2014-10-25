@@ -15,11 +15,11 @@ class TestCase(unittest.TestCase):
     def test_file_ids_as_tree(self):
         """Test file_ids_as_tree"""
         file_ids = []
-        file_ids.append(FileId(filename='/home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend'))
+        file_ids.append(FileId(filename='../damn-test-files/mesh/blender/cube1.blend'))
         file_ids.append(FileId(filename='../../image/jpg/crate10b.jpg'))
         file_ids.append(FileId(filename='../../image/jpg/crate10.jpg'))
 
-        main_dict = file_ids_as_tree(file_ids, '/home/sueastside/dev/DAMN/damn-test-files/mesh/blender')
+        main_dict = file_ids_as_tree(file_ids, '../damn-test-files/mesh/blender')
 
         prettify(main_dict)
         assert True
@@ -27,11 +27,11 @@ class TestCase(unittest.TestCase):
     def test_find_path_for_file_id(self):
         """Test find_path_for_file_id"""
         file_ids = []
-        file_ids.append(FileId(hash='1', filename='/home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend'))
+        file_ids.append(FileId(hash='1', filename='../damn-test-files/mesh/blender/cube1.blend'))
         file_ids.append(FileId(hash='2', filename='../../image/jpg/crate10b.jpg'))
         file_ids.append(FileId(hash='3', filename='../../image/jpg/crate10.jpg'))
 
-        main_dict = file_ids_as_tree(file_ids, '/home/sueastside/dev/DAMN/damn-test-files/mesh/blender')
+        main_dict = file_ids_as_tree(file_ids, '../damn-test-files/mesh/blender')
 
         prettify(main_dict)
 
