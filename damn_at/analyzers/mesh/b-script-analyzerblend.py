@@ -24,13 +24,13 @@ def main(): # pylint: disable=R0914,R0912,R0915
     objects = {}
     groups = {}
     texts = {}
-    
+
     # Set up our FileDescription
     fileid = FileId(filename = bpy.path.abspath(bpy.data.filepath))
     file_descr = FileDescription(file=fileid)
     file_descr.assets = []
-    
-    
+
+
     def get_file_id(obj):
         """If the object is in a library, return a file for it, else return this fileid."""
         if obj.library:
@@ -51,8 +51,8 @@ def main(): # pylint: disable=R0914,R0912,R0915
         asset_descr = AssetDescription(asset = AssetId(subname = image.name, mimetype = image_mimetype, file = image_fileid))
         if image.packed_file:
             asset_descr.metadata = metadata.MetaDataBlenderImage.extract({'image': image})
-            file_descr.assets.append(asset_descr) 
-        images[image.name] = asset_descr 
+            file_descr.assets.append(asset_descr)
+        images[image.name] = asset_descr
 
 
     """
@@ -70,8 +70,8 @@ def main(): # pylint: disable=R0914,R0912,R0915
             if name in images:
                 dep = images[name].asset
                 asset_descr.dependencies.append(dep)
-        file_descr.assets.append(asset_descr) 
-        materials[material.name] = asset_descr 
+        file_descr.assets.append(asset_descr)
+        materials[material.name] = asset_descr
 
 
     """
@@ -85,9 +85,10 @@ def main(): # pylint: disable=R0914,R0912,R0915
         asset_descr.dependencies = []
         # Collect materials from the mesh
         for material in mesh.materials:
-            if material.name in materials:
-                dep = materials[material.name].asset
-                asset_descr.dependencies.append(dep)
+            if material:
+                if material.name in materials:
+                    dep = materials[material.name].asset
+                    asset_descr.dependencies.append(dep)
         # Collect images from the faces
         image_names = {}
         for face in mesh.uv_textures:
@@ -98,11 +99,11 @@ def main(): # pylint: disable=R0914,R0912,R0915
             if name in images:
                 dep = images[name].asset
                 asset_descr.dependencies.append(dep)
-        
-        asset_descr.metadata = metadata.MetaDataBlenderMesh.extract({'mesh': mesh})          
-        
-        file_descr.assets.append(asset_descr) 
-        meshes[mesh.name] = asset_descr 
+
+        asset_descr.metadata = metadata.MetaDataBlenderMesh.extract({'mesh': mesh})
+
+        file_descr.assets.append(asset_descr)
+        meshes[mesh.name] = asset_descr
 
 
     """
@@ -128,11 +129,11 @@ def main(): # pylint: disable=R0914,R0912,R0915
                 if slot.material.name in materials:
                     dep = materials[slot.material.name].asset
                     asset_descr.dependencies.append(dep)
-        
+
         asset_descr.metadata = metadata.MetaDataBlenderObject.extract({'object': obj})
-                
-        file_descr.assets.append(asset_descr) 
-        objects[obj.name] = asset_descr 
+
+        file_descr.assets.append(asset_descr)
+        objects[obj.name] = asset_descr
 
 
     """
@@ -146,15 +147,15 @@ def main(): # pylint: disable=R0914,R0912,R0915
         for obj in group.objects:
             dep = objects[obj.name].asset
             asset_descr.dependencies.append(dep)
-                
-        file_descr.assets.append(asset_descr) 
-        groups[group.name] = asset_descr 
+
+        file_descr.assets.append(asset_descr)
+        groups[group.name] = asset_descr
 
 
     """
     Texts:
     Can be packed, so expose them with 'x-blender.text' mimetype.
-    """   
+    """
     for text in bpy.data.texts:
         text_fileid = get_file_id(text)
         text_mimetype = 'application/x-blender.text'
@@ -162,9 +163,9 @@ def main(): # pylint: disable=R0914,R0912,R0915
             text_fileid = FileId(filename = relpath(text.filepath, start=text.library.filepath if text.library else None))
             text_mimetype = mimetypes.guess_type(text.filepath)[0]
         asset_descr = AssetDescription(asset = AssetId(subname = text.name, mimetype = text_mimetype, file = text_fileid))
-        file_descr.assets.append(asset_descr) 
+        file_descr.assets.append(asset_descr)
         texts[text.name] = asset_descr
-            
+
     data = SerializeThriftMsg(file_descr)
     print('-**-')
     print(binascii.hexlify(data))
