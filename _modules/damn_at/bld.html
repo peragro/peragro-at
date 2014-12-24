@@ -203,6 +203,12 @@
         <span class="k">print</span> <span class="s">&#39;</span><span class="si">%d</span><span class="s"> files with </span><span class="si">%d</span><span class="s"> reused blocks&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">paths</span><span class="p">)</span>
 
 </div>
+<div class="viewcode-block" id="verify"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.verify">[docs]</a><span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">walk</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+        <span class="n">file_hash</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">))</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">new_file_hash</span> <span class="o">=</span> <span class="n">calculate_hash_for_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Verification </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s">&#39;OK&#39;</span> <span class="k">if</span> <span class="n">file_hash</span> <span class="o">==</span> <span class="n">new_file_hash</span> <span class="k">else</span> <span class="s">&#39;FAIL&#39;</span><span class="p">))</span>
+</div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
 
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">walk</span><span class="p">(</span><span class="s">&#39;/home/sueastside/DAMN/damn-test-files/&#39;</span><span class="p">):</span>
@@ -221,6 +227,8 @@
 
         <span class="n">new_file_hash</span> <span class="o">=</span> <span class="n">calculate_hash_for_file</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;Verification </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="s">&#39;OK&#39;</span> <span class="k">if</span> <span class="n">file_hash</span> <span class="o">==</span> <span class="n">new_file_hash</span> <span class="k">else</span> <span class="s">&#39;FAIL&#39;</span><span class="p">))</span>
+
+    <span class="n">verify</span><span class="p">(</span><span class="s">&#39;/tmp/blocks&#39;</span><span class="p">)</span>
 </pre></div>
 
           </div>
