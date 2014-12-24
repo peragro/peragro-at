@@ -203,6 +203,15 @@ as well as the hash for the entire file and return it.
 </dd></dl>
 
 <dl class="function">
+<dt id="damn_at.bld.filter_existing_block_hashes">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">filter_existing_block_hashes</tt><big>(</big><em>an_uri</em>, <em>block_hashes</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#filter_existing_block_hashes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.filter_existing_block_hashes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the given uri if it contains the given blocks and filter out the existing.
+:param an_uri: the directory containing the blocks
+:param block_hashes: the list of block hashes to check for existence
+:rtype: list&lt;string&gt; a list of block hashes that do not exist</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="damn_at.bld.hash_to_dir">
 <tt class="descclassname">damn_at.bld.</tt><tt class="descname">hash_to_dir</tt><big>(</big><em>hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#hash_to_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.hash_to_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transforms a given hash to a relative path and filename

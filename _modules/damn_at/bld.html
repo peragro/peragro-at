@@ -169,6 +169,30 @@
                 <span class="n">filehandle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
 </div>
+<div class="viewcode-block" id="filter_existing_block_hashes"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.filter_existing_block_hashes">[docs]</a><span class="k">def</span> <span class="nf">filter_existing_block_hashes</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">block_hashes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check the given uri if it contains the given blocks and filter out the existing.</span>
+<span class="sd">    :param an_uri: the directory containing the blocks</span>
+<span class="sd">    :param block_hashes: the list of block hashes to check for existence</span>
+<span class="sd">    :rtype: list&lt;string&gt; a list of block hashes that do not exist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_block_hashes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
+    <span class="n">dirs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">an_uri</span><span class="p">)</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">bloc_hash</span> <span class="ow">in</span> <span class="n">block_hashes</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">bloc_hash</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+            <span class="n">new_block_hashes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bloc_hash</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+                <span class="n">cache</span><span class="p">[</span><span class="n">prefix</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;from cache&#39;</span><span class="p">,</span> <span class="n">bloc_hash</span>
+            <span class="k">if</span> <span class="n">bloc_hash</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">[</span><span class="n">prefix</span><span class="p">]:</span>
+                <span class="n">new_block_hashes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bloc_hash</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_block_hashes</span>
+
+</div>
 <div class="viewcode-block" id="walk"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.walk">[docs]</a><span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
         <span class="k">if</span> <span class="s">&#39;.git&#39;</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
@@ -176,6 +200,7 @@
         <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">path</span>
+
 </div>
 <div class="viewcode-block" id="statistics"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.statistics">[docs]</a><span class="k">def</span> <span class="nf">statistics</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
     <span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
@@ -208,6 +233,7 @@
         <span class="n">file_hash</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">))</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">new_file_hash</span> <span class="o">=</span> <span class="n">calculate_hash_for_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;Verification </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s">&#39;OK&#39;</span> <span class="k">if</span> <span class="n">file_hash</span> <span class="o">==</span> <span class="n">new_file_hash</span> <span class="k">else</span> <span class="s">&#39;FAIL&#39;</span><span class="p">))</span>
+
 </div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
 
@@ -229,6 +255,14 @@
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;Verification </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="s">&#39;OK&#39;</span> <span class="k">if</span> <span class="n">file_hash</span> <span class="o">==</span> <span class="n">new_file_hash</span> <span class="k">else</span> <span class="s">&#39;FAIL&#39;</span><span class="p">))</span>
 
     <span class="n">verify</span><span class="p">(</span><span class="s">&#39;/tmp/blocks&#39;</span><span class="p">)</span>
+
+    <span class="n">block_hashes</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;b499ca988473a4abc0461717cc8d4ce8753aa6d9&#39;</span><span class="p">,</span> <span class="c">#exists</span>
+    <span class="s">&#39;b497ca988473a4abc0461717cc8d4ce8753aa6d9&#39;</span><span class="p">,</span>
+    <span class="s">&#39;b497ca988473a4abc0461717cc8d4ce8753aa6d9&#39;</span><span class="p">,</span>
+    <span class="s">&#39;b48e1faa27b06f8a6fabfd32c719d685accfccf4&#39;</span><span class="p">,</span> <span class="c">#exists</span>
+    <span class="s">&#39;b48e1faa27b06f8a6fabfd32c719d685accfccf4&#39;</span><span class="p">]</span>
+
+    <span class="k">print</span> <span class="n">filter_existing_block_hashes</span><span class="p">(</span><span class="s">&#39;/tmp/blocks&#39;</span><span class="p">,</span> <span class="n">block_hashes</span><span class="p">)</span>
 </pre></div>
 
           </div>
