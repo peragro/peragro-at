@@ -152,6 +152,12 @@ def statistics(uri):
         print '%d files with %d reused blocks'%(count, paths)
 
 
+def verify(uri):
+    for path in walk(uri):
+        file_hash = os.path.basename(os.path.dirname(path)) + os.path.basename(path)
+        new_file_hash = calculate_hash_for_file(path)
+        print('Verification %s %s'%(path,'OK' if file_hash == new_file_hash else 'FAIL'))
+
 if __name__ == '__main__':
 
     for path in walk('/home/sueastside/DAMN/damn-test-files/'):
@@ -170,3 +176,5 @@ if __name__ == '__main__':
 
         new_file_hash = calculate_hash_for_file(new_path)
         print('Verification %s'%('OK' if file_hash == new_file_hash else 'FAIL'))
+
+    verify('/tmp/blocks')
