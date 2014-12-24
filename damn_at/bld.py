@@ -118,6 +118,30 @@ def blocks_to_file(an_uri, block_hashes, destination):
                 filehandle.write(block.read())
 
 
+def filter_existing_block_hashes(an_uri, block_hashes):
+    """
+    Check the given uri if it contains the given blocks and filter out the existing.
+    :param an_uri: the directory containing the blocks
+    :param block_hashes: the list of block hashes to check for existence
+    :rtype: list<string> a list of block hashes that do not exist
+    """
+    new_block_hashes = set([])
+    dirs = os.listdir(an_uri)
+    cache = {}
+    for bloc_hash in block_hashes:
+        prefix = bloc_hash[:2]
+        if prefix not in dirs:
+            new_block_hashes.add(bloc_hash)
+        else:
+            if prefix not in cache:
+                cache[prefix] = os.listdir(os.path.join(an_uri, prefix))
+            else:
+                print 'from cache', bloc_hash
+            if bloc_hash[2:] not in cache[prefix]:
+                new_block_hashes.add(bloc_hash)
+    return new_block_hashes
+
+
 def walk(uri):
     for root, dirs, files in os.walk(uri):
         if '.git' in dirs:
@@ -125,6 +149,7 @@ def walk(uri):
         for file_name in files:
             path = os.path.join(root, file_name)
             yield path
+
 
 def statistics(uri):
     blocks = {}
@@ -158,6 +183,7 @@ def verify(uri):
         new_file_hash = calculate_hash_for_file(path)
         print('Verification %s %s'%(path,'OK' if file_hash == new_file_hash else 'FAIL'))
 
+
 if __name__ == '__main__':
 
     for path in walk('/home/sueastside/DAMN/damn-test-files/'):
@@ -178,3 +204,11 @@ if __name__ == '__main__':
         print('Verification %s'%('OK' if file_hash == new_file_hash else 'FAIL'))
 
     verify('/tmp/blocks')
+
+    block_hashes = ['b499ca988473a4abc0461717cc8d4ce8753aa6d9', #exists
+    'b497ca988473a4abc0461717cc8d4ce8753aa6d9',
+    'b497ca988473a4abc0461717cc8d4ce8753aa6d9',
+    'b48e1faa27b06f8a6fabfd32c719d685accfccf4', #exists
+    'b48e1faa27b06f8a6fabfd32c719d685accfccf4']
+
+    print filter_existing_block_hashes('/tmp/blocks', block_hashes)
