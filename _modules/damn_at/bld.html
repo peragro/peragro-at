@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>damn_at.bld &mdash; damn-at 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="damn-at 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">damn-at 0.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for damn_at.bld</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Block-level deplucation utility functions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">wave</span><span class="o">,</span> <span class="nn">struct</span>
+
+<span class="kn">from</span> <span class="nn">utilities</span> <span class="kn">import</span> <span class="n">calculate_hash_for_file</span>
+
+
+<span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">2048</span>
+
+<div class="viewcode-block" id="block_hashes_for_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.block_hashes_for_file">[docs]</a><span class="k">def</span> <span class="nf">block_hashes_for_file</span><span class="p">(</span><span class="n">an_uri</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the hash for each block in the given file</span>
+<span class="sd">    as well as the hash for the entire file and return it.</span>
+<span class="sd">    :param an_uri: the URI pointing to the file</span>
+<span class="sd">    :rtype: string, list&lt;string&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">chksum</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filehandle</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">buf</span> <span class="o">=</span> <span class="n">filehandle</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">buf</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">chksum</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+                <span class="n">blockhash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+                <span class="n">blockhash</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+                <span class="n">hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">blockhash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">chksum</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="n">hashes</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;NOT_FOUND(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">an_uri</span>
+
+</div>
+<div class="viewcode-block" id="block_hashes_from_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.block_hashes_from_file">[docs]</a><span class="k">def</span> <span class="nf">block_hashes_from_file</span><span class="p">(</span><span class="n">an_uri</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deserialize the saved block hashes from the given file.</span>
+<span class="sd">    :param an_uri: the URI pointing to the file</span>
+<span class="sd">    :rtype: list&lt;string&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filehandle</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">filehandle</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="block_hashes_to_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.block_hashes_to_file">[docs]</a><span class="k">def</span> <span class="nf">block_hashes_to_file</span><span class="p">(</span><span class="n">file_hash</span><span class="p">,</span> <span class="n">block_hashes</span><span class="p">,</span> <span class="n">an_uri</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serialize the given block hashes to the given uri destination.</span>
+<span class="sd">    :param file_hash: the complete file&#39;s hash</span>
+<span class="sd">    :param block_hashes: a list of block hashes to serialize</span>
+<span class="sd">    :param an_uri: the file path which to save to</span>
+<span class="sd">    :rtype: list&lt;string&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">an_uri</span><span class="p">)):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">an_uri</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filehandle</span><span class="p">:</span>
+        <span class="n">filehandle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">file_hash</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">block_hashes</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="nb">hash</span> <span class="ow">in</span> <span class="n">block_hashes</span><span class="p">:</span>
+            <span class="n">filehandle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">hash</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="hash_to_dir"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.hash_to_dir">[docs]</a><span class="k">def</span> <span class="nf">hash_to_dir</span><span class="p">(</span><span class="nb">hash</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transforms a given hash to a relative path and filename</span>
+<span class="sd">    ex: &#39;002badb952000339cdcf1b61a3205b221766bf49&#39; -&gt; &#39;00/2badb952000339cdcf1b61a3205b221766bf49&#39;</span>
+<span class="sd">    :param hash: the hash to split</span>
+<span class="sd">    :rtype: string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">hash</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="nb">hash</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+</div>
+<div class="viewcode-block" id="blocks_for_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.blocks_for_file">[docs]</a><span class="k">def</span> <span class="nf">blocks_for_file</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write all blocks for the given file to the destination.</span>
+<span class="sd">    :param an_uri: the URI pointing to the file to split</span>
+<span class="sd">    :param destination: the destination directory for the block files</span>
+<span class="sd">    :rtype: list&lt;string&gt; the paths to the written blocks</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filehandle</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">buf</span> <span class="o">=</span> <span class="n">filehandle</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">buf</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">blockhash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+                <span class="n">blockhash</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+                <span class="nb">hash</span> <span class="o">=</span> <span class="n">blockhash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">hash_to_dir</span><span class="p">(</span><span class="nb">hash</span><span class="p">))</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="c">#print &#39;Block exists&#39;</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">block</span><span class="p">:</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">paths</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;NOT_FOUND(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">an_uri</span>
+
+</div>
+<div class="viewcode-block" id="blocks_to_file"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.blocks_to_file">[docs]</a><span class="k">def</span> <span class="nf">blocks_to_file</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">block_hashes</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Combine the referenced blocks into a given destination file.</span>
+<span class="sd">    :param an_uri: the directory containing the blocks</span>
+<span class="sd">    :param block_hashes: a list of block hashes</span>
+<span class="sd">    :param destination: the destination file path</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filehandle</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">block_hash</span> <span class="ow">in</span> <span class="n">block_hashes</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">an_uri</span><span class="p">,</span> <span class="n">hash_to_dir</span><span class="p">(</span><span class="n">block_hash</span><span class="p">)),</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">block</span><span class="p">:</span>
+                <span class="n">filehandle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+</div>
+<div class="viewcode-block" id="walk"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.walk">[docs]</a><span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&#39;.git&#39;</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+            <span class="n">dirs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;.git&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">path</span>
+</div>
+<div class="viewcode-block" id="statistics"><a class="viewcode-back" href="../../autodoc/damn_at.html#damn_at.bld.statistics">[docs]</a><span class="k">def</span> <span class="nf">statistics</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+    <span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">block_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">walk</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">block_hash</span> <span class="ow">in</span> <span class="n">block_hashes_from_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">block_hash</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">:</span>
+                <span class="n">blocks</span><span class="p">[</span><span class="n">block_hash</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="c">#print &#39;  duplicate&#39;, file_hash, block_hash, path</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">blocks</span><span class="p">[</span><span class="n">block_hash</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
+            <span class="n">block_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%d</span><span class="s"> unique blocks with </span><span class="si">%d</span><span class="s"> references&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">),</span> <span class="n">block_count</span><span class="p">)</span>
+    <span class="n">saved</span> <span class="o">=</span> <span class="p">((</span><span class="n">block_count</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span><span class="o">*</span><span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="p">(</span><span class="n">block_count</span><span class="o">*</span><span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span>
+    <span class="k">print</span> <span class="s">&#39;saving </span><span class="si">%.2f</span><span class="s"> KB on a total of </span><span class="si">%.2f</span><span class="s"> KB&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">saved</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
+    <span class="n">reuse</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">block_hash</span><span class="p">,</span> <span class="n">paths</span> <span class="ow">in</span> <span class="n">blocks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="ow">in</span> <span class="n">reuse</span><span class="p">:</span>
+            <span class="n">reuse</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reuse</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">paths</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">reuse</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%d</span><span class="s"> files with </span><span class="si">%d</span><span class="s"> reused blocks&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">paths</span><span class="p">)</span>
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">walk</span><span class="p">(</span><span class="s">&#39;/home/sueastside/DAMN/damn-test-files/&#39;</span><span class="p">):</span>
+        <span class="n">file_hash</span><span class="p">,</span> <span class="n">block_hashes</span> <span class="o">=</span> <span class="n">block_hashes_for_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">block_hashes_to_file</span><span class="p">(</span><span class="n">file_hash</span><span class="p">,</span> <span class="n">block_hashes</span><span class="p">,</span> <span class="s">&#39;/tmp/files/&#39;</span><span class="o">+</span><span class="n">hash_to_dir</span><span class="p">(</span><span class="n">file_hash</span><span class="p">))</span>
+        <span class="n">blocks_for_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;/tmp/blocks&#39;</span><span class="p">)</span>
+
+
+    <span class="n">statistics</span><span class="p">(</span><span class="s">&#39;/tmp/files/&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">walk</span><span class="p">(</span><span class="s">&#39;/home/sueastside/DAMN/damn-test-files/&#39;</span><span class="p">):</span>
+        <span class="n">file_hash</span> <span class="o">=</span> <span class="n">calculate_hash_for_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">block_hashes</span> <span class="o">=</span> <span class="n">block_hashes_from_file</span><span class="p">(</span><span class="s">&#39;/tmp/files/&#39;</span><span class="o">+</span><span class="n">hash_to_dir</span><span class="p">(</span><span class="n">file_hash</span><span class="p">))</span>
+        <span class="n">new_path</span> <span class="o">=</span> <span class="s">&#39;/tmp/out/&#39;</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">blocks_to_file</span><span class="p">(</span><span class="s">&#39;/tmp/blocks&#39;</span><span class="p">,</span> <span class="n">block_hashes</span><span class="p">,</span> <span class="n">new_path</span><span class="p">)</span>
+
+        <span class="n">new_file_hash</span> <span class="o">=</span> <span class="n">calculate_hash_for_file</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Verification </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="s">&#39;OK&#39;</span> <span class="k">if</span> <span class="n">file_hash</span> <span class="o">==</span> <span class="n">new_file_hash</span> <span class="k">else</span> <span class="s">&#39;FAIL&#39;</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">damn-at 0.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, sueastside.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

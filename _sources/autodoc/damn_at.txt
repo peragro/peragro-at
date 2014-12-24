@@ -17,6 +17,14 @@ damn_at Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`bld` Module
+-----------------
+
+.. automodule:: damn_at.bld
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`metadata` Module
 ----------------------
 

@@ -154,6 +154,74 @@ and address it.</p>
 
 </div>
 </div>
+<div class="section" id="module-damn_at.bld">
+<span id="bld-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">bld</span></tt> Module<a class="headerlink" href="#module-damn_at.bld" title="Permalink to this headline">¶</a></h2>
+<p>Block-level deplucation utility functions.</p>
+<dl class="function">
+<dt id="damn_at.bld.block_hashes_for_file">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">block_hashes_for_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#block_hashes_for_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.block_hashes_for_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the hash for each block in the given file
+as well as the hash for the entire file and return it.
+:param an_uri: the URI pointing to the file
+:rtype: string, list&lt;string&gt;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.bld.block_hashes_from_file">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">block_hashes_from_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#block_hashes_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.block_hashes_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize the saved block hashes from the given file.
+:param an_uri: the URI pointing to the file
+:rtype: list&lt;string&gt;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.bld.block_hashes_to_file">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">block_hashes_to_file</tt><big>(</big><em>file_hash</em>, <em>block_hashes</em>, <em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#block_hashes_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.block_hashes_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize the given block hashes to the given uri destination.
+:param file_hash: the complete file&#8217;s hash
+:param block_hashes: a list of block hashes to serialize
+:param an_uri: the file path which to save to
+:rtype: list&lt;string&gt;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.bld.blocks_for_file">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">blocks_for_file</tt><big>(</big><em>an_uri</em>, <em>destination</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#blocks_for_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.blocks_for_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all blocks for the given file to the destination.
+:param an_uri: the URI pointing to the file to split
+:param destination: the destination directory for the block files
+:rtype: list&lt;string&gt; the paths to the written blocks</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.bld.blocks_to_file">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">blocks_to_file</tt><big>(</big><em>an_uri</em>, <em>block_hashes</em>, <em>destination</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#blocks_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.blocks_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine the referenced blocks into a given destination file.
+:param an_uri: the directory containing the blocks
+:param block_hashes: a list of block hashes
+:param destination: the destination file path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.bld.hash_to_dir">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">hash_to_dir</tt><big>(</big><em>hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#hash_to_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.hash_to_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a given hash to a relative path and filename
+ex: &#8216;002badb952000339cdcf1b61a3205b221766bf49&#8217; -&gt; &#8216;00/2badb952000339cdcf1b61a3205b221766bf49&#8217;
+:param hash: the hash to split
+:rtype: string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="damn_at.bld.statistics">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">statistics</tt><big>(</big><em>uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#statistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.statistics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="damn_at.bld.walk">
+<tt class="descclassname">damn_at.bld.</tt><tt class="descname">walk</tt><big>(</big><em>uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#walk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.walk" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="module-damn_at.metadata">
 <span id="metadata-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">metadata</span></tt> Module<a class="headerlink" href="#module-damn_at.metadata" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -1028,6 +1096,7 @@ and address it.</p>
 <li><a class="reference internal" href="#role">Role</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-damn_at.bld"><tt class="docutils literal"><span class="pre">bld</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.metadatastore"><tt class="docutils literal"><span class="pre">metadatastore</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-damn_at.mimetypes"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a><ul>
