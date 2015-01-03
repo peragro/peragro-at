@@ -181,8 +181,8 @@ def pretty_print_file_id(file_id, indent=0):
     :param indent: indentation level
     """
     whitespace = ' ' * indent
-    print(whitespace + 'hash: ' + file_id.hash)
-    print(whitespace + 'filename: ' + file_id.filename)
+    print(whitespace + 'hash: ' + str(file_id.hash))
+    print(whitespace + 'filename: ' + str(file_id.filename))
 
 
 def pretty_print_file_description(file_descr):
@@ -251,11 +251,11 @@ def unique_asset_id_reference_from_fields(file_id_hash, subname, mimetype):
 
 
 class WaveData():
-    
+
     def __init__(self):
         self.channels = None
         self.nchannels = None
-    
+
     def extractData(self, path, precision):
         stream = wave.open(path, 'rb')
         self.nchannels = stream.getnchannels()

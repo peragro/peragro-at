@@ -3,6 +3,7 @@ The MetaDataStore handler.
 """
 import os
 from .utilities import is_existing_file, pretty_print_file_description
+from .bld import hash_to_dir
 
 from damn_at.serialization import SerializeThriftMsg, DeserializeThriftMsg
 
@@ -37,14 +38,14 @@ class MetaDataStore(object):
         """
         Check if the given file hash is in the store.
         """
-        return is_existing_file(os.path.join(self.store_path, an_hash))
+        return is_existing_file(os.path.join(self.store_path, hash_to_dir(an_hash)))
 
     def get_metadata(self, store_id, an_hash):
         """
         Get the FileDescription for the given hash.
         """
         try:
-            with open(os.path.join(self.store_path, an_hash), 'rb') as metadata:
+            with open(os.path.join(self.store_path, hash_to_dir(an_hash)), 'rb') as metadata:
                 a_file_descr = DeserializeThriftMsg(FileDescription(), metadata.read())
                 return a_file_descr
         except IOError as ioe:
@@ -55,32 +56,9 @@ class MetaDataStore(object):
         Write the FileDescription to this store.
         """
         data = SerializeThriftMsg(a_file_descr)
-        with open(os.path.join(self.store_path, an_hash), 'wb') as metadata:
+        path = os.path.join(self.store_path, hash_to_dir(an_hash))
+        if not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
+        with open(path, 'wb') as metadata:
             metadata.write(data)
         return a_file_descr
-
-
-def main():
-    import sys
-    from optparse import OptionParser
-    import logging
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
-
-    file_path = sys.argv[1]
-
-    m = MetaDataStore(os.path.dirname(file_path))
-
-    from damn_at import _CMD_DESCRIPTION
-
-    usage = "usage: %prog <file_path> [options] " + _CMD_DESCRIPTION
-    parser = OptionParser(usage=usage)
-    (options, args) = parser.parse_args(sys.argv[1:])
-
-    file_descr = m.get_metadata('', os.path.basename(file_path))
-    print(_CMD_DESCRIPTION)
-    print('Inspecting "%s"\n' % file_path)
-    pretty_print_file_description(file_descr)
-
-
-if __name__ == '__main__':
-    main()
