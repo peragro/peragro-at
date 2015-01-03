@@ -37,9 +37,6 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="damn_at.analyzers.html" title="analyzers Package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -58,969 +55,39 @@
 <h1>damn_at Package<a class="headerlink" href="#damn-at-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">damn_at</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-damn_at.__init__"></span><p>The DAMN AT module.</p>
 </div>
-<div class="section" id="module-damn_at.analyzer">
-<span id="analyzer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">analyzer</span></tt> Module<a class="headerlink" href="#module-damn_at.analyzer" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="role">
-<h3>Role<a class="headerlink" href="#role" title="Permalink to this headline">¶</a></h3>
-<p>Analyzer convience class to find the right plugin for a mimetype
-and address it.</p>
-<dl class="class">
-<dt id="damn_at.analyzer.Analyzer">
-<em class="property">class </em><tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">Analyzer</tt><a class="reference internal" href="../_modules/damn_at/analyzer.html#Analyzer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.Analyzer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<p>Analyze files and tries to find known assets types in it.</p>
-<dl class="method">
-<dt id="damn_at.analyzer.Analyzer.analyze_file">
-<tt class="descname">analyze_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#Analyzer.analyze_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.Analyzer.analyze_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a FileDescription</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body">AnalyzerException, AnalyzerFileException, AnalyzerUnknownTypeException</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="damn_at.analyzer.Analyzer.get_supported_metadata">
-<tt class="descname">get_supported_metadata</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#Analyzer.get_supported_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.Analyzer.get_supported_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a list of supported metada, per mimetype.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">map&lt;string, list&lt;tuple&lt;string,MetaDataType&gt;&gt;&gt;</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="damn_at.analyzer.Analyzer.get_supported_mimetypes">
-<tt class="descname">get_supported_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#Analyzer.get_supported_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.Analyzer.get_supported_mimetypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a list of supported mimetypes, &#8216;handled_types&#8217; of all analyzers</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;string&gt;</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.analyzer.AnalyzerException">
-<em class="property">exception </em><tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">AnalyzerException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#AnalyzerException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.AnalyzerException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
-<p>Base Analyzer Exception</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.analyzer.AnalyzerFileException">
-<em class="property">exception </em><tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">AnalyzerFileException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#AnalyzerFileException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.AnalyzerFileException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.analyzer.AnalyzerException" title="damn_at.analyzer.AnalyzerException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.analyzer.AnalyzerException</span></tt></a></p>
-<p>Something wrong with the file</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.analyzer.AnalyzerUnknownTypeException">
-<em class="property">exception </em><tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">AnalyzerUnknownTypeException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#AnalyzerUnknownTypeException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.AnalyzerUnknownTypeException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.analyzer.AnalyzerException" title="damn_at.analyzer.AnalyzerException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.analyzer.AnalyzerException</span></tt></a></p>
-<p>Unknown type</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.analyzer.analyze">
-<tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">analyze</tt><big>(</big><em>analyzer</em>, <em>metadatastore</em>, <em>file_name</em>, <em>output</em>, <em>forcereanalyze=False</em><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.analyze" title="Permalink to this definition">¶</a></dt>
-<dd><p>TODO: move hashing to generic function and metadatastore usage to the metadatastore module.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.analyzer.main">
-<tt class="descclassname">damn_at.analyzer.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzer.main" title="Permalink to this definition">¶</a></dt>
-<dd><p>Main function</p>
-</dd></dl>
-
+<div class="section" id="analyzer-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">analyzer</span></tt> Module<a class="headerlink" href="#analyzer-module" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="bld-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">bld</span></tt> Module<a class="headerlink" href="#bld-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.bld">
-<span id="bld-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">bld</span></tt> Module<a class="headerlink" href="#module-damn_at.bld" title="Permalink to this headline">¶</a></h2>
-<p>Block-level deplucation utility functions.</p>
-<dl class="function">
-<dt id="damn_at.bld.block_hashes_for_file">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">block_hashes_for_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#block_hashes_for_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.block_hashes_for_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the hash for each block in the given file
-as well as the hash for the entire file and return it.
-:param an_uri: the URI pointing to the file
-:rtype: string, list&lt;string&gt;</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.block_hashes_from_file">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">block_hashes_from_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#block_hashes_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.block_hashes_from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deserialize the saved block hashes from the given file.
-:param an_uri: the URI pointing to the file
-:rtype: list&lt;string&gt;</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.block_hashes_to_file">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">block_hashes_to_file</tt><big>(</big><em>file_hash</em>, <em>block_hashes</em>, <em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#block_hashes_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.block_hashes_to_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Serialize the given block hashes to the given uri destination.
-:param file_hash: the complete file&#8217;s hash
-:param block_hashes: a list of block hashes to serialize
-:param an_uri: the file path which to save to
-:rtype: list&lt;string&gt;</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.blocks_for_file">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">blocks_for_file</tt><big>(</big><em>an_uri</em>, <em>destination</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#blocks_for_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.blocks_for_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write all blocks for the given file to the destination.
-:param an_uri: the URI pointing to the file to split
-:param destination: the destination directory for the block files
-:rtype: list&lt;string&gt; the paths to the written blocks</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.blocks_to_file">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">blocks_to_file</tt><big>(</big><em>an_uri</em>, <em>block_hashes</em>, <em>destination</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#blocks_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.blocks_to_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Combine the referenced blocks into a given destination file.
-:param an_uri: the directory containing the blocks
-:param block_hashes: a list of block hashes
-:param destination: the destination file path</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.filter_existing_block_hashes">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">filter_existing_block_hashes</tt><big>(</big><em>an_uri</em>, <em>block_hashes</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#filter_existing_block_hashes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.filter_existing_block_hashes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check the given uri if it contains the given blocks and filter out the existing.
-:param an_uri: the directory containing the blocks
-:param block_hashes: the list of block hashes to check for existence
-:rtype: list&lt;string&gt; a list of block hashes that do not exist</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.hash_to_dir">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">hash_to_dir</tt><big>(</big><em>hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#hash_to_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.hash_to_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms a given hash to a relative path and filename
-ex: &#8216;002badb952000339cdcf1b61a3205b221766bf49&#8217; -&gt; &#8216;00/2badb952000339cdcf1b61a3205b221766bf49&#8217;
-:param hash: the hash to split
-:rtype: string</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.statistics">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">statistics</tt><big>(</big><em>uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#statistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.statistics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.verify">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">verify</tt><big>(</big><em>uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.verify" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="damn_at.bld.walk">
-<tt class="descclassname">damn_at.bld.</tt><tt class="descname">walk</tt><big>(</big><em>uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/bld.html#walk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.bld.walk" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="cli-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">cli</span></tt> Module<a class="headerlink" href="#cli-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.metadata">
-<span id="metadata-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">metadata</span></tt> Module<a class="headerlink" href="#module-damn_at.metadata" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="damn_at.metadata.MetaDataExtractor">
-<em class="property">class </em><tt class="descclassname">damn_at.metadata.</tt><tt class="descname">MetaDataExtractor</tt><a class="reference internal" href="../_modules/damn_at/metadata.html#MetaDataExtractor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadata.MetaDataExtractor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<dl class="classmethod">
-<dt id="damn_at.metadata.MetaDataExtractor.extract">
-<em class="property">classmethod </em><tt class="descname">extract</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadata.html#MetaDataExtractor.extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadata.MetaDataExtractor.extract" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="damn_at.metadata.MetaDataExtractor.fields">
-<em class="property">classmethod </em><tt class="descname">fields</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/metadata.html#MetaDataExtractor.fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadata.MetaDataExtractor.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="metadata-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">metadata</span></tt> Module<a class="headerlink" href="#metadata-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.metadatastore">
-<span id="metadatastore-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">metadatastore</span></tt> Module<a class="headerlink" href="#module-damn_at.metadatastore" title="Permalink to this headline">¶</a></h2>
-<p>The MetaDataStore handler.</p>
-<dl class="class">
-<dt id="damn_at.metadatastore.MetaDataStore">
-<em class="property">class </em><tt class="descclassname">damn_at.metadatastore.</tt><tt class="descname">MetaDataStore</tt><big>(</big><em>store_path</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<p>A filesystem MetaDataStore implementation.</p>
-<dl class="method">
-<dt id="damn_at.metadatastore.MetaDataStore.get_metadata">
-<tt class="descname">get_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.get_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the FileDescription for the given hash.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="damn_at.metadatastore.MetaDataStore.is_in_store">
-<tt class="descname">is_in_store</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.is_in_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.is_in_store" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the given file hash is in the store.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="damn_at.metadatastore.MetaDataStore.write_metadata">
-<tt class="descname">write_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em>, <em>a_file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStore.write_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStore.write_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write the FileDescription to this store.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.metadatastore.MetaDataStoreException">
-<em class="property">exception </em><tt class="descclassname">damn_at.metadatastore.</tt><tt class="descname">MetaDataStoreException</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStoreException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStoreException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
-<p>Base MetaDataStore Exception</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.metadatastore.MetaDataStoreFileException">
-<em class="property">exception </em><tt class="descclassname">damn_at.metadatastore.</tt><tt class="descname">MetaDataStoreFileException</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#MetaDataStoreFileException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.MetaDataStoreFileException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.metadatastore.MetaDataStoreException" title="damn_at.metadatastore.MetaDataStoreException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.metadatastore.MetaDataStoreException</span></tt></a></p>
-<p>Something wrong with the file</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.metadatastore.main">
-<tt class="descclassname">damn_at.metadatastore.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/metadatastore.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.metadatastore.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="metadatastore-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">metadatastore</span></tt> Module<a class="headerlink" href="#metadatastore-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.mimetypes">
-<span id="mimetypes-module"></span><h2><a class="reference external" href="http://docs.python.org/library/mimetypes.html#module-mimetypes" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">mimetypes</span></tt></a> Module<a class="headerlink" href="#module-damn_at.mimetypes" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3>Role<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>Replacement for system&#8217;s mimetype, adding some new types
-and cleaning up reverse map for cleaner file extensions.</p>
-<dl class="function">
-<dt id="damn_at.mimetypes.guess_type">
-<tt class="descclassname">damn_at.mimetypes.</tt><tt class="descname">guess_type</tt><big>(</big><em>url</em>, <em>strict=True</em><big>)</big><a class="reference internal" href="../_modules/damn_at/mimetypes.html#guess_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.mimetypes.guess_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Try to guess the mimetype for the given file using the 
-standard python mimetypes module. 
-If this fails fallback to libmagic.</p>
-</dd></dl>
-
+<div class="section" id="mimetypes-module">
+<h2><a class="reference external" href="http://docs.python.org/library/mimetypes.html#module-mimetypes" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">mimetypes</span></tt></a> Module<a class="headerlink" href="#mimetypes-module" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="options-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">options</span></tt> Module<a class="headerlink" href="#options-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.options">
-<span id="options-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">options</span></tt> Module<a class="headerlink" href="#module-damn_at.options" title="Permalink to this headline">¶</a></h2>
-<p>Options</p>
-<dl class="class">
-<dt id="damn_at.options.BaseOption">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">BaseOption</tt><big>(</big><em>name</em>, <em>description</em>, <em>default</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#BaseOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.BaseOption" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<p>BaseOption</p>
-<dl class="method">
-<dt id="damn_at.options.BaseOption.constraint_description">
-<tt class="descname">constraint_description</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#BaseOption.constraint_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.BaseOption.constraint_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.options.BaseOption.default_description">
-<tt class="descname">default_description</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#BaseOption.default_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.BaseOption.default_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.options.BaseOption.parse_from_string">
-<tt class="descname">parse_from_string</tt><big>(</big><em>a_string</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#BaseOption.parse_from_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.BaseOption.parse_from_string" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.options.BaseOption.type_description">
-<tt class="descname">type_description</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#BaseOption.type_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.BaseOption.type_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.options.EnumOption">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">EnumOption</tt><big>(</big><em>name</em>, <em>description</em>, <em>choices</em>, <em>default</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.BaseOption" title="damn_at.options.BaseOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.BaseOption</span></tt></a></p>
-<p>Class for enum options</p>
-<dl class="attribute">
-<dt id="damn_at.options.EnumOption.constraint_description">
-<tt class="descname">constraint_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption.constraint_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption.constraint_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.options.EnumOption.default_description">
-<tt class="descname">default_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption.default_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption.default_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.options.EnumOption.parse_from_string">
-<tt class="descname">parse_from_string</tt><big>(</big><em>a_string</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption.parse_from_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption.parse_from_string" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.options.EnumOption.type_description">
-<tt class="descname">type_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#EnumOption.type_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.EnumOption.type_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.options.FloatArrayOption">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">FloatArrayOption</tt><big>(</big><em>name=''</em>, <em>description=''</em>, <em>default=0.0</em>, <em>min=2.2250738585072014e-308</em>, <em>max=1.7976931348623157e+308</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#FloatArrayOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.FloatArrayOption" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.VectorOption" title="damn_at.options.VectorOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.VectorOption</span></tt></a></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.options.FloatOption">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">FloatOption</tt><big>(</big><em>name=''</em>, <em>description=''</em>, <em>default=0.0</em>, <em>min=2.2250738585072014e-308</em>, <em>max=1.7976931348623157e+308</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#FloatOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.FloatOption" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.VectorOption" title="damn_at.options.VectorOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.VectorOption</span></tt></a></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.options.HexColorOption">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">HexColorOption</tt><big>(</big><em>name</em>, <em>description</em>, <em>default</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#HexColorOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.HexColorOption" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.BaseOption" title="damn_at.options.BaseOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.BaseOption</span></tt></a></p>
-<p>Class for #rrggbb Option</p>
-<dl class="attribute">
-<dt id="damn_at.options.HexColorOption.constraint_description">
-<tt class="descname">constraint_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#HexColorOption.constraint_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.HexColorOption.constraint_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.options.HexColorOption.default_description">
-<tt class="descname">default_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#HexColorOption.default_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.HexColorOption.default_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.options.HexColorOption.parse_from_string">
-<tt class="descname">parse_from_string</tt><big>(</big><em>a_string</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#HexColorOption.parse_from_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.HexColorOption.parse_from_string" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.options.HexColorOption.type_description">
-<tt class="descname">type_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#HexColorOption.type_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.HexColorOption.type_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.options.IntOption">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">IntOption</tt><big>(</big><em>name=''</em>, <em>description=''</em>, <em>default=0.0</em>, <em>min=-9223372036854775807</em>, <em>max=9223372036854775807</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#IntOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.IntOption" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.VectorOption" title="damn_at.options.VectorOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.VectorOption</span></tt></a></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.options.IntVectorOption">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">IntVectorOption</tt><big>(</big><em>name=''</em>, <em>description=''</em>, <em>default=(0</em>, <em>0</em>, <em>0)</em>, <em>min=-9223372036854775807</em>, <em>max=9223372036854775807</em>, <em>size=3</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#IntVectorOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.IntVectorOption" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.VectorOption" title="damn_at.options.VectorOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.VectorOption</span></tt></a></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.options.OptionConstraintException">
-<em class="property">exception </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">OptionConstraintException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#OptionConstraintException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.OptionConstraintException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.OptionException" title="damn_at.options.OptionException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.OptionException</span></tt></a></p>
-<p>Value did not comply with the constraints</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.options.OptionException">
-<em class="property">exception </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">OptionException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#OptionException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.OptionException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
-<p>Base Option Exception</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.options.OptionParseException">
-<em class="property">exception </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">OptionParseException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#OptionParseException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.OptionParseException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.OptionException" title="damn_at.options.OptionException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.OptionException</span></tt></a></p>
-<p>Something wrong with the option&#8217;s format</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.options.Sizes">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">Sizes</tt><a class="reference internal" href="../_modules/damn_at/options.html#Sizes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.Sizes" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
-<dt id="damn_at.options.Sizes.maxint">
-<tt class="descname">maxint</tt><em class="property"> = 9223372036854775807</em><a class="headerlink" href="#damn_at.options.Sizes.maxint" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.options.VectorOption">
-<em class="property">class </em><tt class="descclassname">damn_at.options.</tt><tt class="descname">VectorOption</tt><big>(</big><em>type</em>, <em>name</em>, <em>description</em>, <em>default</em>, <em>min</em>, <em>max</em>, <em>size</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#VectorOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.VectorOption" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.options.BaseOption" title="damn_at.options.BaseOption"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.options.BaseOption</span></tt></a></p>
-<p>Base class for vector options</p>
-<dl class="attribute">
-<dt id="damn_at.options.VectorOption.constraint_description">
-<tt class="descname">constraint_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#VectorOption.constraint_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.VectorOption.constraint_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.options.VectorOption.default_description">
-<tt class="descname">default_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#VectorOption.default_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.VectorOption.default_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.options.VectorOption.parse_from_string">
-<tt class="descname">parse_from_string</tt><big>(</big><em>a_string</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#VectorOption.parse_from_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.VectorOption.parse_from_string" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.options.VectorOption.type_description">
-<tt class="descname">type_description</tt><a class="reference internal" href="../_modules/damn_at/options.html#VectorOption.type_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.VectorOption.type_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.options.expand_path_template">
-<tt class="descclassname">damn_at.options.</tt><tt class="descname">expand_path_template</tt><big>(</big><em>template</em>, <em>mimetype</em>, <em>asset_id</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#expand_path_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.expand_path_template" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="damn_at.options.options_to_template">
-<tt class="descclassname">damn_at.options.</tt><tt class="descname">options_to_template</tt><big>(</big><em>options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#options_to_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.options_to_template" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="damn_at.options.parse_options">
-<tt class="descclassname">damn_at.options.</tt><tt class="descname">parse_options</tt><big>(</big><em>convert_map_entry</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#parse_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.parse_options" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="damn_at.options.parse_options2">
-<tt class="descclassname">damn_at.options.</tt><tt class="descname">parse_options2</tt><big>(</big><em>convert_map_entry</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/options.html#parse_options2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.options.parse_options2" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="pluginmanager-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">pluginmanager</span></tt> Module<a class="headerlink" href="#pluginmanager-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.pluginmanager">
-<span id="pluginmanager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">pluginmanager</span></tt> Module<a class="headerlink" href="#module-damn_at.pluginmanager" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id3">
-<h3>Role<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>The &#8216;&#8217;DAMNPluginManager&#8217;&#8217; loads all analyzers and transcoders.</p>
-<p>Don&#8217;t use it directly, use &#8216;&#8217;DAMNPluginManagerSingleton&#8217;&#8217; instead.</p>
-<dl class="exception">
-<dt id="damn_at.pluginmanager.ActivationFailedException">
-<em class="property">exception </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">ActivationFailedException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#ActivationFailedException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ActivationFailedException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
-<p>Plugin activation failed exception</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.pluginmanager.DAMNPluginManager">
-<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">DAMNPluginManager</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#DAMNPluginManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.DAMNPluginManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.PluginManager.PluginManager</span></tt></p>
-<p>Loads all analyzers and transcoders.</p>
-<dl class="method">
-<dt id="damn_at.pluginmanager.DAMNPluginManager.collect_plugins">
-<tt class="descname">collect_plugins</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#DAMNPluginManager.collect_plugins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.DAMNPluginManager.collect_plugins" title="Permalink to this definition">¶</a></dt>
-<dd><p>Walk through the plugins&#8217; places and look for plugins. Then
-for each plugin candidate look for its category, load it and
-stores it in the appropriate slot of the category_mapping.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.pluginmanager.DAMNPluginManagerSingleton">
-<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">DAMNPluginManagerSingleton</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#DAMNPluginManagerSingleton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.DAMNPluginManagerSingleton" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<p>Singleton version of the DAMNPluginManager.</p>
-<p>Being a singleton, this class should not be initialised explicitly
-and the <tt class="docutils literal"><span class="pre">get</span></tt> classmethod must be called instead.</p>
-<p>To call one of this class&#8217;s methods you have to use the <tt class="docutils literal"><span class="pre">get</span></tt>
-method in the following way:
-<tt class="docutils literal"><span class="pre">DAMNPluginManagerSingleton.get().themethodname(theargs)</span></tt></p>
-<dl class="classmethod">
-<dt id="damn_at.pluginmanager.DAMNPluginManagerSingleton.get">
-<em class="property">classmethod </em><tt class="descname">get</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#DAMNPluginManagerSingleton.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.DAMNPluginManagerSingleton.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Actually create an instance</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.pluginmanager.IAnalyzer">
-<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">IAnalyzer</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IAnalyzer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IAnalyzer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
-<p>Interface class for an Analyzer</p>
-<dl class="method">
-<dt id="damn_at.pluginmanager.IAnalyzer.analyze">
-<tt class="descname">analyze</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IAnalyzer.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IAnalyzer.analyze" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a FileDescription</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file to be analyzed</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"><a class="reference internal" href="#damn_at.analyzer.AnalyzerException" title="damn_at.analyzer.AnalyzerException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.analyzer.AnalyzerException</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.pluginmanager.IAnalyzer.handled_types">
-<tt class="descname">handled_types</tt><em class="property"> = []</em><a class="headerlink" href="#damn_at.pluginmanager.IAnalyzer.handled_types" title="Permalink to this definition">¶</a></dt>
-<dd><p>The mimetypes this analyzer can handle.
-Example::
-handled_types = [&#8220;application/x-blender&#8221;]</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.pluginmanager.IMetaDataStore">
-<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">IMetaDataStore</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
-<p>Interface class for a MetaDataStore</p>
-<dl class="method">
-<dt id="damn_at.pluginmanager.IMetaDataStore.get_metadata">
-<tt class="descname">get_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.get_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the FileDescription for the given hash.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="damn_at.pluginmanager.IMetaDataStore.is_in_store">
-<tt class="descname">is_in_store</tt><big>(</big><em>store_id</em>, <em>an_hash</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.is_in_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.is_in_store" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the given file hash is in the store.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="damn_at.pluginmanager.IMetaDataStore.write_metadata">
-<tt class="descname">write_metadata</tt><big>(</big><em>store_id</em>, <em>an_hash</em>, <em>a_file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IMetaDataStore.write_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IMetaDataStore.write_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write the FileDescription to this store.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.pluginmanager.IRepository">
-<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">IRepository</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IRepository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IRepository" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
-<p>Interface class for a Repository</p>
-<dl class="method">
-<dt id="damn_at.pluginmanager.IRepository.get_meta_data">
-<tt class="descname">get_meta_data</tt><big>(</big><em>an_uri</em>, <em>a_file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#IRepository.get_meta_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.IRepository.get_meta_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="damn_at.pluginmanager.ITranscoder">
-<em class="property">class </em><tt class="descclassname">damn_at.pluginmanager.</tt><tt class="descname">ITranscoder</tt><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#ITranscoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">yapsy.IPlugin.IPlugin</span></tt></p>
-<p>Interface class for a Transcoder</p>
-<dl class="attribute">
-<dt id="damn_at.pluginmanager.ITranscoder.convert_map">
-<tt class="descname">convert_map</tt><em class="property"> = {}</em><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder.convert_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>The mimetypes this transocder can handle.
-Example::
-convert_map = {&#8220;image/tiff&#8221; : {&#8220;image/jpeg&#8221;: [IntVectorOption(name=&#8217;size&#8217;, description=&#8217;The target size of the image&#8217;, size=2, default=(-1,-1))],</p>
-<blockquote>
-<div>&#8220;image/png&#8221;: []
-}, }</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="damn_at.pluginmanager.ITranscoder.transcode">
-<tt class="descname">transcode</tt><big>(</big><em>dest_path</em>, <em>file_descr</em>, <em>asset_id</em>, <em>target_mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/pluginmanager.html#ITranscoder.transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.pluginmanager.ITranscoder.transcode" title="Permalink to this definition">¶</a></dt>
-<dd><p>blah</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="repository-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">repository</span></tt> Module<a class="headerlink" href="#repository-module" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="transcoder-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">transcoder</span></tt> Module<a class="headerlink" href="#transcoder-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.repository">
-<span id="repository-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">repository</span></tt> Module<a class="headerlink" href="#module-damn_at.repository" title="Permalink to this headline">¶</a></h2>
-<p>The MetaDataStore handler.</p>
-<dl class="class">
-<dt id="damn_at.repository.Repository">
-<em class="property">class </em><tt class="descclassname">damn_at.repository.</tt><tt class="descname">Repository</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="../_modules/damn_at/repository.html#Repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.repository.Repository" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.pluginmanager.IRepository" title="damn_at.pluginmanager.IRepository"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.pluginmanager.IRepository</span></tt></a></p>
-<p>A GIT Repository.</p>
-<dl class="method">
-<dt id="damn_at.repository.Repository.get_meta_data">
-<tt class="descname">get_meta_data</tt><big>(</big><em>an_uri</em>, <em>file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/repository.html#Repository.get_meta_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.repository.Repository.get_meta_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get git commit metadata for the specified file.</p>
-</dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-damn_at.transcoder">
-<span id="transcoder-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">transcoder</span></tt> Module<a class="headerlink" href="#module-damn_at.transcoder" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3>Role<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>Transcoder convience class to find the right plugin for a mimetype
-and address it.</p>
-<dl class="class">
-<dt id="damn_at.transcoder.Transcoder">
-<em class="property">class </em><tt class="descclassname">damn_at.transcoder.</tt><tt class="descname">Transcoder</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<p>Analyze files and tries to find known assets types in it.</p>
-<dl class="method">
-<dt id="damn_at.transcoder.Transcoder.get_paths">
-<tt class="descname">get_paths</tt><big>(</big><em>asset_id</em>, <em>target_mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.get_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.get_paths" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.transcoder.Transcoder.get_target_mimetype">
-<tt class="descname">get_target_mimetype</tt><big>(</big><em>src_mimetype</em>, <em>mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.get_target_mimetype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.get_target_mimetype" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.transcoder.Transcoder.get_target_mimetypes">
-<tt class="descname">get_target_mimetypes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.get_target_mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.get_target_mimetypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a list of supported mimetypes, &#8216;handled_types&#8217; of all analyzers</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">map&lt;string, list&lt;TargetMimetype&gt;&gt;</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="damn_at.transcoder.Transcoder.parse_options">
-<tt class="descname">parse_options</tt><big>(</big><em>src_mimetype</em>, <em>target_mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.parse_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.parse_options" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.transcoder.Transcoder.transcode">
-<tt class="descname">transcode</tt><big>(</big><em>file_descr</em>, <em>asset_id</em>, <em>mimetype</em>, <em>**options</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#Transcoder.transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.Transcoder.transcode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transcode the given AssetId in FileDescription to the specified mimetype</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;string&gt; file paths</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.transcoder.TranscoderException">
-<em class="property">exception </em><tt class="descclassname">damn_at.transcoder.</tt><tt class="descname">TranscoderException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#TranscoderException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.TranscoderException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
-<p>Base Transcoder Exception</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.transcoder.TranscoderFileException">
-<em class="property">exception </em><tt class="descclassname">damn_at.transcoder.</tt><tt class="descname">TranscoderFileException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#TranscoderFileException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.TranscoderFileException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.transcoder.TranscoderException" title="damn_at.transcoder.TranscoderException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.transcoder.TranscoderException</span></tt></a></p>
-<p>Something wrong with the file</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.transcoder.TranscoderUnknownAssetException">
-<em class="property">exception </em><tt class="descclassname">damn_at.transcoder.</tt><tt class="descname">TranscoderUnknownAssetException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#TranscoderUnknownAssetException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.TranscoderUnknownAssetException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.transcoder.TranscoderException" title="damn_at.transcoder.TranscoderException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.transcoder.TranscoderException</span></tt></a></p>
-<p>Unknown asset</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="damn_at.transcoder.TranscoderUnknownTypeException">
-<em class="property">exception </em><tt class="descclassname">damn_at.transcoder.</tt><tt class="descname">TranscoderUnknownTypeException</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#TranscoderUnknownTypeException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.TranscoderUnknownTypeException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#damn_at.transcoder.TranscoderException" title="damn_at.transcoder.TranscoderException"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.transcoder.TranscoderException</span></tt></a></p>
-<p>Unknown type</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.transcoder.main">
-<tt class="descclassname">damn_at.transcoder.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/transcoder.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.transcoder.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</div>
-</div>
-<div class="section" id="module-damn_at.utilities">
-<span id="utilities-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">utilities</span></tt> Module<a class="headerlink" href="#module-damn_at.utilities" title="Permalink to this headline">¶</a></h2>
-<p>General utilities.</p>
-<dl class="class">
-<dt id="damn_at.utilities.WaveData">
-<em class="property">class </em><tt class="descclassname">damn_at.utilities.</tt><tt class="descname">WaveData</tt><a class="reference internal" href="../_modules/damn_at/utilities.html#WaveData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.WaveData" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
-<dt id="damn_at.utilities.WaveData.extractData">
-<tt class="descname">extractData</tt><big>(</big><em>path</em>, <em>precision</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#WaveData.extractData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.WaveData.extractData" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.utilities.WaveData.getData">
-<tt class="descname">getData</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#WaveData.getData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.WaveData.getData" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.abspath">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">abspath</tt><big>(</big><em>path</em>, <em>file_descr=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#abspath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.abspath" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an absolute path using the given FileDescription as reference.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.calculate_hash_for_file">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">calculate_hash_for_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#calculate_hash_for_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.calculate_hash_for_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a sha1 hexdigest for the given file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.collect_python3_paths">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">collect_python3_paths</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#collect_python3_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.collect_python3_paths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect python3&#8217;s &#8216;dist-packages&#8217; paths to create PYTHONPATH with</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.find_asset_id_in_file_descr">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">find_asset_id_in_file_descr</tt><big>(</big><em>file_descr</em>, <em>asset_name</em>, <em>asset_mimetype</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#find_asset_id_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.find_asset_id_in_file_descr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find an AssetId by name in the given FileDescription</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_descr</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></li>
-<li><strong>asset_name</strong> &#8211; string the asset to look for</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of <tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetId</span></tt></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.find_asset_ids_in_file_descr">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">find_asset_ids_in_file_descr</tt><big>(</big><em>file_descr</em>, <em>asset_name</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#find_asset_ids_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.find_asset_ids_in_file_descr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find an AssetId by name in the given FileDescription</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_descr</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></li>
-<li><strong>asset_name</strong> &#8211; string the asset to look for</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of <tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetId</span></tt></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.get_asset_names_in_file_descr">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">get_asset_names_in_file_descr</tt><big>(</big><em>file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#get_asset_names_in_file_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.get_asset_names_in_file_descr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all asset names in the given FileDescription</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_descr</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;string&gt; of asset names contained</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.get_metadatavalue_type">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">get_metadatavalue_type</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#get_metadatavalue_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.get_metadatavalue_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the name of the type and the value of the MetaDataValue</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.MetaDataValue</span></tt></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple&lt;string,string&gt;</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.get_referenced_file_ids">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">get_referenced_file_ids</tt><big>(</big><em>file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#get_referenced_file_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.get_referenced_file_ids" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect all FileIds in a FileDescription</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.is_existing_file">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">is_existing_file</tt><big>(</big><em>an_uri</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#is_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.is_existing_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether the file exists and it is an actual file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>an_uri</strong> &#8211; the URI pointing to the file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.pretty_print_asset_descr">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_asset_descr</tt><big>(</big><em>asset_descr</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_asset_descr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_asset_descr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print a given AssetDescription</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>asset_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetDescription</span></tt></li>
-<li><strong>indent</strong> &#8211; indentation level</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.pretty_print_asset_id">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_asset_id</tt><big>(</big><em>asset_id</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_asset_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_asset_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print a given AssetId</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>asset_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.AssetId</span></tt></li>
-<li><strong>indent</strong> &#8211; indentation level</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.pretty_print_file_description">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_file_description</tt><big>(</big><em>file_descr</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_file_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_file_description" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print a given FileDescription</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>asset_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt></li>
-<li><strong>indent</strong> &#8211; indentation level</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.pretty_print_file_id">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_file_id</tt><big>(</big><em>file_id</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_file_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_file_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print a given FileId</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>asset_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileId</span></tt></li>
-<li><strong>indent</strong> &#8211; indentation level</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.pretty_print_metadatavalue">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">pretty_print_metadatavalue</tt><big>(</big><em>key</em>, <em>value</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#pretty_print_metadatavalue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.pretty_print_metadatavalue" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print a given MetaDataValue</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>key</strong> &#8211; the name of the MetaDataValue</li>
-<li><strong>value</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.MetaDataValue</span></tt></li>
-<li><strong>indent</strong> &#8211; indentation level</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.run_blender">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">run_blender</tt><big>(</big><em>an_uri</em>, <em>script_uri</em>, <em>arguments=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#run_blender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.run_blender" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs blender with the given file and script</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.script_path">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">script_path</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#script_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.script_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>b-script-&#8216;+__file__+&#8217;.py</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; __file__</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.unique_asset_id_reference">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">unique_asset_id_reference</tt><big>(</big><em>asset_id</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#unique_asset_id_reference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.unique_asset_id_reference" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="damn_at.utilities.unique_asset_id_reference_from_fields">
-<tt class="descclassname">damn_at.utilities.</tt><tt class="descname">unique_asset_id_reference_from_fields</tt><big>(</big><em>file_id_hash</em>, <em>subname</em>, <em>mimetype</em><big>)</big><a class="reference internal" href="../_modules/damn_at/utilities.html#unique_asset_id_reference_from_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.utilities.unique_asset_id_reference_from_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="utilities-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">utilities</span></tt> Module<a class="headerlink" href="#utilities-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
@@ -1031,27 +98,27 @@ and address it.</p>
 <li class="toctree-l2"><a class="reference internal" href="damn_at.analyzers.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.audio.html">audio Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.audio.html#id1"><tt class="docutils literal"><span class="pre">audio</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.audio.html#module-damn_at.analyzers.audio.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.audio.html#module-damn_at.analyzers.audio.soxanalyzer"><tt class="docutils literal"><span class="pre">soxanalyzer</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.audio.html#metadata-module"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.audio.html#soxanalyzer-module"><tt class="docutils literal"><span class="pre">soxanalyzer</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.image.html">image Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#id1"><tt class="docutils literal"><span class="pre">image</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#module-damn_at.analyzers.image.analyzerimage"><tt class="docutils literal"><span class="pre">analyzerimage</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#module-damn_at.analyzers.image.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#analyzerimage-module"><tt class="docutils literal"><span class="pre">analyzerimage</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.image.html#metadata-module"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.mesh.html">mesh Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#id1"><tt class="docutils literal"><span class="pre">mesh</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#module-damn_at.analyzers.mesh.analyzerblend"><tt class="docutils literal"><span class="pre">analyzerblend</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#analyzerblend-module"><tt class="docutils literal"><span class="pre">analyzerblend</span></tt> Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#b-script-analyzerblend-module"><tt class="docutils literal"><span class="pre">b-script-analyzerblend</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#module-damn_at.analyzers.mesh.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.mesh.html#metadata-module"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="damn_at.analyzers.video.html">video Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.video.html#id1"><tt class="docutils literal"><span class="pre">video</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.video.html#module-damn_at.analyzers.video.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.video.html#module-damn_at.analyzers.video.videoanalyzer"><tt class="docutils literal"><span class="pre">videoanalyzer</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.video.html#metadata-module"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="damn_at.analyzers.video.html#videoanalyzer-module"><tt class="docutils literal"><span class="pre">videoanalyzer</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -1060,7 +127,7 @@ and address it.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="damn_at.damnfs.html">damnfs Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="damn_at.damnfs.html#damnfs-module"><tt class="docutils literal"><span class="pre">damnfs</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="damn_at.damnfs.html#module-damn_at.damnfs.path"><tt class="docutils literal"><span class="pre">path</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="damn_at.damnfs.html#path-module"><tt class="docutils literal"><span class="pre">path</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="damn_at.serialization.html">serialization Package</a><ul>
@@ -1072,15 +139,15 @@ and address it.</p>
 <li class="toctree-l4"><a class="reference internal" href="damn_at.serialization.generated.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="damn_at.serialization.generated.damn.html">damn Package</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#id1"><tt class="docutils literal"><span class="pre">damn</span></tt> Package</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.DamnService"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#module-damn_at.serialization.generated.damn.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#damnservice-module"><tt class="docutils literal"><span class="pre">DamnService</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#constants-module"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn.html#ttypes-module"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html">damn_types Package</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#id1"><tt class="docutils literal"><span class="pre">damn_types</span></tt> Package</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#module-damn_at.serialization.generated.damn_types.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#module-damn_at.serialization.generated.damn_types.ttypes"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#constants-module"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="damn_at.serialization.generated.damn_types.html#ttypes-module"><tt class="docutils literal"><span class="pre">ttypes</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -1106,28 +173,17 @@ and address it.</p>
   <ul>
 <li><a class="reference internal" href="#">damn_at Package</a><ul>
 <li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">damn_at</span></tt> Package</a></li>
-<li><a class="reference internal" href="#module-damn_at.analyzer"><tt class="docutils literal"><span class="pre">analyzer</span></tt> Module</a><ul>
-<li><a class="reference internal" href="#role">Role</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-damn_at.bld"><tt class="docutils literal"><span class="pre">bld</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-damn_at.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-damn_at.metadatastore"><tt class="docutils literal"><span class="pre">metadatastore</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-damn_at.mimetypes"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a><ul>
-<li><a class="reference internal" href="#id2">Role</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-damn_at.options"><tt class="docutils literal"><span class="pre">options</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-damn_at.pluginmanager"><tt class="docutils literal"><span class="pre">pluginmanager</span></tt> Module</a><ul>
-<li><a class="reference internal" href="#id3">Role</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-damn_at.repository"><tt class="docutils literal"><span class="pre">repository</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-damn_at.transcoder"><tt class="docutils literal"><span class="pre">transcoder</span></tt> Module</a><ul>
-<li><a class="reference internal" href="#id4">Role</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-damn_at.utilities"><tt class="docutils literal"><span class="pre">utilities</span></tt> Module</a></li>
+<li><a class="reference internal" href="#analyzer-module"><tt class="docutils literal"><span class="pre">analyzer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#bld-module"><tt class="docutils literal"><span class="pre">bld</span></tt> Module</a></li>
+<li><a class="reference internal" href="#cli-module"><tt class="docutils literal"><span class="pre">cli</span></tt> Module</a></li>
+<li><a class="reference internal" href="#metadata-module"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
+<li><a class="reference internal" href="#metadatastore-module"><tt class="docutils literal"><span class="pre">metadatastore</span></tt> Module</a></li>
+<li><a class="reference internal" href="#mimetypes-module"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a></li>
+<li><a class="reference internal" href="#options-module"><tt class="docutils literal"><span class="pre">options</span></tt> Module</a></li>
+<li><a class="reference internal" href="#pluginmanager-module"><tt class="docutils literal"><span class="pre">pluginmanager</span></tt> Module</a></li>
+<li><a class="reference internal" href="#repository-module"><tt class="docutils literal"><span class="pre">repository</span></tt> Module</a></li>
+<li><a class="reference internal" href="#transcoder-module"><tt class="docutils literal"><span class="pre">transcoder</span></tt> Module</a></li>
+<li><a class="reference internal" href="#utilities-module"><tt class="docutils literal"><span class="pre">utilities</span></tt> Module</a></li>
 <li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 </ul>
 </li>
@@ -1169,9 +225,6 @@ and address it.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="damn_at.analyzers.html" title="analyzers Package"
              >next</a> |</li>

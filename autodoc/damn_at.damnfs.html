@@ -38,9 +38,6 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="damn_at.serialization.html" title="serialization Package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -61,138 +58,8 @@
 <div class="section" id="damnfs-module">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">damnfs</span></tt> Module<a class="headerlink" href="#damnfs-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.damnfs.path">
-<span id="path-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">path</span></tt> Module<a class="headerlink" href="#module-damn_at.damnfs.path" title="Permalink to this headline">¶</a></h2>
-<p>Path utilities for DAMN FS</p>
-<dl class="function">
-<dt id="damn_at.damnfs.path.attach">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">attach</tt><big>(</big><em>file_id</em>, <em>trunk</em>, <em>branch=None</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#attach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.attach" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert a branch of directories on its trunk.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.damnfs.path.expand_path">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">expand_path</tt><big>(</big><em>path</em>, <em>start_path</em>, <em>base_depth</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#expand_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.expand_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make a path relative to the given starting path and make the path
-atleast base_depth deep by prepending &#8216;_&#8217; directories.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>path</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt>: the path to expand</li>
-<li><strong>start_path</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.FileDescription</span></tt>: the starting path</li>
-<li><strong>base_depth</strong> &#8211; <a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">int</span></tt></a>: how deep the the base file should be</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">string</span></tt></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.damnfs.path.file_ids_as_tree">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">file_ids_as_tree</tt><big>(</big><em>file_ids</em>, <em>start_path</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#file_ids_as_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.file_ids_as_tree" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a tree like structure using the filenames of the given FileIds.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_ids</strong> &#8211; <tt class="xref py py-func docutils literal"><span class="pre">list()</span></tt> of <tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn_types.ttypes.FileId</span></tt></li>
-<li><strong>start_path</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt>: the base path</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></a> {&#8216;adir&#8217;:&lt;&gt;, &#8216;&lt;files&gt;&#8217;:[...]}</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.damnfs.path.find_path_for_file_id">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">find_path_for_file_id</tt><big>(</big><em>file_ids_tree</em>, <em>file_id</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#find_path_for_file_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.find_path_for_file_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Traverse the FileIds tree to construct a path for the given FileId</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_ids_tree</strong> &#8211; <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></a> {&#8216;adir&#8217;:&lt;&gt;, &#8216;&lt;files&gt;&#8217;:[...]}</li>
-<li><strong>file_id</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">damn_at.thrift.generated.damn_types.ttypes.FileId</span></tt>: the fileId we&#8217;re looking for</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">string</span></tt>: the path</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.damnfs.path.get_files_for_path">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">get_files_for_path</tt><big>(</big><em>file_ids_tree</em>, <em>path</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#get_files_for_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.get_files_for_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Traverse the FileIds tree with the given path and return the sub-tree
-at that level or the file if a leaf-node.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_ids_tree</strong> &#8211; <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></a> {&#8216;adir&#8217;:&lt;&gt;, &#8216;&lt;files&gt;&#8217;:[...]}</li>
-<li><strong>path</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt>: the path</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></a> {&#8216;adir&#8217;:&lt;&gt;, &#8216;&lt;files&gt;&#8217;:[...]}</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.damnfs.path.normdirpath">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">normdirpath</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#normdirpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.normdirpath" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make a directory path end with /</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.damnfs.path.parse_path">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">parse_path</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#parse_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.parse_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse a path of /hash/action/my/path returning a tuple of
-(&#8216;hash&#8217;, &#8216;action&#8217;, &#8216;/my/path&#8217;) or None values if a shorter path is
-given.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt>: the path</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">tuple()</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.damnfs.path.path_depth">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">path_depth</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#path_depth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.path_depth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Give the depth, the number of directories deep, of a path</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.damnfs.path.prettify">
-<tt class="descclassname">damn_at.damnfs.path.</tt><tt class="descname">prettify</tt><big>(</big><em>tree</em>, <em>indent=0</em><big>)</big><a class="reference internal" href="../_modules/damn_at/damnfs/path.html#prettify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.damnfs.path.prettify" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print the file tree structure with proper indentation.</p>
-</dd></dl>
-
+<div class="section" id="path-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">path</span></tt> Module<a class="headerlink" href="#path-module" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -206,7 +73,7 @@ given.</p>
   <ul>
 <li><a class="reference internal" href="#">damnfs Package</a><ul>
 <li><a class="reference internal" href="#damnfs-module"><tt class="docutils literal"><span class="pre">damnfs</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-damn_at.damnfs.path"><tt class="docutils literal"><span class="pre">path</span></tt> Module</a></li>
+<li><a class="reference internal" href="#path-module"><tt class="docutils literal"><span class="pre">path</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -245,9 +112,6 @@ given.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="damn_at.serialization.html" title="serialization Package"
              >next</a> |</li>

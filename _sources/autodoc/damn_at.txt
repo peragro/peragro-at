@@ -25,6 +25,14 @@ damn_at Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`cli` Module
+-----------------
+
+.. automodule:: damn_at.cli
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`metadata` Module
 ----------------------
 

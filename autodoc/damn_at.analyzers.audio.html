@@ -38,9 +38,6 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="damn_at.analyzers.image.html" title="image Package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -60,74 +57,12 @@
 <h1>audio Package<a class="headerlink" href="#audio-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">audio</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-damn_at.analyzers.audio"></span><p>audio analyzer</p>
 </div>
-<div class="section" id="module-damn_at.analyzers.audio.metadata">
-<span id="metadata-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">metadata</span></tt> Module<a class="headerlink" href="#module-damn_at.analyzers.audio.metadata" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="damn_at.analyzers.audio.metadata.MetaDataSox">
-<em class="property">class </em><tt class="descclassname">damn_at.analyzers.audio.metadata.</tt><tt class="descname">MetaDataSox</tt><a class="reference internal" href="../_modules/damn_at/analyzers/audio/metadata.html#MetaDataSox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzers.audio.metadata.MetaDataSox" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="damn_at.html#damn_at.metadata.MetaDataExtractor" title="damn_at.metadata.MetaDataExtractor"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.metadata.MetaDataExtractor</span></tt></a></p>
-<dl class="attribute">
-<dt id="damn_at.analyzers.audio.metadata.MetaDataSox.bit_rate">
-<tt class="descname">bit_rate</tt><em class="property"> = (4, &lt;function &lt;lambda&gt; at 0x25f2de8&gt;)</em><a class="headerlink" href="#damn_at.analyzers.audio.metadata.MetaDataSox.bit_rate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.analyzers.audio.metadata.MetaDataSox.channels">
-<tt class="descname">channels</tt><em class="property"> = (2, &lt;function &lt;lambda&gt; at 0x25f2c80&gt;)</em><a class="headerlink" href="#damn_at.analyzers.audio.metadata.MetaDataSox.channels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.analyzers.audio.metadata.MetaDataSox.duration">
-<tt class="descname">duration</tt><em class="property"> = (4, &lt;function &lt;lambda&gt; at 0x25f2f50&gt;)</em><a class="headerlink" href="#damn_at.analyzers.audio.metadata.MetaDataSox.duration" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.analyzers.audio.metadata.MetaDataSox.precision">
-<tt class="descname">precision</tt><em class="property"> = (4, &lt;function &lt;lambda&gt; at 0x25f2ed8&gt;)</em><a class="headerlink" href="#damn_at.analyzers.audio.metadata.MetaDataSox.precision" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.analyzers.audio.metadata.MetaDataSox.sample_rate">
-<tt class="descname">sample_rate</tt><em class="property"> = (2, &lt;function &lt;lambda&gt; at 0x3798050&gt;)</em><a class="headerlink" href="#damn_at.analyzers.audio.metadata.MetaDataSox.sample_rate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="metadata-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">metadata</span></tt> Module<a class="headerlink" href="#metadata-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-damn_at.analyzers.audio.soxanalyzer">
-<span id="soxanalyzer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">soxanalyzer</span></tt> Module<a class="headerlink" href="#module-damn_at.analyzers.audio.soxanalyzer" title="Permalink to this headline">¶</a></h2>
-<p>Analyzer for audio files using sox</p>
-<dl class="class">
-<dt id="damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer">
-<em class="property">class </em><tt class="descclassname">damn_at.analyzers.audio.soxanalyzer.</tt><tt class="descname">SoundAnalyzer</tt><a class="reference internal" href="../_modules/damn_at/analyzers/audio/soxanalyzer.html#SoundAnalyzer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../index.html#damn_at.pluginmanager.IAnalyzer" title="damn_at.pluginmanager.IAnalyzer"><tt class="xref py py-class docutils literal"><span class="pre">damn_at.pluginmanager.IAnalyzer</span></tt></a></p>
-<p>class for sound analyzer called in the analyzer</p>
-<dl class="method">
-<dt id="damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer.activate">
-<tt class="descname">activate</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzers/audio/soxanalyzer.html#SoundAnalyzer.activate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer.activate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer.analyze">
-<tt class="descname">analyze</tt><big>(</big><em>anURI</em><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzers/audio/soxanalyzer.html#SoundAnalyzer.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer.analyze" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer.handled_types">
-<tt class="descname">handled_types</tt><em class="property"> = ['audio/x-aiff', 'audio/x-aiff', 'audio/x-aiff', 'audio/basic', 'audio/amr-wb', 'audio/flac', 'audio/x-gsm', 'audio/mpeg', 'audio/mpeg', 'audio/ogg', 'audio/basic', 'audio/x-wav']</em><a class="headerlink" href="#damn_at.analyzers.audio.soxanalyzer.SoundAnalyzer.handled_types" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="damn_at.analyzers.audio.soxanalyzer.get_sox_types">
-<tt class="descclassname">damn_at.analyzers.audio.soxanalyzer.</tt><tt class="descname">get_sox_types</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/damn_at/analyzers/audio/soxanalyzer.html#get_sox_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#damn_at.analyzers.audio.soxanalyzer.get_sox_types" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract all possible formats for the audio file and store their mime
-types</p>
-</dd></dl>
-
+<div class="section" id="soxanalyzer-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">soxanalyzer</span></tt> Module<a class="headerlink" href="#soxanalyzer-module" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -141,8 +76,8 @@ types</p>
   <ul>
 <li><a class="reference internal" href="#">audio Package</a><ul>
 <li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">audio</span></tt> Package</a></li>
-<li><a class="reference internal" href="#module-damn_at.analyzers.audio.metadata"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-damn_at.analyzers.audio.soxanalyzer"><tt class="docutils literal"><span class="pre">soxanalyzer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#metadata-module"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
+<li><a class="reference internal" href="#soxanalyzer-module"><tt class="docutils literal"><span class="pre">soxanalyzer</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -181,9 +116,6 @@ types</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="damn_at.analyzers.image.html" title="image Package"
              >next</a> |</li>
