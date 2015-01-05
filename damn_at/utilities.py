@@ -119,6 +119,14 @@ def abspath(path, file_descr=None):
         path = os.path.normpath(os.path.abspath(path))
     return path
 
+def get_metadatavalue_fieldname(type_name):
+    """Return the name of the field holding the value in MetaDataValue
+
+    :param type_name: string of :py:class:`damn_at.MetaDataType`
+    :rtype: string
+    """
+    field = type_name.lower() + '_value'
+    return field
 
 def get_metadatavalue_type(value):
     """Return the name of the type and the value of the MetaDataValue
@@ -128,7 +136,7 @@ def get_metadatavalue_type(value):
     """
     from damn_at import MetaDataType
     name = MetaDataType._VALUES_TO_NAMES[value.type]
-    field = name.lower() + '_value'
+    field = get_metadatavalue_fieldname(name)
     return name, str(getattr(value, field, None))
 
 

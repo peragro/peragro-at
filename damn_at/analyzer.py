@@ -95,7 +95,7 @@ class Analyzer(object):
         def convert_time(st_time):
             dt = datetime.fromtimestamp(stat.st_mtime)
             return dt.isoformat()
-            
+
         stat = os.stat(an_uri)
         if file_descr.metadata is None:
             file_descr.metadata = {}
@@ -113,7 +113,7 @@ class Analyzer(object):
 
             repo.get_meta_data(an_uri, file_descr)
         except Exception as repo_exception:
-            logger.warn("Unable to extract repository information: %s", str(repo_exception))
+            logger.debug("Unable to extract repository information: %s", str(repo_exception))
 
     def analyze_file(self, an_uri):
         """Returns a FileDescription
@@ -244,7 +244,7 @@ def main():
         parser.exit(1)
 
     args = parser.parse_args()
-    
+
     logging.basicConfig(format='%(levelname)s:%(message)s', level=args.loglevel)
     formatter = logging.Formatter('%(message)s')
     output = logging.getLogger('damn-at_analyzer')

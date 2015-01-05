@@ -18,17 +18,17 @@ def get_sox_types():
                 stderr=subprocess.PIPE)
         out, err = pro.communicate()
         if pro.returncode != 0:
-            logger.error("GetSoxTypes failed with error code %d! "%(pro.returncode),
+            logger.debug("GetSoxTypes failed with error code %d! "%(pro.returncode),
                     out, err)
             return []
     except OSError as oserror:
-        logger.error("GetSoxTypes failed! %s", oserror)
+        logger.debug("GetSoxTypes failed! %s", oserror)
         return []
 
     match = re.search(r'AUDIO FILE FORMATS:(.*)PLAYLIST FORMATS',
             out, re.DOTALL)
     if not match:
-        logger.error("GetSoxTypes failed to parse output! %s %s", out, err)
+        logger.debug("GetSoxTypes failed to parse output! %s %s", out, err)
         return []
 
     extensions = match.group(1).strip().split(' ')
