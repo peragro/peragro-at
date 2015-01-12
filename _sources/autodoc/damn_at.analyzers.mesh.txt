@@ -9,6 +9,14 @@ mesh Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`analyzer_assimp` Module
+-----------------------------
+
+.. automodule:: damn_at.analyzers.mesh.analyzer_assimp
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`analyzerblend` Module
 ---------------------------
 

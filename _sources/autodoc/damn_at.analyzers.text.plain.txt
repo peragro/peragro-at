@@ -1,0 +1,11 @@
+plain Package
+=============
+
+:mod:`analyzertext` Module
+--------------------------
+
+.. automodule:: damn_at.analyzers.text.plain.analyzertext
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

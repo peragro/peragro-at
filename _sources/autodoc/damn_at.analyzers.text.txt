@@ -1,0 +1,10 @@
+text Package
+============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    damn_at.analyzers.text.plain
+

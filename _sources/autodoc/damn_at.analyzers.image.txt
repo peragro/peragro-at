@@ -17,6 +17,14 @@ image Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`analyzerimage_pil` Module
+-------------------------------
+
+.. automodule:: damn_at.analyzers.image.analyzerimage_pil
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`metadata` Module
 ----------------------
 
