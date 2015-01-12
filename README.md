@@ -11,7 +11,7 @@ http://sueastside.github.io/damn-at/
 
 
 Installation
------ 
+-----
 Install Blender, Git, Pip and other initial python requirements
  ```
     sudo add-apt-repository ppa:irie/blender
@@ -22,11 +22,12 @@ Install Blender, Git, Pip and other initial python requirements
     sudo apt-get install -qq python-pip
     sudo apt-get install python-software-properties
     sudo apt-get install python-dev cython libavcodec-dev libavformat-dev libswscale-dev
+    sudo apt-get install python-pyassimp
     sudo apt-get install sox libsox-fmt-mp3
     sudo apt-get install ffmpeg
     sudo apt-get build-dep python-matplotlib
  ```
- 
+
 Install Thirft globally for python3
  ```
     git clone https://github.com/wgwang/thrift.git
@@ -43,28 +44,34 @@ Install matplotlib
 Create a virtualenv and activate it
  ```
     virtualenv env
-    source env/bin/activate 
+    source env/bin/activate
  ```
- 
+
+ Finish install Assimp
+ ```
+    mkdir $VIRTUAL_ENV/lib/python2.7/site-packages/pyassimp/
+    ln -s /usr/share/pyshared/pyassimp/* $VIRTUAL_ENV/lib/python2.7/site-packages/pyassimp/
+ ```
+
 Checkout damn-at
  ```
     git clone https://github.com/sueastside/damn-at.git
  ```
- 
+
 Install damn-at
  ```
     cd damn-at
     ../env/bin/python setup.py develop
  ```
- 
+
 Optional: checkout test files
  ```
     cd ..
     git clone https://github.com/sueastside/damn-test-files.git
  ```
- 
+
 Usage
------ 
+-----
 Analyze
  ```
     mkdir /tmp/damn
@@ -76,7 +83,7 @@ Analyze
     Analyzing damn-test-files/mesh/blender/cube1.blend into /tmp/damn
     ----------------------------------------------------------------------
 
-    52c676b407d05d50282661b7b451a52cc93b46d2 
+    52c676b407d05d50282661b7b451a52cc93b46d2
     ----------------------------------------
     Assets: 5
       -->Cube1-data  (application/x-blender.mesh)
@@ -86,13 +93,13 @@ Analyze
       -->Text  (application/x-blender.text)
  ```
 
-Inspect 
+Inspect
  ```
     damn_at-inspect /tmp/damn/52c676b407d05d50282661b7b451a52cc93b46d2
  ```
   Output:
  ```
-     ___   _   __  __ _  _ 
+     ___   _   __  __ _  _
     |   \ /_\ |  \/  | \| |
     | |) / _ \| |\/| | .` |
     |___/_/ \_\_|  |_|_|\_|
@@ -102,7 +109,7 @@ Inspect
 
     hash: 52c676b407d05d50282661b7b451a52cc93b46d2
     filename: /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
-    5 Assets: 
+    5 Assets:
     ================================================================================
     * Cube1-data (application/x-blender.mesh)
       hash: 52c676b407d05d50282661b7b451a52cc93b46d2
@@ -172,14 +179,14 @@ Or
       --angles ANGLES       The angle (Value needs to be between 0.0 and 3.1415)
                             [default: (0.0,)]
  ```
- 
+
 And finally lets generate a thumb for a blender mesh datablock
  ```
     damn_at-transcode /tmp/damn/52c676b407d05d50282661b7b451a52cc93b46d2 Cube1-object image/png --size=64,64
  ```
   Output:
  ```
-     ___   _   __  __ _  _ 
+     ___   _   __  __ _  _
     |   \ /_\ |  \/  | \| |
     | |) / _ \| |\/| | .` |
     |___/_/ \_\_|  |_|_|\_|
@@ -188,10 +195,10 @@ And finally lets generate a thumb for a blender mesh datablock
     Transcoding "/home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend"
 
     Using: Blender object render transcoder
-    with: 
-    * camera_type: PERSPECTIVE 
-    * angles: (0.0,) 
-    * size: [64, 64] 
+    with:
+    * camera_type: PERSPECTIVE
+    * angles: (0.0,)
+    * size: [64, 64]
     0
     ['assets/52c676b407d05d50282661b7b451a52cc93b46d2Cube1-objectapplication%7Cx-blender.object/image/png/[64, 64]/PERSPECTIVE/0.0/52c676b407d05d50282661b7b451a52cc93b46d2Cube1-objectapplication%7Cx-blender.object.png']
  ```

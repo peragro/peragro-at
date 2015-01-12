@@ -13,6 +13,31 @@ import argparse
 import logging
 import pkg_resources
 
+import json
+def serialize_file_description(file_descr, format='print'):
+    from .utilities import pretty_print_file_description
+    from damn_at.serialization import SerializeThriftMsg
+    from thrift.protocol.TJSONProtocol import TSimpleJSONProtocol
+    from cStringIO import StringIO
+    if format == 'print':
+        old_stdout = sys.stdout
+        sys.stdout = StringIO()
+        pretty_print_file_description(file_descr)
+        data = sys.stdout.getvalue()
+        sys.stdout.close()
+        sys.stdout = old_stdout
+    elif format == 'json':
+        data = SerializeThriftMsg(file_descr, TSimpleJSONProtocol)
+    elif format == 'json-pretty':
+        data = SerializeThriftMsg(file_descr, TSimpleJSONProtocol)
+        data = json.loads(data)
+        data = json.dumps(data, indent=4)
+    elif format == 'binary':
+        data = SerializeThriftMsg(file_descr)
+    else:
+        raise Exception('Unknown format %s', format)
+    return data
+
 
 def create_argparse_analyze(subparsers):
     subparse = subparsers.add_parser(
@@ -32,7 +57,7 @@ def create_argparse_analyze(subparsers):
     group.add_argument(
             "-f", "--format", dest="format", type=str,
             help="The format to output",
-            ).completer = ChoicesCompleter(['binary', 'json', 'json-pretty'])
+            ).completer = ChoicesCompleter(['print', 'binary', 'json', 'json-pretty'])
     group.add_argument(
             "-s", "--store", dest="store", type=str,
             help="The store to write the binary output to",
@@ -41,27 +66,15 @@ def create_argparse_analyze(subparsers):
     def analyze(path, output, format, store):
         from .analyzer import Analyzer
         from .metadatastore import MetaDataStore
-        from .utilities import pretty_print_file_description, calculate_hash_for_file
-        import json
-        from damn_at.serialization import SerializeThriftMsg
-        #from thrift.protocol.TJSONProtocol import TJSONProtocol
-        from thrift.protocol.TJSONProtocol import TSimpleJSONProtocol
+        from .utilities import calculate_hash_for_file
 
         analyzer = Analyzer()
         descr = analyzer.analyze_file(path)
         descr.file.hash = calculate_hash_for_file(path)
         if not format and not output and not store:
-            pretty_print_file_description(descr)
+            print serialize_file_description(descr, 'print')
         elif not output and not store:
-            if format == 'json':
-                data = SerializeThriftMsg(descr, TSimpleJSONProtocol)
-            elif format == 'json-pretty':
-                data = SerializeThriftMsg(descr, TSimpleJSONProtocol)
-                data = json.loads(data)
-                data = json.dumps(data, indent=4)
-            else:
-                data = SerializeThriftMsg(descr)
-            print data
+            print serialize_file_description(descr, format)
         elif output:
             with open(output, 'wb') as file:
                 data = SerializeThriftMsg(descr)
@@ -195,9 +208,12 @@ def create_argparse_inspect(parser, subparsers):
             "-s", "--store", dest="store", type=str,
             help="The store to write the binary output to",
             ).completer = FilesCompleter(['ignore'])
-
+    subparse.add_argument(
+            "-f", "--format", dest="format", type=str,
+            help="The format to output",
+            default='print'
+            ).completer = ChoicesCompleter(['print', 'binary', 'json', 'json-pretty'])
     def inspect(args):
-        print 'inspect'
         from .metadatastore import MetaDataStore
         if args.store:
             m = MetaDataStore(args.store)
@@ -207,9 +223,8 @@ def create_argparse_inspect(parser, subparsers):
             from damn_at.serialization import DeserializeThriftMsg
             with open(args.path, 'rb') as f:
                 descr = DeserializeThriftMsg(FileDescription(), f.read())
-        #TODO: formating options from analyze...
-        from .utilities import pretty_print_file_description
-        pretty_print_file_description(descr)
+
+        print serialize_file_description(descr, args.format)
 
     subparse.set_defaults(
             func=lambda args:

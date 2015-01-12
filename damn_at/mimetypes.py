@@ -25,9 +25,9 @@ sys_mimetypes.add_type("image/tga", ".tga")
 sys_mimetypes.add_type("application/x-crystalspace.library+xml", ".xml")
 sys_mimetypes.add_type("image/x-dds", ".dds")
 
-# Add special purpose meta-mimetypes for transcoding, only add them 
+# Add special purpose meta-mimetypes for transcoding, only add them
 # to the inverse lookup table (mimetype->extension) and not to the
-# (extension->mimetype) so they're never returned for extension lookups! 
+# (extension->mimetype) so they're never returned for extension lookups!
 sys_mimetypes._db.types_map_inv[True]["image/jpg-reel"] = [".jpg"]
 sys_mimetypes._db.types_map_inv[True]["image/png-reel"] = [".png"]
 
@@ -45,15 +45,18 @@ guess_extension = sys_mimetypes.guess_extension
 
 #guess_type = sys_mimetypes.guess_type
 def guess_type(url, strict=True):
-    """ Try to guess the mimetype for the given file using the 
-    standard python mimetypes module. 
+    """ Try to guess the mimetype for the given file using the
+    standard python mimetypes module.
     If this fails fallback to libmagic.
     """
     res = sys_mimetypes.guess_type(url, strict)
-    if res[0] is None:
+    if res[0] is None or res[0] == 'application/octet-stream':
         paths = [None]*2
         paths[0] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'magic.blender')
         paths[1] = '/usr/share/misc/magic.mgc'
-        with magic.Magic(paths=paths, flags=magic.MAGIC_COMPRESS|magic.MAGIC_MIME_TYPE) as mm:
-            return (mm.id_filename(url), None)
+        try:
+            with magic.Magic(paths=paths, flags=magic.MAGIC_COMPRESS|magic.MAGIC_MIME_TYPE) as mm:
+                return (mm.id_filename(url), None)
+        except magic.api.MagicError:
+            pass #Going back to original response
     return res

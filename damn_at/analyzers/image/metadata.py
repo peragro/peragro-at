@@ -37,5 +37,23 @@ class MetaDataPSD(MetaDataExtractor):
     width = MetaDataType.INT, lambda context :int(context['image_width'])
     height = MetaDataType.INT, lambda context :int(context['image_height'])
     bit_depth = MetaDataType.INT, lambda context : int(context['bit_depth'])
-    creator_tool = MetaDataType.STRING, lambda context : context['creator_tool']
+    creator_tool = MetaDataType.STRING, lambda context : context.get('creator_tool', None)
     color_mode = MetaDataType.STRING, lambda context : context['color_mode']
+
+class MetaDataXCF(MetaDataExtractor):
+    __mimetype__ = 'application/x-xcf'
+
+    width = MetaDataType.INT, lambda context :int(context['image_width'])
+    height = MetaDataType.INT, lambda context :int(context['image_height'])
+    compression = MetaDataType.STRING, lambda context : context['compression']
+    color_mode = MetaDataType.STRING, lambda context : context['color_mode']
+
+
+class MetaDataTGA(MetaDataExtractor):
+    __mimetype__ = 'image/tga'
+
+    width = MetaDataType.INT, lambda context :int(context['size'][0])
+    height = MetaDataType.INT, lambda context :int(context['size'][1])
+    format = MetaDataType.STRING, lambda context : context['format']
+    color_mode = MetaDataType.STRING, lambda context : context['mode']
+    orientation = MetaDataType.INT, lambda context : context['orientation']

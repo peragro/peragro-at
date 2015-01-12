@@ -16,11 +16,11 @@ from damn_at.analyzer import AnalyzerException
 
 class GenericImageAnalyzer(IAnalyzer):
     """Generic Image analyzer."""
-    handled_types = ["image/x-ms-bmp", "image/jpeg", "image/png", "image/gif", "image/x-photoshop", "image/tiff"]
-    
+    handled_types = ["image/x-ms-bmp", "image/jpeg", "image/png", "image/gif", "image/x-photoshop", "image/tiff", "application/x-xcf"]
+
     def __init__(self):
         super(GenericImageAnalyzer, self).__init__()
-      
+
     def activate(self):
         pass
 
@@ -28,9 +28,9 @@ class GenericImageAnalyzer(IAnalyzer):
         fileid = FileId(filename = os.path.abspath(an_uri))
         file_descr = FileDescription(file = fileid)
         file_descr.assets = []
-        
+
         image_mimetype = mimetypes.guess_type(an_uri)[0]
-        
+
         asset_descr = AssetDescription(asset = AssetId(subname = 'main layer', mimetype = image_mimetype, file = fileid))
 
         try:
@@ -44,7 +44,7 @@ class GenericImageAnalyzer(IAnalyzer):
         except OSError as e:
             print("E: ImageAnalyzer failed %s (%s)" %(an_uri, e))
             raise e
-            
+
         meta = {}
         flag = 0
         lines = out.strip().split('\n')
@@ -58,12 +58,13 @@ class GenericImageAnalyzer(IAnalyzer):
                 meta[line[0].lower().replace(' ','_')] = line[1]
 
         from damn_at.analyzers.image import metadata
-        
+
         extractor_mapping = {'image/png' : metadata.MetaDataPNG,
                 'image/jpeg' : metadata.MetaDataJPG,
                 'image/x-ms-bmp' : metadata.MetaDataBMP,
-                'image/x-photoshop' : metadata.MetaDataPSD}
-        
+                'image/x-photoshop' : metadata.MetaDataPSD,
+                'application/x-xcf' : metadata.MetaDataXCF,}
+
         if image_mimetype in extractor_mapping:
             asset_descr.metadata = extractor_mapping[image_mimetype].extract(meta)
         else:
@@ -73,6 +74,6 @@ class GenericImageAnalyzer(IAnalyzer):
             if key not in asset_descr.metadata:
                 asset_descr.metadata['exif-'+key] = MetaDataValue(type=MetaDataType.STRING, string_value = value)
 
-        file_descr.assets.append(asset_descr) 
-        
+        file_descr.assets.append(asset_descr)
+
         return file_descr

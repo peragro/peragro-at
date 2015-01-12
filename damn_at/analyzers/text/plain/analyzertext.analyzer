@@ -1,0 +1,9 @@
+[Core]
+Name = Text analyzer
+Module = analyzertext
+
+[Documentation]
+Author =
+Version = 0.1
+Website =
+Description = Text analyzer

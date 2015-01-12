@@ -11,7 +11,8 @@ class MetaDataExtractor(object):
                 type_name = MetaDataType._VALUES_TO_NAMES[type].lower() + '_value'
                 kwargs = {'type': type}
                 kwargs[type_name] = func(context)
-                metadata[field] = MetaDataValue(**kwargs)
+                if kwargs[type_name] is not None: # Ignore None values!
+                    metadata[field] = MetaDataValue(**kwargs)
         return metadata
 
     @classmethod

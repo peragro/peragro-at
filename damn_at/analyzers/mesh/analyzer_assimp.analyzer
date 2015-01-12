@@ -1,0 +1,9 @@
+[Core]
+Name = Assimp analyzer
+Module = analyzer_assimp
+
+[Documentation]
+Author =
+Version = 0.1
+Website =
+Description = Assimp-based analyzer

@@ -31,3 +31,9 @@
 >>>0x5e byte    x               \b%c
 >>>0x5f byte    x               \b%c
 
+
+0       regex #.*Wavefront
+!:mime application/wavefront-obj
+
+0       string  =Kaydara FBX Binary  \x00
+!:mime application/fbx

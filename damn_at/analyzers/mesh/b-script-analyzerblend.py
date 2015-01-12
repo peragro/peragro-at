@@ -162,6 +162,8 @@ def main(): # pylint: disable=R0914,R0912,R0915
         if not text.is_in_memory:
             text_fileid = FileId(filename = relpath(text.filepath, start=text.library.filepath if text.library else None))
             text_mimetype = mimetypes.guess_type(text.filepath)[0]
+        if not text_mimetype:
+            text_mimetype = 'text/plain'
         asset_descr = AssetDescription(asset = AssetId(subname = text.name, mimetype = text_mimetype, file = text_fileid))
         file_descr.assets.append(asset_descr)
         texts[text.name] = asset_descr

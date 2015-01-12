@@ -1,0 +1,9 @@
+[Core]
+Name = PIL Image analyzer
+Module = analyzerimage_pil
+
+[Documentation]
+Author =
+Version = 0.1
+Website =
+Description = PIL Image analyzer
