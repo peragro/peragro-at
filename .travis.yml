@@ -25,7 +25,7 @@ install:
 - pip install coveralls
 script:
 - python setup.py develop
-- nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage  --cover-erase --cover-xml --all-modules -w tests/
+- nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w tests/
 after_script:
 - ./bin/update-gh-pages.sh
 after_success:
