@@ -23,7 +23,7 @@ def version():
             return "0.0.0-development"
 
 INSTALL_REQUIRES = ['Yapsy', 'Image', 'gitpython', 'ffvideo', 'filemagic',
-                    'logilab-common', 'setuptools']
+                    'logilab-common', 'setuptools', 'thrift']
 TESTS_REQUIRE = ['pylint', 'nose', 'coverage']
 
 setup(
