@@ -8,6 +8,7 @@ http://sueastside.github.io/damn-at/
 
 ![Build Status](https://api.travis-ci.org/sueastside/damn-at.png)
 [![Code Health](https://landscape.io/github/sueastside/damn-at/master/landscape.png)](https://landscape.io/github/sueastside/damn-at/master)
+[![Coverage Status](https://coveralls.io/repos/sueastside/damn-at/badge.svg?branch=master)](https://coveralls.io/r/sueastside/damn-at?branch=master)
 
 
 Installation
