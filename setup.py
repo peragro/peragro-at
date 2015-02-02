@@ -23,19 +23,20 @@ def version():
             return "0.0.0-development"
 
 INSTALL_REQUIRES = ['Yapsy', 'Image', 'gitpython', 'ffvideo', 'filemagic',
-                    'logilab-common']
+                    'logilab-common', 'setuptools']
+TESTS_REQUIRE = ['pylint', 'nose', 'coverage']
 
 setup(
     name='damn_at',
     description='Digital Assets Managed Neatly: Analyzers and Transcoders',
+    author='sueastside',
+    author_email='No, thanks',
+    version=version(),
     packages=find_packages('src'),
     package_dir={"": "src"},
-    version=version(),
-    author='sueastside',
     url='https://github.com/sueastside/damn-at',
     download_url='https://github.com/sueastside/damn-at',
-    author_email='No, thanks',
-    test_suite="tests",
+    test_suite='nose.collector',
     install_requires=INSTALL_REQUIRES,
     scripts=[],
     entry_points={
