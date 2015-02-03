@@ -10,6 +10,7 @@ from damn_at import MetaDataValue, MetaDataType
 from damn_at.pluginmanager import IAnalyzer
 from damn_at.analyzers.audio import metadata
 
+
 def get_sox_types():
     '''Extract all possible formats for the audio file and store their mime
     types'''
@@ -18,15 +19,18 @@ def get_sox_types():
                 stderr=subprocess.PIPE)
         out, err = pro.communicate()
         if pro.returncode != 0:
-            logger.debug("GetSoxTypes failed with error code %d! "%(pro.returncode),
-                    out, err)
+            logger.debug(
+                "GetSoxTypes failed with error code %d! " % (pro.returncode),
+                out,
+                err
+            )
             return []
     except OSError as oserror:
         logger.debug("GetSoxTypes failed! %s", oserror)
         return []
 
     match = re.search(r'AUDIO FILE FORMATS:(.*)PLAYLIST FORMATS',
-            out, re.DOTALL)
+                      out, re.DOTALL)
     if not match:
         logger.debug("GetSoxTypes failed to parse output! %s %s", out, err)
         return []
@@ -38,10 +42,12 @@ def get_sox_types():
         if mime and mime.startswith('audio/'): mimes.append(mime)
     return mimes
 
+
 class SoundAnalyzer(IAnalyzer):
     '''class for sound analyzer called in the analyzer'''
 
     handled_types = get_sox_types()
+
     def __init__(self):
         IAnalyzer.__init__(self)
 
@@ -58,8 +64,11 @@ class SoundAnalyzer(IAnalyzer):
             mimetype=mimetypes.guess_type(anURI, False)[0], file=fileid))
 
         try:
-            pro = subprocess.Popen(['sox', '--i', anURI], stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE)
+            pro = subprocess.Popen(
+                ['sox', '--i', anURI],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
             out, err = pro.communicate()
             if pro.returncode != 0:
                 print("E: SoundAnalyzer failed %s with error code %d! "%(anURI,
