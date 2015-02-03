@@ -151,16 +151,16 @@ class Transcoder(object):
 
         return transcoder.plugin_object.transcode(self._path, file_descr, asset_id, target_mimetype, **options)
 
-
+'''
 def main():
     import argparse
     import logging
 
     from damn_at.metadatastore import MetaDataStore
     from damn_at import _CMD_DESCRIPTION
-    
+
     epilog = 'Supported mimetypes: \n'
-    
+
     #Process the positional arguments
     parser = argparse.ArgumentParser(add_help=False, epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter,)
     parser.add_argument('path', help='The path to the FileDescription file')
@@ -195,7 +195,7 @@ def main():
         parser.exit(1)
 
     logging.basicConfig(format='%(levelname)s:%(message)s', level=args.loglevel)
-    
+
     t = Transcoder('/tmp/transcoded/')
 
     store_path = os.path.dirname(args.path)
@@ -268,3 +268,4 @@ def main():
 if __name__ == '__main__':
     main()
     #damn_at-transcode /tmp/damn/4bf0356127a51d7e2167433b7e78cedff3f8953a b2csmaterialpanel.png image/jpeg --size=128,128 -h
+'''

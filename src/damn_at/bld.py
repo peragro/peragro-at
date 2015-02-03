@@ -32,7 +32,7 @@ def block_hashes_for_file(an_uri):
                 hashes.append(blockhash.hexdigest())
         return chksum.hexdigest(), hashes
     except IOError:
-        return 'NOT_FOUND(%s)' % an_uri
+        return 'NOT_FOUND(%s)' % an_uri, []
 
 
 def block_hashes_from_file(an_uri):

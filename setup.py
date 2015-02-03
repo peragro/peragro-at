@@ -24,7 +24,7 @@ def version():
 
 INSTALL_REQUIRES = ['Yapsy', 'Image', 'gitpython', 'ffvideo', 'filemagic',
                     'logilab-common', 'setuptools', 'thrift']
-TESTS_REQUIRE = ['pylint', 'nose', 'coverage']
+TESTS_REQUIRE = ['pylint', 'nose', 'coverage', 'mock']
 
 setup(
     name='damn_at',

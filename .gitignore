@@ -1,6 +1,7 @@
 *~
 *.py[cod]
 .coverage
+tests/cover
 
 # C extensions
 *.so
@@ -36,4 +37,3 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
-

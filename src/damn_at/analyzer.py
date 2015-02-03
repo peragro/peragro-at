@@ -138,7 +138,7 @@ class Analyzer(object):
         else:
             raise AnalyzerUnknownTypeException("E: Analyzer: No analyzer for %s (file: %s)" % (mimetype, an_uri))
 
-
+'''
 def analyze(analyzer, metadatastore, file_name, output, forcereanalyze=False):
     """TODO: move hashing to generic function and metadatastore usage to the metadatastore module. """
     def hash_file_descr(file_descr):
@@ -280,3 +280,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+'''
