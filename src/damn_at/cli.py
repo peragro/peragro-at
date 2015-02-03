@@ -5,10 +5,8 @@ Peragro commandline tool
 """
 import os
 import sys
-import re
 import argcomplete
 from argcomplete.completers import ChoicesCompleter, FilesCompleter, _wrapcall
-from argcomplete import warn
 import argparse
 import logging
 import pkg_resources
@@ -66,15 +64,16 @@ def create_argparse_analyze(subparsers):
     def analyze(path, output, format, store):
         from .analyzer import Analyzer
         from .metadatastore import MetaDataStore
+        from damn_at.serialization import SerializeThriftMsg
         from .utilities import calculate_hash_for_file
 
         analyzer = Analyzer()
         descr = analyzer.analyze_file(path)
         descr.file.hash = calculate_hash_for_file(path)
         if not format and not output and not store:
-            print serialize_file_description(descr, 'print')
+            print(serialize_file_description(descr, 'print'))
         elif not output and not store:
-            print serialize_file_description(descr, format)
+            print(serialize_file_description(descr, format))
         elif output:
             with open(output, 'wb') as file:
                 data = SerializeThriftMsg(descr)
@@ -168,14 +167,14 @@ def create_argparse_transcode(parser, subparsers):
         pass
 
     def transcode(args):
-        print 'transcoding'
+        print('transcoding')
         from .transcoder import Transcoder
         t = Transcoder('/tmp/transcoded/')
         asset_subname, asset_mimetype = split_assetname(args.assetname)
         target_mimetype = t.get_target_mimetype(asset_mimetype, args.mimetype)
         #TODO
         for option in target_mimetype.options:
-            print option
+            print(option)
 
     subparse.set_defaults(
             func=lambda args:
@@ -224,7 +223,7 @@ def create_argparse_inspect(parser, subparsers):
             with open(args.path, 'rb') as f:
                 descr = DeserializeThriftMsg(FileDescription(), f.read())
 
-        print serialize_file_description(descr, args.format)
+        print(serialize_file_description(descr, args.format))
 
     subparse.set_defaults(
             func=lambda args:
