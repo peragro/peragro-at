@@ -38,6 +38,7 @@ setup(
     download_url='https://github.com/sueastside/damn-at',
     test_suite='nose.collector',
     install_requires=INSTALL_REQUIRES,
+    tests_require=TESTS_REQUIRE,
     scripts=[],
     entry_points={
         'console_scripts': ['pt = damn_at.cli:main',
