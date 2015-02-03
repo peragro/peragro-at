@@ -1,0 +1,9 @@
+#!/bin/bash
+find /tmp/store -type f ! -path "*/.svn/*" ! -path "*/.git/*" ! -iname ".*" | \
+parallel --joblog /tmp/joblog --halt 1 \
+'pt i --format json-pretty {} | pt index transform \
+| curl -XPOST --data-binary @- http://localhost:9200/damn/asset/_bulk \
+| pt index stats'
+
+# Print the failed files
+tail -n+1 /tmp/joblog | parallel  --header : echo {Exitval} {Command} | grep --line-buffer '^1'

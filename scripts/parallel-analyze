@@ -1,0 +1,6 @@
+#!/bin/bash
+find $1 -type f ! -path "*/.svn/*" ! -path "*/.git/*" ! -iname ".*" | \
+parallel --joblog /tmp/joblog pt a --store $2
+
+# Print the failed files
+tail -n+1 /tmp/joblog | parallel  --header : echo {Exitval} {Command} | grep --line-buffer '^1'
