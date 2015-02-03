@@ -160,8 +160,9 @@ def main(): # pylint: disable=R0914,R0912,R0915
         text_fileid = get_file_id(text)
         text_mimetype = 'application/x-blender.text'
         if not text.is_in_memory:
-            text_fileid = FileId(filename = relpath(text.filepath, start=text.library.filepath if text.library else None))
-            text_mimetype = mimetypes.guess_type(text.filepath)[0]
+            path = text.filepath if text.filepath else 'UNKNOWN'
+            text_fileid = FileId(filename = relpath(path, start=text.library.filepath if text.library else None))
+            text_mimetype = mimetypes.guess_type(path)[0]
         if not text_mimetype:
             text_mimetype = 'text/plain'
         asset_descr = AssetDescription(asset = AssetId(subname = text.name, mimetype = text_mimetype, file = text_fileid))
