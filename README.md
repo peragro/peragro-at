@@ -29,7 +29,7 @@ Install Blender, Git, Pip and other initial python requirements
     sudo apt-get build-dep python-matplotlib
  ```
 
-Install Thirft globally for python3
+Install Thrift globally for python3
  ```
     git clone https://github.com/wgwang/thrift.git
     cd thrift/lib/py3
