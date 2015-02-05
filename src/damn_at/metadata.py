@@ -11,23 +11,23 @@ class MetaDataExtractor(object):
                 type_name = MetaDataType._VALUES_TO_NAMES[type].lower() + '_value'
                 kwargs = {'type': type}
                 kwargs[type_name] = func(context)
-                if kwargs[type_name] is not None: # Ignore None values!
+                if kwargs[type_name] is not None:  # Ignore None values!
                     kwargs[type_name] = cls.convert(type, kwargs[type_name])
                     metadata[field] = MetaDataValue(**kwargs)
         return metadata
 
     @classmethod
-    def convert(cls, type, value):
-        if type == MetaDataType.INT:
+    def convert(cls, type_name, value):
+        if type_name == MetaDataType.INT:
             return int(value)
-        elif type == MetaDataType.DOUBLE:
+        elif type_name == MetaDataType.DOUBLE:
             return float(value)
-        elif type == MetaDataType.BOOL:
+        elif type_name == MetaDataType.BOOL:
             return bool(value)
-        elif type == MetaDataType.STRING:
+        elif type_name == MetaDataType.STRING:
             return str(value)
         else:
-            raise Exception('Unknown type %s'%(type_name))
+            raise Exception('Unknown type %s' % type_name)
 
     @classmethod
     def fields(cls):

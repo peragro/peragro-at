@@ -4,8 +4,6 @@ Role
 Transcoder convience class to find the right plugin for a mimetype
 and address it.
 """
-import os
-
 from .pluginmanager import DAMNPluginManagerSingleton
 
 from damn_at import TargetMimetype, TargetMimetypeOption
@@ -66,13 +64,19 @@ class Transcoder(object):
         for src_mimetype, transcoders in self.transcoders.items():
             for transcoder in transcoders:
                 for dst_mimetype, options in transcoder.plugin_object.convert_map[src_mimetype].items():
-                    tmt = TargetMimetype(mimetype=dst_mimetype, description=transcoder.description, template=options_to_template(options))
+                    tmt = TargetMimetype(
+                        mimetype=dst_mimetype,
+                        description=transcoder.description,
+                        template=options_to_template(options)
+                    )
                     for option in options:
-                        tmto = TargetMimetypeOption(name=option.name,
-                                                    description=option.description,
-                                                    type=option.type_description,
-                                                    constraint=option.constraint_description,
-                                                    default_value=option.default_description)
+                        tmto = TargetMimetypeOption(
+                            name=option.name,
+                            description=option.description,
+                            type=option.type_description,
+                            constraint=option.constraint_description,
+                            default_value=option.default_description
+                        )
                         tmt.options.append(tmto)
                     if not src_mimetype in self.target_mimetypes:
                         self.target_mimetypes[src_mimetype] = []

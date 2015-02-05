@@ -1,12 +1,14 @@
 """
 General utilities.
 """
-
+# Standard
 import os
-import subprocess
 import glob
+import wave
+import struct
 import hashlib
-import wave, struct
+import subprocess
+
 
 def calculate_hash_for_file(an_uri):
     """Returns a sha1 hexdigest for the given file.
@@ -61,7 +63,12 @@ def run_blender(an_uri, script_uri, arguments=[]):
     args = ['blender', "-b", an_uri, '-P', script_uri]
     args.extend(arguments)
 
-    process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
+    process = subprocess.Popen(
+        args,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        env=env
+    )
     stdout, stderr = process.communicate()
     return stdout, stderr, process.returncode
 
@@ -69,8 +76,16 @@ def run_blender(an_uri, script_uri, arguments=[]):
 def collect_python3_paths():
     """Collect python3's 'dist-packages' paths to create PYTHONPATH with"""
     paths = []
-    args = ['python3', "-c", 'import site; [print(x) for x in site.getsitepackages()]']
-    process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    args = [
+        'python3',
+        '-c',
+        'import site; [print(x) for x in site.getsitepackages()]'
+    ]
+    process = subprocess.Popen(
+        args,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
     stdout, _ = process.communicate()
     for path in stdout.split('\n'):
         paths.append(path)
@@ -114,10 +129,14 @@ def get_referenced_file_ids(file_descr):
 def abspath(path, file_descr=None):
     """Return an absolute path using the given FileDescription as reference."""
     if file_descr:
-        path = os.path.normpath(os.path.join(os.path.dirname(file_descr.file.filename), path))
+        path = os.path.normpath(os.path.join(
+            os.path.dirname(file_descr.file.filename),
+            path
+        ))
     else:
         path = os.path.normpath(os.path.abspath(path))
     return path
+
 
 def get_metadatavalue_fieldname(type_name):
     """Return the name of the field holding the value in MetaDataValue
@@ -127,6 +146,7 @@ def get_metadatavalue_fieldname(type_name):
     """
     field = type_name.lower() + '_value'
     return field
+
 
 def get_metadatavalue_type(value):
     """Return the name of the type and the value of the MetaDataValue
@@ -173,7 +193,10 @@ def pretty_print_asset_descr(asset_descr, indent=0):
     #print(whitespace+''+str(asset_descr))
     pretty_print_asset_id(asset_descr.asset)
     if asset_descr.dependencies:
-        print(whitespace + '  Dependencies (%d):' % len(asset_descr.dependencies))
+        print('%s  Dependencies (%d):' % (
+            whitespace,
+            len(asset_descr.dependencies)
+        ))
         for dep in asset_descr.dependencies:
             pretty_print_asset_id(dep, indent + 4)
     if asset_descr.metadata:
@@ -223,6 +246,7 @@ def find_asset_ids_in_file_descr(file_descr, asset_name):
                 asset_ids.append(asset.asset)
     return asset_ids
 
+
 def find_asset_id_in_file_descr(file_descr, asset_name, asset_mimetype):
     """Find an AssetId by name in the given FileDescription
 
@@ -235,6 +259,7 @@ def find_asset_id_in_file_descr(file_descr, asset_name, asset_mimetype):
     if len(asset_ids) == 1:
         return asset_ids[0]
     return
+
 
 def get_asset_names_in_file_descr(file_descr):
     """Get all asset names in the given FileDescription
@@ -249,7 +274,11 @@ def get_asset_names_in_file_descr(file_descr):
 
 
 def unique_asset_id_reference(asset_id):
-    return unique_asset_id_reference_from_fields(asset_id.file.hash, asset_id.subname, asset_id.mimetype)
+    return unique_asset_id_reference_from_fields(
+        asset_id.file.hash,
+        asset_id.subname,
+        asset_id.mimetype
+    )
 
 
 def unique_asset_id_reference_from_fields(file_id_hash, subname, mimetype):
@@ -258,7 +287,7 @@ def unique_asset_id_reference_from_fields(file_id_hash, subname, mimetype):
     return name.replace('/', '__')
 
 
-class WaveData():
+class WaveData(object):
 
     def __init__(self):
         self.channels = None
@@ -276,22 +305,22 @@ class WaveData():
         total_samples = self.nchannels*num_frames
 
         if sample_width == 1:
-            fmt = "%iB" % total_samples # read unsigned chars
+            fmt = "%iB" % total_samples  # read unsigned chars
             round_with = 128.0
         elif sample_width == 2:
-            fmt = "%ih" % total_samples # read signed 2 byte shorts
+            fmt = "%ih" % total_samples  # read signed 2 byte shorts
             round_with = 32768.0
         else:
             raise ValueError("Only supports 8 and 16 bit audio formats.")
 
         integer_data = struct.unpack(fmt, raw_data)
-        del raw_data # Keep Memory Tidy
+        del raw_data  # Keep Memory Tidy
 
-        self.channels = [ [] for time in range(self.nchannels) ]
+        self.channels = [[] for time in range(self.nchannels)]
 
         #As the values are from 0 to 255 for 8 bit files.
-        if sample_width ==1:
-            integer_data = [ val - 128 for val in integer_data ]
+        if sample_width == 1:
+            integer_data = [val - 128 for val in integer_data]
 
         for index, value in enumerate(integer_data):
             bucket = index % self.nchannels
