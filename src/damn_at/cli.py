@@ -5,13 +5,18 @@ Peragro commandline tool
 """
 import os
 import sys
+import json
 import argcomplete
-from argcomplete.completers import ChoicesCompleter, FilesCompleter, _wrapcall
+from argcomplete.completers import (
+    ChoicesCompleter,
+    FilesCompleter,
+    # _wrapcall
+)
 import argparse
 import logging
 import pkg_resources
 
-import json
+
 def serialize_file_description(file_descr, format='print'):
     from .utilities import pretty_print_file_description
     from damn_at.serialization import SerializeThriftMsg
@@ -43,27 +48,27 @@ def serialize_file_description(file_descr, format='print'):
 
 def create_argparse_analyze(subparsers):
     subparse = subparsers.add_parser(
-            "a", #aliases=("analyze",),
-            help="Analyze a given file",
-            )
+        "a",  # aliases=("analyze",),
+        help="Analyze a given file",
+    )
     subparse.add_argument(
-            dest="path", type=str,
-            help="Path to checkout on the server",
-            ).completer = FilesCompleter(directories=False)
+        dest="path", type=str,
+        help="Path to checkout on the server",
+    ).completer = FilesCompleter(directories=False)
 
     group = subparse.add_mutually_exclusive_group()
     group.add_argument(
-            "-o", "--output", dest="output", type=str,
-            help="The file to write the binary output to",
-            )
+        "-o", "--output", dest="output", type=str,
+        help="The file to write the binary output to",
+    )
     group.add_argument(
-            "-f", "--format", dest="format", type=str,
-            help="The format to output",
-            ).completer = ChoicesCompleter(['print', 'binary', 'json', 'json-pretty'])
+        "-f", "--format", dest="format", type=str,
+        help="The format to output",
+    ).completer = ChoicesCompleter(['print', 'binary', 'json', 'json-pretty'])
     group.add_argument(
-            "-s", "--store", dest="store", type=str,
-            help="The store to write the binary output to",
-            ).completer = FilesCompleter(['ignore'])
+        "-s", "--store", dest="store", type=str,
+        help="The store to write the binary output to",
+    ).completer = FilesCompleter(['ignore'])
 
     def analyze(path, output, format, store):
         from .analyzer import Analyzer
@@ -87,12 +92,14 @@ def create_argparse_analyze(subparsers):
             hash = descr.file.hash
             store.write_metadata('', hash, descr)
         else:
-            assert False #Error in logic
+            assert False  # Error in logic
 
-    subparse.set_defaults(
-            func=lambda args:
-                analyze(args.path, args.output, args.format, args.store),
-            )
+    subparse.set_defaults(func=lambda args: analyze(
+        args.path,
+        args.output,
+        args.format,
+        args.store
+    ),)
 
 
 def assetname_completer(prefix, parsed_args, **kwargs):
@@ -109,10 +116,8 @@ def split_assetname(assetname):
     import re
     regexp = re.compile(r'^(.+?)(\((.+?)\))?$')
     match = regexp.match(assetname)
-
     asset_subname = match.group(1)
     asset_mimetype = match.group(3)
-
     return asset_subname, asset_mimetype
 
 
@@ -129,28 +134,35 @@ def target_mimetype_completer(prefix, parsed_args, **kwargs):
 
 def create_argparse_transcode(parser, subparsers):
     subparse = subparsers.add_parser(
-            "t", #aliases=("transcode",),
-            help="Transcode a given file",
-            )
+        "t",  # aliases=("transcode",),
+        help="Transcode a given file",
+    )
     subparse.add_argument(
-            dest="path", type=str,
-            help="Path to file to transcode",
-            ).completer = FilesCompleter(directories=False)
-    subparse.add_argument('assetname',
-            help='The subname of the asset to transcoder'
-            ).completer = assetname_completer
-    subparse.add_argument('mimetype',
-            help='The destination mimetype'
-            ).completer = target_mimetype_completer
+        dest="path",
+        type=str,
+        help="Path to file to transcode",
+    ).completer = FilesCompleter(directories=False)
     subparse.add_argument(
-            "-fd", "--file-description",
-            dest="fd", type=str,
-            help="Path to the cached FileDescription",
-            ).completer = FilesCompleter(directories=False)
+        'assetname',
+        help='The subname of the asset to transcoder'
+    ).completer = assetname_completer
     subparse.add_argument(
-            "-o", "--output", dest="output", type=str,
-            help="The output directory to write the transcoded files to",
-            ).completer = FilesCompleter(['ignore'])
+        'mimetype',
+        help='The destination mimetype'
+    ).completer = target_mimetype_completer
+    subparse.add_argument(
+        "-fd",
+        "--file-description",
+        dest="fd",
+        type=str,
+        help="Path to the cached FileDescription",
+    ).completer = FilesCompleter(directories=False)
+    subparse.add_argument(
+        "-o", "--output",
+        dest="output",
+        type=str,
+        help="The output directory to write the transcoded files to",
+    ).completer = FilesCompleter(['ignore'])
 
     try:
         args, options_args = parser.parse_known_args()
@@ -159,13 +171,21 @@ def create_argparse_transcode(parser, subparsers):
             from .transcoder import Transcoder
             t = Transcoder('/tmp/transcoded/')
             asset_subname, asset_mimetype = split_assetname(args.assetname)
-            target_mimetype = t.get_target_mimetype(asset_mimetype, args.mimetype)
+            target_mimetype = t.get_target_mimetype(
+                asset_mimetype,
+                args.mimetype
+            )
             for option in target_mimetype.options:
                 subparse.add_argument(
                     "--" + option.name,
                     dest=option.name,
                     default=option.default_value,
-                    help='%s (%s) [default: %s] (%s)' % (option.description, option.constraint, option.default_value, option.type)
+                    help='%s (%s) [default: %s] (%s)' % (
+                        option.description,
+                        option.constraint,
+                        option.default_value,
+                        option.type
+                    )
                 )
     except:
         pass
@@ -180,10 +200,7 @@ def create_argparse_transcode(parser, subparsers):
         for option in target_mimetype.options:
             print(option)
 
-    subparse.set_defaults(
-            func=lambda args:
-                transcode(args),
-            )
+    subparse.set_defaults(func=lambda args: transcode(args),)
 
 
 def file_or_hash_completer(prefix, parsed_args, **kwargs):
@@ -200,22 +217,30 @@ def file_or_hash_completer(prefix, parsed_args, **kwargs):
 
 def create_argparse_inspect(parser, subparsers):
     subparse = subparsers.add_parser(
-            "i", #aliases=("inspect",),
-            help="Inspect a given file or hash in store",
-            )
+        "i",  # aliases=("inspect",),
+        help="Inspect a given file or hash in store",
+    )
     subparse.add_argument(
-            dest="path", type=str,
-            help="Path to file to transcode",
-            ).completer = file_or_hash_completer
+        dest="path",
+        type=str,
+        help="Path to file to transcode",
+    ).completer = file_or_hash_completer
     subparse.add_argument(
-            "-s", "--store", dest="store", type=str,
-            help="The store to write the binary output to",
-            ).completer = FilesCompleter(['ignore'])
+        "-s",
+        "--store",
+        dest="store",
+        type=str,
+        help="The store to write the binary output to",
+    ).completer = FilesCompleter(['ignore'])
     subparse.add_argument(
-            "-f", "--format", dest="format", type=str,
-            help="The format to output",
-            default='print'
-            ).completer = ChoicesCompleter(['print', 'binary', 'json', 'json-pretty'])
+        "-f",
+        "--format",
+        dest="format",
+        type=str,
+        help="The format to output",
+        default='print'
+    ).completer = ChoicesCompleter(['print', 'binary', 'json', 'json-pretty'])
+
     def inspect(args):
         from .metadatastore import MetaDataStore
         if args.store:
@@ -229,22 +254,16 @@ def create_argparse_inspect(parser, subparsers):
 
         print(serialize_file_description(descr, args.format))
 
-    subparse.set_defaults(
-            func=lambda args:
-                inspect(args),
-            )
+    subparse.set_defaults(func=lambda args: inspect(args),)
+
 
 def create_argparse():
-    usage_text = (
-        "Platinumial\n" +
-        __doc__
-        )
+    usage_text = ("Platinumial\n" + __doc__)
 
     parser = argparse.ArgumentParser(
-            prog="pt",
-            description=usage_text,
-            )
-
+        prog="pt",
+        description=usage_text,
+    )
 
     parser.add_argument(
         '-d',
@@ -265,10 +284,10 @@ def create_argparse():
     )
 
     subparsers = parser.add_subparsers(
-            title='subcommands',
-            description='valid subcommands',
-            help='additional help',
-            )
+        title='subcommands',
+        description='valid subcommands',
+        help='additional help',
+    )
 
     create_argparse_analyze(subparsers)
     create_argparse_inspect(parser, subparsers)
@@ -292,7 +311,8 @@ def main(argv=None):
     argcomplete.autocomplete(parser)
     args = parser.parse_args(argv)
 
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=args.loglevel)
+    logging.basicConfig(format='%(levelname)s:%(message)s',
+                        level=args.loglevel)
 
     # call subparser callback
     if not hasattr(args, "func"):

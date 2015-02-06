@@ -52,13 +52,16 @@ class ITranscoder(IPlugin):
     """
     The mimetypes this transocder can handle.
     Example::
-    convert_map = {"image/tiff" : {"image/jpeg": [IntVectorOption(name='size', description='The target size of the image', size=2, default=(-1,-1))],
-                                   "image/png": []
-                                   }, }
+    convert_map = {
+        "image/tiff" : {
+            "image/jpeg": [IntVectorOption(name='size',  description='The target size of the image', size=2, default=(-1,-1))],
+            "image/png": []
+        },
+    }
     """
 
     def transcode(self, dest_path, file_descr, asset_id, target_mimetype, **options):
-        """ blah """
+        """Transcode some *CENSORED*"""
         raise NotImplementedError("'transcode' must be reimplemented by %s" % self)
 
 

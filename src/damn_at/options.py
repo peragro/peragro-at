@@ -77,14 +77,21 @@ class VectorOption(BaseOption):
     def parse_from_string(self, a_string):
         splits = self._clean(a_string).split(',')
         if self.size and len(splits) != self.size:
-            raise OptionParseException('%s not of size %d!' % (a_string, self.size))
+            raise OptionParseException('%s not of size %d!' % (
+                a_string,
+                self.size
+            ))
         return_value = []
         for i, val in enumerate(splits):
             value = self.type(val)  # Todo:catch
             default = self.default[i] if self.size is None or self.size > 1 else self.default
             if value != default:
                 if value < self.min or value > self.max:
-                    raise OptionConstraintException('%d < %d < %d failed!' % (self.min, value, self.max))
+                    raise OptionConstraintException('%d < %d < %d failed!' % (
+                        self.min,
+                        value,
+                        self.max
+                    ))
             return_value.append(value)
         if self.size == 1:
             return return_value[0]
@@ -101,7 +108,11 @@ class VectorOption(BaseOption):
     @property
     def constraint_description(self):
         size = 's' if not self.size or self.size > 1 else ''
-        return 'Value%s needs to be between %s and %s' % (size, self.min, self.max)
+        return 'Value%s needs to be between %s and %s' % (
+            size,
+            self.min,
+            self.max
+        )
 
     @property
     def default_description(self):
@@ -142,7 +153,10 @@ class EnumOption(BaseOption):
 
     def parse_from_string(self, a_string):
         if a_string not in self.choices:
-            raise OptionConstraintException('%s not in %s' % (a_string, str(self.choices)))
+            raise OptionConstraintException('%s not in %s' % (
+                a_string,
+                str(self.choices)
+            ))
         return a_string
 
     @property
@@ -157,19 +171,29 @@ class EnumOption(BaseOption):
     def default_description(self):
         return str(self.default)
 
+
 class HexColorOption(BaseOption):
     """Class for #rrggbb Option"""
 
     def __init__(self, name, description, default):
         BaseOption.__init__(self, name, description, default)
 
+    @property
+    def matcher(self):
+        try:
+            return self._matcher
+        except AttributeError:
+            self._matcher = re.compile(r'^#?(([0-9a-fA-F]{2}){3})')
+        return self._matcher
+
     def parse_from_string(self, a_string):
         a_string = a_string.strip()
-        matcher = re.compile(r'^#?(([0-9a-fA-F]{2}){3})')
-        m = matcher.match(a_string)
+        m = self.matcher.match(a_string)
         if not m or len(m.groups()) != 2:
-            raise OptionConstraintException('%s not of #rrggbb format!' %(a_string))
-        return '#'+m.group(1)
+            raise OptionConstraintException(
+                '%s not of #rrggbb format!' % a_string
+            )
+        return '#' + m.group(1)
 
     @property
     def type_description(self):
@@ -188,7 +212,14 @@ def options_to_template(options):
     path = ''
     for option in options:
         path = os.path.join(path, '${' + str(option.name) + '}')
-    return os.path.join('assets', '${uuid}', '${dstFormat}', path, '${uuid}${extension}')
+
+    return os.path.join(
+        'assets',
+        '${uuid}',
+        '${dstFormat}',
+        path,
+        '${uuid}${extension}'
+    )
 
 
 def parse_options(convert_map_entry, **options):
@@ -218,4 +249,9 @@ def expand_path_template(template, mimetype, asset_id, **options):
     extension = str(mimetypes.guess_extension(mimetype))
     t = Template(template)
     uuid = utilities.unique_asset_id_reference(asset_id)
-    return t.safe_substitute(uuid=uuid, dstFormat=mimetype, extension=extension, **options)
+    return t.safe_substitute(
+        uuid=uuid,
+        dstFormat=mimetype,
+        extension=extension,
+        **options
+    )
