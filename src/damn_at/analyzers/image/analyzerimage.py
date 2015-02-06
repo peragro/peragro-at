@@ -16,7 +16,8 @@ from damn_at.analyzer import AnalyzerException
 
 class GenericImageAnalyzer(IAnalyzer):
     """Generic Image analyzer."""
-    handled_types = ["image/x-ms-bmp", "image/jpeg", "image/png", "image/gif", "image/x-photoshop", "image/tiff", "application/x-xcf"]
+    handled_types = ["image/x-ms-bmp", "image/jpeg", "image/png", "image/gif",
+                     "image/x-photoshop", "image/tiff", "application/x-xcf"]
 
     def __init__(self):
         super(GenericImageAnalyzer, self).__init__()
@@ -44,10 +45,9 @@ class GenericImageAnalyzer(IAnalyzer):
         except OSError as e:
             print("E: ImageAnalyzer failed %s (%s)" %(an_uri, e))
             raise e
-
         meta = {}
         flag = 0
-        lines = out.strip().split('\n')
+        lines = str(out).strip().split('\n')
         for line in lines:
             line = line.split(':', 1)
             if len(line) == 1:

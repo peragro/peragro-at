@@ -16,7 +16,11 @@ def serialize_file_description(file_descr, format='print'):
     from .utilities import pretty_print_file_description
     from damn_at.serialization import SerializeThriftMsg
     from thrift.protocol.TJSONProtocol import TSimpleJSONProtocol
-    from cStringIO import StringIO
+
+    try:
+        from cStringIO import StringIO
+    except ImportError:
+        from io import StringIO
     if format == 'print':
         old_stdout = sys.stdout
         sys.stdout = StringIO()
