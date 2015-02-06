@@ -1,8 +1,9 @@
 '''Analyzer for audio files using sox'''
 import os
-import subprocess
 import re
+import logging
 import mimetypes
+import subprocess
 
 from damn_at import logger
 from damn_at import AssetId, FileId, FileDescription, AssetDescription

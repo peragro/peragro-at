@@ -4,17 +4,22 @@ Generic Text analyzer.
 import os
 import magic
 
-from damn_at import mimetypes
-from damn_at import MetaDataType, MetaDataValue
-from damn_at import FileId, FileDescription, AssetDescription, AssetId
+from damn_at import (
+    mimetypes,
+    MetaDataType,
+    MetaDataValue,
+    FileId,
+    FileDescription,
+    AssetDescription,
+    AssetId
+)
 
 from damn_at.pluginmanager import IAnalyzer
 
-from damn_at.analyzer import AnalyzerException
 
 class GenericTextAnalyzer(IAnalyzer):
     """Generic Text analyzer."""
-    handled_types = ["text/plain",]
+    handled_types = ["text/plain", ]
 
     def __init__(self):
         super(GenericTextAnalyzer, self).__init__()
@@ -23,13 +28,17 @@ class GenericTextAnalyzer(IAnalyzer):
         pass
 
     def analyze(self, an_uri):
-        fileid = FileId(filename = os.path.abspath(an_uri))
-        file_descr = FileDescription(file = fileid)
+        fileid = FileId(filename=os.path.abspath(an_uri))
+        file_descr = FileDescription(file=fileid)
         file_descr.assets = []
 
         text_mimetype = mimetypes.guess_type(an_uri)[0]
 
-        asset_descr = AssetDescription(asset = AssetId(subname = 'content', mimetype = text_mimetype, file = fileid))
+        asset_descr = AssetDescription(asset=AssetId(
+            subname='content',
+            mimetype=text_mimetype,
+            file=fileid
+        ))
 
         num_lines = sum(1 for line in open(an_uri))
 
@@ -38,8 +47,14 @@ class GenericTextAnalyzer(IAnalyzer):
 
         asset_descr.metadata = {}
 
-        asset_descr.metadata['lines'] = MetaDataValue(type=MetaDataType.INT, int_value = num_lines)
-        asset_descr.metadata['charset'] = MetaDataValue(type=MetaDataType.STRING, string_value = charset)
+        asset_descr.metadata['lines'] = MetaDataValue(
+            type=MetaDataType.INT,
+            int_value=num_lines
+        )
+        asset_descr.metadata['charset'] = MetaDataValue(
+            type=MetaDataType.STRING,
+            string_value=charset
+        )
 
         file_descr.assets.append(asset_descr)
 

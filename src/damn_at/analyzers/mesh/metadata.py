@@ -49,6 +49,7 @@ class MetaDataAssimpMaterial(MetaDataExtractor):
     opacity = MetaDataType.STRING, lambda context: str(context['$mat.opacity'])
     refracti = MetaDataType.STRING, lambda context: str(context['$mat.refracti'])
 
+
 class MetaDataAssimpMesh(MetaDataExtractor):
     __mimetype__ = 'application/assimp.mesh'
 

@@ -5,6 +5,7 @@ import os
 
 FILE_MARKER = '<children>'
 
+
 def attach(file_id, trunk, branch=None):
     """Insert a branch of directories on its trunk."""
     if branch is None:
@@ -77,7 +78,7 @@ def expand_path(path, start_path, base_depth):
 
 def file_ids_as_tree(file_ids, start_path):
     """Create a tree like structure using the filenames of the given FileIds.
-    
+
     :param file_ids: :py:func:`list` of :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileId`
     :param start_path: :py:class:`string`: the base path
     :rtype: :py:class:`dict` {'adir':<>, '<files>':[...]}
@@ -86,12 +87,14 @@ def file_ids_as_tree(file_ids, start_path):
 
     paths = set([file_id.filename.replace(relative_path, '') for file_id in file_ids])
     base_depth = max([path.count('../') for path in paths])
-    #print(base_depth)
 
     main_dict = {FILE_MARKER: []}
     for file_id in file_ids:
-        #print(expand_path(file_id.filename, relative_path, base_depth))
-        attach(file_id, main_dict, expand_path(file_id.filename, relative_path, base_depth))
+        attach(
+            file_id,
+            main_dict,
+            expand_path(file_id.filename, relative_path, base_depth)
+        )
 
     return main_dict
 
@@ -119,6 +122,7 @@ def get_files_for_path(file_ids_tree, path):
 
     return entry
 
+
 def find_path_for_file_id(file_ids_tree, file_id):
     """Traverse the FileIds tree to construct a path for the given FileId
 
@@ -135,20 +139,21 @@ def find_path_for_file_id(file_ids_tree, file_id):
             if isinstance(value, dict):
                 ret = find_path_for_file_id(value, file_id)
                 if ret:
-                    return key +'/'+ ret
+                    return key + '/' + ret
 
 
 def parse_path(path):
     """Parse a path of /hash/action/my/path returning a tuple of
     ('hash', 'action', '/my/path') or None values if a shorter path is
     given.
-    
+
     :param path: :py:class:`string`: the path
     :rtype: :py:func:`tuple`
     """
     if path == '/':
         return None, None, None
     paths = path[1:].split('/', 1)
+
     #Filter Empty strings
     paths = [p for p in paths if p != '']
     if len(paths) == 1:

@@ -1,17 +1,21 @@
 #!/usr/bin/env python
 """DAMN Service client"""
- 
+ # Standard
 import sys
-sys.path.append('generated')
-
 import socket
+import logging
 
+# 3rd Party
 from thrift import Thrift
 from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
+# Damn
 from damn_at.thrift.generated.damn import DamnService
+
+sys.path.append('generated')
+LOG = logging.getLogger(__name__)
 
 
 class DamnServiceClient(object):
@@ -23,7 +27,7 @@ class DamnServiceClient(object):
         self._client = None
         self._transport = None
         self.connected = False
-    
+
     def _connect(self):
         # Make socket
         self._socket = TSocket.TSocket(self.host, self.port)
@@ -39,12 +43,12 @@ class DamnServiceClient(object):
 
         # Connect!
         self._transport.open()
-        
+
         self.connected = True
-            
+
     def __del__(self):
         self._transport.close()
-        
+
     def __getattr__(self, name):
         try:
             if not self.connected:
@@ -56,23 +60,22 @@ class DamnServiceClient(object):
         except socket.error as serr:
             self.connected = False
             raise serr
-        
+
 
 if __name__ == '__main__':
     client = DamnServiceClient()
     while True:
         try:
             #client.ping()
-            #print(client.get_supported_mimetypes())
-            print(client.get_target_mimetypes())
+            LOG.debug(client.get_target_mimetypes())
         except Thrift.TApplicationException as tae:
-            print('while TApplicationException', tae)
+            LOG.error('while TApplicationException: %s' % str(tae))
         except TTransport.TTransportException as wtte:
-            import traceback
+            # import traceback
             #traceback.print_exc()
-            print('while TTransport', wtte)
+            LOG.debug('while TTransport: %s' % str(wtte))
         except socket.error as wserr:
-            import traceback
+            # import traceback
             #traceback.print_exc()
-            print('while socket', wserr)
+            LOG.debug('while socket: %s' % str(wserr))
             client = DamnServiceClient()

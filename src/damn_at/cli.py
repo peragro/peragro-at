@@ -6,15 +6,17 @@ Peragro commandline tool
 import os
 import sys
 import json
+import logging
+import argparse
 import argcomplete
 from argcomplete.completers import (
     ChoicesCompleter,
     FilesCompleter,
     # _wrapcall
 )
-import argparse
-import logging
 import pkg_resources
+
+LOG = logging.getLogger(__name__)
 
 
 def serialize_file_description(file_descr, format='print'):
@@ -70,7 +72,7 @@ def create_argparse_analyze(subparsers):
         help="The store to write the binary output to",
     ).completer = FilesCompleter(['ignore'])
 
-    def analyze(path, output, format, store):
+    def analyze(path, output, format_type, store):
         from .analyzer import Analyzer
         from .metadatastore import MetaDataStore
         from damn_at.serialization import SerializeThriftMsg
@@ -79,10 +81,12 @@ def create_argparse_analyze(subparsers):
         analyzer = Analyzer()
         descr = analyzer.analyze_file(path)
         descr.file.hash = calculate_hash_for_file(path)
-        if not format and not output and not store:
-            print(serialize_file_description(descr, 'print'))
+        if not format_type and not output and not store:
+            LOG.info(serialize_file_description(descr, 'print'))
+            # print(serialize_file_description(descr, 'print'))
         elif not output and not store:
-            print(serialize_file_description(descr, format))
+            LOG.info(serialize_file_description(descr, format_type))
+            # print(serialize_file_description(descr, format_type))
         elif output:
             with open(output, 'wb') as file:
                 data = SerializeThriftMsg(descr)
@@ -108,7 +112,8 @@ def assetname_completer(prefix, parsed_args, **kwargs):
         from damn_at.serialization import DeserializeThriftMsg
         with open(parsed_args.fd, 'rb') as f:
             file_descr = DeserializeThriftMsg(FileDescription(), f.read())
-            data = ['{0.subname}({0.mimetype})'.format(asset.asset) for asset in file_descr.assets]
+            data = ['{0.subname}({0.mimetype})'.format(asset.asset) for
+                    asset in file_descr.assets]
             return data
 
 
@@ -191,14 +196,14 @@ def create_argparse_transcode(parser, subparsers):
         pass
 
     def transcode(args):
-        print('transcoding')
+        LOG.info('Transcoding...')
+        # print('transcoding')
         from .transcoder import Transcoder
         t = Transcoder('/tmp/transcoded/')
         asset_subname, asset_mimetype = split_assetname(args.assetname)
         target_mimetype = t.get_target_mimetype(asset_mimetype, args.mimetype)
-        #TODO
-        for option in target_mimetype.options:
-            print(option)
+        # TODO
+        LOG.info("Options:\n%s" % "\n".join(target_mimetype.options))
 
     subparse.set_defaults(func=lambda args: transcode(args),)
 
@@ -252,7 +257,8 @@ def create_argparse_inspect(parser, subparsers):
             with open(args.path, 'rb') as f:
                 descr = DeserializeThriftMsg(FileDescription(), f.read())
 
-        print(serialize_file_description(descr, args.format))
+        LOG.info(serialize_file_description(descr, args.format))
+        # print(serialize_file_description(descr, args.format))
 
     subparse.set_defaults(func=lambda args: inspect(args),)
 
@@ -266,21 +272,21 @@ def create_argparse():
     )
 
     parser.add_argument(
-        '-d',
-        '--debug',
-        help='Print lots of debugging statements',
-        action="store_const",
-        dest="loglevel",
-        const=logging.DEBUG,
-        default=logging.WARNING
-    )
-    parser.add_argument(
         '-v',
         '--verbose',
         help='Be verbose',
         action="store_const",
         dest="loglevel",
-        const=logging.INFO
+        const=logging.DEBUG,
+        default=logging.INFO
+    )
+    parser.add_argument(
+        '-q',
+        '--quiet',
+        help='Hide most output',
+        action="store_const",
+        dest="loglevel",
+        const=logging.ERROR
     )
 
     subparsers = parser.add_subparsers(
@@ -311,8 +317,15 @@ def main(argv=None):
     argcomplete.autocomplete(parser)
     args = parser.parse_args(argv)
 
-    logging.basicConfig(format='%(levelname)s:%(message)s',
-                        level=args.loglevel)
+    # Setup basic logging
+    logging.basicConfig(
+        level=args.loglevel,
+        format='%(levelname)7s:%(name)s: %(message)s',
+        handlers=[logging.StreamHandler()]
+    )
+
+    # logging.basicConfig(format='%(levelname)s:%(message)s',
+    #                     level=args.loglevel)
 
     # call subparser callback
     if not hasattr(args, "func"):

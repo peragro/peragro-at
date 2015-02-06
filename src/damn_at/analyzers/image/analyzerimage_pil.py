@@ -1,18 +1,22 @@
 """
 PIL Image analyzer.
 """
+# Standard
 import os
 
-from damn_at import mimetypes
-
+# 3rd Party
 from PIL import Image
 
-from damn_at import MetaDataType, MetaDataValue
-from damn_at import FileId, FileDescription, AssetDescription, AssetId
-
+# Damn
+from damn_at import (
+    mimetypes,
+    FileId,
+    FileDescription,
+    AssetDescription,
+    AssetId
+)
 from damn_at.pluginmanager import IAnalyzer
 
-from damn_at.analyzer import AnalyzerException
 
 class GenericImageAnalyzer(IAnalyzer):
     """PIL Image analyzer."""
@@ -25,14 +29,17 @@ class GenericImageAnalyzer(IAnalyzer):
         pass
 
     def analyze(self, an_uri):
-        fileid = FileId(filename = os.path.abspath(an_uri))
-        file_descr = FileDescription(file = fileid)
+        fileid = FileId(filename=os.path.abspath(an_uri))
+        file_descr = FileDescription(file=fileid)
         file_descr.assets = []
 
         image_mimetype = mimetypes.guess_type(an_uri)[0]
 
-        asset_descr = AssetDescription(asset = AssetId(subname = 'main layer', mimetype = image_mimetype, file = fileid))
-
+        asset_descr = AssetDescription(asset=AssetId(
+            subname='main layer',
+            mimetype=image_mimetype,
+            file=fileid
+        ))
 
         im = Image.open(an_uri)
 
