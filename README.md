@@ -1,14 +1,14 @@
-DAMN-AT
+Peragro-AT
 ====
-Digital Assets Managed Neatly - Analyzers and Transcoders
+Peragro - Analyzers and Transcoders
 
 
-http://sueastside.github.io/damn-at/
+http://peragro.github.io/peragro-at/
 
 
-[![Build Status](https://api.travis-ci.org/sueastside/damn-at.png)](https://travis-ci.org/sueastside/damn-at)
-[![Code Health](https://landscape.io/github/sueastside/damn-at/master/landscape.png)](https://landscape.io/github/sueastside/damn-at/master)
-[![Coverage Status](https://coveralls.io/repos/sueastside/damn-at/badge.svg?branch=master)](https://coveralls.io/r/sueastside/damn-at?branch=master)
+[![Build Status](https://api.travis-ci.org/peragro/peragro-at.png)](https://travis-ci.org/sueastside/peragro-at)
+[![Code Health](https://landscape.io/github/peragro/peragro-at/master/landscape.png)](https://landscape.io/github/peragro/peragro-at/master)
+[![Coverage Status](https://coveralls.io/repos/peragro/peragro-at/badge.svg?branch=master)](https://coveralls.io/r/peragro/peragro-at?branch=master)
 
 
 Installation
@@ -54,34 +54,34 @@ Create a virtualenv and activate it
     ln -s /usr/share/pyshared/pyassimp/* $VIRTUAL_ENV/lib/python2.7/site-packages/pyassimp/
  ```
 
-Checkout damn-at
+Checkout peragro-at
  ```
-    git clone https://github.com/sueastside/damn-at.git
+    git clone https://github.com/peragro/peragro-at.git
  ```
 
-Install damn-at
+Install peragro-at
  ```
-    cd damn-at
+    cd peragro-at
     ../env/bin/python setup.py develop
  ```
 
 Optional: checkout test files
  ```
     cd ..
-    git clone https://github.com/sueastside/damn-test-files.git
+    git clone https://github.com/peragro/peragro-test-files.git
  ```
 
 Usage
 -----
 Analyze
  ```
-    mkdir /tmp/damn
-    damn_at-analyze /tmp/damn damn-test-files/mesh/blender/cube1.blend
+    mkdir /tmp/peragro
+    pt analyze /tmp/peragro peragro-test-files/mesh/blender/cube1.blend
  ```
   Output:
  ```
     ----------------------------------------------------------------------
-    Analyzing damn-test-files/mesh/blender/cube1.blend into /tmp/damn
+    Analyzing peragro-test-files/mesh/blender/cube1.blend into /tmp/peragro
     ----------------------------------------------------------------------
 
     52c676b407d05d50282661b7b451a52cc93b46d2
@@ -96,25 +96,19 @@ Analyze
 
 Inspect
  ```
-    damn_at-inspect /tmp/damn/52c676b407d05d50282661b7b451a52cc93b46d2
+    pt inspect /tmp/peragro/52c676b407d05d50282661b7b451a52cc93b46d2
  ```
   Output:
  ```
-     ___   _   __  __ _  _
-    |   \ /_\ |  \/  | \| |
-    | |) / _ \| |\/| | .` |
-    |___/_/ \_\_|  |_|_|\_|
-        Digital Assets Managed Neatly.
-
-    Inspecting "/tmp/damn/52c676b407d05d50282661b7b451a52cc93b46d2"
+    Inspecting "/tmp/peragro/52c676b407d05d50282661b7b451a52cc93b46d2"
 
     hash: 52c676b407d05d50282661b7b451a52cc93b46d2
-    filename: /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
+    filename: /home/sueastside/peragro-test-files/mesh/blender/cube1.blend
     5 Assets:
     ================================================================================
     * Cube1-data (application/x-blender.mesh)
       hash: 52c676b407d05d50282661b7b451a52cc93b46d2
-      filename: /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
+      filename: /home/sueastside/peragro-test-files/mesh/blender/cube1.blend
       Dependencies (1):
         * crate10b.jpg (image/jpeg)
           hash: 8c8065ae5590cb5d669426651ce229ed11c5f07d
@@ -125,33 +119,33 @@ Inspect
     --------------------------------------------------------------------------------
     * Camera (application/x-blender.object)
       hash: 52c676b407d05d50282661b7b451a52cc93b46d2
-      filename: /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
+      filename: /home/sueastside/peragro-test-files/mesh/blender/cube1.blend
     --------------------------------------------------------------------------------
     * Cube1-object (application/x-blender.object)
       hash: 52c676b407d05d50282661b7b451a52cc93b46d2
-      filename: /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
+      filename: /home/sueastside/dev/peragro-test-files/mesh/blender/cube1.blend
       Dependencies (1):
         * Cube1-data (application/x-blender.mesh)
           hash: 52c676b407d05d50282661b7b451a52cc93b46d2
-          filename: /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
+          filename: /home/sueastside/peragro-test-files/mesh/blender/cube1.blend
     --------------------------------------------------------------------------------
     * Lamp (application/x-blender.object)
       hash: 52c676b407d05d50282661b7b451a52cc93b46d2
-      filename: /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
+      filename: /home/sueastside/peragro-test-files/mesh/blender/cube1.blend
     --------------------------------------------------------------------------------
     * Text (application/x-blender.text)
       hash: 52c676b407d05d50282661b7b451a52cc93b46d2
-      filename: /home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend
+      filename: /home/sueastside/peragro-test-files/mesh/blender/cube1.blend
     --------------------------------------------------------------------------------
  ```
 
 Transcode
  ```
-    damn_at-transcode /tmp/damn/8c8065ae5590cb5d669426651ce229ed11c5f07d "main layer" image/jpeg -h
+    pt transcode /tmp/peragro/8c8065ae5590cb5d669426651ce229ed11c5f07d "main layer" image/jpeg -h
  ```
   Output:
  ```
-    usage: damn_at-transcode [-h] [--size SIZE] [--quality QUALITY]
+    usage: pt transcode [-h] [--size SIZE] [--quality QUALITY]
 
     optional arguments:
       -h, --help         show this help message and exit
@@ -163,11 +157,11 @@ Transcode
 
 Or
  ```
-    damn_at-transcode /tmp/damn/52c676b407d05d50282661b7b451a52cc93b46d2 Cube1-object image/png -h
+    pt transcode /tmp/peragro/52c676b407d05d50282661b7b451a52cc93b46d2 Cube1-object image/png -h
  ```
   Output:
  ```
-    usage: damn_at-transcode [-h] [--size SIZE] [--camera_type CAMERA_TYPE]
+    usage: pt transcode [-h] [--size SIZE] [--camera_type CAMERA_TYPE]
                              [--angles ANGLES]
 
     optional arguments:
@@ -183,17 +177,11 @@ Or
 
 And finally lets generate a thumb for a blender mesh datablock
  ```
-    damn_at-transcode /tmp/damn/52c676b407d05d50282661b7b451a52cc93b46d2 Cube1-object image/png --size=64,64
+    pt transcode /tmp/peragro/52c676b407d05d50282661b7b451a52cc93b46d2 Cube1-object image/png --size=64,64
  ```
   Output:
  ```
-     ___   _   __  __ _  _
-    |   \ /_\ |  \/  | \| |
-    | |) / _ \| |\/| | .` |
-    |___/_/ \_\_|  |_|_|\_|
-        Digital Assets Managed Neatly.
-
-    Transcoding "/home/sueastside/dev/DAMN/damn-test-files/mesh/blender/cube1.blend"
+    Transcoding "/home/sueastside/peragro-test-files/mesh/blender/cube1.blend"
 
     Using: Blender object render transcoder
     with:
