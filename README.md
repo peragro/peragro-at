@@ -37,16 +37,16 @@ Install Thrift globally for python3
     cd ../../..
  ```
 
-Install matplotlib
-```
-    pip install matplotlib
-```
-
 Create a virtualenv and activate it
  ```
     virtualenv env
     source env/bin/activate
  ```
+ 
+ Install matplotlib
+```
+    pip install matplotlib
+```
 
  Finish install Assimp
  ```
@@ -70,13 +70,16 @@ Optional: checkout test files
     cd ..
     git clone https://github.com/peragro/peragro-test-files.git
  ```
+ Optional: install autocomplete
+ ```
+    eval "$(register-python-argcomplete pt)"
+ ```
 
 Usage
 -----
 Analyze
  ```
-    mkdir /tmp/peragro
-    pt analyze /tmp/peragro peragro-test-files/mesh/blender/cube1.blend
+    pt a /tmp/peragro peragro-test-files/mesh/blender/cube1.blend
  ```
   Output:
  ```
