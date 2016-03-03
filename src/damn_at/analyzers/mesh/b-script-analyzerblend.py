@@ -193,9 +193,9 @@ def main():  # pylint: disable=R0914,R0912,R0915
         ))
         file_descr.assets.append(asset_descr)
         texts[text.name] = asset_descr
-
+    
     data = SerializeThriftMsg(file_descr)
-    LOG.info('-**-\n%s\n-**-' % binascii.hexlify(data))
+    print('-**-\n%s\n-**-' % binascii.hexlify(data))
 
 
 if __name__ == '__main__':

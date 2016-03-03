@@ -44,7 +44,7 @@ class BlendAnalyzer(IAnalyzer):
         LOG.debug(stdoutdata)
         LOG.debug(stderrdata)
 
-        data = str(stdoutdata)
+        data = str(stdoutdata).split('-**-')[1]
         for old, replace in [('\n', ''), ('\r', ''), ("b'", ''), ("'", '')]:
             data = data.replace(old, replace)
         data = binascii.unhexlify(data)
