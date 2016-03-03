@@ -37,16 +37,16 @@ Install Thrift globally for python3
     cd ../../..
  ```
 
-Install matplotlib
-```
-    pip install matplotlib
-```
-
 Create a virtualenv and activate it
  ```
     virtualenv env
     source env/bin/activate
  ```
+ 
+ Install matplotlib
+```
+    pip install matplotlib
+```
 
  Finish install Assimp
  ```
