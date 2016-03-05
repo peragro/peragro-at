@@ -27,6 +27,8 @@ Install Blender, Git, Pip and other initial python requirements
     sudo apt-get install sox libsox-fmt-mp3
     sudo apt-get install ffmpeg
     sudo apt-get build-dep python-matplotlib
+    sudo apt-get install python3-dev
+    sudo apt-get install python3-setuptools
  ```
 
 Install Thrift globally for python3
@@ -43,7 +45,6 @@ Install Thrift globally for python3
   
  Install peragro-at dependencies for python 3
  ```
-    git clone https://github.com/peragro/peragro-at.git
     cd peragro-at
     sudo python3 setup.py develop
     cd ..
