@@ -36,14 +36,26 @@ Install Thrift globally for python3
     python3 setup.py install
     cd ../../..
  ```
+ Checkout peragro-at
+ ```
+    git clone https://github.com/peragro/peragro-at.git
+ ```
+  
+ Install peragro-at dependencies for python 3
+ ```
+    git clone https://github.com/peragro/peragro-at.git
+    cd peragro-at
+    sudo python3 setup.py develop
+    cd ..
+ ```
 
-Create a virtualenv and activate it
+ Create a virtualenv and activate it
  ```
     virtualenv env
     source env/bin/activate
  ```
  
- Install matplotlib
+Install matplotlib
 ```
     pip install matplotlib
 ```
@@ -52,11 +64,6 @@ Create a virtualenv and activate it
  ```
     mkdir $VIRTUAL_ENV/lib/python2.7/site-packages/pyassimp/
     ln -s /usr/share/pyshared/pyassimp/* $VIRTUAL_ENV/lib/python2.7/site-packages/pyassimp/
- ```
-
-Checkout peragro-at
- ```
-    git clone https://github.com/peragro/peragro-at.git
  ```
 
 Install peragro-at
