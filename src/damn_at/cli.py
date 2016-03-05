@@ -197,13 +197,27 @@ def create_argparse_transcode(parser, subparsers):
 
     def transcode(args):
         LOG.info('Transcoding...')
-        # print('transcoding')
         from .transcoder import Transcoder
         t = Transcoder('/tmp/transcoded/')
         asset_subname, asset_mimetype = split_assetname(args.assetname)
         target_mimetype = t.get_target_mimetype(asset_mimetype, args.mimetype)
+        if target_mimetype is None:
+            parser.print_help()
         # TODO
-        LOG.info("Options:\n%s" % "\n".join(target_mimetype.options))
+        LOG.info("Options:\n%s" % "\n".join(map(str, target_mimetype.options)))
+        
+        options = t.parse_options(asset_mimetype, target_mimetype, **vars(args))
+        
+        if not args.fd:
+            from .analyzer import Analyzer
+            analyzer = Analyzer()
+            descr = analyzer.analyze_file(args.path)
+            
+        from .utilities import find_asset_id_in_file_descr    
+        asset_id = find_asset_id_in_file_descr(descr, asset_subname, asset_mimetype)
+        if asset_id is None:
+            parser.print_help()
+        print t.transcode(descr, asset_id, target_mimetype, **options)
 
     subparse.set_defaults(func=lambda args: transcode(args),)
 

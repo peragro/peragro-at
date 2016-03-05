@@ -90,7 +90,7 @@ class Transcoder(object):
         """
         target_mimetypes = self.target_mimetypes_transcoders[src_mimetype]
         for target, transcoder in target_mimetypes:
-            if target == target_mimetype:
+            if target.mimetype == target_mimetype:
                 return transcoder
 
     def get_target_mimetypes(self):
@@ -113,7 +113,7 @@ class Transcoder(object):
 
     def parse_options(self, src_mimetype, target_mimetype, **options):
         """"""
-        transcoder = self._get_transcoder(src_mimetype, target_mimetype)
+        transcoder = self._get_transcoder(src_mimetype, target_mimetype.mimetype)
         convert_map_entry = transcoder.plugin_object.convert_map[src_mimetype][target_mimetype.mimetype]
         return parse_options(convert_map_entry, **options)
 
@@ -144,14 +144,13 @@ class Transcoder(object):
 
         return path_templates
 
-    def transcode(self, file_descr, asset_id, mimetype, **options):
+    def transcode(self, file_descr, asset_id, target_mimetype, **options):
         """
         Transcode the given AssetId in FileDescription to the specified mimetype
 
         :rtype: list<string> file paths
         """
-        target_mimetype = self.get_target_mimetype(asset_id.mimetype, mimetype)
-        transcoder = self._get_transcoder(asset_id.mimetype, target_mimetype)
+        transcoder = self._get_transcoder(asset_id.mimetype, target_mimetype.mimetype)
 
         return transcoder.plugin_object.transcode(self._path, file_descr, asset_id, target_mimetype, **options)
 
