@@ -79,7 +79,7 @@ Usage
 -----
 Analyze
  ```
-    pt a /tmp/peragro peragro-test-files/mesh/blender/cube1.blend
+    pt a peragro-test-files/mesh/blender/cube1.blend --store /tmp/peragro
  ```
   Output:
  ```
@@ -99,7 +99,7 @@ Analyze
 
 Inspect
  ```
-    pt inspect /tmp/peragro/52c676b407d05d50282661b7b451a52cc93b46d2
+    pt i /tmp/peragro/90/ca0b2230d6f9b486cd932e1ae1c28b780a2b0c
  ```
   Output:
  ```
@@ -144,7 +144,7 @@ Inspect
 
 Transcode
  ```
-    pt transcode /tmp/peragro/8c8065ae5590cb5d669426651ce229ed11c5f07d "main layer" image/jpeg -h
+    pt -v t peragro-test-files/image/png/b2csmaterialpanel.png  "Cube1-data(application/x-blender.mesh)" "image/png" -h
  ```
   Output:
  ```
@@ -160,7 +160,7 @@ Transcode
 
 Or
  ```
-    pt transcode /tmp/peragro/52c676b407d05d50282661b7b451a52cc93b46d2 Cube1-object image/png -h
+    pt -v t peragro-test-files/mesh/blender/cube1.blend  "Cube1-data(application/x-blender.mesh)" "image/png" -h
  ```
   Output:
  ```
@@ -180,7 +180,7 @@ Or
 
 And finally lets generate a thumb for a blender mesh datablock
  ```
-    pt transcode /tmp/peragro/52c676b407d05d50282661b7b451a52cc93b46d2 Cube1-object image/png --size=64,64
+    pt -v t peragro-test-files/mesh/blender/cube1.blend  "Cube1-data(application/x-blender.mesh)" "image/png" --size=64,64
  ```
   Output:
  ```
@@ -192,9 +192,9 @@ And finally lets generate a thumb for a blender mesh datablock
     * angles: (0.0,)
     * size: [64, 64]
     0
-    ['assets/52c676b407d05d50282661b7b451a52cc93b46d2Cube1-objectapplication%7Cx-blender.object/image/png/[64, 64]/PERSPECTIVE/0.0/52c676b407d05d50282661b7b451a52cc93b46d2Cube1-objectapplication%7Cx-blender.object.png']
+    ['assets/NoneCube1-dataapplication__x-blender.mesh/image/png/[64, 64]/PERSPECTIVE/0.0/NoneCube1-dataapplication__x-blender.mesh.png']
  ```
 
  ```
-    eog /tmp/transcoded/assets/52c676b407d05d50282661b7b451a52cc93b46d2Cube1-objectapplication%7Cx-blender.object/image/png/\[64\,\ 64\]/PERSPECTIVE/0.0/52c676b407d05d50282661b7b451a52cc93b46d2Cube1-objectapplication%7Cx-blender.object.png
+    eog /tmp/transcoded/assets/NoneCube1-dataapplication__x-blender.mesh/image/png/\[64\,\ 64\]/PERSPECTIVE/0.0/NoneCube1-dataapplication__x-blender.mesh.png
  ```
