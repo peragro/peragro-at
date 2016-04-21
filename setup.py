@@ -22,7 +22,7 @@ def version():
         except Exception:
             return "0.0.0-development"
 
-INSTALL_REQUIRES = ['Yapsy', 'Image', 'gitpython', 'ffvideo', 'filemagic',
+INSTALL_REQUIRES = ['Yapsy', 'Image', 'gitpython', 'filemagic',
                     'logilab-common', 'setuptools', 'thrift', 'argcomplete']
 TESTS_REQUIRE = ['pylint', 'nose', 'coverage', 'mock']
 
