@@ -5,7 +5,7 @@ import os
 import logging
 import subprocess
 
-from pyassimp.pyassimp import *
+from pyassimp import *
 
 from damn_at import (
     mimetypes,
