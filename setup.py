@@ -22,8 +22,10 @@ def version():
         except Exception:
             return "0.0.0-development"
 
+
 INSTALL_REQUIRES = ['Yapsy', 'Image', 'gitpython', 'filemagic',
-                    'logilab-common', 'setuptools', 'thrift', 'argcomplete']
+                    'logilab-common', 'setuptools', 'thrift', 'argcomplete',
+                    'pyacoustid']
 TESTS_REQUIRE = ['pylint', 'nose', 'coverage', 'mock']
 
 setup(
