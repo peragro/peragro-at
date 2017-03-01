@@ -29,6 +29,7 @@ Install Blender, Git, Pip and other initial python requirements
     sudo apt-get build-dep python-matplotlib
     sudo apt-get install python3-dev
     sudo apt-get install python3-setuptools
+    sudo apt-get install libassimp-dev
  ```
 
 Install Thrift globally for python3
@@ -56,16 +57,11 @@ Install Thrift globally for python3
     source env/bin/activate
  ```
  
-Install matplotlib
+Install matplotlib and pyassimp
 ```
     pip install matplotlib
+    pip install pyassimp
 ```
-
- Finish install Assimp
- ```
-    mkdir $VIRTUAL_ENV/lib/python2.7/site-packages/pyassimp/
-    ln -s /usr/share/pyshared/pyassimp/* $VIRTUAL_ENV/lib/python2.7/site-packages/pyassimp/
- ```
 
 Install peragro-at
  ```
