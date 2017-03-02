@@ -15,4 +15,4 @@ class MetaDataAcoustID(MetaDataExtractor):
 
     duration = MetaDataType.STRING, lambda context: context['duration']
     fingerprint = MetaDataType.STRING, lambda context: context['fingerprint']
-
+    fingerprint_uuid = MetaDataType.STRING, lambda context: context['fingerprint_uuid']

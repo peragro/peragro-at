@@ -2,7 +2,7 @@
 import os
 import mimetypes
 import subprocess
-
+import uuid
 from damn_at import logger
 from damn_at import AssetId, FileId, FileDescription, AssetDescription
 from damn_at.pluginmanager import IAnalyzer
@@ -58,9 +58,10 @@ class SoundAnalyzer(IAnalyzer):
 
         try:
             duration, fingerprint = fingerprint_file(anURI)
+            fingerprint_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, str(duration)+fingerprint)
         except Exception as e:
             print("E: AcoustID analyzer failed %s with error %s" % (anURI, e))
-        meta = {'duration': str(duration)+'s', 'fingerprint': fingerprint}
+        meta = {'duration': str(duration)+'s', 'fingerprint': fingerprint, 'fingerprint_uuid': fingerprint_uuid}
         asset_descr.metadata = metadata.MetaDataAcoustID.extract(meta)
         file_descr.assets.append(asset_descr)
 
