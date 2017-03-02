@@ -56,7 +56,9 @@ class Analyzer(object):
         for plugin in plugin_mgr.getPluginsOfCategory('Analyzer'):
             if plugin.plugin_object.is_activated:
                 for mimetype in plugin.plugin_object.handled_types:
-                    self.analyzers[mimetype] = plugin
+                    analyzer = self.analyzers.setdefault(mimetype, [])
+                    if plugin not in analyzer:
+                        analyzer.append(plugin)
 
     def get_supported_mimetypes(self):
         """Returns a list of supported mimetypes, 'handled_types' of all analyzers
@@ -115,6 +117,20 @@ class Analyzer(object):
         except Exception as repo_exception:
             logger.debug("Unable to extract repository information: %s", str(repo_exception))
 
+    def _find_correct_metadata(self, file_descr, mimetype):
+        for asset in file_descr.assets:
+            if asset.asset.mimetype == mimetype:
+                return asset.metadata
+        return None
+
+    def _append_metadata(self, orig_descr, new_descr, mimetype):
+        orig_metadata = self._find_correct_metadata(orig_descr, mimetype)
+        new_metadata = self._find_correct_metadata(new_descr, mimetype)
+        if orig_metadata and new_metadata:
+            for key, value in new_metadata.items():
+                if key not in orig_metadata:
+                    orig_metadata[key] = value
+
     def analyze_file(self, an_uri):
         """Returns a FileDescription
 
@@ -127,8 +143,13 @@ class Analyzer(object):
         mimetype = mimetypes.guess_type(an_uri, False)[0]
         if mimetype in self.analyzers:
             try:
-                file_descr = self.analyzers[mimetype].plugin_object.analyze(an_uri)
-                file_descr.mimetype = mimetype
+                file_descr = None
+                for analyzer in self.analyzers[mimetype]:
+                    if not file_descr:
+                        file_descr = analyzer.plugin_object.analyze(an_uri)
+                        file_descr.mimetype = mimetype
+                    else:
+                        self._append_metadata(file_descr, analyzer.plugin_object.analyze(an_uri), mimetype)
                 self._file_metadata(an_uri, file_descr)
                 return file_descr
             except Exception as ex:
