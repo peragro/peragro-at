@@ -117,19 +117,19 @@ class Analyzer(object):
         except Exception as repo_exception:
             logger.debug("Unable to extract repository information: %s", str(repo_exception))
 
-    def _find_correct_metadata(self, file_descr, mimetype):
-        for asset in file_descr.assets:
-            if asset.asset.mimetype == mimetype:
-                return asset.metadata
-        return None
+    def _append_metadata(self, orig_metadata, new_metadata):
+        for key, value in new_metadata.items():
+            if key not in orig_metadata:
+                orig_metadata[key] = value
 
-    def _append_metadata(self, orig_descr, new_descr, mimetype):
-        orig_metadata = self._find_correct_metadata(orig_descr, mimetype)
-        new_metadata = self._find_correct_metadata(new_descr, mimetype)
-        if orig_metadata and new_metadata:
-            for key, value in new_metadata.items():
-                if key not in orig_metadata:
-                    orig_metadata[key] = value
+    def _combine_assets(self, orig_descr, new_descr):
+        orig_assets = dict(((asset.asset.mimetype, asset.asset.subname), asset) for asset in orig_descr.assets)
+        for asset in new_descr.assets:
+            orig_asset = orig_assets.get((asset.asset.mimetype, asset.asset.subname), None)
+            if orig_asset:
+                self._append_metadata(orig_asset.metadata, asset.metadata)
+            else:
+                orig_descr.assets.append(asset)
 
     def analyze_file(self, an_uri):
         """Returns a FileDescription
@@ -149,7 +149,7 @@ class Analyzer(object):
                         file_descr = analyzer.plugin_object.analyze(an_uri)
                         file_descr.mimetype = mimetype
                     else:
-                        self._append_metadata(file_descr, analyzer.plugin_object.analyze(an_uri), mimetype)
+                        self._combine_assets(file_descr, analyzer.plugin_object.analyze(an_uri))
                 self._file_metadata(an_uri, file_descr)
                 return file_descr
             except Exception as ex:
