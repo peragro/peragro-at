@@ -52,7 +52,8 @@ def guess_type(url, strict=True):
     If this fails fallback to libmagic.
     """
     res = sys_mimetypes.guess_type(url, strict)
-    if res[0] is None or res[0] == 'application/octet-stream':
+    '''dont use magic if windows, ever'''
+    if (res[0] is None or res[0] == 'application/octet-stream') and os.name != 'nt':
         paths = [None]*2
         paths[0] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'magic.blender')
         paths[1] = '/usr/share/misc/magic.mgc'
