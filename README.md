@@ -79,6 +79,13 @@ Optional: checkout test files
     eval "$(register-python-argcomplete pt)"
  ```
 
+Windows: install assimp dll
+ ```
+    download https://superb-dca2.dl.sourceforge.net/project/assimp/assimp-3.1/assimp-3.1.1-win-binaries.zip
+	grab dll from bin32 or bin64 depending on python version
+    Put assimp.dll into C:\Python351\lib\site-packages\pyassimp\
+ ```
+ 
 Usage
 -----
 Analyze

@@ -5,8 +5,15 @@ Analyzer convience class to find the right plugin for a mimetype
 and address it.
 """
 import os
-import pwd
-import grp
+if os.name == 'nt':
+    class Pwd():
+        def getpwnam(self, user):
+            pass
+    pwd = Pwd()
+else:
+    import pwd
+if os.name != 'nt':
+    import grp
 import time
 from datetime import datetime
 

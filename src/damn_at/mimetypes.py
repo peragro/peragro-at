@@ -8,11 +8,13 @@ and cleaning up reverse map for cleaner file extensions.
 import os
 import sys
 import imp
-import magic
 
 #The following might conflict
 #from __future__ import absolute_import
-#import mimetypes as sys_mimetypes
+if os.name == 'nt':
+    import mimetypes as sys_mimetypes
+else:
+    import magic
 
 #...so let's load it with some more magic.
 search_paths = [path for path in sys.path[:] if path.find('damn_at') == -1]
