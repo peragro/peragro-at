@@ -2,7 +2,10 @@
 Generic Text analyzer.
 """
 import os
-import magic
+if os.name == 'nt':
+    import mimetypes as sys_mimetypes
+else:
+    import magic
 
 from damn_at import (
     mimetypes,
@@ -42,9 +45,12 @@ class GenericTextAnalyzer(IAnalyzer):
 
         num_lines = sum(1 for line in open(an_uri))
 
-        with magic.Magic(flags=magic.MAGIC_MIME_ENCODING) as mm:
-            charset = mm.id_filename(an_uri)
-
+        if os.name == 'nt':
+            charset = sys_mimetypes.guess_type(an_uri)
+        else:
+            with magic.Magic(flags=magic.MAGIC_MIME_ENCODING) as mm:
+                charset = mm.id_filename(an_uri)
+            
         asset_descr.metadata = {}
 
         asset_descr.metadata['lines'] = MetaDataValue(
