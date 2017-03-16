@@ -6,14 +6,18 @@ and address it.
 """
 import os
 if os.name == 'nt':
+
     class Pwd():
-        def getpwnam(self, user):
+        def getpwuid(self, user):
             pass
     pwd = Pwd()
+    class Grp():
+        def getgrgid(self, user):
+            pass
+    grp = Grp()
 else:
     import pwd
-if os.name != 'nt':
-    import grp
+    import grp    
 import time
 from datetime import datetime
 
