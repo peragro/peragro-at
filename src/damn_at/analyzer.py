@@ -112,8 +112,9 @@ class Analyzer(object):
         stat = os.stat(an_uri)
         if file_descr.metadata is None:
             file_descr.metadata = {}
-        file_descr.metadata['pw_name'] = MetaDataValue(type=MetaDataType.STRING, string_value=pwd.getpwuid(stat.st_uid).pw_name)
-        file_descr.metadata['gr_name'] = MetaDataValue(type=MetaDataType.STRING, string_value=grp.getgrgid(stat.st_gid).gr_name)
+        if os.name != 'nt':
+            file_descr.metadata['pw_name'] = MetaDataValue(type=MetaDataType.STRING, string_value=pwd.getpwuid(stat.st_uid).pw_name)
+            file_descr.metadata['gr_name'] = MetaDataValue(type=MetaDataType.STRING, string_value=grp.getgrgid(stat.st_gid).gr_name)
         file_descr.metadata['st_size'] = MetaDataValue(type=MetaDataType.INT, int_value=stat.st_size)
 
         file_descr.metadata['st_ctime'] = MetaDataValue(type=MetaDataType.STRING, string_value=convert_time(stat.st_ctime))

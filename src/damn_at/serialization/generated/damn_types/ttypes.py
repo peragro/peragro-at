@@ -6,6 +6,8 @@
 #  options string: py
 #
 
+import sys
+
 from thrift.Thrift import TType, TMessageType, TException, TApplicationException
 
 from thrift.transport import TTransport
@@ -308,10 +310,16 @@ class TargetMimetype:
         if ftype == TType.LIST:
           self.options = []
           (_etype3, _size0) = iprot.readListBegin()
-          for _i4 in xrange(_size0):
-            _elem5 = TargetMimetypeOption()
-            _elem5.read(iprot)
-            self.options.append(_elem5)
+          if sys.version_info < (3,0):
+            for _i4 in xrange(_size0):
+              _elem5 = TargetMimetypeOption()
+              _elem5.read(iprot)
+              self.options.append(_elem5)
+          else:
+            for _i4 in range(_size0):
+              _elem5 = TargetMimetypeOption()
+              _elem5.read(iprot)
+              self.options.append(_elem5)
           iprot.readListEnd()
         else:
           iprot.skip(ftype)
@@ -630,10 +638,17 @@ class AssetDescription:
         if ftype == TType.MAP:
           self.metadata = {}
           (_ktype8, _vtype9, _size7 ) = iprot.readMapBegin() 
-          for _i11 in xrange(_size7):
-            _key12 = iprot.readString();
-            _val13 = MetaDataValue()
-            _val13.read(iprot)
+          if sys.version_info < (3,0):
+            for _i11 in xrange(_size7):
+              _key12 = iprot.readString();
+              _val13 = MetaDataValue()
+              _val13.read(iprot)
+            self.metadata[_key12] = _val13
+          else:
+            for _i11 in range(_size7):
+              _key12 = iprot.readString();
+              _val13 = MetaDataValue()
+              _val13.read(iprot)
             self.metadata[_key12] = _val13
           iprot.readMapEnd()
         else:
@@ -642,10 +657,16 @@ class AssetDescription:
         if ftype == TType.LIST:
           self.dependencies = []
           (_etype17, _size14) = iprot.readListBegin()
-          for _i18 in xrange(_size14):
-            _elem19 = AssetId()
-            _elem19.read(iprot)
-            self.dependencies.append(_elem19)
+          if sys.version_info < (3,0):
+            for _i18 in xrange(_size14):
+              _elem19 = AssetId()
+              _elem19.read(iprot)
+              self.dependencies.append(_elem19)
+          else:
+            for _i18 in range(_size14):
+              _elem19 = AssetId()
+              _elem19.read(iprot)
+              self.dependencies.append(_elem19)
           iprot.readListEnd()
         else:
           iprot.skip(ftype)
@@ -755,10 +776,16 @@ class FileDescription:
         if ftype == TType.LIST:
           self.assets = []
           (_etype33, _size30) = iprot.readListBegin()
-          for _i34 in xrange(_size30):
-            _elem35 = AssetDescription()
-            _elem35.read(iprot)
-            self.assets.append(_elem35)
+          if sys.version_info < (3,0):
+            for _i34 in xrange(_size30):
+              _elem35 = AssetDescription()
+              _elem35.read(iprot)
+              self.assets.append(_elem35)
+          else:
+            for _i34 in range(_size30):
+              _elem35 = AssetDescription()
+              _elem35.read(iprot)
+              self.assets.append(_elem35)              
           iprot.readListEnd()
         else:
           iprot.skip(ftype)
