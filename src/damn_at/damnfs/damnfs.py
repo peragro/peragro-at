@@ -66,13 +66,17 @@ class MyStat(fuse.Stat):
     """
     def __init__(self, is_dir, size):
         fuse.Stat.__init__(self)
-        if is_dir:
-            self.st_mode = stat.S_IFDIR | 0555
-            self.st_nlink = 2
+        if os.name == 'nt':
+            #windows doesnt support this stuff :(
         else:
-            self.st_mode = stat.S_IFREG | 0444
-            self.st_nlink = 1
-            self.st_size = size
+            if is_dir:
+                    print(os.name)
+                    self.st_mode = stat.S_IFDIR | 0555
+                    self.st_nlink = 2
+            else:
+                self.st_mode = stat.S_IFREG | 0444
+                self.st_nlink = 1
+                self.st_size = size
         self.st_atime = _file_timestamp
         self.st_mtime = _file_timestamp
         self.st_ctime = _file_timestamp

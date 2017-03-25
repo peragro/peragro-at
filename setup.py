@@ -20,7 +20,7 @@ def version():
         try:
             return subprocess.check_output(args).rstrip().lstrip("tags/")
         except Exception:
-            return "0.0.0-development"
+            return "0.0.0.dev0"
 
 
 INSTALL_REQUIRES = ['Yapsy', 'Image', 'gitpython', 'filemagic',
@@ -36,6 +36,7 @@ setup(
     version=version(),
     packages=find_packages('src'),
     package_dir={"": "src"},
+    include_package_data = True,
     url='https://github.com/sueastside/damn-at',
     download_url='https://github.com/sueastside/damn-at',
     test_suite='nose.collector',
