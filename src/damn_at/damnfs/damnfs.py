@@ -68,6 +68,7 @@ class MyStat(fuse.Stat):
         fuse.Stat.__init__(self)
         if os.name == 'nt':
             #windows doesnt support this stuff :(
+            print("windows os doesnt support everything...")
         else:
             if is_dir:
                     print(os.name)

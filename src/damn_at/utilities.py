@@ -76,24 +76,16 @@ def run_blender(an_uri, script_uri, arguments=[]):
 def collect_python3_paths():
     """Collect python3's 'dist-packages' paths to create PYTHONPATH with"""
     paths = []
-    args = [
-        'python3',
-        '-c',
-        'import site; [print(x) for x in site.getsitepackages()]'
-    ]
-    process = subprocess.Popen(
-        args,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
-    stdout, _ = process.communicate()
-    for path in stdout.split('\n'):
+    import site
+    packages = site.getsitepackages()
+
+    for path in packages:
         paths.append(path)
         for include in glob.glob(path + '/*.egg'):
             paths.append(include)
         for include in glob.glob(path + '/*.egg-link'):
             with open(include, 'rb') as data:
-                for include_path in data.read().split('\n'):
+                for include_path in str(data.read()).split('\n'):
                     include_path = os.path.join(include, include_path)
                     paths.append(include_path)
 
