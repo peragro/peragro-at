@@ -36,8 +36,6 @@ setup(
     version=version(),
     packages=find_packages('src'),
     package_dir={"": "src"},
-    # package_data = {'': ['*.analyzer','*.repository','*.transocder']},
-    include_package_data = True,
     url='https://github.com/sueastside/damn-at',
     download_url='https://github.com/sueastside/damn-at',
     test_suite='nose.collector',
