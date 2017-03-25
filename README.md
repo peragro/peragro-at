@@ -34,8 +34,8 @@ Install Blender, Git, Pip and other initial python requirements
 
 Install Thrift globally for python3
  ```
-    git clone https://github.com/wgwang/thrift.git
-    cd thrift/lib/py3
+    git clone -b 0.10.0 https://github.com/apache/thrift.git
+    cd thrift/lib/py
     python3 setup.py install
     cd ../../..
  ```
