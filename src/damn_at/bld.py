@@ -6,7 +6,7 @@ import subprocess
 import glob
 import hashlib
 
-from .utilities import calculate_hash_for_file
+from damn_at.utilities import calculate_hash_for_file
 
 
 BLOCK_SIZE = 2048
@@ -111,6 +111,8 @@ def blocks_to_file(an_uri, block_hashes, destination):
     :param block_hashes: a list of block hashes
     :param destination: the destination file path
     """
+    if not os.path.exists(os.path.dirname(destination)):
+        os.makedirs(os.path.dirname(destination))
     with open(destination, 'wb') as filehandle:
         for block_hash in block_hashes:
             with open(os.path.join(an_uri, hash_to_dir(block_hash)), 'rb') as block:
@@ -146,6 +148,9 @@ def walk(uri):
         if '.git' in dirs:
             dirs.remove('.git')
         for file_name in files:
+            if file_name.startswith('.git'):
+                files.remove(file_name)
+                continue
             path = os.path.join(root, file_name)
             yield path
 
@@ -184,8 +189,8 @@ def verify(uri):
 
 
 if __name__ == '__main__':
-
-    for path in walk('/home/sueastside/DAMN/damn-test-files/'):
+    test_files_dir = os.path.join(os.path.dirname(__file__), '../../../peragro-test-files')
+    for path in walk(test_files_dir):
         file_hash, block_hashes = block_hashes_for_file(path)
         block_hashes_to_file(file_hash, block_hashes, '/tmp/files/'+hash_to_dir(file_hash))
         blocks_for_file(path, '/tmp/blocks')
@@ -193,7 +198,7 @@ if __name__ == '__main__':
 
     statistics('/tmp/files/')
 
-    for path in walk('/home/sueastside/DAMN/damn-test-files/'):
+    for path in walk(test_files_dir):
         file_hash = calculate_hash_for_file(path)
         block_hashes = block_hashes_from_file('/tmp/files/'+hash_to_dir(file_hash))
         new_path = '/tmp/out/'+os.path.basename(path)
