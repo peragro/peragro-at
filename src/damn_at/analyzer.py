@@ -123,8 +123,8 @@ class Analyzer(object):
         #TODO:
         try:
             from damn_at.repository import Repository
-            repo = Repository('/home/sueastside/dev/DAMN/damn-test-files')
-
+            test_files_dir = os.path.join(os.path.dirname(__file__), '../../../peragro-test-files')
+            repo = Repository(test_files_dir)
             repo.get_meta_data(an_uri, file_descr)
         except Exception as repo_exception:
             logger.debug("Unable to extract repository information: %s", str(repo_exception))
