@@ -19,7 +19,7 @@ class UtilTests(unittest.TestCase):
 
     def test_is_existing_file_b(self):
         """Test returns true when given a valid path
-        NamedTemporaryFile not supported in windows"""
+        NamedTemporaryFile() not supported in windows"""
         if os.name == 'nt':
             return
         f = tempfile.NamedTemporaryFile(delete=False)
@@ -29,7 +29,7 @@ class UtilTests(unittest.TestCase):
 
     def test_calculate_hash(self):
         """Test accurate hash generated from file
-        NamedTemporaryFile not supported in windows"""
+        NamedTemporaryFile() not supported in windows"""
         if os.name == 'nt':
             return
         data = (
