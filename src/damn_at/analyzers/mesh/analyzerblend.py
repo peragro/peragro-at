@@ -45,8 +45,8 @@ class BlendAnalyzer(IAnalyzer):
         LOG.debug(stderrdata)
 
         data = str(stdoutdata).split('-**-')[1]
-        for old, replace in [('\\r\\n', ''), ('\n', ''), ('\r', ''), ("b'", ''), ("'", '')]:
-            data = data.replace(old, replace)      
+        for old, replace in [('\\r\\n', ''), ('\n', ''), ('\\n', ''), ('\r', ''), ("b'", ''), ("'", '')]:
+            data = data.replace(old, replace)
         data = binascii.unhexlify(data)
 
         file_descr = DeserializeThriftMsg(
