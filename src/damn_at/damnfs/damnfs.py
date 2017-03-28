@@ -72,10 +72,10 @@ class MyStat(fuse.Stat):
         else:
             if is_dir:
                     print(os.name)
-                    self.st_mode = stat.S_IFDIR | 0555
+                    self.st_mode = stat.S_IFDIR | 0o555
                     self.st_nlink = 2
             else:
-                self.st_mode = stat.S_IFREG | 0444
+                self.st_mode = stat.S_IFREG | 0o444
                 self.st_nlink = 1
                 self.st_size = size
         self.st_atime = _file_timestamp
@@ -139,7 +139,7 @@ class DamnFS(Fuse):
                 file_descr
             )
             if path_to.count('/') != 0:
-                file_stat.st_mode = stat.S_IFLNK | 0755
+                file_stat.st_mode = stat.S_IFLNK | 0o755
             return file_stat
 
         files = get_files_for_path(tree, rest)
