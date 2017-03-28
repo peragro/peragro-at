@@ -85,7 +85,7 @@ def file_ids_as_tree(file_ids, start_path):
     """
     relative_path = normdirpath(start_path)
 
-    paths = set([file_id.filename.replace(relative_path, '') for file_id in file_ids])
+    paths = {file_id.filename.replace(relative_path, '') for file_id in file_ids}
     base_depth = max([path.count('../') for path in paths])
 
     main_dict = {FILE_MARKER: []}

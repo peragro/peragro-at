@@ -206,7 +206,7 @@ class DamnFS(Fuse):
             yield fuse.Direntry(os.path.basename(file_descr.file.filename))
 
         file_ids = get_referenced_file_ids(file_descr)
-        file_id_paths = set([file_id.filename for file_id in file_ids])
+        file_id_paths = {file_id.filename for file_id in file_ids}
         LOG.debug(os.path.dirname(file_descr.file.filename))
         LOG.debug(file_id_paths)
         tree = file_ids_as_tree(
