@@ -1161,11 +1161,11 @@ def generate_mtl(materials):
     return mtl
 
 def value2string(v):
-    if type(v) == str and v[0:2] != "0x":
+    if isinstance(v, str) and v[0:2] != "0x":
         return '"%s"' % v
-    elif type(v) == bool:
+    elif isinstance(v, bool):
         return str(v).lower()
-    elif type(v) == list:
+    elif isinstance(v, list):
         return "[%s]" % (", ".join(value2string(x) for x in v))
     return str(v)
 
