@@ -1,11 +1,13 @@
 from __future__ import division
 from __future__ import print_function
+from __future__ import absolute_import
 import bpy
 from mathutils import Vector, Matrix, Euler
 
 import sys
 import argparse
 from string import Template
+from six.moves import range
 
 
 def create_scene(args):

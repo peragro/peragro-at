@@ -36,6 +36,7 @@ from damn_at.damnfs.path import (
 )
 import six
 from io import open
+from six.moves import range
 
 LOG = logging.getLogger(__name__)
 
@@ -273,7 +274,7 @@ def unmount(path):
     FUSE filesystem.  It works, but it would probably be better to use the
     'unmount' method on the MountProcess class if you have it.
     """
-    for num_tries in xrange(3):
+    for num_tries in range(3):
         process = subprocess.Popen(
             ["fusermount", "-u", path],
             stderr=subprocess.PIPE

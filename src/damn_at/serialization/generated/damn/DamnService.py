@@ -13,6 +13,7 @@ from thrift.Thrift import TProcessor
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol, TProtocol
 import six
+from six.moves import range
 try:
   from thrift.protocol import fastbinary
 except:
@@ -439,7 +440,7 @@ class get_supported_mimetypes_result:
         if ftype == TType.LIST:
           self.success = []
           (_etype3, _size0) = iprot.readListBegin()
-          for _i4 in xrange(_size0):
+          for _i4 in range(_size0):
             _elem5 = iprot.readString();
             self.success.append(_elem5)
           iprot.readListEnd()
@@ -548,11 +549,11 @@ class get_target_mimetypes_result:
         if ftype == TType.MAP:
           self.success = {}
           (_ktype8, _vtype9, _size7 ) = iprot.readMapBegin() 
-          for _i11 in xrange(_size7):
+          for _i11 in range(_size7):
             _key12 = iprot.readString();
             _val13 = []
             (_etype17, _size14) = iprot.readListBegin()
-            for _i18 in xrange(_size14):
+            for _i18 in range(_size14):
               _elem19 = damn_types.ttypes.TargetMimetype()
               _elem19.read(iprot)
               _val13.append(_elem19)
@@ -770,7 +771,7 @@ class transcode_args:
         if ftype == TType.LIST:
           self.files = []
           (_etype26, _size23) = iprot.readListBegin()
-          for _i27 in xrange(_size23):
+          for _i27 in range(_size23):
             _elem28 = damn_types.ttypes.File()
             _elem28.read(iprot)
             self.files.append(_elem28)
@@ -792,7 +793,7 @@ class transcode_args:
         if ftype == TType.MAP:
           self.options = {}
           (_ktype30, _vtype31, _size29 ) = iprot.readMapBegin() 
-          for _i33 in xrange(_size29):
+          for _i33 in range(_size29):
             _key34 = iprot.readString();
             _val35 = iprot.readString();
             self.options[_key34] = _val35
@@ -879,7 +880,7 @@ class transcode_result:
         if ftype == TType.LIST:
           self.success = []
           (_etype42, _size39) = iprot.readListBegin()
-          for _i43 in xrange(_size39):
+          for _i43 in range(_size39):
             _elem44 = damn_types.ttypes.File()
             _elem44.read(iprot)
             self.success.append(_elem44)

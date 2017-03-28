@@ -12,6 +12,7 @@ import struct
 import hashlib
 import subprocess
 from io import open
+from six.moves import range
 
 
 def calculate_hash_for_file(an_uri):

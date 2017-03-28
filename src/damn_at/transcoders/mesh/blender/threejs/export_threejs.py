@@ -37,6 +37,7 @@ import operator
 import random
 from six.moves import map
 from io import open
+from six.moves import range
 
 # #####################################################
 # Configuration
@@ -1538,7 +1539,7 @@ def generate_mesh_string(objects, scene,
 
         original_frame = scene.frame_current # save animation state
 
-        scene_frames = range(scene.frame_start, scene.frame_end + 1, option_frame_step)
+        scene_frames = list(range(scene.frame_start, scene.frame_end + 1, option_frame_step))
 
         for index, frame in enumerate(scene_frames):
             scene.frame_set(frame, 0.0)

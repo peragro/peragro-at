@@ -12,6 +12,7 @@ from damn_at.pluginmanager import ITranscoder
 from damn_at.options import IntVectorOption, IntOption, expand_path_template
 from damn_at.utilities import script_path, run_blender
 from six.moves import map
+from six.moves import range
 
 class BlenderTranscoder(ITranscoder):
     options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(128, 128)),

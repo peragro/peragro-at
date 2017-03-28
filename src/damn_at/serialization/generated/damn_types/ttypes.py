@@ -14,6 +14,7 @@ from thrift.Thrift import TType, TMessageType, TException, TApplicationException
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol, TProtocol
 import six
+from six.moves import range
 try:
   from thrift.protocol import fastbinary
 except:
@@ -313,7 +314,7 @@ class TargetMimetype:
           self.options = []
           (_etype3, _size0) = iprot.readListBegin()
           if sys.version_info < (3, 0):
-            for _i4 in xrange(_size0):
+            for _i4 in range(_size0):
               _elem5 = TargetMimetypeOption()
               _elem5.read(iprot)
               self.options.append(_elem5)
@@ -641,7 +642,7 @@ class AssetDescription:
           self.metadata = {}
           (_ktype8, _vtype9, _size7 ) = iprot.readMapBegin() 
           if sys.version_info < (3, 0):
-            for _i11 in xrange(_size7):
+            for _i11 in range(_size7):
               _key12 = iprot.readString();
               _val13 = MetaDataValue()
               _val13.read(iprot)
@@ -660,7 +661,7 @@ class AssetDescription:
           self.dependencies = []
           (_etype17, _size14) = iprot.readListBegin()
           if sys.version_info < (3, 0):
-            for _i18 in xrange(_size14):
+            for _i18 in range(_size14):
               _elem19 = AssetId()
               _elem19.read(iprot)
               self.dependencies.append(_elem19)
@@ -766,7 +767,7 @@ class FileDescription:
         if ftype == TType.MAP:
           self.metadata = {}
           (_ktype24, _vtype25, _size23 ) = iprot.readMapBegin() 
-          for _i27 in xrange(_size23):
+          for _i27 in range(_size23):
             _key28 = iprot.readString();
             _val29 = MetaDataValue()
             _val29.read(iprot)
@@ -779,7 +780,7 @@ class FileDescription:
           self.assets = []
           (_etype33, _size30) = iprot.readListBegin()
           if sys.version_info < (3, 0):
-            for _i34 in xrange(_size30):
+            for _i34 in range(_size30):
               _elem35 = AssetDescription()
               _elem35.read(iprot)
               self.assets.append(_elem35)
