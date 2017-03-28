@@ -1,7 +1,7 @@
 """
 The DAMN AT module.
 """
-from __future__ import absolute_import
+
 import logging
 logger = logging.getLogger('damn_at')  # pylint: disable=C0103
 

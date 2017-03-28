@@ -50,7 +50,7 @@ class BlenderTranscoder(ITranscoder):
             datatype = 'object' 
             
         arguments = ['--', datatype, asset_id.subname, os.path.join(dest_path, template.safe_substitute())]
-        arguments.extend(map(str, angles))
+        arguments.extend(list(map(str, angles)))
         arguments.append('--format=PNG')#TODO
         arguments.append('--camera_type=PERSPECTIVE')
         arguments.append('--width='+str(options['size'][0]))

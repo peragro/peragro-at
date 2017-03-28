@@ -34,7 +34,7 @@ class Video2ImageTranscoder(ITranscoder):
         time = file_descr.assets[0].metadata['duration'].string_value.split(':')
         time = eval(time[0])*3600 + eval(time[1])*60 + eval(time[2])
         if time < options['second']:
-            print("Not in range of video", file_descr.file.filename)
+            print(("Not in range of video", file_descr.file.filename))
             return False
 
         if options['second']==-1:
@@ -47,11 +47,11 @@ class Video2ImageTranscoder(ITranscoder):
                 file_descr.file.filename, '-t', '1', '-r', '1', tmp.name, '-y' ])
             out, err = pro.communicate()
             if pro.returncode != 0:
-                print('ffmpeg failed %s with error code %d'
-                        %(file_descr.file.filename, pro.returncode), err)
+                print(('ffmpeg failed %s with error code %d'
+                        %(file_descr.file.filename, pro.returncode), err))
                 return False
         except OSError:
-            print("Cannot open video", file_descr.file.filename)
+            print(("Cannot open video", file_descr.file.filename))
             return False
 
         image = Image.open(tmp.name)

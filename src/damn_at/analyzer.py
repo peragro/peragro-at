@@ -76,7 +76,7 @@ class Analyzer(object):
 
         :rtype: list<string>
         """
-        return self.analyzers.keys()
+        return list(self.analyzers.keys())
 
     def get_supported_metadata(self):
         """Returns a list of supported metada, per mimetype.
@@ -87,7 +87,7 @@ class Analyzer(object):
         from damn_at.metadata import MetaDataExtractor
 
         metadata = {}
-        for mimetype, analyzer in self.analyzers.items():
+        for mimetype, analyzer in list(self.analyzers.items()):
             try:
                 module = imp.load_source('damn_at.metadata.' + (mimetype.replace('.', '__')), os.path.join(os.path.dirname(analyzer.path), 'metadata.py'))
                 for name in dir(module):
@@ -130,7 +130,7 @@ class Analyzer(object):
             logger.debug("Unable to extract repository information: %s", str(repo_exception))
 
     def _append_metadata(self, orig_metadata, new_metadata):
-        for key, value in new_metadata.items():
+        for key, value in list(new_metadata.items()):
             if key not in orig_metadata:
                 orig_metadata[key] = value
 

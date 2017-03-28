@@ -51,7 +51,7 @@ class Transcoder(object):
 
         for plugin in plugin_mgr.getPluginsOfCategory('Transcoder'):
             if plugin.plugin_object.is_activated:
-                for src, _ in plugin.plugin_object.convert_map.items():
+                for src, _ in list(plugin.plugin_object.convert_map.items()):
                     if not src in self.transcoders:
                         self.transcoders[src] = []
                     self.transcoders[src].append(plugin)
@@ -61,9 +61,9 @@ class Transcoder(object):
     def _build_target_mimetypes(self):
         self.target_mimetypes = {}
         self.target_mimetypes_transcoders = {}
-        for src_mimetype, transcoders in self.transcoders.items():
+        for src_mimetype, transcoders in list(self.transcoders.items()):
             for transcoder in transcoders:
-                for dst_mimetype, options in transcoder.plugin_object.convert_map[src_mimetype].items():
+                for dst_mimetype, options in list(transcoder.plugin_object.convert_map[src_mimetype].items()):
                     tmt = TargetMimetype(
                         mimetype=dst_mimetype,
                         description=transcoder.description,
@@ -124,16 +124,16 @@ class Transcoder(object):
 
         path_templates = []
         single_options = dict([(option.name, option) for option in convert_map_entry if not option.is_array])
-        single_options = dict([(option, value) for option, value in options.items() if option in single_options])
+        single_options = dict([(option, value) for option, value in list(options.items()) if option in single_options])
         array_options = dict([(option.name, option) for option in convert_map_entry if option.is_array])
-        array_options = dict([(option, value) for option, value in options.items() if option in array_options])
+        array_options = dict([(option, value) for option, value in list(options.items()) if option in array_options])
 
         from damn_at.options import expand_path_template
         path_template = expand_path_template(target_mimetype.template, target_mimetype.mimetype, asset_id, **single_options)
 
         #TODO: does not work for multiple arrays.
         if len(array_options):
-            for key, values in array_options.items():
+            for key, values in list(array_options.items()):
                 from string import Template
                 for value in values:
                     t = Template(path_template)

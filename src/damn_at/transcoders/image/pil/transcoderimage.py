@@ -27,7 +27,7 @@ class ImageTranscoder(ITranscoder):
         try:
           im = Image.open(file_descr.file.filename)
         except IOError:
-          print("cannot open", file_descr.file.fileName)
+          print(("cannot open", file_descr.file.fileName))
           return False
 
         if options['size'] != [-1,-1]:

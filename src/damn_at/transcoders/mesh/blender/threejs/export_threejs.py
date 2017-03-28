@@ -658,7 +658,7 @@ def generate_normals(normals, option_normals):
         return ""
 
     chunks = []
-    for key, index in sorted(normals.items(), key = operator.itemgetter(1)):
+    for key, index in sorted(list(normals.items()), key = operator.itemgetter(1)):
         chunks.append(key)
 
     return ",".join(generate_normal(n) for n in chunks)
@@ -688,7 +688,7 @@ def generate_vertex_colors(colors, option_colors):
         return ""
 
     chunks = []
-    for key, index in sorted(colors.items(), key=operator.itemgetter(1)):
+    for key, index in sorted(list(colors.items()), key=operator.itemgetter(1)):
         chunks.append(key)
 
     return ",".join(generate_vertex_color(c) for c in chunks)
@@ -731,7 +731,7 @@ def generate_uvs(uv_layers, option_uv_coords):
     layers = []
     for uvs in uv_layers:
         chunks = []
-        for key, index in sorted(uvs.items(), key=operator.itemgetter(1)):
+        for key, index in sorted(list(uvs.items()), key=operator.itemgetter(1)):
             chunks.append(key)
         layer = ",".join(generate_uv(n) for n in chunks)
         layers.append(layer)
@@ -829,7 +829,7 @@ def generate_indices_and_weights(meshes, option_skinning):
             i += 1
 
         if mesh_index == -1:
-            print("generate_indices: couldn't find object for mesh", mesh.name)
+            print(("generate_indices: couldn't find object for mesh", mesh.name))
             continue
 
         object = bpy.data.objects[mesh_index]
@@ -1533,7 +1533,7 @@ def generate_mesh_string(objects, scene,
 
         original_frame = scene.frame_current # save animation state
 
-        scene_frames = range(scene.frame_start, scene.frame_end + 1, option_frame_step)
+        scene_frames = list(range(scene.frame_start, scene.frame_end + 1, option_frame_step))
 
         for index, frame in enumerate(scene_frames):
             scene.frame_set(frame, 0.0)
@@ -1641,7 +1641,7 @@ def export_mesh(objects,
 
     write_file(filepath, text)
 
-    print("writing", filepath, "done")
+    print(("writing", filepath, "done"))
 
 
 # #####################################################

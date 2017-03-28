@@ -72,11 +72,11 @@ class SoundAnalyzer(IAnalyzer):
             )
             out, err = pro.communicate()
             if pro.returncode != 0:
-                print("E: SoundAnalyzer failed %s with error code %d! "%(anURI,
-                    pro.returncode), out, err)
+                print(("E: SoundAnalyzer failed %s with error code %d! "%(anURI,
+                    pro.returncode), out, err))
                 return False
         except OSError:
-            print("E: SoundAnalyzer failed %s!"%(anURI), out, err)
+            print(("E: SoundAnalyzer failed %s!"%(anURI), out, err))
             return False
 
         meta = {}
@@ -90,7 +90,7 @@ class SoundAnalyzer(IAnalyzer):
             meta[line[0].lower().replace(' ', '_')] = line[1]
 
         asset_descr.metadata = metadata.MetaDataSox.extract(meta)
-        for key, value in meta.items():
+        for key, value in list(meta.items()):
             #Add none default metadata.
             if key not in asset_descr.metadata:
                 asset_descr.metadata['Sox-'+key] = MetaDataValue(type=MetaDataType.STRING, string_value=value)

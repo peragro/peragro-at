@@ -56,16 +56,16 @@ def create_light(scene, cam):
 def calc_center(bbox):
     allvecs = [None, None, None]
     for i in range(3):
-        allvecs[i] = [x for x in map(lambda v: (v[i]), bbox)]
+        allvecs[i] = [x for x in [(v[i]) for v in bbox]]
 
-    minbox = Vector(map(lambda c: min(c), allvecs))
-    maxbox = Vector(map(lambda c: max(c), allvecs))
+    minbox = Vector([min(c) for c in allvecs])
+    maxbox = Vector([max(c) for c in allvecs])
     return (minbox+maxbox)/2
 
 
 def scale_camera (cameraob, camdata, mesh_box, txtw, txth):
   mesh_center = calc_center(mesh_box)
-  print('mesh_center', mesh_center)
+  print(('mesh_center', mesh_center))
 
   aspect = (txtw/txth)*2
   shift_x = camdata.shift_x
@@ -135,7 +135,7 @@ def reset_materials():
             #print("I: mesh.active_uv_texture: no data", m2i, materials[m2i].name, uv.image.size[0])
             f.material_index = m2i
       else:
-        print("I: No UVs", m2i, materials[m2i].name)
+        print(("I: No UVs", m2i, materials[m2i].name))
         for f in mesh.tessfaces:
           f.material_index = m2i
 
@@ -146,7 +146,7 @@ def bounding_box_for_empty(empty):
     max = [-99999]*3
 
     for obj in empty.dupli_group.objects:
-        bound_box = [x for x in map(lambda v: obj.matrix_world*Vector(v), obj.bound_box)]
+        bound_box = [x for x in [obj.matrix_world*Vector(v) for v in obj.bound_box]]
         #bound_box = obj.bound_box
         for coord in bound_box:
             for i in range(3):
@@ -230,7 +230,7 @@ def main():
         bbox = bounding_box_for_empty(obj)
     else:
         bbox = obj.bound_box
-        bbox =  [x for x in map(lambda v: obj.matrix_world*Vector(v), bbox)]
+        bbox =  [x for x in [obj.matrix_world*Vector(v) for v in bbox]]
 
 
     cameraob, camdata  = create_camera(scene)
@@ -244,7 +244,7 @@ def main():
         new_angle = previous_angle - angle
         previous_angle = angle
         path = template.safe_substitute(angles=angle)
-        print('Render %s angle to %s'%(str(angle), path))   
+        print(('Render %s angle to %s'%(str(angle), path)))   
         render(obj, scene, path, new_angle)
 
     

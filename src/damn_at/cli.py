@@ -25,7 +25,7 @@ def serialize_file_description(file_descr, format='print'):
     from thrift.protocol.TJSONProtocol import TSimpleJSONProtocol
 
     try:
-        from cStringIO import StringIO
+        from io import StringIO
     except ImportError:
         from io import StringIO
     if format == 'print':
@@ -217,7 +217,7 @@ def create_argparse_transcode(parser, subparsers):
         asset_id = find_asset_id_in_file_descr(descr, asset_subname, asset_mimetype)
         if asset_id is None:
             parser.print_help()
-        print (t.transcode(descr, asset_id, target_mimetype, **options))
+        print((t.transcode(descr, asset_id, target_mimetype, **options)))
 
     subparse.set_defaults(func=lambda args: transcode(args),)
 
@@ -227,7 +227,7 @@ def file_or_hash_completer(prefix, parsed_args, **kwargs):
         return FilesCompleter(directories=False)
     path = os.path.join(parsed_args.store, prefix[:2])
     if os.path.isdir(path):
-        res = map(lambda x: prefix[:2]+x, os.listdir(path))
+        res = [prefix[:2]+x for x in os.listdir(path)]
     else:
         res = os.listdir(parsed_args.store)
 

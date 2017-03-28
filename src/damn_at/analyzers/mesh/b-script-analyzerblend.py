@@ -10,7 +10,7 @@ import mimetypes
 import bpy  # pylint: disable=F0401
 
 # Damn
-import metadata
+from . import metadata
 from damn_at import (
     FileDescription,
     FileId,
@@ -195,7 +195,7 @@ def main():  # pylint: disable=R0914,R0912,R0915
         texts[text.name] = asset_descr
     
     data = SerializeThriftMsg(file_descr)
-    print('-**-\n%s\n-**-' % binascii.hexlify(data))
+    print(('-**-\n%s\n-**-' % binascii.hexlify(data)))
 
 
 if __name__ == '__main__':

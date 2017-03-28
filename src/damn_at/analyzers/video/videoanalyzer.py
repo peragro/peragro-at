@@ -78,7 +78,7 @@ class GenericVideoAnalyzer(IAnalyzer):
                     meta['video_frame_rate'] = meta.pop('frame_rate')
 
         asset_descr.metadata = metadata.MetaDataExif.extract(meta)
-        for key, value in meta.items():
+        for key, value in list(meta.items()):
             if key not in asset_descr.metadata:
                 asset_descr.metadata['Exif-'+key] = MetaDataValue(
                     type=MetaDataType.STRING,

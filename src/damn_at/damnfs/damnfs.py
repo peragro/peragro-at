@@ -71,11 +71,11 @@ class MyStat(fuse.Stat):
             print("windows os doesnt support everything...")
         else:
             if is_dir:
-                    print(os.name)
-                    self.st_mode = stat.S_IFDIR | 0555
+                    print((os.name))
+                    self.st_mode = stat.S_IFDIR | 0o555
                     self.st_nlink = 2
             else:
-                self.st_mode = stat.S_IFREG | 0444
+                self.st_mode = stat.S_IFREG | 0o444
                 self.st_nlink = 1
                 self.st_size = size
         self.st_atime = _file_timestamp
@@ -139,7 +139,7 @@ class DamnFS(Fuse):
                 file_descr
             )
             if path_to.count('/') != 0:
-                file_stat.st_mode = stat.S_IFLNK | 0755
+                file_stat.st_mode = stat.S_IFLNK | 0o755
             return file_stat
 
         files = get_files_for_path(tree, rest)
@@ -215,7 +215,7 @@ class DamnFS(Fuse):
         )
         files = get_files_for_path(tree, rest)
         LOG.debug('Files:\n\t%s' % files)
-        for key, value in files.iteritems():
+        for key, value in files.items():
             if key == FILE_MARKER:
                 for entry in value:
                     yield fuse.Direntry(entry[0])
@@ -269,7 +269,7 @@ def unmount(path):
     FUSE filesystem.  It works, but it would probably be better to use the
     'unmount' method on the MountProcess class if you have it.
     """
-    for num_tries in xrange(3):
+    for num_tries in range(3):
         process = subprocess.Popen(
             ["fusermount", "-u", path],
             stderr=subprocess.PIPE

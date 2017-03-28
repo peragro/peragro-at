@@ -187,8 +187,8 @@ class Loader(object):
                 faces = current['faces']
                 face = []
                 for v in values[1:]:
-                    w = map(lambda x: int(x) if x else None, v.split('/'))
-                    w = map(lambda x: x-1 if x is not None and x > 0 else x, w)
+                    w = [int(x) if x else None for x in v.split('/')]
+                    w = [x-1 if x is not None and x > 0 else x for x in w]
                     face.append(tuple(w))
                 faces.append(tuple(face))
             else:

@@ -37,13 +37,13 @@ class Audio2ImageTranscoder(ITranscoder):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = pro.communicate()
             if pro.returncode != 0:
-                print("Sox failed %s with error code %d!" %(file_decrs.file.filename, pro.returncode), 
-                        out, err)
+                print(("Sox failed %s with error code %d!" %(file_decrs.file.filename, pro.returncode), 
+                        out, err))
                 return False
             else:
                 toopen = tmp.name
         except OSError:
-            print("Sox failed %s!" %(file_descr.file.filename), out, err)
+            print(("Sox failed %s!" %(file_descr.file.filename), out, err))
             return False
 
         wavedata = WaveData()

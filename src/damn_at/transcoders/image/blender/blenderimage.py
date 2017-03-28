@@ -37,7 +37,7 @@ class ImageTranscoder(ITranscoder):
         try:
           im = Image.open(full_path)
         except IOError:
-          print("Cannot open: %s" % full_path)
+          print(("Cannot open: %s" % full_path))
           return False
 
         if tuple(options['size']) != (-1,-1):

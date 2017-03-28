@@ -138,7 +138,7 @@ class MetaDataValue:
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in self.__dict__.items()]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
@@ -246,7 +246,7 @@ class TargetMimetypeOption:
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in self.__dict__.items()]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
@@ -311,7 +311,7 @@ class TargetMimetype:
           self.options = []
           (_etype3, _size0) = iprot.readListBegin()
           if sys.version_info < (3,0):
-            for _i4 in xrange(_size0):
+            for _i4 in range(_size0):
               _elem5 = TargetMimetypeOption()
               _elem5.read(iprot)
               self.options.append(_elem5)
@@ -361,7 +361,7 @@ class TargetMimetype:
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in self.__dict__.items()]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
@@ -433,7 +433,7 @@ class File:
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in self.__dict__.items()]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
@@ -505,7 +505,7 @@ class FileId:
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in self.__dict__.items()]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
@@ -590,7 +590,7 @@ class AssetId:
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in self.__dict__.items()]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
@@ -639,7 +639,7 @@ class AssetDescription:
           self.metadata = {}
           (_ktype8, _vtype9, _size7 ) = iprot.readMapBegin() 
           if sys.version_info < (3,0):
-            for _i11 in xrange(_size7):
+            for _i11 in range(_size7):
               _key12 = iprot.readString();
               _val13 = MetaDataValue()
               _val13.read(iprot)
@@ -658,7 +658,7 @@ class AssetDescription:
           self.dependencies = []
           (_etype17, _size14) = iprot.readListBegin()
           if sys.version_info < (3,0):
-            for _i18 in xrange(_size14):
+            for _i18 in range(_size14):
               _elem19 = AssetId()
               _elem19.read(iprot)
               self.dependencies.append(_elem19)
@@ -687,7 +687,7 @@ class AssetDescription:
     if self.metadata is not None:
       oprot.writeFieldBegin('metadata', TType.MAP, 2)
       oprot.writeMapBegin(TType.STRING, TType.STRUCT, len(self.metadata))
-      for kiter20,viter21 in self.metadata.items():
+      for kiter20,viter21 in list(self.metadata.items()):
         oprot.writeString(kiter20)
         viter21.write(oprot)
       oprot.writeMapEnd()
@@ -708,7 +708,7 @@ class AssetDescription:
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in self.__dict__.items()]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
@@ -764,7 +764,7 @@ class FileDescription:
         if ftype == TType.MAP:
           self.metadata = {}
           (_ktype24, _vtype25, _size23 ) = iprot.readMapBegin() 
-          for _i27 in xrange(_size23):
+          for _i27 in range(_size23):
             _key28 = iprot.readString();
             _val29 = MetaDataValue()
             _val29.read(iprot)
@@ -777,7 +777,7 @@ class FileDescription:
           self.assets = []
           (_etype33, _size30) = iprot.readListBegin()
           if sys.version_info < (3,0):
-            for _i34 in xrange(_size30):
+            for _i34 in range(_size30):
               _elem35 = AssetDescription()
               _elem35.read(iprot)
               self.assets.append(_elem35)
@@ -810,7 +810,7 @@ class FileDescription:
     if self.metadata is not None:
       oprot.writeFieldBegin('metadata', TType.MAP, 3)
       oprot.writeMapBegin(TType.STRING, TType.STRUCT, len(self.metadata))
-      for kiter36,viter37 in self.metadata.items():
+      for kiter36,viter37 in list(self.metadata.items()):
         oprot.writeString(kiter36)
         viter37.write(oprot)
       oprot.writeMapEnd()
@@ -831,7 +831,7 @@ class FileDescription:
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in self.__dict__.items()]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):

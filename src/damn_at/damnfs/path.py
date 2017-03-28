@@ -30,16 +30,16 @@ def attach(file_id, trunk, branch=None):
 
 def prettify(tree, indent=0):
     """Print the file tree structure with proper indentation."""
-    for key, value in tree.iteritems():
+    for key, value in tree.items():
         if key == FILE_MARKER:
             if value:
-                print('  ' * indent + str(value))
+                print(('  ' * indent + str(value)))
         else:
-            print('  ' * indent + str(key))
+            print(('  ' * indent + str(key)))
             if isinstance(value, dict):
                 prettify(value, indent+1)
             else:
-                print('  ' * (indent+1) + str(value))
+                print(('  ' * (indent+1) + str(value)))
 
 
 def normdirpath(path):
@@ -130,7 +130,7 @@ def find_path_for_file_id(file_ids_tree, file_id):
     :param file_id: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileId`: the fileId we're looking for
     :rtype: :py:class:`string`: the path
     """
-    for key, value in file_ids_tree.iteritems():
+    for key, value in file_ids_tree.items():
         if key == FILE_MARKER:
             for name, fid in value:
                 if fid.hash == file_id.hash:

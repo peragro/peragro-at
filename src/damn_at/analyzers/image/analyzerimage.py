@@ -93,7 +93,7 @@ class GenericImageAnalyzer(IAnalyzer):
         else:
             asset_descr.metadata = {}
 
-        for key, value in meta.items():
+        for key, value in list(meta.items()):
             if key not in asset_descr.metadata:
                 asset_descr.metadata['exif-' + key] = MetaDataValue(
                     type=MetaDataType.STRING,

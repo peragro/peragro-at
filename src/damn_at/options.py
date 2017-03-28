@@ -12,7 +12,7 @@ from damn_at import utilities
 
 class Sizes():
     try:
-        maxint = sys.maxint
+        maxint = sys.maxsize
     except:
         maxint = sys.maxsize
 
@@ -117,7 +117,7 @@ class VectorOption(BaseOption):
     @property
     def default_description(self):
         try:
-            iterator = map(lambda x: str(x), iter(self.default))
+            iterator = [str(x) for x in iter(self.default)]
             return ','.join(iterator)
         except TypeError:
             # not iterable
@@ -225,7 +225,7 @@ def options_to_template(options):
 def parse_options(convert_map_entry, **options):
     opts = {}
     entries = dict([(option.name, option) for option in convert_map_entry])
-    for name, option in entries.items():
+    for name, option in list(entries.items()):
         if name in options:
             opts[name] = entries[name].parse_from_string(options[name])
         else:
@@ -236,7 +236,7 @@ def parse_options(convert_map_entry, **options):
 def parse_options2(convert_map_entry, **options):  # TODO: remove
     opts = {}
     entries = dict([(option.name, option) for option in convert_map_entry])
-    for name, value in options.items():
+    for name, value in list(options.items()):
         if name in entries:
             if value != entries[name].default_description:
                 opts[name] = entries[name].parse_from_string(value)

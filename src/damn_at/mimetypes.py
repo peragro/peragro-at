@@ -12,7 +12,7 @@ import imp
 #The following might conflict
 #from __future__ import absolute_import
 if os.name == 'nt':
-    import mimetypes as sys_mimetypes
+    from . import mimetypes as sys_mimetypes
 else:
     import magic
 
