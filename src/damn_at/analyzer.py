@@ -76,7 +76,7 @@ class Analyzer(object):
 
         :rtype: list<string>
         """
-        return self.analyzers.keys()
+        return list(self.analyzers.keys())
 
     def get_supported_metadata(self):
         """Returns a list of supported metada, per mimetype.

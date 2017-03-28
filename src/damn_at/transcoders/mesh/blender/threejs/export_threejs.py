@@ -659,7 +659,7 @@ def generate_normals(normals, option_normals):
         return ""
 
     chunks = []
-    for key, index in sorted(normals.items(), key = operator.itemgetter(1)):
+    for key, index in sorted(list(normals.items()), key = operator.itemgetter(1)):
         chunks.append(key)
 
     return ",".join(generate_normal(n) for n in chunks)
@@ -689,7 +689,7 @@ def generate_vertex_colors(colors, option_colors):
         return ""
 
     chunks = []
-    for key, index in sorted(colors.items(), key=operator.itemgetter(1)):
+    for key, index in sorted(list(colors.items()), key=operator.itemgetter(1)):
         chunks.append(key)
 
     return ",".join(generate_vertex_color(c) for c in chunks)
@@ -732,7 +732,7 @@ def generate_uvs(uv_layers, option_uv_coords):
     layers = []
     for uvs in uv_layers:
         chunks = []
-        for key, index in sorted(uvs.items(), key=operator.itemgetter(1)):
+        for key, index in sorted(list(uvs.items()), key=operator.itemgetter(1)):
             chunks.append(key)
         layer = ",".join(generate_uv(n) for n in chunks)
         layers.append(layer)

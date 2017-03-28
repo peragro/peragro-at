@@ -7,6 +7,7 @@ damn_at-analyze /tmp/damn /home/sueastside/dev/DAMN/damn-test-files/
 damn_fs -f /tmp/damnfs/
 '''
 # Standard
+from __future__ import absolute_import
 import os
 import time
 import stat
@@ -32,6 +33,7 @@ from damn_at.damnfs.path import (
     parse_path,
     find_path_for_file_id
 )
+import six
 
 LOG = logging.getLogger(__name__)
 
@@ -215,7 +217,7 @@ class DamnFS(Fuse):
         )
         files = get_files_for_path(tree, rest)
         LOG.debug('Files:\n\t%s' % files)
-        for key, value in files.iteritems():
+        for key, value in six.iteritems(files):
             if key == FILE_MARKER:
                 for entry in value:
                     yield fuse.Direntry(entry[0])

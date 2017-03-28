@@ -6,12 +6,14 @@
 #  options string: py
 #
 
+from __future__ import absolute_import
 from thrift.Thrift import TType, TMessageType, TException, TApplicationException
 import damn_types.ttypes
 
 
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol, TProtocol
+import six
 try:
   from thrift.protocol import fastbinary
 except:
@@ -73,7 +75,7 @@ class AnalyzerException(TException):
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in six.iteritems(self.__dict__)]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
@@ -136,7 +138,7 @@ class TranscoderException(TException):
 
   def __repr__(self):
     L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+      for key, value in six.iteritems(self.__dict__)]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):

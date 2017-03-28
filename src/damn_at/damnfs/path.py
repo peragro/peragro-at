@@ -1,7 +1,9 @@
 """
 Path utilities for DAMN FS
 """
+from __future__ import absolute_import
 import os
+import six
 
 FILE_MARKER = '<children>'
 
@@ -30,7 +32,7 @@ def attach(file_id, trunk, branch=None):
 
 def prettify(tree, indent=0):
     """Print the file tree structure with proper indentation."""
-    for key, value in tree.iteritems():
+    for key, value in six.iteritems(tree):
         if key == FILE_MARKER:
             if value:
                 print('  ' * indent + str(value))
@@ -130,7 +132,7 @@ def find_path_for_file_id(file_ids_tree, file_id):
     :param file_id: :py:class:`damn_at.thrift.generated.damn_types.ttypes.FileId`: the fileId we're looking for
     :rtype: :py:class:`string`: the path
     """
-    for key, value in file_ids_tree.iteritems():
+    for key, value in six.iteritems(file_ids_tree):
         if key == FILE_MARKER:
             for name, fid in value:
                 if fid.hash == file_id.hash:
