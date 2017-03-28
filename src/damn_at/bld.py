@@ -2,12 +2,14 @@
 Block-level deplucation utility functions.
 """
 from __future__ import division
+from __future__ import absolute_import
 import os
 import subprocess
 import glob
 import hashlib
 
 from damn_at.utilities import calculate_hash_for_file
+from io import open
 
 
 BLOCK_SIZE = 2048

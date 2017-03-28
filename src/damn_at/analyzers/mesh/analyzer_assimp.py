@@ -17,6 +17,7 @@ from damn_at import (
 )
 from damn_at.pluginmanager import IAnalyzer
 from six.moves import map
+from io import open
 
 LOG = logging.getLogger(__name__)
 

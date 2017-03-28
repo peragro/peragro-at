@@ -35,6 +35,7 @@ import math
 import operator
 import random
 from six.moves import map
+from io import open
 
 # #####################################################
 # Configuration

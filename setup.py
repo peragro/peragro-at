@@ -1,8 +1,10 @@
+from __future__ import absolute_import
 import os
 import re
 import subprocess
 from setuptools import setup
 from setuptools import find_packages
+from io import open
 
 
 def version():

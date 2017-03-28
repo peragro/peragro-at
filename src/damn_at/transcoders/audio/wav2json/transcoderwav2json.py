@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import os, tempfile
 import json, mimetypes, subprocess
 
@@ -7,6 +8,7 @@ from damn_at.utilities import WaveData
 
 from damn_at.pluginmanager import ITranscoder
 from damn_at.options import IntOption, expand_path_template
+from io import open
 
 class Audio2JsonTranscoder(ITranscoder):
     options = [IntOption(name = 'channels', description = 'Number of channels to output', default = 2, min=1, max=2),

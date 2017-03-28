@@ -17,6 +17,7 @@ from argcomplete.completers import (
 )
 import pkg_resources
 from six.moves import map
+from io import open
 
 LOG = logging.getLogger(__name__)
 

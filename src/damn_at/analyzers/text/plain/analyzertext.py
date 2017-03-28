@@ -1,7 +1,9 @@
 """
 Generic Text analyzer.
 """
+from __future__ import absolute_import
 import os
+from io import open
 if os.name == 'nt':
     import mimetypes as sys_mimetypes
 else:

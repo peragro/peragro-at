@@ -34,6 +34,7 @@ from damn_at.damnfs.path import (
     find_path_for_file_id
 )
 import six
+from io import open
 
 LOG = logging.getLogger(__name__)
 

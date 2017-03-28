@@ -1,8 +1,10 @@
+from __future__ import absolute_import
 import bpy
 
 import os, sys
 import argparse
 from string import Template
+from io import open
 
 
 def main():

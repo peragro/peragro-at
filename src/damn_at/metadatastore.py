@@ -1,6 +1,7 @@
 """
 The MetaDataStore handler.
 """
+from __future__ import absolute_import
 import os
 from .utilities import is_existing_file, pretty_print_file_description
 from .bld import hash_to_dir
@@ -8,6 +9,7 @@ from .bld import hash_to_dir
 from damn_at.serialization import SerializeThriftMsg, DeserializeThriftMsg
 
 from damn_at import FileDescription
+from io import open
 
 
 class MetaDataStoreException(Exception):

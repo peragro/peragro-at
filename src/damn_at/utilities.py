@@ -3,12 +3,14 @@ General utilities.
 """
 # Standard
 from __future__ import division
+from __future__ import absolute_import
 import os
 import glob
 import wave
 import struct
 import hashlib
 import subprocess
+from io import open
 
 
 def calculate_hash_for_file(an_uri):
