@@ -23,6 +23,7 @@ TODO
     - binary format
 """
 
+from __future__ import division
 import bpy
 import mathutils
 
@@ -444,9 +445,9 @@ def center(vertices):
 
     bb = bbox(vertices)
 
-    cx = bb['x'][0] + (bb['x'][1] - bb['x'][0])/2.0
-    cy = bb['y'][0] + (bb['y'][1] - bb['y'][0])/2.0
-    cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])/2.0
+    cx = bb['x'][0] + (bb['x'][1] - bb['x'][0])//2.0
+    cy = bb['y'][0] + (bb['y'][1] - bb['y'][0])//2.0
+    cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])//2.0
 
     translate(vertices, [-cx, -cy, -cz])
 
@@ -458,9 +459,9 @@ def top(vertices):
 
     bb = bbox(vertices)
 
-    cx = bb['x'][0] + (bb['x'][1] - bb['x'][0])/2.0
+    cx = bb['x'][0] + (bb['x'][1] - bb['x'][0])//2.0
     cy = bb['y'][1]
-    cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])/2.0
+    cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])//2.0
 
     translate(vertices, [-cx, -cy, -cz])
 
@@ -472,9 +473,9 @@ def bottom(vertices):
 
     bb = bbox(vertices)
 
-    cx = bb['x'][0] + (bb['x'][1] - bb['x'][0])/2.0
+    cx = bb['x'][0] + (bb['x'][1] - bb['x'][0])//2.0
     cy = bb['y'][0]
-    cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])/2.0
+    cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])//2.0
 
     translate(vertices, [-cx, -cy, -cz])
 
@@ -920,7 +921,7 @@ def generate_animation(option_animation_skeletal, option_frame_step, flipyz, act
 
         keys = []
 
-        for frame in range(int(start_frame), int(end_frame / option_frame_step) + 1):
+        for frame in range(int(start_frame), int(end_frame // option_frame_step) + 1):
 
             pos, pchange = position(hierarchy, frame * option_frame_step, action, armatureMat)
             rot, rchange = rotation(hierarchy, frame * option_frame_step, action, armatureRotMat)
@@ -936,15 +937,15 @@ def generate_animation(option_animation_skeletal, option_frame_step, flipyz, act
 
             if frame == int(start_frame):
 
-                time = (frame * option_frame_step - start_frame) / fps
+                time = (frame * option_frame_step - start_frame) // fps
                 keyframe = TEMPLATE_KEYFRAME_FULL % (time, px, py, pz, rx, ry, rz, rw)
                 keys.append(keyframe)
 
             # END-FRAME: needs pos, rot and scl attributes with animation length (required frame)
 
-            elif frame == int(end_frame / option_frame_step):
+            elif frame == int(end_frame // option_frame_step):
 
-                time = frame_length / fps
+                time = frame_length // fps
                 keyframe = TEMPLATE_KEYFRAME_FULL % (time, px, py, pz, rx, ry, rz, rw)
                 keys.append(keyframe)
 
@@ -952,7 +953,7 @@ def generate_animation(option_animation_skeletal, option_frame_step, flipyz, act
 
             elif pchange == True or rchange == True:
 
-                time = (frame * option_frame_step - start_frame) / fps
+                time = (frame * option_frame_step - start_frame) // fps
 
                 if pchange == True and rchange == True:
                     keyframe = TEMPLATE_KEYFRAME % (time, px, py, pz, rx, ry, rz, rw)
@@ -969,7 +970,7 @@ def generate_animation(option_animation_skeletal, option_frame_step, flipyz, act
         parents.append(parent)
 
     hierarchy_string = ",".join(parents)
-    animation_string = '"name":"%s","fps":%d,"length":%g,"hierarchy":[%s]' % (action.name, fps, (frame_length / fps), hierarchy_string)
+    animation_string = '"name":"%s","fps":%d,"length":%g,"hierarchy":[%s]' % (action.name, fps, (frame_length // fps), hierarchy_string)
 
     return animation_string
 
@@ -1489,7 +1490,7 @@ def extract_meshes(objects, scene, export_single_model, option_scale, flipyz):
 
                     # that's what Blender's native export_obj.py does to flip YZ
 
-                    X_ROT = mathutils.Matrix.Rotation(-math.pi/2, 4, 'X')
+                    X_ROT = mathutils.Matrix.Rotation(-math.pi//2, 4, 'X')
                     mesh.transform(X_ROT * object.matrix_world)
 
                 else:
@@ -2171,7 +2172,7 @@ def generate_cameras(data):
 
                     camera_string = TEMPLATE_CAMERA_PERSPECTIVE % {
                     "camera_id" : generate_string(camera.name),
-                    "fov"       : (camera.angle / 3.14) * 180.0,
+                    "fov"       : (camera.angle // 3.14) * 180.0,
                     "aspect"    : 1.333,
                     "near"      : camera.clip_start,
                     "far"       : camera.clip_end,

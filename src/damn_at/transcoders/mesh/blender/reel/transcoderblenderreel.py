@@ -1,3 +1,4 @@
+from __future__ import division
 import os
 from PIL import Image
 
@@ -32,12 +33,12 @@ class BlenderTranscoder(ITranscoder):
         angles = [0.0, 0.1, 0.5]
         
         width = options['size'][0] * options['footage']
-        height = options['size'][1] * (options['frames']/options['footage'])
+        height = options['size'][1] * (options['frames']//options['footage'])
           
         angles = []
         file_paths = []
-        for angle in range(0, 628, 628/12):
-            angle = angle/100.0
+        for angle in range(0, 628, 628//12):
+            angle = angle//100.0
             file_path = template.safe_substitute(angles=angle)
             file_paths.append(file_path)
             angles.append(angle)
@@ -72,7 +73,7 @@ class BlenderTranscoder(ITranscoder):
             path = os.path.join(dest_path, file_path)
             tile = Image.open(path)
             x = (i%options['footage'])*options['size'][0]
-            y = (i/options['footage'])*options['size'][1]
+            y = (i//options['footage'])*options['size'][1]
             sprite.paste(tile, (x, y))
         
         #sprite.show()    

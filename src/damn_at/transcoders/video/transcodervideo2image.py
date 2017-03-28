@@ -1,4 +1,5 @@
 """Video to Image Transcoder """
+from __future__ import division
 import os
 import tempfile
 import subprocess
@@ -38,7 +39,7 @@ class Video2ImageTranscoder(ITranscoder):
             return False
 
         if options['second']==-1:
-            second = time/2
+            second = time//2
         else:
             second = options['second']
         try:

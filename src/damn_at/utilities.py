@@ -2,6 +2,7 @@
 General utilities.
 """
 # Standard
+from __future__ import division
 import os
 import glob
 import wave
@@ -316,7 +317,7 @@ class WaveData(object):
 
         for index, value in enumerate(integer_data):
             bucket = index % self.nchannels
-            self.channels[bucket].append(round(value/round_with, precision))
+            self.channels[bucket].append(round(value//round_with, precision))
 
     def getData(self):
         return self.channels

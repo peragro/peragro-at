@@ -1,6 +1,7 @@
 """
 Block-level deplucation utility functions.
 """
+from __future__ import division
 import os
 import subprocess
 import glob
@@ -168,8 +169,8 @@ def statistics(uri):
             block_count += 1
 
     print('%d unique blocks with %d references'%(len(blocks), block_count))
-    saved = ((block_count-len(blocks))*BLOCK_SIZE) / 1024
-    total = (block_count*BLOCK_SIZE) / 1024
+    saved = ((block_count-len(blocks))*BLOCK_SIZE) // 1024
+    total = (block_count*BLOCK_SIZE) // 1024
     print('saving %.2f KB on a total of %.2f KB'%(saved, total))
     reuse = {}
     for block_hash, paths in blocks.items():

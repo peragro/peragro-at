@@ -1,3 +1,4 @@
+from __future__ import division
 import bpy
 from mathutils import Vector, Matrix, Euler
 
@@ -60,29 +61,29 @@ def calc_center(bbox):
 
     minbox = Vector(map(lambda c: min(c), allvecs))
     maxbox = Vector(map(lambda c: max(c), allvecs))
-    return (minbox+maxbox)/2
+    return (minbox+maxbox)//2
 
 
 def scale_camera (cameraob, camdata, mesh_box, txtw, txth):
   mesh_center = calc_center(mesh_box)
   print('mesh_center', mesh_center)
 
-  aspect = (txtw/txth)*2
+  aspect = (txtw//txth)*2
   shift_x = camdata.shift_x
   shift_y = camdata.shift_y
   maxy = -10000000.0
   for i in range(8):
     corner = Vector(mesh_box[i]) - mesh_center
-    y = (corner[0] * aspect) / (1.0 - shift_x)
+    y = (corner[0] * aspect) // (1.0 - shift_x)
     if (y < 0):
-      y = (corner[0] * aspect) / (float(txtw) - shift_x)
+      y = (corner[0] * aspect) // (float(txtw) - shift_x)
     y += corner[1]
     if (y > maxy):
       maxy = y
 
-    y = (corner[2] * aspect) / (1.0 - shift_y)
+    y = (corner[2] * aspect) // (1.0 - shift_y)
     if (y < 0):
-      y = (corner[2] * aspect) / (float(txth) - shift_y)
+      y = (corner[2] * aspect) // (float(txth) - shift_y)
     y += corner[1]
     if (y > maxy):
       maxy = y;
