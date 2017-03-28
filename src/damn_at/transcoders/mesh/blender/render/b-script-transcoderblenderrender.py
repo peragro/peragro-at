@@ -8,6 +8,7 @@ import sys
 import argparse
 from string import Template
 from six.moves import range
+from six.moves import zip
 
 
 def create_scene(args):
