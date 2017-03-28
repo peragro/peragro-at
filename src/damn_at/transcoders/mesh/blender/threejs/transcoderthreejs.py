@@ -10,7 +10,7 @@ from damn_at.utilities import script_path, run_blender
 
 class BlenderThreeJSTranscoder(ITranscoder):
     options = []
-    convert_map = {"application/x-blender.object" : {"application/json": options},}
+    convert_map = {"application/x-blender.object": {"application/json": options},}
     
     def __init__(self):
         ITranscoder.__init__(self)

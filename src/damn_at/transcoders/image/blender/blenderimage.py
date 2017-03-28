@@ -11,9 +11,9 @@ from damn_at.utilities import script_path, run_blender
 
 
 class ImageTranscoder(ITranscoder):
-    options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(-1,-1))]
-    convert_map = {"application/x-blender.image" : {"image/png": options, "image/jpeg": options},
-                   "application/x-blender.image" : {"image/png": options, "image/jpeg": options},}
+    options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(-1, -1))]
+    convert_map = {"application/x-blender.image": {"image/png": options, "image/jpeg": options},
+                   "application/x-blender.image": {"image/png": options, "image/jpeg": options},}
 
     def __init__(self):
         ITranscoder.__init__(self)
@@ -40,7 +40,7 @@ class ImageTranscoder(ITranscoder):
           print("Cannot open: %s" % full_path)
           return False
 
-        if tuple(options['size']) != (-1,-1):
+        if tuple(options['size']) != (-1, -1):
           im.thumbnail(options['size'])
 
         if im.mode == 'P':

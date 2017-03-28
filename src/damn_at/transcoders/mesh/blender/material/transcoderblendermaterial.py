@@ -9,9 +9,9 @@ from damn_at.options import IntVectorOption, EnumOption, expand_path_template
 from damn_at.utilities import script_path, run_blender
 
 class BlenderMaterialTranscoder(ITranscoder):
-    options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(64,64))]
-    convert_map = {"application/x-blender.material" : {"image/jpg": options},
-                   "application/x-blender.material" : {"image/png": options},}
+    options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(64, 64))]
+    convert_map = {"application/x-blender.material": {"image/jpg": options},
+                   "application/x-blender.material": {"image/png": options},}
     
     def __init__(self):
         ITranscoder.__init__(self)

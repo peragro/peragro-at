@@ -93,7 +93,7 @@ def scale_camera (cameraob, camdata, mesh_box, txtw, txth):
   cam_pos.x += 0.5 #TODO: adding some extra distance, why?
 
   m = Matrix.Translation(cam_pos)
-  cameraob.matrix_world = m * Euler([1.57,0,1.57]).to_matrix().to_4x4()
+  cameraob.matrix_world = m * Euler([1.57, 0, 1.57]).to_matrix().to_4x4()
 
 
 def reset_materials():
@@ -140,7 +140,7 @@ def reset_materials():
           f.material_index = m2i
 
 def bounding_box_for_empty(empty):
-    bbox = [[0.0,0.0,0.0]]*8
+    bbox = [[0.0, 0.0, 0.0]]*8
 
     min = [99999]*3
     max = [-99999]*3
@@ -223,7 +223,7 @@ def main():
     reset_materials()
     
     # Reset Object's location
-    obj.location = (0,0,0)
+    obj.location = (0, 0, 0)
     scene.update()
 
     if args.type == 'group':

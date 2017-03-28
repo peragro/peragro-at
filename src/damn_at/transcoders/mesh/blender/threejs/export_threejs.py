@@ -322,7 +322,7 @@ TEMPLATE_C = "%d"
 # Utils
 # #####################################################
 
-def veckey3(x,y,z):
+def veckey3(x, y, z):
     return round(x, 6), round(y, 6), round(z, 6)
 
 def veckey3d(v):
@@ -424,10 +424,10 @@ def bbox(vertices):
             elif v.co.z > maxz:
                 maxz = v.co.z
 
-        return { 'x':[minx,maxx], 'y':[miny,maxy], 'z':[minz,maxz] }
+        return { 'x':[minx, maxx], 'y':[miny, maxy], 'z':[minz, maxz] }
 
     else:
-        return { 'x':[0,0], 'y':[0,0], 'z':[0,0] }
+        return { 'x':[0, 0], 'y':[0, 0], 'z':[0, 0] }
 
 def translate(vertices, t):
     """Translate array of vertices by vector t.
@@ -448,9 +448,9 @@ def center(vertices):
     cy = bb['y'][0] + (bb['y'][1] - bb['y'][0])/2.0
     cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])/2.0
 
-    translate(vertices, [-cx,-cy,-cz])
+    translate(vertices, [-cx, -cy, -cz])
 
-    return [-cx,-cy,-cz]
+    return [-cx, -cy, -cz]
 
 def top(vertices):
     """Align top of the model with the floor (Y-axis) and center it around X and Z.
@@ -462,9 +462,9 @@ def top(vertices):
     cy = bb['y'][1]
     cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])/2.0
 
-    translate(vertices, [-cx,-cy,-cz])
+    translate(vertices, [-cx, -cy, -cz])
 
-    return [-cx,-cy,-cz]
+    return [-cx, -cy, -cz]
 
 def bottom(vertices):
     """Align bottom of the model with the floor (Y-axis) and center it around X and Z.
@@ -476,9 +476,9 @@ def bottom(vertices):
     cy = bb['y'][0]
     cz = bb['z'][0] + (bb['z'][1] - bb['z'][0])/2.0
 
-    translate(vertices, [-cx,-cy,-cz])
+    translate(vertices, [-cx, -cy, -cz])
 
-    return [-cx,-cy,-cz]
+    return [-cx, -cy, -cz]
 
 # #####################################################
 # Elements rendering
@@ -898,7 +898,7 @@ def generate_animation(option_animation_skeletal, option_frame_step, flipyz, act
     if armature is None or armatureObject is None:
         return "", 0
     armatureMat = armatureObject.matrix_world
-    l,r,s = armatureMat.decompose()
+    l, r, s = armatureMat.decompose()
     armatureRotMat = r.to_matrix()
 
     parents = []
@@ -1006,7 +1006,7 @@ def handle_position_channel(channel, frame, position):
 
 def position(bone, frame, action, armatureMatrix):
 
-    position = mathutils.Vector((0,0,0))
+    position = mathutils.Vector((0, 0, 0))
     change = False
 
     ngroups = len(action.groups)
@@ -1085,7 +1085,7 @@ def rotation(bone, frame, action, armatureMatrix):
 
     # TODO: calculate rotation also from rotation_euler channels
 
-    rotation = mathutils.Vector((0,0,0,1))
+    rotation = mathutils.Vector((0, 0, 0, 1))
 
     change = False
 
@@ -1189,11 +1189,11 @@ def generate_materials(mtl, materials, draw_type):
             mtl[m]['wireframe'] = True
             mtl[m]['DbgColor'] = 0xff0000
 
-        mtl_raw = ",\n".join(['\t\t"%s" : %s' % (n, value2string(v)) for n,v in sorted(mtl[m].items())])
+        mtl_raw = ",\n".join(['\t\t"%s" : %s' % (n, value2string(v)) for n, v in sorted(mtl[m].items())])
         mtl_string = "\t{\n%s\n\t}" % mtl_raw
         mtl_array.append([index, mtl_string])
 
-    return ",\n\n".join([m for i,m in sorted(mtl_array)]), len(mtl_array)
+    return ",\n\n".join([m for i, m in sorted(mtl_array)]), len(mtl_array)
 
 def extract_materials(mesh, scene, option_colors, option_copy_textures, filepath):
     world = scene.world

@@ -418,7 +418,7 @@ class get_supported_mimetypes_result:
   """
 
   thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRING,None), None, ), # 0
+    (0, TType.LIST, 'success', (TType.STRING, None), None, ), # 0
   )
 
   def __init__(self, success=None,):
@@ -527,7 +527,7 @@ class get_target_mimetypes_result:
   """
 
   thrift_spec = (
-    (0, TType.MAP, 'success', (TType.STRING,None,TType.LIST,(TType.STRUCT,(damn_types.ttypes.TargetMimetype, damn_types.ttypes.TargetMimetype.thrift_spec))), None, ), # 0
+    (0, TType.MAP, 'success', (TType.STRING, None, TType.LIST, (TType.STRUCT, (damn_types.ttypes.TargetMimetype, damn_types.ttypes.TargetMimetype.thrift_spec))), None, ), # 0
   )
 
   def __init__(self, success=None,):
@@ -572,7 +572,7 @@ class get_target_mimetypes_result:
     if self.success is not None:
       oprot.writeFieldBegin('success', TType.MAP, 0)
       oprot.writeMapBegin(TType.STRING, TType.LIST, len(self.success))
-      for kiter20,viter21 in self.success.items():
+      for kiter20, viter21 in self.success.items():
         oprot.writeString(kiter20)
         oprot.writeListBegin(TType.STRUCT, len(viter21))
         for iter22 in viter21:
@@ -743,10 +743,10 @@ class transcode_args:
 
   thrift_spec = (
     None, # 0
-    (1, TType.LIST, 'files', (TType.STRUCT,(damn_types.ttypes.File, damn_types.ttypes.File.thrift_spec)), None, ), # 1
+    (1, TType.LIST, 'files', (TType.STRUCT, (damn_types.ttypes.File, damn_types.ttypes.File.thrift_spec)), None, ), # 1
     (2, TType.STRUCT, 'asset', (damn_types.ttypes.AssetId, damn_types.ttypes.AssetId.thrift_spec), None, ), # 2
     (3, TType.STRING, 'mimetype', None, None, ), # 3
-    (4, TType.MAP, 'options', (TType.STRING,None,TType.STRING,None), None, ), # 4
+    (4, TType.MAP, 'options', (TType.STRING, None, TType.STRING, None), None, ), # 4
   )
 
   def __init__(self, files=None, asset=None, mimetype=None, options=None,):
@@ -825,7 +825,7 @@ class transcode_args:
     if self.options is not None:
       oprot.writeFieldBegin('options', TType.MAP, 4)
       oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.options))
-      for kiter37,viter38 in self.options.items():
+      for kiter37, viter38 in self.options.items():
         oprot.writeString(kiter37)
         oprot.writeString(viter38)
       oprot.writeMapEnd()
@@ -856,7 +856,7 @@ class transcode_result:
   """
 
   thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRUCT,(damn_types.ttypes.File, damn_types.ttypes.File.thrift_spec)), None, ), # 0
+    (0, TType.LIST, 'success', (TType.STRUCT, (damn_types.ttypes.File, damn_types.ttypes.File.thrift_spec)), None, ), # 0
     (1, TType.STRUCT, 'te', (TranscoderException, TranscoderException.thrift_spec), None, ), # 1
   )
 

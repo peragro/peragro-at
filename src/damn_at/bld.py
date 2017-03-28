@@ -185,7 +185,7 @@ def verify(uri):
     for path in walk(uri):
         file_hash = os.path.basename(os.path.dirname(path)) + os.path.basename(path)
         new_file_hash = calculate_hash_for_file(path)
-        print('Verification %s %s'%(path,'OK' if file_hash == new_file_hash else 'FAIL'))
+        print('Verification %s %s'%(path, 'OK' if file_hash == new_file_hash else 'FAIL'))
 
 
 if __name__ == '__main__':

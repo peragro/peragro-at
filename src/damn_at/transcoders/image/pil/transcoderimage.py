@@ -9,7 +9,7 @@ from damn_at.options import IntVectorOption, FloatOption, expand_path_template
 
 
 class ImageTranscoder(ITranscoder):
-    options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(-1,-1)),
+    options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(-1, -1)),
                FloatOption(name='quality', description='The target quality of the image', min=0.0, max=1.0, default=1.0)]
     convert_map = {"image/jpeg" : {"image/png": options, "image/jpeg": options, "image/x-ms-bmp" : options},
                    "image/png" : {"image/png": options, "image/jpeg": options, "image/x-ms-bmp": options},
@@ -30,7 +30,7 @@ class ImageTranscoder(ITranscoder):
           print("cannot open", file_descr.file.fileName)
           return False
 
-        if options['size'] != [-1,-1]:
+        if options['size'] != [-1, -1]:
           im.thumbnail(options['size'])
 
         if im.mode == 'P':

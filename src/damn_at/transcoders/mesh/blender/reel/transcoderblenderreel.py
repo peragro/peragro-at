@@ -11,12 +11,12 @@ from damn_at.options import IntVectorOption, IntOption, expand_path_template
 from damn_at.utilities import script_path, run_blender
 
 class BlenderTranscoder(ITranscoder):
-    options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(128,128)),
+    options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(128, 128)),
                IntOption(name='frames', description='Total number of frames.', min=1, max=4096, default=12),
                IntOption(name='footage', description='Number of frames per line', min=1, max=4096, default=4),]
-    convert_map = {"application/x-blender.object" : {"image/jpg-reel": options, "image/png-reel": options},
-                   "application/x-blender.mesh" : {"image/jpg-reel": options, "image/png-reel": options},
-                   "application/x-blender.group" : {"image/jpg-reel": options, "image/png-reel": options},}
+    convert_map = {"application/x-blender.object": {"image/jpg-reel": options, "image/png-reel": options},
+                   "application/x-blender.mesh": {"image/jpg-reel": options, "image/png-reel": options},
+                   "application/x-blender.group": {"image/jpg-reel": options, "image/png-reel": options},}
     
     def __init__(self):
         ITranscoder.__init__(self)
@@ -73,7 +73,7 @@ class BlenderTranscoder(ITranscoder):
             tile = Image.open(path)
             x = (i%options['footage'])*options['size'][0]
             y = (i/options['footage'])*options['size'][1]
-            sprite.paste(tile, (x,y))
+            sprite.paste(tile, (x, y))
         
         #sprite.show()    
         sprite.save(abs_file_path)

@@ -11,12 +11,12 @@ class Video2ImageTranscoder(ITranscoder):
     options = [IntOption(name='second', description='The second from which frame is to be extracted', default=-1, min=-1),
         IntVectorOption(name='size', description='The size of output image in pixels', size=2, min=1, max=4096, default=(-1, -1))]
 
-    convert_map = {"video/mp4" : {"image/png":options, "image/jpeg":options},
-            "video/x-msvideo" : {"image/png":options, "image/jpeg":options},
-            "video/x-flv" : {"image/png":options, "image/jpeg":options},
-            "video/quicktime" : {"image/png":options, "image/jpeg":options},
-            "video/x-matroska" : {"image/png":options, "image/jpeg":options},
-            "video/mpeg" : {"image/png":options, "image/jpeg":options},
+    convert_map = {"video/mp4": {"image/png":options, "image/jpeg":options},
+            "video/x-msvideo": {"image/png":options, "image/jpeg":options},
+            "video/x-flv": {"image/png":options, "image/jpeg":options},
+            "video/quicktime": {"image/png":options, "image/jpeg":options},
+            "video/x-matroska": {"image/png":options, "image/jpeg":options},
+            "video/mpeg": {"image/png":options, "image/jpeg":options},
             }
 
     def __init__(self):

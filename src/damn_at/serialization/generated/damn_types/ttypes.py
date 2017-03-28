@@ -269,7 +269,7 @@ class TargetMimetype:
     (1, TType.STRING, 'mimetype', None, None, ), # 1
     (2, TType.STRING, 'description', None, None, ), # 2
     (3, TType.STRING, 'template', None, None, ), # 3
-    (4, TType.LIST, 'options', (TType.STRUCT,(TargetMimetypeOption, TargetMimetypeOption.thrift_spec)), [
+    (4, TType.LIST, 'options', (TType.STRUCT, (TargetMimetypeOption, TargetMimetypeOption.thrift_spec)), [
     ], ), # 4
   )
 
@@ -310,7 +310,7 @@ class TargetMimetype:
         if ftype == TType.LIST:
           self.options = []
           (_etype3, _size0) = iprot.readListBegin()
-          if sys.version_info < (3,0):
+          if sys.version_info < (3, 0):
             for _i4 in xrange(_size0):
               _elem5 = TargetMimetypeOption()
               _elem5.read(iprot)
@@ -610,8 +610,8 @@ class AssetDescription:
   thrift_spec = (
     None, # 0
     (1, TType.STRUCT, 'asset', (AssetId, AssetId.thrift_spec), None, ), # 1
-    (2, TType.MAP, 'metadata', (TType.STRING,None,TType.STRUCT,(MetaDataValue, MetaDataValue.thrift_spec)), None, ), # 2
-    (3, TType.LIST, 'dependencies', (TType.STRUCT,(AssetId, AssetId.thrift_spec)), None, ), # 3
+    (2, TType.MAP, 'metadata', (TType.STRING, None, TType.STRUCT, (MetaDataValue, MetaDataValue.thrift_spec)), None, ), # 2
+    (3, TType.LIST, 'dependencies', (TType.STRUCT, (AssetId, AssetId.thrift_spec)), None, ), # 3
   )
 
   def __init__(self, asset=None, metadata=None, dependencies=None,):
@@ -638,7 +638,7 @@ class AssetDescription:
         if ftype == TType.MAP:
           self.metadata = {}
           (_ktype8, _vtype9, _size7 ) = iprot.readMapBegin() 
-          if sys.version_info < (3,0):
+          if sys.version_info < (3, 0):
             for _i11 in xrange(_size7):
               _key12 = iprot.readString();
               _val13 = MetaDataValue()
@@ -657,7 +657,7 @@ class AssetDescription:
         if ftype == TType.LIST:
           self.dependencies = []
           (_etype17, _size14) = iprot.readListBegin()
-          if sys.version_info < (3,0):
+          if sys.version_info < (3, 0):
             for _i18 in xrange(_size14):
               _elem19 = AssetId()
               _elem19.read(iprot)
@@ -687,7 +687,7 @@ class AssetDescription:
     if self.metadata is not None:
       oprot.writeFieldBegin('metadata', TType.MAP, 2)
       oprot.writeMapBegin(TType.STRING, TType.STRUCT, len(self.metadata))
-      for kiter20,viter21 in self.metadata.items():
+      for kiter20, viter21 in self.metadata.items():
         oprot.writeString(kiter20)
         viter21.write(oprot)
       oprot.writeMapEnd()
@@ -730,8 +730,8 @@ class FileDescription:
     None, # 0
     (1, TType.STRUCT, 'file', (FileId, FileId.thrift_spec), None, ), # 1
     (2, TType.STRING, 'mimetype', None, None, ), # 2
-    (3, TType.MAP, 'metadata', (TType.STRING,None,TType.STRUCT,(MetaDataValue, MetaDataValue.thrift_spec)), None, ), # 3
-    (4, TType.LIST, 'assets', (TType.STRUCT,(AssetDescription, AssetDescription.thrift_spec)), None, ), # 4
+    (3, TType.MAP, 'metadata', (TType.STRING, None, TType.STRUCT, (MetaDataValue, MetaDataValue.thrift_spec)), None, ), # 3
+    (4, TType.LIST, 'assets', (TType.STRUCT, (AssetDescription, AssetDescription.thrift_spec)), None, ), # 4
   )
 
   def __init__(self, file=None, mimetype=None, metadata=None, assets=None,):
@@ -776,7 +776,7 @@ class FileDescription:
         if ftype == TType.LIST:
           self.assets = []
           (_etype33, _size30) = iprot.readListBegin()
-          if sys.version_info < (3,0):
+          if sys.version_info < (3, 0):
             for _i34 in xrange(_size30):
               _elem35 = AssetDescription()
               _elem35.read(iprot)
@@ -810,7 +810,7 @@ class FileDescription:
     if self.metadata is not None:
       oprot.writeFieldBegin('metadata', TType.MAP, 3)
       oprot.writeMapBegin(TType.STRING, TType.STRUCT, len(self.metadata))
-      for kiter36,viter37 in self.metadata.items():
+      for kiter36, viter37 in self.metadata.items():
         oprot.writeString(kiter36)
         viter37.write(oprot)
       oprot.writeMapEnd()
