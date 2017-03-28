@@ -2,6 +2,7 @@
 Path utilities for DAMN FS
 """
 from __future__ import absolute_import
+from __future__ import print_function
 import os
 import six
 
@@ -35,13 +36,13 @@ def prettify(tree, indent=0):
     for key, value in six.iteritems(tree):
         if key == FILE_MARKER:
             if value:
-                print('  ' * indent + str(value))
+                print(('  ' * indent + str(value)))
         else:
-            print('  ' * indent + str(key))
+            print(('  ' * indent + str(key)))
             if isinstance(value, dict):
                 prettify(value, indent+1)
             else:
-                print('  ' * (indent+1) + str(value))
+                print(('  ' * (indent+1) + str(value)))
 
 
 def normdirpath(path):

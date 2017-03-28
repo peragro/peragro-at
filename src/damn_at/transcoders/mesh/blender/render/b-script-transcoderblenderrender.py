@@ -1,4 +1,5 @@
 from __future__ import division
+from __future__ import print_function
 import bpy
 from mathutils import Vector, Matrix, Euler
 
@@ -66,7 +67,7 @@ def calc_center(bbox):
 
 def scale_camera (cameraob, camdata, mesh_box, txtw, txth):
   mesh_center = calc_center(mesh_box)
-  print('mesh_center', mesh_center)
+  print(('mesh_center', mesh_center))
 
   aspect = (txtw//txth)*2
   shift_x = camdata.shift_x
@@ -136,7 +137,7 @@ def reset_materials():
             #print("I: mesh.active_uv_texture: no data", m2i, materials[m2i].name, uv.image.size[0])
             f.material_index = m2i
       else:
-        print("I: No UVs", m2i, materials[m2i].name)
+        print(("I: No UVs", m2i, materials[m2i].name))
         for f in mesh.tessfaces:
           f.material_index = m2i
 
@@ -245,7 +246,7 @@ def main():
         new_angle = previous_angle - angle
         previous_angle = angle
         path = template.safe_substitute(angles=angle)
-        print('Render %s angle to %s'%(str(angle), path))   
+        print(('Render %s angle to %s'%(str(angle), path)))   
         render(obj, scene, path, new_angle)
 
     

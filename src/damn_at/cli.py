@@ -4,6 +4,7 @@
 Peragro commandline tool
 """
 from __future__ import absolute_import
+from __future__ import print_function
 import os
 import sys
 import json
@@ -220,7 +221,7 @@ def create_argparse_transcode(parser, subparsers):
         asset_id = find_asset_id_in_file_descr(descr, asset_subname, asset_mimetype)
         if asset_id is None:
             parser.print_help()
-        print (t.transcode(descr, asset_id, target_mimetype, **options))
+        print((t.transcode(descr, asset_id, target_mimetype, **options)))
 
     subparse.set_defaults(func=lambda args: transcode(args),)
 

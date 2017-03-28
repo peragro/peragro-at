@@ -2,6 +2,7 @@
 Script to be run with blender -P this
 """
 # Standard
+from __future__ import print_function
 import binascii
 import logging
 import mimetypes
@@ -195,7 +196,7 @@ def main():  # pylint: disable=R0914,R0912,R0915
         texts[text.name] = asset_descr
     
     data = SerializeThriftMsg(file_descr)
-    print('-**-\n%s\n-**-' % binascii.hexlify(data))
+    print(('-**-\n%s\n-**-' % binascii.hexlify(data)))
 
 
 if __name__ == '__main__':

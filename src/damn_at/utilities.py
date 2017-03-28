@@ -4,6 +4,7 @@ General utilities.
 # Standard
 from __future__ import division
 from __future__ import absolute_import
+from __future__ import print_function
 import os
 import glob
 import wave
@@ -164,7 +165,7 @@ def pretty_print_metadatavalue(key, value, indent=0):
     """
     whitespace = ' ' * indent
     type, val = get_metadatavalue_type(value)
-    print(whitespace + '* ' + key + ': ' + val + ' (' + type + ')')
+    print((whitespace + '* ' + key + ': ' + val + ' (' + type + ')'))
 
 
 def pretty_print_asset_id(asset_id, indent=0):
@@ -174,7 +175,7 @@ def pretty_print_asset_id(asset_id, indent=0):
     :param indent: indentation level
     """
     whitespace = ' ' * indent
-    print(whitespace + '* %s (%s)' % (asset_id.subname, asset_id.mimetype))
+    print((whitespace + '* %s (%s)' % (asset_id.subname, asset_id.mimetype)))
     pretty_print_file_id(asset_id.file, indent + 2)
 
 
@@ -188,14 +189,14 @@ def pretty_print_asset_descr(asset_descr, indent=0):
     #print(whitespace+''+str(asset_descr))
     pretty_print_asset_id(asset_descr.asset)
     if asset_descr.dependencies:
-        print('%s  Dependencies (%d):' % (
+        print(('%s  Dependencies (%d):' % (
             whitespace,
             len(asset_descr.dependencies)
-        ))
+        )))
         for dep in asset_descr.dependencies:
             pretty_print_asset_id(dep, indent + 4)
     if asset_descr.metadata:
-        print(whitespace + '  MetaData (%d):' % len(asset_descr.metadata))
+        print((whitespace + '  MetaData (%d):' % len(asset_descr.metadata)))
         for key, value in asset_descr.metadata.items():
             pretty_print_metadatavalue(key, value, indent + 4)
 
@@ -207,8 +208,8 @@ def pretty_print_file_id(file_id, indent=0):
     :param indent: indentation level
     """
     whitespace = ' ' * indent
-    print(whitespace + 'hash: ' + str(file_id.hash))
-    print(whitespace + 'filename: ' + str(file_id.filename))
+    print((whitespace + 'hash: ' + str(file_id.hash)))
+    print((whitespace + 'filename: ' + str(file_id.filename)))
 
 
 def pretty_print_file_description(file_descr):
@@ -218,12 +219,12 @@ def pretty_print_file_description(file_descr):
     :param indent: indentation level
     """
     pretty_print_file_id(file_descr.file)
-    print('%d Assets: ' % len(file_descr.assets) if file_descr.assets else 0)
-    print('=' * 80)
+    print(('%d Assets: ' % len(file_descr.assets) if file_descr.assets else 0))
+    print(('=' * 80))
     if file_descr.assets:
         for asset in file_descr.assets:
             pretty_print_asset_descr(asset)
-            print('-' * 80)
+            print(('-' * 80))
     print('\n')
 
 

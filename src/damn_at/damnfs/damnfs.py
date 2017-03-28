@@ -8,6 +8,7 @@ damn_fs -f /tmp/damnfs/
 '''
 # Standard
 from __future__ import absolute_import
+from __future__ import print_function
 import os
 import time
 import stat
@@ -74,7 +75,7 @@ class MyStat(fuse.Stat):
             print("windows os doesnt support everything...")
         else:
             if is_dir:
-                    print(os.name)
+                    print((os.name))
                     self.st_mode = stat.S_IFDIR | 0o555
                     self.st_nlink = 2
             else:

@@ -25,6 +25,7 @@ TODO
 
 from __future__ import division
 from __future__ import absolute_import
+from __future__ import print_function
 import bpy
 import mathutils
 
@@ -833,7 +834,7 @@ def generate_indices_and_weights(meshes, option_skinning):
             i += 1
 
         if mesh_index == -1:
-            print("generate_indices: couldn't find object for mesh", mesh.name)
+            print(("generate_indices: couldn't find object for mesh", mesh.name))
             continue
 
         object = bpy.data.objects[mesh_index]
@@ -1645,7 +1646,7 @@ def export_mesh(objects,
 
     write_file(filepath, text)
 
-    print("writing", filepath, "done")
+    print(("writing", filepath, "done"))
 
 
 # #####################################################

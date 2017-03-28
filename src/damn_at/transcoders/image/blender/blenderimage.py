@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 from PIL import Image
 
@@ -37,7 +38,7 @@ class ImageTranscoder(ITranscoder):
         try:
           im = Image.open(full_path)
         except IOError:
-          print("Cannot open: %s" % full_path)
+          print(("Cannot open: %s" % full_path))
           return False
 
         if tuple(options['size']) != (-1, -1):

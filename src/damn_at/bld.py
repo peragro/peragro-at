@@ -3,6 +3,7 @@ Block-level deplucation utility functions.
 """
 from __future__ import division
 from __future__ import absolute_import
+from __future__ import print_function
 import os
 import subprocess
 import glob
@@ -140,7 +141,7 @@ def filter_existing_block_hashes(an_uri, block_hashes):
             if prefix not in cache:
                 cache[prefix] = os.listdir(os.path.join(an_uri, prefix))
             else:
-                print('from cache', bloc_hash)
+                print(('from cache', bloc_hash))
             if bloc_hash[2:] not in cache[prefix]:
                 new_block_hashes.add(bloc_hash)
     return new_block_hashes
@@ -170,10 +171,10 @@ def statistics(uri):
                 blocks[block_hash] = [path]
             block_count += 1
 
-    print('%d unique blocks with %d references'%(len(blocks), block_count))
+    print(('%d unique blocks with %d references'%(len(blocks), block_count)))
     saved = ((block_count-len(blocks))*BLOCK_SIZE) // 1024
     total = (block_count*BLOCK_SIZE) // 1024
-    print('saving %.2f KB on a total of %.2f KB'%(saved, total))
+    print(('saving %.2f KB on a total of %.2f KB'%(saved, total)))
     reuse = {}
     for block_hash, paths in blocks.items():
         if len(paths) in reuse:
@@ -181,14 +182,14 @@ def statistics(uri):
         else:
             reuse[len(paths)] = 1
     for paths, count in reuse.items():
-        print('%d files with %d reused blocks'%(count, paths))
+        print(('%d files with %d reused blocks'%(count, paths)))
 
 
 def verify(uri):
     for path in walk(uri):
         file_hash = os.path.basename(os.path.dirname(path)) + os.path.basename(path)
         new_file_hash = calculate_hash_for_file(path)
-        print('Verification %s %s'%(path, 'OK' if file_hash == new_file_hash else 'FAIL'))
+        print(('Verification %s %s'%(path, 'OK' if file_hash == new_file_hash else 'FAIL')))
 
 
 if __name__ == '__main__':
@@ -208,7 +209,7 @@ if __name__ == '__main__':
         blocks_to_file('/tmp/blocks', block_hashes, new_path)
 
         new_file_hash = calculate_hash_for_file(new_path)
-        print('Verification %s'%('OK' if file_hash == new_file_hash else 'FAIL'))
+        print(('Verification %s'%('OK' if file_hash == new_file_hash else 'FAIL')))
 
     verify('/tmp/blocks')
 
@@ -218,4 +219,4 @@ if __name__ == '__main__':
     'b48e1faa27b06f8a6fabfd32c719d685accfccf4', #exists
     'b48e1faa27b06f8a6fabfd32c719d685accfccf4']
 
-    print(filter_existing_block_hashes('/tmp/blocks', block_hashes))
+    print((filter_existing_block_hashes('/tmp/blocks', block_hashes)))

@@ -1,4 +1,5 @@
 '''Analyzer for audio files using sox'''
+from __future__ import print_function
 import os
 import re
 import logging
@@ -72,11 +73,11 @@ class SoundAnalyzer(IAnalyzer):
             )
             out, err = pro.communicate()
             if pro.returncode != 0:
-                print("E: SoundAnalyzer failed %s with error code %d! "%(anURI,
-                    pro.returncode), out, err)
+                print(("E: SoundAnalyzer failed %s with error code %d! "%(anURI,
+                    pro.returncode), out, err))
                 return False
         except OSError:
-            print("E: SoundAnalyzer failed %s!"%(anURI), out, err)
+            print(("E: SoundAnalyzer failed %s!"%(anURI), out, err))
             return False
 
         meta = {}

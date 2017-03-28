@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from __future__ import print_function
 import bpy
 
 import os, sys
@@ -26,9 +27,9 @@ def main():
     data = text.as_string()
     if data.strip() == '':
         data = 'application/x-blender.text\n EMPTY'
-    print('-'*70)
+    print(('-'*70))
     print(data)
-    print('-'*70)
+    print(('-'*70))
 
     with open(args.destination, 'wb') as file:
         file.write(bytes(data, 'UTF-8'))
