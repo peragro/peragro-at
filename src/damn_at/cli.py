@@ -3,6 +3,7 @@
 """
 Peragro commandline tool
 """
+from __future__ import absolute_import
 import os
 import sys
 import json
@@ -15,6 +16,7 @@ from argcomplete.completers import (
     # _wrapcall
 )
 import pkg_resources
+from six.moves import map
 
 LOG = logging.getLogger(__name__)
 
@@ -227,7 +229,7 @@ def file_or_hash_completer(prefix, parsed_args, **kwargs):
         return FilesCompleter(directories=False)
     path = os.path.join(parsed_args.store, prefix[:2])
     if os.path.isdir(path):
-        res = map(lambda x: prefix[:2]+x, os.listdir(path))
+        res = [prefix[:2]+x for x in os.listdir(path)]
     else:
         res = os.listdir(parsed_args.store)
 

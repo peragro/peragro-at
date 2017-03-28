@@ -24,6 +24,7 @@ TODO
 """
 
 from __future__ import division
+from __future__ import absolute_import
 import bpy
 import mathutils
 
@@ -33,6 +34,7 @@ import os.path
 import math
 import operator
 import random
+from six.moves import map
 
 # #####################################################
 # Configuration

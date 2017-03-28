@@ -117,7 +117,7 @@ class VectorOption(BaseOption):
     @property
     def default_description(self):
         try:
-            iterator = map(lambda x: str(x), iter(self.default))
+            iterator = [str(x) for x in iter(self.default)]
             return ','.join(iterator)
         except TypeError:
             # not iterable

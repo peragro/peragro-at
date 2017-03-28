@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import os
 from PIL import Image
 
@@ -7,6 +8,7 @@ from damn_at.transcoder import TranscoderException
 from damn_at.pluginmanager import ITranscoder
 from damn_at.options import IntVectorOption, FloatArrayOption, EnumOption, expand_path_template
 from damn_at.utilities import script_path, run_blender
+from six.moves import map
 
 class BlenderTranscoder(ITranscoder):
     options = [IntVectorOption(name='size', description='The target size of the image', size=2, min=1, max=4096, default=(64, 64)),
@@ -44,7 +46,7 @@ class BlenderTranscoder(ITranscoder):
             datatype = 'object' 
             
         arguments = ['--', datatype, asset_id.subname, path_template]
-        arguments.extend(map(str, angles))
+        arguments.extend(list(map(str, angles)))
         arguments.append('--format=PNG')#TODO
         arguments.append('--camera_type=PERSPECTIVE')
         arguments.append('--width='+str(options['size'][0]))
