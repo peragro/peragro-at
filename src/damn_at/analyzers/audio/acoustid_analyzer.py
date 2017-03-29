@@ -58,7 +58,7 @@ class SoundAnalyzer(IAnalyzer):
 
         try:
             duration, fingerprint = fingerprint_file(anURI)
-            fingerprint_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, str(duration)+fingerprint)
+            fingerprint_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, str(duration)+ str(fingerprint))
         except Exception as e:
             print(("E: AcoustID analyzer failed %s with error %s" % (anURI, e)))
         meta = {'duration': str(duration)+'s', 'fingerprint': fingerprint, 'fingerprint_uuid': fingerprint_uuid}
