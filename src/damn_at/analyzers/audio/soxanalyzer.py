@@ -32,7 +32,7 @@ def get_sox_types():
         return []
 
     match = re.search(r'AUDIO FILE FORMATS:(.*)PLAYLIST FORMATS',
-                      out, re.DOTALL)
+                      out.decode("utf-8"), re.DOTALL)
     if not match:
         logger.debug("GetSoxTypes failed to parse output! %s %s", out, err)
         return []
@@ -81,7 +81,7 @@ class SoundAnalyzer(IAnalyzer):
             return False
 
         meta = {}
-        lines = out.strip().split('\n')
+        lines = out.decode("utf-8").strip().split('\n')
         for line in lines:
             line = line.split(':', 1)
             if len(line) == 1:

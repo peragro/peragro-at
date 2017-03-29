@@ -27,8 +27,7 @@ def get_supported_formats():
     except OSError as oserror:
         logger.debug("GetAcoustIDTypes failed! %s", oserror)
         return []
-
-    extensions = [line.split()[1] for line in str(out).split("\n")[4:] if len(line.split()) > 1]
+    extensions = [line.split()[1] for line in out.decode("utf-8").split("\n")[4:] if len(line.split()) > 1]
     mimes = []
     for ext in extensions:
         mime = mimetypes.guess_type('file.' + ext, False)[0]
@@ -59,7 +58,7 @@ class SoundAnalyzer(IAnalyzer):
 
         try:
             duration, fingerprint = fingerprint_file(anURI)
-            fingerprint_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, str(duration)+fingerprint)
+            fingerprint_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, str(duration)+ str(fingerprint))
         except Exception as e:
             print(("E: AcoustID analyzer failed %s with error %s" % (anURI, e)))
         meta = {'duration': str(duration)+'s', 'fingerprint': fingerprint, 'fingerprint_uuid': fingerprint_uuid}
