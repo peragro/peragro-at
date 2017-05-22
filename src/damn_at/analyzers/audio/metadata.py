@@ -16,3 +16,12 @@ class MetaDataAcoustID(MetaDataExtractor):
     duration = MetaDataType.STRING, lambda context: context['duration']
     fingerprint = MetaDataType.STRING, lambda context: context['fingerprint']
     fingerprint_uuid = MetaDataType.STRING, lambda context: context['fingerprint_uuid']
+
+class MetaDataFeatureExtraction(MetaDataExtractor):
+
+    bpm = MetaDataType.DOUBLE, lambda context: context['bpm']
+    beats_count = MetaDataType.DOUBLE, lambda context: context['beats_count']
+    chord = MetaDataType.STRING, lambda context: context['chord']
+    key = MetaDataType.STRING, lambda context: context['key']
+
+
