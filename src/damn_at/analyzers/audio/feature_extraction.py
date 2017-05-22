@@ -45,9 +45,9 @@ def get_extracted_features(ofile):
                 features['beats_count'] = content['rhythm']['beats_count']
         if 'tonal' in content:
             if 'chords_key' in content['tonal'] and 'chords_scale' in content['tonal']:
-                features['chord'] = str(content['tonal']['chords_key']) + str(content['tonal']['chords_scale'])
+                features['chord'] = str(content['tonal']['chords_key']) + ' ' + str(content['tonal']['chords_scale'])
             if 'key_key' in content['tonal'] and 'key_scale' in content['tonal']:
-                features['key'] = str(content['tonal']['key_key']) + str(content['tonal']['key_scale'])
+                features['key'] = str(content['tonal']['key_key']) + ' ' + str(content['tonal']['key_scale'])
 
     return features
 
@@ -83,6 +83,8 @@ class SoundAnalyzer(IAnalyzer):
             print(("E: Feature Extraction failed %s with error %s" % (anURI, e)))
 
         meta = get_extracted_features(output_file)
+        if os.path.exists(output_file):
+            os.remove(output_file)
         asset_descr.metadata = metadata.MetaDataFeatureExtraction.extract(meta)
         file_descr.assets.append(asset_descr)
 
