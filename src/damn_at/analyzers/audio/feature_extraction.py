@@ -78,7 +78,7 @@ class SoundAnalyzer(IAnalyzer):
             if os.path.exists(self.ex):
                 subprocess.call([self.ex, anURI, output_file])
             else:
-                print("E: Extractor does not exist, please place the extractor at 'damn_at/analyzers/audio/extractor'")
+                print("E: Extractor does not exist, please place the extractor at 'damn_at/analyzers/audio/extractors'")
         except Exception as e:
             print(("E: Feature Extraction failed %s with error %s" % (anURI, e)))
 

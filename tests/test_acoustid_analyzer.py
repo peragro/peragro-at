@@ -11,7 +11,7 @@ class TestCase(unittest.TestCase):
 
     def test_get_supported_mimetypes(self):
         mimetypes = acoustid_analyzer.get_supported_formats()
-        if len(mimetypes) == 0:
+        if len(mimetypes) != 0:
             print (mimetypes)
             for mimetype in mimetypes:
                 if mimetype.startswith("audio/"):
