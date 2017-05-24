@@ -25,6 +25,11 @@ For development you can rebuild just the final steps using a --build-arg
     docker build -t peragro/peragro-at github.com/peragro/peragro-at --build-arg CACHEBUST=$(date +%s)
 ```
 
+Additionally you can enter the bash shell of the container using
+```
+    docker run -v /d/:/home --rm -it peragro/peragro-at bash -il
+```
+
 Run peragro-at through docker using local files
 ```
     docker run -v /local/path/:/tmp -it peragro/peragro-at pt a /tmp/file.blend
