@@ -8,6 +8,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y blender git python3-pip py
 RUN pip3 install pyassimp
 RUN mkdir -p /opt
 RUN git clone -b 0.10.0 https://github.com/apache/thrift.git /opt/thrift
-RUN cd /root/thrift/lib/py && python3 setup.py install
+RUN cd /opt/thrift/lib/py && python3 setup.py install
 RUN git clone https://github.com/peragro/peragro-at.git /opt/peragro-at
-RUN cd /root/opt/peragro-at && python3 setup.py develop
+RUN cd /opt/peragro-at && python3 setup.py develop
