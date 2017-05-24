@@ -10,8 +10,24 @@ http://peragro.github.io/peragro-at/
 [![Code Health](https://landscape.io/github/peragro/peragro-at/master/landscape.png)](https://landscape.io/github/peragro/peragro-at/master)
 [![Coverage Status](https://coveralls.io/repos/peragro/peragro-at/badge.svg?branch=master)](https://coveralls.io/r/peragro/peragro-at?branch=master)
 
+Installation with Docker (Recomended)
+-----
 
-Installation
+Install docker for your system
+
+Build the Docker container
+```
+    docker build -t peragro/peragro-at github.com/peragro/peragro-at
+```
+
+Run peragro-at through docker using local files
+```
+    docker run -v /local/path/:/tmp -it peragro/peragro-at pt a /tmp/file.blend
+```
+
+You will need to replace '/local/path/' with your local path to the directory of the file as well as file.blend with the filename
+	 
+Installation (No Docker)
 -----
 Install Blender, Git, Pip and other initial python requirements
  ```
