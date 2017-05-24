@@ -27,7 +27,7 @@ For development you can rebuild just the final steps using a --build-arg
 
 Additionally you can enter the bash shell of the container using
 ```
-    docker run -v /d/:/home --rm -it peragro/peragro-at bash -il
+    docker run --rm -it peragro/peragro-at bash -il
 ```
 
 Run peragro-at through docker using local files
