@@ -75,8 +75,7 @@ class SoundAnalyzer(IAnalyzer):
 
     def __init__(self):
         IAnalyzer.__init__(self)
-        self.ex = os.path.join(os.path.dirname(__file__),
-                               'extractors/streaming_extractor_music')
+        self.ex = 'streaming_extractor_music'
 
     def activate(self):
         pass
