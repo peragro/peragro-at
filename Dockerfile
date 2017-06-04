@@ -35,7 +35,7 @@ RUN git clone https://github.com/swig/swig.git /tmp/swig \
     && cd /tmp/swig \
     && sh autogen.sh \
     && ./configure \
-    && make \
+    && make -j8 \
     && make install \
     && cd .. \
     && rm -r /tmp/swig
