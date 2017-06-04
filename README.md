@@ -10,36 +10,44 @@ http://peragro.github.io/peragro-at/
 [![Code Health](https://landscape.io/github/peragro/peragro-at/master/landscape.png)](https://landscape.io/github/peragro/peragro-at/master)
 [![Coverage Status](https://coveralls.io/repos/peragro/peragro-at/badge.svg?branch=master)](https://coveralls.io/r/peragro/peragro-at?branch=master)
 
-Installation with Docker (Recomended)
+Installation with Docker (Recommended)
 -----
 
-Install docker for your system
+**Install Docker**
 
-Build the Docker container
+Follow the [instructions](https://docs.docker.com/engine/installation/) to install docker for your system
+
+**Now you can Pull the image from docker hub**
+```
+    docker pull peragro/peragro-at
+```
+
+
+**Or you can Build through Dockerfile**
 ```
     docker build -t peragro/peragro-at github.com/peragro/peragro-at
 ```
 
-For development you can rebuild just the final steps using a --build-arg
+**For development you can rebuild just the final steps using a --build-arg**
 ```
     docker build -t peragro/peragro-at github.com/peragro/peragro-at --build-arg CACHEBUST=$(date +%s)
 ```
 
-Additionally you can enter the bash shell of the container using
+**Additionally you can enter the bash shell of the container using**
 ```
     docker run --rm -it peragro/peragro-at bash -il
 ```
 
-Run peragro-at through docker using local files
+**Run peragro-at through docker using local files**
 ```
-    docker run -v /local/path/:/tmp -it peragro/peragro-at pt a /tmp/file.blend
+    docker run --rm -v /local/path/:/peragro -it peragro/peragro-at pt a /peragro/file.blend
 ```
 
-You will need to replace '/local/path/' with your local path to the directory of the file as well as file.blend with the filename
+Note: You will need to replace '/local/path/' with your local path to the directory of the file as well as file.blend with the filename
 	 
 Installation (No Docker)
 -----
-Install Blender, Git, Pip and other initial python requirements
+Install Blender, Git, Pip and other initial python requirements 
  ```
     sudo add-apt-repository ppa:irie/blender
     sudo apt-get update -qq
@@ -65,39 +73,27 @@ Install Thrift globally for python3
     python3 setup.py install
     cd ../../..
  ```
+ 
+ Install matplotlib and pyassimp
+```
+    pip install matplotlib
+    pip install pyassimp
+```
+
  Checkout peragro-at
  ```
     git clone https://github.com/peragro/peragro-at.git
  ```
   
- Install peragro-at dependencies for python 3
+ Install peragro-at
  ```
     cd peragro-at
     sudo python3 setup.py develop
     cd ..
  ```
 
- Create a virtualenv and activate it
- ```
-    virtualenv env
-    source env/bin/activate
- ```
- 
-Install matplotlib and pyassimp
-```
-    pip install matplotlib
-    pip install pyassimp
-```
-
-Install peragro-at
- ```
-    cd peragro-at
-    ../env/bin/python setup.py develop
- ```
-
 Optional: checkout test files
  ```
-    cd ..
     git clone https://github.com/peragro/peragro-test-files.git
  ```
  Optional: install autocomplete
