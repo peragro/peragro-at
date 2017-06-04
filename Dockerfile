@@ -1,90 +1,65 @@
 FROM ubuntu:16.04
-MAINTAINER Brant Watson
+MAINTAINER Peragro Team
 
-# Install dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common python-software-properties
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y blender git python3-pip python3-dev cython sox libsox-fmt-mp3 ffmpeg libimage-exiftool-perl python3-matplotlib libassimp-dev
-RUN pip3 install pyassimp
+# apt-get Install dependencies
+RUN apt-get update
+
+# peragro-at required dependencies
+RUN apt-get install -y software-properties-common python-software-properties blender git python3-pip python3-dev cython sox libsox-fmt-mp3 ffmpeg libimage-exiftool-perl python3-matplotlib libassimp-dev
+RUN pip3 install Yapsy Image gitpython filemagic logilab-common setuptools thrift argcomplete pyacoustid pyassimp
+
+# swift dependencies
+RUN apt-get install -y autoconf automake libtool libpcre3-dev bison 
+
+# gaia dependencies
+RUN apt-get install -y  build-essential libqt4-dev libyaml-dev swig python-dev pkg-config
+
+# essentia dependencies
+RUN apt-get install -y libfftw3-dev libavcodec-dev libavformat-dev libavutil-dev libavresample-dev libsamplerate0-dev libtag1-dev
+
+# install thrift 0.10.0
+RUN git clone -b 0.10.0 https://github.com/apache/thrift.git /opt/thrift \
+    &cd /opt/thrift/lib/py && python3 setup.py install
+
+# build items
 RUN mkdir -p /opt
-RUN git clone -b 0.10.0 https://github.com/apache/thrift.git /opt/thrift
-RUN cd /opt/thrift/lib/py && python3 setup.py install
-RUN pip3 install Yapsy Image gitpython filemagic logilab-common setuptools thrift argcomplete pyacoustid
-RUN git clone https://github.com/peragro/peragro-test-files.git /opt/peragro-test-files
-
+RUN ldconfig /usr/local/lib
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
-#Install gaia & essentia
-#note:
-#   Before we install gaia we need to install the latest version of swig
-#   As gaia build will fail if we'll use the swig package distributed with ubuntu 16.04
-#   i.e. gaia build will fail if we'll use swig 3.0.8
-
-#Install swig
-RUN apt-get update \
-    && apt-get install -y \
-        autoconf \
-        automake \
-        libtool \
-        libpcre3-dev \
-        bison \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN git clone https://github.com/swig/swig.git /tmp/swig \
-    && cd /tmp/swig \
+# build swig
+RUN git clone https://github.com/swig/swig.git /opt/swig \
+    && cd /opt/swig \
+    && git checkout tags/rel-3.0.12 \
     && sh autogen.sh \
     && ./configure \
     && make -j8 \
-    && make install \
-    && cd .. \
-    && rm -r /tmp/swig
+    && make install 
 
-#Now install gaia
-RUN apt-get update \
-    && apt-get install -y \
-       build-essential \
-       libqt4-dev \
-       libyaml-dev \
-       swig \
-       python-dev \
-       pkg-config
-
-RUN git clone https://github.com/MTG/gaia.git /tmp/gaia \
-    && cd /tmp/gaia \
+# Now install gaia
+RUN git clone https://github.com/MTG/gaia.git /opt/gaia \
+    && cd /opt/gaia \
     && ./waf configure --with-python-bindings \
     && ./waf \
-    && ./waf install \
-    && rm -r /tmp/gaia
+    && ./waf install 
 
 #install essentia v2.1_beta2
-RUN apt-get update \
-    && apt-get install -y \
-       libfftw3-dev \
-       libavcodec-dev \
-       libavformat-dev \
-       libavutil-dev \
-       libavresample-dev \
-       libsamplerate0-dev \
-       libtag1-dev
-
-RUN git clone https://github.com/MTG/essentia.git /tmp/essentia \
-    && cd /tmp/essentia \
+RUN git clone https://github.com/MTG/essentia.git /opt/essentia \
+    && cd /opt/essentia \
     && git checkout tags/v2.1_beta2 \
-    && ./waf configure --mode=release --with-gaia \
-       --with-example=streaming_extractor_music_svm,streaming_extractor_music \
+    && ./waf configure --mode=release --with-gaia --with-example=streaming_extractor_music_svm, streaming_extractor_music \
     && ./waf \
     && cp ./build/src/examples/streaming_extractor_music /usr/local/bin \
     && cp ./build/src/examples/streaming_extractor_music_svm /usr/local/bin \
-   # && cp ./build/src/examples/streaming_extractor_freesound /usr/local/bin \
-    #&& cp ./build/src/libessentia.so /usr/local/lib \
-    && rm -r /tmp/essentia
+    #&& cp ./build/src/examples/streaming_extractor_freesound /usr/local/bin \
+    #&& cp ./build/src/libessentia.so /usr/local/lib 
+
 
 #Download svm models for high level extraction
 #RUN curl http://essentia.upf.edu/documentation/svm_models/essentia-extractor-svm_models-v2.1_beta1.tar.gz | tar xz -C /tmp \
 #    && mv /tmp/v2.1_beta1/svm_models/ /usr/local/bin/
 
-RUN ldconfig /usr/local/lib
+#Download peragro-test-data for troubleshooting
+RUN git clone https://github.com/peragro/peragro-test-files.git /opt/peragro-test-files
 
 #download and setup peragro-at
 ARG CACHEBUST=1
