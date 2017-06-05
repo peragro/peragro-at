@@ -94,12 +94,7 @@ class SoundAnalyzer(IAnalyzer):
         output_file = os.path.abspath(anURI).split(".")[0] + ".json"
 
         try:
-            if os.path.exists(self.ex):
-                subprocess.call([self.ex, anURI, output_file])
-            else:
-                print('E: Extractor does not exist, '
-                      'please place the extractor at '
-                      '\'damn_at/analyzers/audio/extractors\'')
+            subprocess.call([self.ex, anURI, output_file])
         except Exception as e:
             print(('E: Feature Extraction failed %s with error %s'
                    % (anURI, e)))

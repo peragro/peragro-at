@@ -19,7 +19,7 @@ RUN apt-get install -y libfftw3-dev libavcodec-dev libavformat-dev libavutil-dev
 
 # install thrift 0.10.0
 RUN git clone -b 0.10.0 https://github.com/apache/thrift.git /opt/thrift \
-    &cd /opt/thrift/lib/py && python3 setup.py install
+    && cd /opt/thrift/lib/py && python3 setup.py install
 
 # build items
 RUN mkdir -p /opt
@@ -46,10 +46,10 @@ RUN git clone https://github.com/MTG/gaia.git /opt/gaia \
 RUN git clone https://github.com/MTG/essentia.git /opt/essentia \
     && cd /opt/essentia \
     && git checkout tags/v2.1_beta2 \
-    && ./waf configure --mode=release --with-gaia --with-example=streaming_extractor_music_svm, streaming_extractor_music \
+    && ./waf configure --mode=release --with-gaia --with-example=streaming_extractor_music_svm,streaming_extractor_music \
     && ./waf \
     && cp ./build/src/examples/streaming_extractor_music /usr/local/bin \
-    && cp ./build/src/examples/streaming_extractor_music_svm /usr/local/bin \
+    && cp ./build/src/examples/streaming_extractor_music_svm /usr/local/bin
     #&& cp ./build/src/examples/streaming_extractor_freesound /usr/local/bin \
     #&& cp ./build/src/libessentia.so /usr/local/lib 
 
