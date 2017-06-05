@@ -61,6 +61,7 @@ class SoundAnalyzer(IAnalyzer):
             fingerprint_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, str(duration)+ str(fingerprint))
         except Exception as e:
             print(("E: AcoustID analyzer failed %s with error %s" % (anURI, e)))
+            return False
         meta = {'duration': str(duration)+'s', 'fingerprint': fingerprint, 'fingerprint_uuid': fingerprint_uuid}
         asset_descr.metadata = metadata.MetaDataAcoustID.extract(meta)
         file_descr.assets.append(asset_descr)
