@@ -18,8 +18,8 @@ def get_supported_formats():
         out, err = pro.communicate()
         if pro.returncode != 0:
             logger.debug(
-                "GetFeatureExtractorTypes failed with error code %d! ",
-                pro.returncode,
+                "GetFeatureExtractorTypes failed with error code %d! "
+                % pro.returncode,
                 out,
                 err
             )
