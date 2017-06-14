@@ -1,4 +1,5 @@
-'''Analyzer for audio files using AcoustID'''
+"""Analyzer for audio files using AcoustID"""
+
 from __future__ import print_function
 import os
 import mimetypes
@@ -8,7 +9,6 @@ from damn_at import logger
 from damn_at import AssetId, FileId, FileDescription, AssetDescription
 from damn_at.pluginmanager import IAnalyzer
 from damn_at.analyzers.audio import metadata
-
 from acoustid import fingerprint_file
 
 
@@ -19,15 +19,19 @@ def get_supported_formats():
         out, err = pro.communicate()
         if pro.returncode != 0:
             logger.debug(
-                "GetAcoustIDTypes failed with error code %d! " % (pro.returncode),
+                'GetAcoustIDTypes failed with error code %d! '
+                % pro.returncode,
                 out,
                 err
             )
             return []
     except OSError as oserror:
-        logger.debug("GetAcoustIDTypes failed! %s", oserror)
+        logger.debug('GetAcoustIDTypes failed! %s', oserror)
         return []
-    extensions = [line.split()[1] for line in out.decode("utf-8").split("\n")[4:] if len(line.split()) > 1]
+    extensions = [
+        line.split()[1] for line in out.decode('utf-8').split('\n')[4:]
+        if len(line.split()) > 1]
+
     mimes = []
     for ext in extensions:
         mime = mimetypes.guess_type('file.' + ext, False)[0]
@@ -37,7 +41,7 @@ def get_supported_formats():
 
 
 class SoundAnalyzer(IAnalyzer):
-    '''Class for sound analyzer called in the analyzer'''
+    """Class for sound analyzer called in the analyzer"""
 
     handled_types = get_supported_formats()
 
@@ -52,17 +56,25 @@ class SoundAnalyzer(IAnalyzer):
         file_descr = FileDescription(file=fileid)
         file_descr.assets = []
 
-        asset_descr = AssetDescription(asset=AssetId(subname=os.path.basename(anURI),
-                                       mimetype=mimetypes.guess_type(anURI, False)[0],
-                                       file=fileid))
+        asset_descr = AssetDescription(asset=AssetId(
+            subname=os.path.basename(anURI),
+            mimetype=mimetypes.guess_type(anURI, False)[0],
+            file=fileid))
 
         try:
             duration, fingerprint = fingerprint_file(anURI)
-            fingerprint_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, str(duration)+ str(fingerprint))
+            fingerprint_uuid = uuid.uuid5(uuid.NAMESPACE_DNS,
+                                          str(duration) + str(fingerprint))
+
         except Exception as e:
-            print(("E: AcoustID analyzer failed %s with error %s" % (anURI, e)))
+            print(('E: AcoustID analyzer failed %s with error %s'
+                   % (anURI, e)))
             return False
-        meta = {'duration': str(duration)+'s', 'fingerprint': fingerprint, 'fingerprint_uuid': fingerprint_uuid}
+        meta = {
+            'duration': str(duration) + 's',
+            'fingerprint': fingerprint,
+            'fingerprint_uuid': fingerprint_uuid
+        }
         asset_descr.metadata = metadata.MetaDataAcoustID.extract(meta)
         file_descr.assets.append(asset_descr)
 
