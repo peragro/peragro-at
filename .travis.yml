@@ -14,7 +14,7 @@ before_install:
  - sudo apt-get install -qq python3-dev cython libavcodec-dev libavformat-dev libswscale-dev
  - sudo apt-get install -qq ffmpeg sox libsox-fmt-mp3
  - sudo apt-get install -qq libimage-exiftool-perl
- - sudo apt-get build-dep python3-matplotlib
+ - sudo apt-get build-dep python-matplotlib
 install:
 - pip install matplotlib
 - git clone https://github.com/peragro/peragro-test-files
