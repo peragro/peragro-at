@@ -1,6 +1,6 @@
 language: python
 python:
-- "2.7"
+- "3.5"
 env:
   global:
     secure: CR0RYDzX5o+Jwd7wAE4XES8Gwpk6X9JbRREb7dFhfUgXoW1gLOlRlz5lI9CtXw4ib/XtYvm3gcpJADn63S+X2edVt5loQcB7wH8LhPYfdkhmDm+DUpugq4TZnWjkeYKkOQpu7l65dKCfO9nnXiuzZlJ4jIW7vhh3IPmHLUWUzAw=
@@ -10,21 +10,22 @@ before_install:
  - sudo apt-get install -qq python-sphinx
  - sudo apt-get install -qq blender
  - sudo apt-get install -qq pylint
- - sudo apt-get install -qq python-all-dev
- - sudo apt-get install -qq python-dev cython libavcodec-dev libavformat-dev libswscale-dev
+ - sudo apt-get install -qq python3-all-dev
+ - sudo apt-get install -qq python3-dev cython libavcodec-dev libavformat-dev libswscale-dev
  - sudo apt-get install -qq ffmpeg sox libsox-fmt-mp3
  - sudo apt-get install -qq libimage-exiftool-perl
  - sudo apt-get build-dep python-matplotlib
+ - sudo apt-get install python3-setuptools
 install:
 - pip install matplotlib
-- git clone https://github.com/ayush1794/damn-test-files
-- git clone https://github.com/wgwang/thrift.git
-- cd thrift/lib/py3/
-- sudo python3 setup.py install
+- git clone https://github.com/peragro/peragro-test-files
+- git clone -b 0.10.0 https://github.com/apache/thrift.git
+- cd thrift/lib/py/
+- python3 setup.py install
 - cd ../../..
 - pip install coveralls
 script:
-- python setup.py develop
+- python3 setup.py develop
 - nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w tests/
 after_script:
 - ./bin/update-gh-pages.sh
