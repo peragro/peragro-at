@@ -9,6 +9,7 @@ from damn_at import logger
 from damn_at import AssetId, FileId, FileDescription, AssetDescription
 from damn_at.pluginmanager import IAnalyzer
 from damn_at.analyzers.audio import metadata
+import tempfile
 
 
 def get_supported_formats():
@@ -90,19 +91,36 @@ class SoundAnalyzer(IAnalyzer):
             mimetype=mimetypes.guess_type(anURI, False)[0],
             file=fileid)
         )
+        output_file = tempfile.NamedTemporaryFile(
+            suffix='.json',
+            prefix=os.path.basename(anURI).split(".")[0],
+            dir='/dev/shm',
+            delete=True
+        )
 
-        output_file = os.path.abspath(anURI).split(".")[0] + ".json"
 
         try:
-            subprocess.call([self.ex, anURI, output_file])
+            pro = subprocess.Popen([self.ex, anURI, output_file.name],
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
+            err, out = pro.communicate()
+            if pro.returncode != 0:
+                logger.debug(
+                    "FeatureExtractor failed with error code %d! "
+                    % pro.returncode,
+                    out,
+                    err
+                )
+            else:
+                logger.debug("Extraction audio features: \n%s",
+                             out.decode("utf-8"))
         except Exception as e:
             print(('E: Feature Extraction failed %s with error %s'
                    % (anURI, e)))
 
-        meta = get_extracted_features(output_file)
-        if os.path.exists(output_file):
-            os.remove(output_file)
+        meta = get_extracted_features(output_file.name)
         asset_descr.metadata = metadata.MetaDataFeatureExtraction.extract(meta)
         file_descr.assets.append(asset_descr)
+        output_file.close()
 
         return file_descr
