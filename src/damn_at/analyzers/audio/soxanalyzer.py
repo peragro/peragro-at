@@ -1,4 +1,4 @@
-'''Analyzer for audio files using sox'''
+"""Analyzer for audio files using sox"""
 from __future__ import print_function
 import os
 import re
@@ -14,11 +14,12 @@ from damn_at.analyzers.audio import metadata
 
 
 def get_sox_types():
-    '''Extract all possible formats for the audio file and store their mime
-    types'''
+    """Extract all possible formats for the audio file and store their mime
+    types"""
     try:
-        pro = subprocess.Popen(['sox', '-h'], stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+        pro = subprocess.Popen(['sox', '-h'],
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
         out, err = pro.communicate()
         if pro.returncode != 0:
             logger.debug(
@@ -41,12 +42,13 @@ def get_sox_types():
     mimes = []
     for ext in extensions:
         mime = mimetypes.guess_type('file.'+ext, False)[0]
-        if mime and mime.startswith('audio/'): mimes.append(mime)
+        if mime and mime.startswith('audio/'):
+            mimes.append(mime)
     return mimes
 
 
 class SoundAnalyzer(IAnalyzer):
-    '''class for sound analyzer called in the analyzer'''
+    """class for sound analyzer called in the analyzer"""
 
     handled_types = get_sox_types()
 
@@ -61,9 +63,10 @@ class SoundAnalyzer(IAnalyzer):
         file_descr = FileDescription(file=fileid)
         file_descr.assets = []
 
-        asset_descr = AssetDescription(asset=
-        AssetId(subname=os.path.basename(anURI),
-            mimetype=mimetypes.guess_type(anURI, False)[0], file=fileid))
+        asset_descr = AssetDescription(asset=AssetId(
+            subname=os.path.basename(anURI),
+            mimetype=mimetypes.guess_type(anURI, False)[0],
+            file=fileid))
 
         try:
             pro = subprocess.Popen(
@@ -73,11 +76,11 @@ class SoundAnalyzer(IAnalyzer):
             )
             out, err = pro.communicate()
             if pro.returncode != 0:
-                print(("E: SoundAnalyzer failed %s with error code %d! "%(anURI,
-                    pro.returncode), out, err))
+                print(("E: SoundAnalyzer failed %s with error code %d! "
+                       % (anURI, pro.returncode), out, err))
                 return False
         except OSError:
-            print(("E: SoundAnalyzer failed %s!"%(anURI), out, err))
+            print(("E: SoundAnalyzer failed %s!" % anURI, out, err))
             return False
 
         meta = {}
@@ -87,15 +90,17 @@ class SoundAnalyzer(IAnalyzer):
             if len(line) == 1:
                 line = line[0].split('=')
             line = [l.strip() for l in line]
-            if line[0] in ['Input File', 'Comment']: continue
+            if line[0] in ['Input File', 'Comment']:
+                continue
             meta[line[0].lower().replace(' ', '_')] = line[1]
 
         asset_descr.metadata = metadata.MetaDataSox.extract(meta)
         for key, value in meta.items():
-            #Add none default metadata.
+            # Add none default metadata.
             if key not in asset_descr.metadata:
-                asset_descr.metadata['Sox-'+key] = MetaDataValue(type=MetaDataType.STRING, string_value=value)
-
+                asset_descr.metadata['Sox-'+key] = MetaDataValue(
+                    type=MetaDataType.STRING,
+                    string_value=value)
 
         file_descr.assets.append(asset_descr)
 

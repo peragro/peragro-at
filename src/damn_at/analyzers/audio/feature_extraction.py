@@ -98,21 +98,18 @@ class SoundAnalyzer(IAnalyzer):
             delete=True
         )
 
-
         try:
             pro = subprocess.Popen([self.ex, anURI, output_file.name],
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
             err, out = pro.communicate()
             if pro.returncode != 0:
-                logger.debug(
-                    "FeatureExtractor failed with error code %d! "
-                    % pro.returncode,
-                    out,
-                    err
-                )
+                print("FeatureExtractor failed with error code %d! "
+                      % pro.returncode,
+                      out,
+                      err)
             else:
-                logger.debug("Extraction audio features: \n%s",
+                logger.debug("Extracting audio features: \n%s",
                              out.decode("utf-8"))
         except Exception as e:
             print(('E: Feature Extraction failed %s with error %s'
