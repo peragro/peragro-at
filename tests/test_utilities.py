@@ -18,20 +18,16 @@ class UtilTests(unittest.TestCase):
         self.assertFalse(ret)
 
     def test_is_existing_file_b(self):
-        """Test returns true when given a valid path
-        NamedTemporaryFile() not supported in windows"""
-        if os.name == 'nt':
-            return
+        """Test returns true when given a valid path"""
+
         f = tempfile.NamedTemporaryFile(delete=False)
         f.close()
         ret = utils.is_existing_file(f.name)
         self.assertTrue(ret)
 
     def test_calculate_hash(self):
-        """Test accurate hash generated from file
-        NamedTemporaryFile() not supported in windows"""
-        if os.name == 'nt':
-            return
+        """Test accurate hash generated from file"""
+
         data = (
             b'QlJBTlQgSVMgU1VQRVIgQVdFU09NRSBDT09MIEFORCBTSElULiBTTFVHUyBBUkUg'
             b'Q1VURQ=='
@@ -45,6 +41,7 @@ class UtilTests(unittest.TestCase):
 
     def test_unique_asset_id_reference_from_fields(self):
         """Make sure uuid generator produces accurate strings"""
+
         ret = utils.unique_asset_id_reference_from_fields(
             'OHIAMAHASH',
             'SNAILJUICE',
@@ -58,5 +55,5 @@ def test_suite():
     return unittest.TestLoader().loadTestsFromTestCase(UtilTests)
 
 if __name__ == '__main__':
-    #unittest.main()
+    # unittest.main()
     unittest.TextTestRunner().run(test_suite())
