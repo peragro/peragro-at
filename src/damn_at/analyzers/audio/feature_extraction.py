@@ -66,6 +66,17 @@ def get_extracted_features(ofile):
                     str(content['tonal']['key_key']) + ' ' + \
                     str(content['tonal']['key_scale'])
 
+        if 'lowlevel' in content:
+            if 'average_loudness' in content['lowlevel']:
+                features['average_loudness'] = \
+                    content['lowlevel']['average_loudness']
+
+        if 'metadata' in content:
+            if 'audio_properties' in content['metadata']:
+                if 'lossless' in content['metadata']['audio_properties']:
+                    features['lossless'] = \
+                        content['metadata']['audio_properties']['lossless']
+
     return features
 
 
@@ -97,7 +108,6 @@ class SoundAnalyzer(IAnalyzer):
             dir='/dev/shm',
             delete=True
         )
-
 
         try:
             pro = subprocess.Popen([self.ex, anURI, output_file.name],
