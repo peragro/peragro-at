@@ -24,5 +24,5 @@ class MetaDataFeatureExtraction(MetaDataExtractor):
     beats_count = MetaDataType.DOUBLE, lambda context: float(context['beats_count'])
     chord = MetaDataType.STRING, lambda context: context['chord']
     key = MetaDataType.STRING, lambda context: context['key']
-
-
+    average_loudness = MetaDataType.DOUBLE, lambda context: float(context['average_loudness'])
+    lossless = MetaDataType.BOOL, lambda context: bool(context['lossless'])
