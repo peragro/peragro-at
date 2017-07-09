@@ -5,9 +5,10 @@ env:
   global:
     secure: CR0RYDzX5o+Jwd7wAE4XES8Gwpk6X9JbRREb7dFhfUgXoW1gLOlRlz5lI9CtXw4ib/XtYvm3gcpJADn63S+X2edVt5loQcB7wH8LhPYfdkhmDm+DUpugq4TZnWjkeYKkOQpu7l65dKCfO9nnXiuzZlJ4jIW7vhh3IPmHLUWUzAw=
 services:
-  - docker    
+- docker    
 install:
-- docker build -t peragro/peragro-at github.com/peragro/peragro-at --build-arg CACHEBUST=$(date +%s)
+- docker pull peragro/peragro-at 
+- docker build -t peragro/peragro-at -v ./:/opt/peragro-at --build-arg CACHEBUST=$(date +%s)
 script:
 - docker run --rm -it peragro/peragro-at /bin/bash -c "nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/"
 after_script:
