@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y software-properties-common python-softw
 RUN pip3 install Yapsy Image gitpython filemagic logilab-common setuptools thrift argcomplete pyacoustid pyassimp
 
 #test dependencies
-RUN pip3 install nose mock
+RUN pip3 install nose mock coverage
 
 # swift dependencies
 RUN apt-get install -y autoconf automake libtool libpcre3-dev bison 
