@@ -13,4 +13,4 @@ script:
 after_script:
 - docker run --rm -it peragro/peragro-at /bin/bash -c "/opt/peragro-at/bin/update-gh-pages.sh"
 after_success:
-  docker run --rm -it peragro/peragro-at /bin/bash -c "coveralls -b /opt/peragro-at/"
+  docker run --rm -e TRAVIS=$TRAVIS -e TRAVIS_JOB_ID=$TRAVIS_JOB_ID -it peragro/peragro-at /bin/bash -c "coveralls -b /opt/peragro-at/"
