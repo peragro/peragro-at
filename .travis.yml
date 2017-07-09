@@ -4,30 +4,13 @@ python:
 env:
   global:
     secure: CR0RYDzX5o+Jwd7wAE4XES8Gwpk6X9JbRREb7dFhfUgXoW1gLOlRlz5lI9CtXw4ib/XtYvm3gcpJADn63S+X2edVt5loQcB7wH8LhPYfdkhmDm+DUpugq4TZnWjkeYKkOQpu7l65dKCfO9nnXiuzZlJ4jIW7vhh3IPmHLUWUzAw=
-before_install:
- - yes | sudo add-apt-repository ppa:irie/blender
- - sudo apt-get update -qq
- - sudo apt-get install -qq python-sphinx
- - sudo apt-get install -qq blender
- - sudo apt-get install -qq pylint
- - sudo apt-get install -qq python3-all-dev
- - sudo apt-get install -qq python3-dev cython libavcodec-dev libavformat-dev libswscale-dev
- - sudo apt-get install -qq ffmpeg sox libsox-fmt-mp3
- - sudo apt-get install -qq libimage-exiftool-perl
- - sudo apt-get build-dep python-matplotlib
- - sudo apt-get install python3-setuptools
+services:
+  - docker    
 install:
-- pip install matplotlib
-- git clone https://github.com/peragro/peragro-test-files
-- git clone -b 0.10.0 https://github.com/apache/thrift.git
-- cd thrift/lib/py/
-- python3 setup.py install
-- cd ../../..
-- pip install coveralls
+- docker build -t peragro/peragro-at github.com/peragro/peragro-at --build-arg CACHEBUST=$(date +%s)
 script:
-- python3 setup.py develop
-- nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w tests/
+- docker run --rm -it peragro/peragro-at nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/
 after_script:
-- ./bin/update-gh-pages.sh
+- docker run --rm -it peragro/peragro-at /opt/peragro-at/bin/update-gh-pages.sh
 after_success:
   coveralls

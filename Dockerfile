@@ -5,6 +5,9 @@ MAINTAINER Peragro Team
 RUN apt-get update && apt-get install -y software-properties-common python-software-properties blender git python3-pip python3-dev cython sox libsox-fmt-mp3 ffmpeg libimage-exiftool-perl python3-matplotlib libassimp-dev libchromaprint-tools curl
 RUN pip3 install Yapsy Image gitpython filemagic logilab-common setuptools thrift argcomplete pyacoustid pyassimp
 
+#test dependencies
+RUN pip3 install nose mock
+
 # swift dependencies
 RUN apt-get install -y autoconf automake libtool libpcre3-dev bison 
 
