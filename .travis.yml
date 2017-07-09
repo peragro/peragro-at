@@ -9,8 +9,8 @@ services:
 install:
 - docker build -t peragro/peragro-at github.com/peragro/peragro-at --build-arg CACHEBUST=$(date +%s)
 script:
-- docker run --rm -it peragro/peragro-at /bin/bash -c "nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/ ; /opt/peragro-at/bin/update-gh-pages.sh"
+- docker run --rm -it peragro/peragro-at /bin/bash -c "nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/"
 after_script:
 - docker run --rm -it peragro/peragro-at /bin/bash -c "/opt/peragro-at/bin/update-gh-pages.sh"
 after_success:
-  coveralls
+  docker run --rm -it peragro/peragro-at /bin/bash -c "coveralls -b /opt/peragro-at/"
