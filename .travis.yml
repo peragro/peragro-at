@@ -8,7 +8,8 @@ services:
 - docker    
 install:
 - docker pull peragro/peragro-at 
-- docker build -t peragro/peragro-at -v ./:/opt/peragro-at --build-arg CACHEBUST=$(date +%s)
+- pwd
+- ls
 script:
 - docker run --rm -it peragro/peragro-at /bin/bash -c "nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/"
 after_script:
