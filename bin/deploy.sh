@@ -23,6 +23,7 @@ echo -e "Starting to update gh-pages\n"
 #generate and copy data we're interested in to other place
 cd docs/
 make html
+doxygen Doxyfile
 echo "Copying html to " $HOME
 cp -R _build/html $HOME/html_gen
 echo "==============================="

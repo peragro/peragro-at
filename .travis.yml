@@ -4,6 +4,15 @@ python:
 env:
   global:
     secure: "TxYs86fLN8Yw+oN0GShmtLGS5a+NR2x35PcN4U8gEheRGSSxVU8O+MrpGfUZf3CVAT6FfE3zfX2DkV57JlWfP3i7ff5iPtMOEAzbqah41olFVCYCLJdw6J8dbfRcUkWS550b6BAXaWclB0jhtdEP8PmlFpAiRZ0acg3Ynsk+/ew="
+# Install dependencies
+addons:
+  apt:
+    packages:
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
+      - doxygen-gui
+      - graphviz
 before_install:
 - sudo apt-get install -qq python-sphinx
 services:
