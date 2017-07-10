@@ -31,7 +31,10 @@ echo "==============================="
 ls -la .
 echo "==============================="
 
-cd $HOME/html_gen
+cd ..
+git checkout gh-pages
+git clean -f -d
+cp -R $HOME/html_gen/* ./
 
 git init
 git config user.name "Travis"
