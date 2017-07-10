@@ -1,20 +1,23 @@
 language: python
 python:
-- "3.5"
+- '3.5'
 env:
   global:
-  - secure: "PjRj++G3b5AkLUowfqxx6ZPyo7e9qOfYuM4GX8iW3QLoKYv6Bs9N+jU40Hbr3kwmK6fA/ZmGfajp7N2lqfQfRdoFz9aATIxU2zr1HCQ+wlUtasRsyrbhdmGjRC3aAGvHponELSGZ+HxO4LG6X3e9yjAtH5kYwuVF1vsXmnGTcLk="
+    secure: "TxYs86fLN8Yw+oN0GShmtLGS5a+NR2x35PcN4U8gEheRGSSxVU8O+MrpGfUZf3CVAT6FfE3zfX2DkV57JlWfP3i7ff5iPtMOEAzbqah41olFVCYCLJdw6J8dbfRcUkWS550b6BAXaWclB0jhtdEP8PmlFpAiRZ0acg3Ynsk+/ew="
 before_install:
 - sudo apt-get install -qq python-sphinx
 services:
-- docker    
+- docker
 install:
-- docker pull peragro/peragro-at 
-- docker build -t peragro/peragro-at . --build-arg CACHEBUST=$(date +%s) --cache-from peragro/peragro-at
+- docker pull peragro/peragro-at
+- docker build -t peragro/peragro-at . --build-arg CACHEBUST=$(date +%s) --cache-from
+  peragro/peragro-at
 script:
-- docker run --rm -it peragro/peragro-at /bin/bash -c "nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/"
-after_script:
-- chmod +x ./bin/deploy.sh
-- ./bin/deploy.sh
+- docker run --rm -it peragro/peragro-at /bin/bash -c "nosetests -v --with-xunit --xunit-file=nosetests.xml
+  --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules
+  -w /opt/peragro-at/tests/"
 after_success:
-- docker run --rm -e TRAVIS=$TRAVIS -e TRAVIS_JOB_ID=$TRAVIS_JOB_ID -it peragro/peragro-at /bin/bash -c "coveralls -b /opt/peragro-at/"
+- docker run --rm -e TRAVIS=$TRAVIS -e TRAVIS_JOB_ID=$TRAVIS_JOB_ID -it peragro/peragro-at
+  /bin/bash -c "coveralls -b /opt/peragro-at/"
+- chmod +x bin/deploy.sh
+- bash bin/deploy.sh
