@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,14 +6,14 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to damn-at’s documentation! &mdash; damn-at 0.1 documentation</title>
+    <title>Welcome to peragro-at’s documentation! &mdash; peragro-at 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -25,67 +23,47 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="damn-at 0.1 documentation" href="#" />
-    <link rel="next" title="damn_at Package" href="autodoc/damn_at.html" /> 
+    <link rel="top" title="peragro-at 0.1 documentation" href="#" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="autodoc/damn_at.html" title="damn_at Package"
-             accesskey="N">next</a> |</li>
-        <li><a href="#">damn-at 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">peragro-at 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <div class="section" id="welcome-to-damn-at-s-documentation">
-<h1>Welcome to damn-at&#8217;s documentation!<a class="headerlink" href="#welcome-to-damn-at-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-peragro-at-s-documentation">
+<h1>Welcome to peragro-at&#8217;s documentation!<a class="headerlink" href="#welcome-to-peragro-at-s-documentation" title="Permalink to this headline">¶</a></h1>
 <p>The general process:</p>
-<div class="highlight-python"><pre>                      user requested format-\
+<div class="highlight-python"><div class="highlight"><pre>                      user requested format-\
                                        ______\______
         ___________                    |            |
         |          |/---&gt; Asset 1  ---&gt;| Transcoder |--&gt; Asset 1 in user requested format
 File --&gt;| Analyzer |----&gt; Asset 2      |____________|
         |__________|\---&gt; Asset 3
               \             /
-               \--Metadata-/</pre>
+               \--Metadata-/
+</pre></div>
 </div>
 <p>Example: A blend file is given to the analyzer, the analyzer looks up the plugin for .blend files by mimetype. The plugin then begins to scan the file, and it will output a list of all blender objects(which from now on will be called assets), the assets are given an internal mimetype of &#8216;x-blender/object&#8217; and additional information like face/vertex count, number of materials, etc is scanned and added to the asset as metadata. All this information is stored in the database. Note: at this point we haven&#8217;t done anything with the file except for having scanned it. An asset is just an unique ID combined with a file reference, a name(unique for that file), an internal mimetype and some metadata!</p>
 <p>Now say a user wants asset 1 in CS format, he&#8217;d request it with the mimetype &#8216;application/x-crystalspace.library+xml&#8217;, asset 1 is then looked up in the database, this tells us it has the internal mimetype of &#8216;x-blender/object&#8217; , so now we can lookup a transcoder for &#8216;application/x-crystalspace.library+xml&#8217; &#8211;&gt;&#8217;x-blender/object&#8217;. The asset is passed to the transcoder plugin, it reads the file, finds the object by name and extracts its data and converts it to the CS format.</p>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="autodoc/damn_at.html">damn_at Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#id1"><tt class="docutils literal"><span class="pre">damn_at</span></tt> Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#analyzer-module"><tt class="docutils literal"><span class="pre">analyzer</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#bld-module"><tt class="docutils literal"><span class="pre">bld</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#cli-module"><tt class="docutils literal"><span class="pre">cli</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#metadata-module"><tt class="docutils literal"><span class="pre">metadata</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#metadatastore-module"><tt class="docutils literal"><span class="pre">metadatastore</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#mimetypes-module"><tt class="docutils literal"><span class="pre">mimetypes</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#options-module"><tt class="docutils literal"><span class="pre">options</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#pluginmanager-module"><tt class="docutils literal"><span class="pre">pluginmanager</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#repository-module"><tt class="docutils literal"><span class="pre">repository</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#transcoder-module"><tt class="docutils literal"><span class="pre">transcoder</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#utilities-module"><tt class="docutils literal"><span class="pre">utilities</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autodoc/damn_at.html#subpackages">Subpackages</a></li>
-</ul>
-</li>
+<ul class="simple">
 </ul>
 </div>
 <div class="section" id="analyzers">
 <h2>Analyzers<a class="headerlink" href="#analyzers" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="autodoc/damn_at.analyzers.html">analyzers Package</a></li>
+<ul class="simple">
 </ul>
 </div>
 </div>
@@ -95,13 +73,15 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 <div class="section" id="convert-map">
 <h3>convert_map<a class="headerlink" href="#convert-map" title="Permalink to this headline">¶</a></h3>
 <p>This specifies the source and destination mimetypes this transcoder supports. Each entry describes a &#8216;source &#8211;&gt; destination&#8217;-mapping and is of the format:</p>
-<div class="highlight-python"><pre>"source-mimetype": "destination-mimetype"</pre>
+<div class="highlight-python"><div class="highlight"><pre>&quot;source-mimetype&quot;: &quot;destination-mimetype&quot;
+</pre></div>
 </div>
 <p>or:</p>
-<div class="highlight-python"><pre>"source-mimetype": ["destination-mimetype1", "destination-mimetype2", ...]</pre>
+<div class="highlight-python"><div class="highlight"><pre>&quot;source-mimetype&quot;: [&quot;destination-mimetype1&quot;, &quot;destination-mimetype2&quot;, ...]
+</pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">convert_map</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;image/png&quot;</span> <span class="p">:</span> <span class="s">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s">&quot;image/tga&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s">&quot;image/png&quot;</span><span class="p">]}</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">convert_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;image/png&quot;</span> <span class="p">:</span> <span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;image/tga&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;image/png&quot;</span><span class="p">]}</span>
 </pre></div>
 </div>
 <p>It can convert png to jpeg or convert tga to either jpeg or png.</p>
@@ -110,8 +90,8 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 <h3>options_map<a class="headerlink" href="#options-map" title="Permalink to this headline">¶</a></h3>
 <p>This specifies what options/arguments can be given when transcoding an asset. Each entry specifies a source mimetype(corresponding to one in the convert_map) and a dictionary of options; each tuple consists of the option&#8217;s name and a function used to convert the input to the correct type(all inputs are string).</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">convert_map</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;x-blender/object&quot;</span> <span class="p">:</span> <span class="s">&quot;image/jpeg&quot;</span><span class="p">}</span>
-<span class="n">options_map</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;x-blender/object&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;sizex&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s">&#39;sizey&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s">&#39;angley&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s">&#39;cameraType&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s">&#39;cameraAngley&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s">&#39;anglesy&#39;</span><span class="p">:</span> <span class="n">floatArray</span><span class="p">}}</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">convert_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x-blender/object&quot;</span> <span class="p">:</span> <span class="s2">&quot;image/jpeg&quot;</span><span class="p">}</span>
+<span class="n">options_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x-blender/object&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;sizex&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;sizey&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;angley&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;cameraType&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;cameraAngley&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;anglesy&#39;</span><span class="p">:</span> <span class="n">floatArray</span><span class="p">}}</span>
 </pre></div>
 </div>
 <p>This one renders a blender object to a jpeg, it&#8217;s options are size(x/y): specifying the width and height of the rendered image. angley: the rotation around the Y axis of the object. cameraType: blender options for camera type, ORTHO or PERSP. cameraAngley: the angle of the camera.</p>
@@ -126,9 +106,9 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
-<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+<li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span>Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
 </ul>
 </div>
 
@@ -136,19 +116,15 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to damn-at&#8217;s documentation!</a><ul>
-<li><a class="reference internal" href="#analyzers">Analyzers</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Welcome to peragro-at&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#analyzers">Analyzers</a></li>
 <li><a class="reference internal" href="#transcoders">Transcoders</a><ul>
 <li><a class="reference internal" href="#convert-map">convert_map</a></li>
-<li><a class="reference internal" href="#options-map">options_map</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#options-map">options_map</a></li>
 </ul>
 </li>
 </ul>
@@ -156,15 +132,14 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
-  <h4>Next topic</h4>
-  <p class="topless"><a href="autodoc/damn_at.html"
-                        title="next chapter">damn_at Package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -181,21 +156,18 @@ File --&gt;| Analyzer |----&gt; Asset 2      |____________|
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="autodoc/damn_at.html" title="damn_at Package"
-             >next</a> |</li>
-        <li><a href="#">damn-at 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">peragro-at 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, sueastside.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

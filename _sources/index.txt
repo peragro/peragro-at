@@ -1,4 +1,4 @@
-Welcome to damn-at's documentation!
+Welcome to peragro-at's documentation!
 ===================================
 
 The general process::
