@@ -42,7 +42,8 @@ clean:
 	-rm -rf $(BUILDDIR)/*
 
 html:
-	sphinx-apidoc ../damn_at -o autodoc
+	mkdir -p ../peragro-at
+	sphinx-apidoc ../peragro-at -o autodoc
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	rm -rf autodoc
 	@echo
