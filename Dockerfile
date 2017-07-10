@@ -39,21 +39,22 @@ RUN git clone https://github.com/MTG/gaia.git /opt/gaia \
     && ./waf \
     && ./waf install 
 
-#install essentia v2.1_beta2
+#install essentia
 RUN git clone https://github.com/MTG/essentia.git /opt/essentia \
     && cd /opt/essentia \
-    && git checkout tags/v2.1_beta2 \
-    && ./waf configure --mode=release --with-gaia --with-example=streaming_extractor_music_svm,streaming_extractor_music \
+    && ./waf configure --mode=release --with-gaia --with-example=streaming_extractor_music_svm \
     && ./waf \
-    && cp ./build/src/examples/streaming_extractor_music /usr/local/bin \
-    && cp ./build/src/examples/streaming_extractor_music_svm /usr/local/bin
-    #&& cp ./build/src/examples/streaming_extractor_freesound /usr/local/bin \
-    #&& cp ./build/src/libessentia.so /usr/local/lib 
+    && cp ./build/src/examples/essentia_streaming_extractor_music_svm /usr/local/bin \
+    && cp ./build/src/libessentia.so /usr/local/lib
 
 
 #Download svm models for high level extraction
-#RUN curl http://essentia.upf.edu/documentation/svm_models/essentia-extractor-svm_models-v2.1_beta1.tar.gz | tar xz -C /tmp \
-#    && mv /tmp/v2.1_beta1/svm_models/ /usr/local/bin/
+RUN curl http://essentia.upf.edu/documentation/svm_models/essentia-extractor-svm_models-v2.1_beta1.tar.gz | tar xz -C /tmp \
+    && mv /tmp/v2.1_beta1/svm_models/ /usr/local/bin/
+
+#Download prebuilt static binary from acousticBrainz website
+RUN curl http://acousticbrainz.org/static/download/essentia-extractor-v2.1_beta2-linux-x86_64.tar.gz | tar xz -C /tmp \
+    && mv /tmp/streaming_extractor_music /usr/local/bin/
 
 #Download peragro-test-data for troubleshooting
 RUN git clone https://github.com/peragro/peragro-test-files.git /opt/peragro-test-files
