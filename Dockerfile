@@ -63,6 +63,6 @@ RUN git clone https://github.com/peragro/peragro-test-files.git /opt/peragro-tes
 
 #download and setup peragro-at
 ARG CACHEBUST=1
-RUN git clone https://github.com/peragro/peragro-at.git /opt/peragro-at
+ADD . /opt/peragro-at
 RUN cd /opt/peragro-at && python3 setup.py develop
 RUN pt a /opt/peragro-test-files/mesh/blender/cube1.blend
