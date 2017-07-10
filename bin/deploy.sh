@@ -36,6 +36,8 @@ git checkout gh-pages
 git clean -f -d
 cp -R $HOME/html_gen/* ./
 
+echo "setup git"
+
 git init
 git config user.name "Travis"
 git config user.email "travis@travis-ci.org"
