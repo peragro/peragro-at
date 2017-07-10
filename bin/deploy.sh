@@ -31,9 +31,10 @@ echo "==============================="
 ls -la .
 echo "==============================="
 
-cd ..
+cd $HOME
+git clone https://github.com/peragro/peragro-at.git
+cd peragro-at
 git checkout gh-pages
-git clean -f -d
 cp -R $HOME/html_gen/* ./
 
 echo "setup git"
