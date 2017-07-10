@@ -31,6 +31,8 @@ echo "==============================="
 ls -la .
 echo "==============================="
 
+cd $HOME/html_gen
+
 git init
 git config user.name "Travis"
 git config user.email "travis@travis-ci.org"
