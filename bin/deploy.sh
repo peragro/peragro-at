@@ -4,7 +4,7 @@ set -o errexit -o nounset
 
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]
 then
-  echo "This commit was made against a pull request! No deploy!"
+  echo "This commit was made against pull request $TRAVIS_PULL_REQUEST! No deploy!"
   exit 0
 fi
 
