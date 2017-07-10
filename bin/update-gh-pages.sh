@@ -1,4 +1,4 @@
-if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+if [ "${ghToken:-false}" != "false" ]; then
   echo -e "Starting to update gh-pages\n"
 
   #generate and copy data we're interested in to other place
