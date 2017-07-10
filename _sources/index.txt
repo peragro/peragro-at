@@ -21,25 +21,25 @@ Now say a user wants asset 1 in CS format, he'd request it with the mimetype 'ap
 .. toctree::
    :maxdepth: 2
 
-   autodoc/damn_at
+   autodoc/peragro-at
    
 
 Analyzers
 ----------
 
-.. autoclass:: damn_at.pluginmanager.IAnalyzer
+.. autoclass:: peragro-at.pluginmanager.IAnalyzer
    :members:
 
 .. toctree::
    :maxdepth: 1
 
-   autodoc/damn_at.analyzers
+   autodoc/peragro-at.analyzers
 
 
 Transcoders
 -----------
 
-.. autoclass:: damn_at.pluginmanager.ITranscoder
+.. autoclass:: peragro-at.pluginmanager.ITranscoder
    :members:
 
 Any .py file in the transcoders/ directory will be automatically scanned on startup and registered as a plugin if it has the following requirements: It has a function 'transcode(self, anAsset, aFormat, kwargs)' It has a member dictionary **convert_map** and it has a member dictionary **options_map**
@@ -79,7 +79,7 @@ This one renders a blender object to a jpeg, it's options are size(x/y): specify
 .. toctree::
    :maxdepth: 4
 
-   autodoc/damn_at.transcoders
+   autodoc/peragro-at.transcoders
 
 
 Indices and tables
