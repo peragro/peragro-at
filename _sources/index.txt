@@ -89,3 +89,7 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+Doxygen
+==================
+
+* Doxygen: `Doxygen <doxy>`_.
