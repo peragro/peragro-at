@@ -46,6 +46,8 @@ git remote add upstream "https://$GH_TOKEN@github.com/peragro/peragro-at.git"
 git fetch upstream
 git reset upstream/gh-pages
 
+echo "touch all files"
+
 touch .
 
 git add -A .
