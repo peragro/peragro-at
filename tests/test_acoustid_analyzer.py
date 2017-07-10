@@ -46,8 +46,7 @@ class TestCase(unittest.TestCase):
                               "ChFCCBAMCQXAIQQIpBAwCDhAFBCecCAIo4wgAhAhgDiGiGE"
                               "CMCAEI-hgBQACxhEhAA'",
                'fingerprint_uuid': 'd6b5ffe5-a332-554c-8a68-56eae6f9fbfe',
-               'duration': '15.0044375s',
-               'hello_world': 'sagar-kohli'}
+               'duration': '15.0044375s'}
 
         analyzer = acoustid_analyzer.SoundAnalyzer()
         uri = os.path.join(os.path.dirname(__file__),
