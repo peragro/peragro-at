@@ -41,8 +41,8 @@ def get_supported_formats():
     return mimes
 
 
-def get_extracted_features(ofile):
-    """returns the extracted features from json file in dictionary format"""
+def get_extracted_ll_features(ofile):
+    """returns the extracted low-level features from json file in dictionary format"""
 
     features = {}
     with open(ofile, 'r') as ef:
@@ -80,6 +80,40 @@ def get_extracted_features(ofile):
     return features
 
 
+def get_extracted_hl_features(ofile):
+    """returns the extracted high-level features from json file in dictionary format"""
+
+    features = {}
+    with open(ofile, 'r') as ef:
+        content = json.load(ef)
+
+        for f in content['highlevel']:
+            features[f] = content['highlevel'][f]['value']
+
+    return features
+
+
+def extract_feature(ex, in_file, out_file, conf_file=''):
+    """Extract feature using 'ex' extractor and stores it to 'out_file'"""
+
+    try:
+        pro = subprocess.Popen([ex, in_file, out_file, conf_file],
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+        err, out = pro.communicate()
+        if pro.returncode != 0:
+            print("FeatureExtractor failed with error code %d! "
+                  % pro.returncode,
+                  out,
+                  err)
+        else:
+            logger.debug("Extracting audio features: \n%s",
+                         out.decode("utf-8"))
+    except OSError as e:
+        print(('E: Feature Extraction failed %s with error %s'
+               % (in_file, e)))
+
+
 class SoundAnalyzer(IAnalyzer):
     """Class for sound analyzer called in the analyzer"""
 
@@ -87,7 +121,9 @@ class SoundAnalyzer(IAnalyzer):
 
     def __init__(self):
         IAnalyzer.__init__(self)
-        self.ex = 'streaming_extractor_music'
+        self.ll_ex = 'streaming_extractor_music'
+        self.hl_ex = 'essentia_streaming_extractor_music_svm'
+        self.conf = os.path.join(os.path.dirname(__file__), 'profile.conf')
 
     def activate(self):
         pass
@@ -102,33 +138,33 @@ class SoundAnalyzer(IAnalyzer):
             mimetype=mimetypes.guess_type(anURI, False)[0],
             file=fileid)
         )
-        output_file = tempfile.NamedTemporaryFile(
+        output_file_ll = tempfile.NamedTemporaryFile(
             suffix='.json',
-            prefix=os.path.basename(anURI).split(".")[0],
+            prefix=os.path.basename(anURI).split(".")[0] + '_ll',
+            dir='/dev/shm',
+            delete=True
+        )
+        output_file_hl = tempfile.NamedTemporaryFile(
+            suffix='.json',
+            prefix=os.path.basename(anURI).split(".")[0] + '_hl',
             dir='/dev/shm',
             delete=True
         )
 
-        try:
-            pro = subprocess.Popen([self.ex, anURI, output_file.name],
-                                   stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE)
-            err, out = pro.communicate()
-            if pro.returncode != 0:
-                print("FeatureExtractor failed with error code %d! "
-                      % pro.returncode,
-                      out,
-                      err)
-            else:
-                logger.debug("Extracting audio features: \n%s",
-                             out.decode("utf-8"))
-        except Exception as e:
-            print(('E: Feature Extraction failed %s with error %s'
-                   % (anURI, e)))
+        meta = {}
+        # low-level features
+        extract_feature(self.ll_ex, anURI, output_file_ll.name)
+        ll_meta = get_extracted_ll_features(output_file_ll.name)
+        meta.update(ll_meta)
 
-        meta = get_extracted_features(output_file.name)
+        # high-level features
+        extract_feature(self.hl_ex, output_file_ll.name, output_file_hl.name, self.conf)
+        hl_meta = get_extracted_hl_features(output_file_hl.name)
+        meta.update(hl_meta)
+
         asset_descr.metadata = metadata.MetaDataFeatureExtraction.extract(meta)
         file_descr.assets.append(asset_descr)
-        output_file.close()
+        output_file_ll.close()
+        output_file_hl.close()
 
         return file_descr
