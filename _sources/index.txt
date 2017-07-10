@@ -92,4 +92,4 @@ Indices and tables
 Doxygen
 ==================
 
-* Doxygen: `Doxygen <doxy>`_.
+* Doxygen: `<doxy/html>`_.
