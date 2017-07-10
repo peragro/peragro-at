@@ -14,6 +14,6 @@ install:
 script:
 - docker run --rm -it peragro/peragro-at /bin/bash -c "nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/"
 after_script:
-- ./bin/update-gh-pages.sh
+- ./bin/deploy.sh
 after_success:
 - docker run --rm -e TRAVIS=$TRAVIS -e TRAVIS_JOB_ID=$TRAVIS_JOB_ID -it peragro/peragro-at /bin/bash -c "coveralls -b /opt/peragro-at/"
