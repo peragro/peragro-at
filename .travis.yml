@@ -6,7 +6,7 @@ env:
   - secure: "PjRj++G3b5AkLUowfqxx6ZPyo7e9qOfYuM4GX8iW3QLoKYv6Bs9N+jU40Hbr3kwmK6fA/ZmGfajp7N2lqfQfRdoFz9aATIxU2zr1HCQ+wlUtasRsyrbhdmGjRC3aAGvHponELSGZ+HxO4LG6X3e9yjAtH5kYwuVF1vsXmnGTcLk="
 before_install:
 - sudo apt-get install -qq python-sphinx
- services:
+services:
 - docker    
 install:
 - docker pull peragro/peragro-at 
