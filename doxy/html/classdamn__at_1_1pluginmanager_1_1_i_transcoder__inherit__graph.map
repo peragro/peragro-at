@@ -1,0 +1,13 @@
+<map id="damn_at.pluginmanager.ITranscoder" name="damn_at.pluginmanager.ITranscoder">
+<area shape="rect" id="node3" href="$classaudio_1_1wav2image_1_1transcoderwav2image_1_1_audio2_image_transcoder.html" title="audio.wav2image.transcoderwav2image.\lAudio2ImageTranscoder" alt="" coords="424,5,683,46"/>
+<area shape="rect" id="node4" href="$classaudio_1_1wav2json_1_1transcoderwav2json_1_1_audio2_json_transcoder.html" title="audio.wav2json.transcoderwav2json.\lAudio2JsonTranscoder" alt="" coords="435,70,671,111"/>
+<area shape="rect" id="node5" href="$classimage_1_1blender_1_1blenderimage_1_1_image_transcoder.html" title="image.blender.blenderimage.\lImageTranscoder" alt="" coords="459,135,647,177"/>
+<area shape="rect" id="node6" href="$classimage_1_1pil_1_1transcoderimage_1_1_image_transcoder.html" title="image.pil.transcoderimage.\lImageTranscoder" alt="" coords="464,201,643,242"/>
+<area shape="rect" id="node7" href="$classmesh_1_1blender_1_1camera_1_1transcoderblendercamera_1_1_blender_camera_transcoder.html" title="mesh.blender.camera.transcoderblendercamera.\lBlenderCameraTranscoder" alt="" coords="403,266,704,307"/>
+<area shape="rect" id="node8" href="$classmesh_1_1blender_1_1material_1_1transcoderblendermaterial_1_1_blender_material_transcoder.html" title="mesh.blender.material.transcoderblendermaterial.\lBlenderMaterialTranscoder" alt="" coords="400,331,707,373"/>
+<area shape="rect" id="node9" href="$classmesh_1_1blender_1_1reel_1_1transcoderblenderreel_1_1_blender_transcoder.html" title="mesh.blender.reel.transcoderblenderreel.\lBlenderTranscoder" alt="" coords="425,397,682,438"/>
+<area shape="rect" id="node10" href="$classmesh_1_1blender_1_1render_1_1transcoderblenderrender_1_1_blender_transcoder.html" title="mesh.blender.render.transcoderblenderrender.\lBlenderTranscoder" alt="" coords="410,462,697,503"/>
+<area shape="rect" id="node11" href="$classmesh_1_1blender_1_1text_1_1transcoderblendertext_1_1_blender_transcoder.html" title="mesh.blender.text.transcoderblendertext.\lBlenderTranscoder" alt="" coords="424,527,683,569"/>
+<area shape="rect" id="node12" href="$classtranscoderthreejs_1_1_blender_three_j_s_transcoder.html" title="transcoderthreejs.Blender\lThreeJSTranscoder" alt="" coords="468,593,639,634"/>
+<area shape="rect" id="node13" href="$classvideo_1_1transcodervideo2image_1_1_video2_image_transcoder.html" title="video.transcodervideo2image.\lVideo2ImageTranscoder" alt="" coords="456,658,651,699"/>
+</map>
