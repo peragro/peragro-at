@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# damn-at documentation build configuration file, created by
+# peragro-at documentation build configuration file, created by
 # sphinx-quickstart on Thu Oct 31 21:43:52 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'damn-at'
+project = u'peragro-at'
 copyright = u'2013, sueastside'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -164,7 +164,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'damn-atdoc'
+htmlhelp_basename = 'peragro-atdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'damn-at.tex', u'damn-at Documentation',
+  ('index', 'peragro-at.tex', u'peragro-at Documentation',
    u'sueastside', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'damn-at', u'damn-at Documentation',
+    ('index', 'peragro-at', u'peragro-at Documentation',
      [u'sueastside'], 1)
 ]
 
@@ -227,8 +227,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'damn-at', u'damn-at Documentation',
-   u'sueastside', 'damn-at', 'One line description of project.',
+  ('index', 'peragro-at', u'peragro-at Documentation',
+   u'sueastside', 'peragro-at', 'One line description of project.',
    'Miscellaneous'),
 ]
 

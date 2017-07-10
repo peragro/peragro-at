@@ -280,7 +280,7 @@ def main():
 
     logging.basicConfig(format='%(levelname)s:%(message)s', level=args.loglevel)
     formatter = logging.Formatter('%(message)s')
-    output = logging.getLogger('damn-at_analyzer')
+    output = logging.getLogger('peragro-at_analyzer')
     stream_handler = logging.StreamHandler()
     output.setLevel(logging.INFO)
     stream_handler.setFormatter(formatter)
