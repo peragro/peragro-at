@@ -69,4 +69,4 @@ RUN cd /opt/peragro-at && python3 setup.py develop
 RUN pt a /opt/peragro-test-files/mesh/blender/cube1.blend
 
 #Run tests
-RUN nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/
+RUN nosetests -v --with-xunit --xunit-file=nosetests.xml --cover-package=damn_at --with-coverage -e ^rtest.+$ --cover-erase --cover-xml --all-modules -w /opt/peragro-at/tests/ --exe
