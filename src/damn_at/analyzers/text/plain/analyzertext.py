@@ -4,11 +4,6 @@ Generic Text analyzer.
 from __future__ import absolute_import
 import os
 from io import open
-if os.name == 'nt':
-    import mimetypes as sys_mimetypes
-else:
-    import magic
-
 from damn_at import (
     mimetypes,
     MetaDataType,
@@ -18,8 +13,11 @@ from damn_at import (
     AssetDescription,
     AssetId
 )
-
 from damn_at.pluginmanager import IAnalyzer
+if os.name == 'nt':
+    import mimetypes as sys_mimetypes
+else:
+    import magic
 
 
 class GenericTextAnalyzer(IAnalyzer):
@@ -52,7 +50,7 @@ class GenericTextAnalyzer(IAnalyzer):
         else:
             with magic.Magic(flags=magic.MAGIC_MIME_ENCODING) as mm:
                 charset = mm.id_filename(an_uri)
-            
+
         asset_descr.metadata = {}
 
         asset_descr.metadata['lines'] = MetaDataValue(

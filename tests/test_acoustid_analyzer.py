@@ -1,4 +1,5 @@
-import unittest, os
+import unittest
+import os
 from mock import Mock, patch
 from damn_at.analyzers.audio import acoustid_analyzer
 from damn_at import mimetypes
