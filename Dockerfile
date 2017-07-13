@@ -59,11 +59,12 @@ RUN curl http://essentia.upf.edu/documentation/svm_models/essentia-extractor-svm
 RUN curl http://acousticbrainz.org/static/download/essentia-extractor-v2.1_beta2-linux-x86_64.tar.gz | tar xz -C /tmp \
     && mv /tmp/streaming_extractor_music /usr/local/bin/
 
+#download and setup peragro-at
+ARG CACHEBUST=1
+	
 #Download peragro-test-data for troubleshooting
 RUN git clone https://github.com/peragro/peragro-test-files.git /opt/peragro-test-files
 
-#download and setup peragro-at
-ARG CACHEBUST=1
 ADD . /opt/peragro-at
 RUN cd /opt/peragro-at && python3 setup.py develop
 RUN pt a /opt/peragro-test-files/mesh/blender/cube1.blend
