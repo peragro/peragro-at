@@ -1,2 +1,6 @@
 ignore-paths:
     - damn_at/serialization/generated
+python-targets:
+  - 3
+doc-warnings: true
+max-line-length: 256
