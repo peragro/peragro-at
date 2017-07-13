@@ -23,8 +23,8 @@ var searchData=
   ['metadatavalue',['MetaDataValue',['../classdamn__at_1_1serialization_1_1generated_1_1damn__types_1_1ttypes_1_1_meta_data_value.html',1,'damn_at::serialization::generated::damn_types::ttypes']]],
   ['metadatawavefrontdefault',['MetaDataWaveFrontDefault',['../classdamn__at_1_1analyzers_1_1mesh_1_1metadata_1_1_meta_data_wave_front_default.html',1,'damn_at::analyzers::mesh::metadata']]],
   ['metadataxcf',['MetaDataXCF',['../classdamn__at_1_1analyzers_1_1image_1_1metadata_1_1_meta_data_x_c_f.html',1,'damn_at::analyzers::image::metadata']]],
-  ['mockdamnpluginmanager',['MockDAMNPluginManager',['../classtests_1_1test__analyzer_1_1_mock_d_a_m_n_plugin_manager.html',1,'tests::test_analyzer']]],
   ['mockdamnpluginmanager',['MockDAMNPluginManager',['../classtests_1_1test__transcoder_1_1_mock_d_a_m_n_plugin_manager.html',1,'tests::test_transcoder']]],
+  ['mockdamnpluginmanager',['MockDAMNPluginManager',['../classtests_1_1test__analyzer_1_1_mock_d_a_m_n_plugin_manager.html',1,'tests::test_analyzer']]],
   ['mockplugin',['MockPlugin',['../classtests_1_1test__analyzer_1_1_mock_plugin.html',1,'tests::test_analyzer']]],
   ['mockplugin',['MockPlugin',['../classtests_1_1test__transcoder_1_1_mock_plugin.html',1,'tests::test_transcoder']]],
   ['mystat',['MyStat',['../classdamn__at_1_1damnfs_1_1damnfs_1_1_my_stat.html',1,'damn_at::damnfs::damnfs']]]

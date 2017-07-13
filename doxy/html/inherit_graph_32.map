@@ -4,7 +4,9 @@
 <area shape="rect" id="node4" href="$classtests_1_1test__bld_1_1_test_case.html" title="tests.test_bld.TestCase" alt="" coords="188,121,351,148"/>
 <area shape="rect" id="node5" href="$classtests_1_1test__damnfs__path_1_1_test_case.html" title="tests.test_damnfs_path.TestCase" alt="" coords="159,172,379,199"/>
 <area shape="rect" id="node6" href="$classtests_1_1test__damnservice_1_1_d_a_m_n_service_test.html" title="tests.test_damnservice.DAMNServiceTest" alt="" coords="133,223,405,249"/>
-<area shape="rect" id="node7" href="$classtests_1_1test__serialization_1_1_serialization_test.html" title="tests.test_serialization.\lSerializationTest" alt="" coords="191,274,348,315"/>
-<area shape="rect" id="node8" href="$classtests_1_1test__transcoder_1_1_test_case.html" title="tests.test_transcoder.TestCase" alt="" coords="166,340,373,367"/>
-<area shape="rect" id="node9" href="$classtests_1_1test__utilities_1_1_util_tests.html" title="tests.test_utilities.Util\lTests" alt="" coords="195,391,344,433"/>
+<area shape="rect" id="node7" href="$classtests_1_1test__feature__extraction_1_1_test_case.html" title="tests.test_feature\l_extraction.TestCase" alt="" coords="196,274,343,315"/>
+<area shape="rect" id="node8" href="$classtests_1_1test__plain__text__analyzer_1_1_test_case.html" title="tests.test_plain_text\l_analyzer.TestCase" alt="" coords="199,339,339,381"/>
+<area shape="rect" id="node9" href="$classtests_1_1test__serialization_1_1_serialization_test.html" title="tests.test_serialization.\lSerializationTest" alt="" coords="191,405,348,446"/>
+<area shape="rect" id="node10" href="$classtests_1_1test__transcoder_1_1_test_case.html" title="tests.test_transcoder.TestCase" alt="" coords="166,471,373,497"/>
+<area shape="rect" id="node11" href="$classtests_1_1test__utilities_1_1_util_tests.html" title="tests.test_utilities.Util\lTests" alt="" coords="195,522,344,563"/>
 </map>
