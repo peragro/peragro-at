@@ -51,7 +51,7 @@ def get_extracted_ll_features(ofile):
 
         if 'rhythm' in content:
             if 'bpm' in content['rhythm']:
-                features['bpm'] = content['rhythm']['bpm']
+                features['bpm'] = int(content['rhythm']['bpm'])
             if 'beats_count' in content['rhythm']:
                 features['beats_count'] = content['rhythm']['beats_count']
 

@@ -20,7 +20,7 @@ class MetaDataAcoustID(MetaDataExtractor):
 
 class MetaDataFeatureExtraction(MetaDataExtractor):
 
-    bpm = MetaDataType.DOUBLE, lambda context: float(context['bpm'])
+    bpm = MetaDataType.INT, lambda context: int(context['bpm'])
     beats_count = MetaDataType.DOUBLE, lambda context: float(context['beats_count'])
     chord = MetaDataType.STRING, lambda context: context['chord']
     key = MetaDataType.STRING, lambda context: context['key']

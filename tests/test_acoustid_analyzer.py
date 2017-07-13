@@ -63,6 +63,50 @@ class TestCase(unittest.TestCase):
         assert metadata_dic == dic, \
             "Analyzed values are not equal to the expected ones"
 
+    def test_analyze_flacfile_(self):
+        dic = {'fingerprint': "b'AQAAIkqYSUoWRcKDLwmH5hqFlkR-JP2D_6isw0xIJagl4"
+                              "MieQ6UeBecuvNmhRT-qLcN5nMP_Qst18GGHSwtShYfzo8-D"
+                              "H0_koVaUEL7mouWN2AeEgDIICCKEJYwIgRAQDFgDCDAAOAM"
+                              "UcAgBogA'",
+               'fingerprint_uuid': '6aaf1de2-5c42-56cf-a981-eaab1928ead6',
+               'duration': '6.8s'}
+
+        analyzer = acoustid_analyzer.SoundAnalyzer()
+        uri = os.path.join(os.path.dirname(__file__),
+                           '../../peragro-test-files/audio/flac/dubstep.flac')
+        file_descr = analyzer.analyze(uri)
+        assert file_descr, "something went wrong while analysing dubstep.flac"
+        # print(file_descr)
+        metadata_dic = {}
+        for asset in file_descr.assets:
+            for key, value in asset.metadata.items():
+                ty, val = utilities.get_metadatavalue_type(value)
+                metadata_dic[key] = val
+        assert metadata_dic == dic, \
+            "Analyzed values are not equal to the expected ones"
+
+    def test_analyze_oggfile_(self):
+        dic = {'fingerprint': "b'AQAAIkqYSUoWRcJzfEmI5hqFlkR-JP2D_2hiHU9IJagl4"
+                              "MieQ6UeBecuvNnR6IemLcN5nMP_orkO6WGHJ1qQjnD-oc-D"
+                              "H0_koVaUEL5mtDxiH6QQUAYBQYQwljAiBEJAMGANIMAAYIA"
+                              "CDiFAFA'",
+               'fingerprint_uuid': 'cad37087-ed51-5b4f-ad0c-76a414acf26f',
+               'duration': '6.8s'}
+
+        analyzer = acoustid_analyzer.SoundAnalyzer()
+        uri = os.path.join(os.path.dirname(__file__),
+                           '../../peragro-test-files/audio/ogg/dubstep.ogg')
+        file_descr = analyzer.analyze(uri)
+        assert file_descr, "something went wrong while analysing dubstep.ogg"
+        # print(file_descr)
+        metadata_dic = {}
+        for asset in file_descr.assets:
+            for key, value in asset.metadata.items():
+                ty, val = utilities.get_metadatavalue_type(value)
+                metadata_dic[key] = val
+        assert metadata_dic == dic, \
+            "Analyzed values are not equal to the expected ones"
+
 
 def test_suite():
     """Return a list of tests"""
