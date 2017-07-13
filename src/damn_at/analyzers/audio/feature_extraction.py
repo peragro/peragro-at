@@ -42,7 +42,8 @@ def get_supported_formats():
 
 
 def get_extracted_ll_features(ofile):
-    """returns the extracted low-level features from json file in dictionary format"""
+    """returns the extracted low-level features from json file in dictionary
+    format"""
 
     features = {}
     with open(ofile, 'r') as ef:
@@ -50,7 +51,7 @@ def get_extracted_ll_features(ofile):
 
         if 'rhythm' in content:
             if 'bpm' in content['rhythm']:
-                features['bpm'] = content['rhythm']['bpm']
+                features['bpm'] = int(content['rhythm']['bpm'])
             if 'beats_count' in content['rhythm']:
                 features['beats_count'] = content['rhythm']['beats_count']
 
@@ -81,7 +82,8 @@ def get_extracted_ll_features(ofile):
 
 
 def get_extracted_hl_features(ofile):
-    """returns the extracted high-level features from json file in dictionary format"""
+    """returns the extracted high-level features from json file in dictionary
+    format"""
 
     features = {}
     with open(ofile, 'r') as ef:
@@ -158,7 +160,8 @@ class SoundAnalyzer(IAnalyzer):
         meta.update(ll_meta)
 
         # high-level features
-        extract_feature(self.hl_ex, output_file_ll.name, output_file_hl.name, self.conf)
+        extract_feature(self.hl_ex, output_file_ll.name,
+                        output_file_hl.name, self.conf)
         hl_meta = get_extracted_hl_features(output_file_hl.name)
         meta.update(hl_meta)
 
