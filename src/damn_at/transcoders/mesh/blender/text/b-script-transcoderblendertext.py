@@ -2,7 +2,8 @@ from __future__ import absolute_import
 from __future__ import print_function
 import bpy
 
-import os, sys
+import os
+import sys
 import argparse
 from string import Template
 from io import open
@@ -18,12 +19,12 @@ def main():
     parser.add_argument('destination')
 
     args = parser.parse_args(args)
-    
+
     text = bpy.data.texts[args.subname]
-    
+
     if not os.path.exists(os.path.dirname(args.destination)):
         os.makedirs(os.path.dirname(args.destination))
-        
+
     data = text.as_string()
     if data.strip() == '':
         data = 'application/x-blender.text\n EMPTY'
@@ -34,7 +35,7 @@ def main():
     with open(args.destination, 'wb') as file:
         file.write(bytes(data, 'UTF-8'))
         file.flush()
-        
-    
+
+
 if __name__ == '__main__':
     main()

@@ -8,7 +8,7 @@ class MetaDataBlenderImage(MetaDataExtractor):
     channels = MetaDataType.INT, lambda context: context['image'].channels
     depth = MetaDataType.INT, lambda context: context['image'].depth
     file_format = MetaDataType.STRING, lambda context: str(context['image'].file_format)
-    #resolution = MetaDataType.STRING, lambda context: '{}x{}'.format(*list(context['image'].resolution[:]))
+    # resolution = MetaDataType.STRING, lambda context: '{}x{}'.format(*list(context['image'].resolution[:]))
     size = MetaDataType.STRING, lambda context: '{}x{}'.format(*list(context['image'].size[:]))
 
 
@@ -37,6 +37,7 @@ class MetaDataWaveFrontDefault(MetaDataExtractor):
 
 class MetaDataAssimpTexture(MetaDataExtractor):
     __mimetype__ = 'application/assimp.texture'
+
 
 class MetaDataAssimpMaterial(MetaDataExtractor):
     __mimetype__ = 'application/assimp.material'

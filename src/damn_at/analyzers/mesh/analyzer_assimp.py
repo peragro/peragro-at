@@ -2,7 +2,6 @@
 Assimp-based analyzer.
 """
 from __future__ import absolute_import
-import os
 import logging
 import subprocess
 
@@ -117,7 +116,7 @@ class AssimpAnalyzer(IAnalyzer):
                 ))
                 asset_descr.metadata = MetaDataAssimpMesh.extract(mesh)
                 asset_descr.dependencies = []
-                #Dependencies
+                # Dependencies
                 if mesh.mMaterialIndex is not None:
                     if mesh.mMaterialIndex in materials:
                         asset_descr.dependencies.append(
