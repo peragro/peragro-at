@@ -153,8 +153,10 @@ dictionary&#160;</td><td class="memItemRight" valign="bottom"><b>convert_map</b>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= {<span class="stringliteral">&quot;audio/x-wav&quot;</span> : {<span class="stringliteral">&quot;image/png&quot;</span> : options, <span class="stringliteral">&quot;image/jpeg&quot;</span> :options},</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;            <span class="stringliteral">&quot;audio/mpeg&quot;</span> : {<span class="stringliteral">&quot;image/png&quot;</span> : options, <span class="stringliteral">&quot;image/jpeg&quot;</span> : options}}</div>
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= {<span class="stringliteral">&quot;audio/x-wav&quot;</span>: {<span class="stringliteral">&quot;image/png&quot;</span>: options,</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                   <span class="stringliteral">&quot;image/jpeg&quot;</span>: options},</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                   <span class="stringliteral">&quot;audio/mpeg&quot;</span>: {<span class="stringliteral">&quot;image/png&quot;</span>: options,</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;                                  <span class="stringliteral">&quot;image/jpeg&quot;</span>: options}}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -175,10 +177,17 @@ dictionary&#160;</td><td class="memItemRight" valign="bottom"><b>convert_map</b>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= [HexColorOption(name = <span class="stringliteral">&#39;color&#39;</span>, description = <span class="stringliteral">&#39;Color of the plot&#39;</span>, default = <span class="stringliteral">&#39;#0000ff&#39;</span>),</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;            IntOption(name = <span class="stringliteral">&#39;samplerate&#39;</span>, description = <span class="stringliteral">&#39;Sample Rate of the audio&#39;</span>, default = 800),</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;            VectorOption(name = <span class="stringliteral">&#39;size&#39;</span>, type = int, description = <span class="stringliteral">&#39;(width, height) tuple&#39;</span>, default = (8, 6), min = 0, max = Sizes.maxint, size = 2),</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;            IntOption(name = <span class="stringliteral">&#39;dpi&#39;</span>, description = <span class="stringliteral">&#39;DPI of image&#39;</span>, default = 80, min = 0)]</div>
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= [HexColorOption(name=<span class="stringliteral">&#39;color&#39;</span>,</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                              description=<span class="stringliteral">&#39;Color of the plot&#39;</span>,</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                              default=<span class="stringliteral">&#39;#0000ff&#39;</span>),</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;               IntOption(name=<span class="stringliteral">&#39;samplerate&#39;</span>,</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                         description=<span class="stringliteral">&#39;Sample Rate of the audio&#39;</span>,</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                         default=800),</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;               VectorOption(name=<span class="stringliteral">&#39;size&#39;</span>, type=int,</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;                            description=<span class="stringliteral">&#39;(width, height) tuple&#39;</span>,</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;                            default=(8, 6), min=0, max=Sizes.maxint, size=2),</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;               IntOption(name=<span class="stringliteral">&#39;dpi&#39;</span>, description=<span class="stringliteral">&#39;DPI of image&#39;</span>,</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                         default=80, min=0)]</div>
 </div><!-- fragment -->
 </div>
 </div>

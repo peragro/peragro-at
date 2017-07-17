@@ -153,9 +153,12 @@ dictionary&#160;</td><td class="memItemRight" valign="bottom"><b>convert_map</b>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= {<span class="stringliteral">&quot;application/x-blender.object&quot;</span>: {<span class="stringliteral">&quot;image/jpg&quot;</span>: options, <span class="stringliteral">&quot;image/png&quot;</span>: options},</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                   <span class="stringliteral">&quot;application/x-blender.mesh&quot;</span>: {<span class="stringliteral">&quot;image/jpg&quot;</span>: options, <span class="stringliteral">&quot;image/png&quot;</span>: options},</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                   <span class="stringliteral">&quot;application/x-blender.group&quot;</span>: {<span class="stringliteral">&quot;image/jpg&quot;</span>: options, <span class="stringliteral">&quot;image/png&quot;</span>: options},}</div>
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= {<span class="stringliteral">&quot;application/x-blender.object&quot;</span>: {<span class="stringliteral">&quot;image/jpg&quot;</span>: options,</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                                    <span class="stringliteral">&quot;image/png&quot;</span>: options},</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                   <span class="stringliteral">&quot;application/x-blender.mesh&quot;</span>: {<span class="stringliteral">&quot;image/jpg&quot;</span>: options,</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;                                                  <span class="stringliteral">&quot;image/png&quot;</span>: options},</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                   <span class="stringliteral">&quot;application/x-blender.group&quot;</span>: {<span class="stringliteral">&quot;image/jpg&quot;</span>: options,</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                                                   <span class="stringliteral">&quot;image/png&quot;</span>: options}, }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -176,9 +179,16 @@ dictionary&#160;</td><td class="memItemRight" valign="bottom"><b>convert_map</b>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= [IntVectorOption(name=<span class="stringliteral">&#39;size&#39;</span>, description=<span class="stringliteral">&#39;The target size of the image&#39;</span>, size=2, min=1, max=4096, default=(64, 64)),</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;               EnumOption(name=<span class="stringliteral">&#39;camera_type&#39;</span>, description=<span class="stringliteral">&#39;The camera type&#39;</span>, choices=(<span class="stringliteral">&#39;ORTHO&#39;</span>, <span class="stringliteral">&#39;PERSPECTIVE&#39;</span>), default=<span class="stringliteral">&#39;PERSPECTIVE&#39;</span>),</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;               FloatArrayOption(name=<span class="stringliteral">&#39;angles&#39;</span>, description=<span class="stringliteral">&#39;The angles&#39;</span>, min=0.0, max=3.1415, default=(0.0,))]</div>
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= [IntVectorOption(name=<span class="stringliteral">&#39;size&#39;</span>,</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                               description=<span class="stringliteral">&#39;The target size of the image&#39;</span>,</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                               size=2, min=1, max=4096, default=(64, 64)),</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;               EnumOption(name=<span class="stringliteral">&#39;camera_type&#39;</span>,</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                          description=<span class="stringliteral">&#39;The camera type&#39;</span>,</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                          choices=(<span class="stringliteral">&#39;ORTHO&#39;</span>, <span class="stringliteral">&#39;PERSPECTIVE&#39;</span>),</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                          default=<span class="stringliteral">&#39;PERSPECTIVE&#39;</span>),</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;               FloatArrayOption(name=<span class="stringliteral">&#39;angles&#39;</span>,</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;                                description=<span class="stringliteral">&#39;The angles&#39;</span>,</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;                                min=0.0, max=3.1415, default=(0.0,))]</div>
 </div><!-- fragment -->
 </div>
 </div>
