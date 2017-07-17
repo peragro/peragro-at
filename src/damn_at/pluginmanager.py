@@ -42,7 +42,8 @@ class IAnalyzer(IPlugin):
         :rtype: :py:class:`damn_at.FileDescription`
         :raises: :py:class:`damn_at.analyzer.AnalyzerException`
         """
-        raise NotImplementedError("'analyze' must be reimplemented by %s" % self)
+        raise NotImplementedError(
+            "'analyze' must be reimplemented by %s" % self)
 
 
 class ITranscoder(IPlugin):
@@ -54,15 +55,20 @@ class ITranscoder(IPlugin):
     Example::
     convert_map = {
         "image/tiff" : {
-            "image/jpeg": [IntVectorOption(name='size',  description='The target size of the image', size=2, default=(-1,-1))],
+            "image/jpeg": [IntVectorOption(
+                name='size',
+                description='The target size of the image',
+                size=2, default=(-1,-1))],
             "image/png": []
         },
     }
     """
 
-    def transcode(self, dest_path, file_descr, asset_id, target_mimetype, **options):
+    def transcode(self, dest_path, file_descr,
+                  asset_id, target_mimetype, **options):
         """Transcode some *CENSORED*"""
-        raise NotImplementedError("'transcode' must be reimplemented by %s" % self)
+        raise NotImplementedError(
+            "'transcode' must be reimplemented by %s" % self)
 
 
 class IMetaDataStore(IPlugin):
@@ -71,19 +77,22 @@ class IMetaDataStore(IPlugin):
         """
         Check if the given file hash is in the store.
         """
-        raise NotImplementedError("'is_in_store' must be reimplemented by %s" % self)
+        raise NotImplementedError(
+            "'is_in_store' must be reimplemented by %s" % self)
 
     def get_metadata(self, store_id, an_hash):
         """
         Get the FileDescription for the given hash.
         """
-        raise NotImplementedError("'get_metadata' must be reimplemented by %s" % self)
+        raise NotImplementedError(
+            "'get_metadata' must be reimplemented by %s" % self)
 
     def write_metadata(self, store_id, an_hash, a_file_descr):
         """
         Write the FileDescription to this store.
         """
-        raise NotImplementedError("'write_metadata' must be reimplemented by %s" % self)
+        raise NotImplementedError(
+            "'write_metadata' must be reimplemented by %s" % self)
 
 
 class IRepository(IPlugin):
@@ -91,7 +100,8 @@ class IRepository(IPlugin):
     def get_meta_data(self, an_uri, a_file_descr):
         """
         """
-        raise NotImplementedError("'get_meta_data' must be reimplemented by %s" % self)
+        raise NotImplementedError(
+            "'get_meta_data' must be reimplemented by %s" % self)
 
 
 class DAMNPluginManager(PluginManager):
@@ -100,7 +110,9 @@ class DAMNPluginManager(PluginManager):
         directory = os.path.dirname(os.path.abspath(__file__))
         PluginManager.__init__(
             self,
-            directories_list=[os.path.join(directory, 'analyzers'), os.path.join(directory, 'transcoders'), os.path.join(directory, 'repositories')],
+            directories_list=[os.path.join(directory, 'analyzers'),
+                              os.path.join(directory, 'transcoders'),
+                              os.path.join(directory, 'repositories')],
             categories_filter={
                 "Analyzer": IAnalyzer,
                 "Transcoder": ITranscoder,
@@ -134,10 +146,14 @@ class DAMNPluginManager(PluginManager):
                     plugin_to_activate.is_activated = True
                 except Exception:
                     try:
-                        raise ActivationFailedException('Failed to activate %s' % (plugin_info_reference.name))
+                        raise ActivationFailedException(
+                            'Failed to activate %s'
+                            % plugin_info_reference.name)
                     except ActivationFailedException:
                         exc_info = sys.exc_info()
-                        logger.error("Unable to activate plugin: %s" % plugin_info_reference.name, exc_info=exc_info)
+                        logger.error("Unable to activate plugin: %s"
+                                     % plugin_info_reference.name,
+                                     exc_info=exc_info)
                         plugin_info_reference.error = exc_info
                         self.category_mapping["Failed"].append(plugin_info_reference)
 

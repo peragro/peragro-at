@@ -71,7 +71,7 @@ class BlenderTranscoder(ITranscoder):
         logger.debug(stdoutdata)
         logger.debug(stderrdata)
         logger.debug(returncode)
-        #print(returncode) #Todo: check return code
+        # print(returncode) #Todo: check return code
 
         arguments = [
             'convert',

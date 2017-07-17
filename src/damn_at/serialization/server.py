@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """DAMN Service server"""
 # Standard
 import os
@@ -12,9 +11,9 @@ from thrift.protocol import TBinaryProtocol
 from thrift.server import TServer
 
 # Damn
-from damn_at.thrift.generated.damn import DamnService
+from damn_at.serialization.generated.damn import DamnService
 from damn_at.analyzer import Analyzer
-from damn_at.thrift.generated.damn_types.ttypes import (
+from damn_at.serialization.generated.damn_types.ttypes import (
     TargetMimetype,
     TargetMimetypeOption
 )
@@ -80,7 +79,7 @@ def main():
     server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
 
     # You could do one of these for a multithreaded server
-    #server = TServer.TThreadedServer(processor, transport, tfactory, pfactory)
+    # server = TServer.TThreadedServer(processor, transport, tfactory, pfactory)
     # server = TServer.TThreadPoolServer(
     #     processor,
     #     transport,

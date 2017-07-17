@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 """DAMN Service client"""
- # Standard
+# Standard
 import sys
 import socket
 import logging
@@ -12,7 +11,7 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
 # Damn
-from damn_at.thrift.generated.damn import DamnService
+from damn_at.serialization.generated.damn import DamnService
 
 sys.path.append('generated')
 LOG = logging.getLogger(__name__)
@@ -66,16 +65,16 @@ if __name__ == '__main__':
     client = DamnServiceClient()
     while True:
         try:
-            #client.ping()
+            # client.ping()
             LOG.debug(client.get_target_mimetypes())
         except Thrift.TApplicationException as tae:
             LOG.error('while TApplicationException: %s' % str(tae))
         except TTransport.TTransportException as wtte:
             # import traceback
-            #traceback.print_exc()
+            # traceback.print_exc()
             LOG.debug('while TTransport: %s' % str(wtte))
         except socket.error as wserr:
             # import traceback
-            #traceback.print_exc()
+            # traceback.print_exc()
             LOG.debug('while socket: %s' % str(wserr))
             client = DamnServiceClient()

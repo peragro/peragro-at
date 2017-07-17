@@ -64,7 +64,7 @@ class GenericImageAnalyzer(IAnalyzer):
         except OSError as e:
             msg = 'ImageAnalyzer failed %s:\n%s' % (an_uri, e)
             LOG.error(msg)
-            raise e(msg)
+            raise OSError(msg)
         meta = {}
         flag = 0
         lines = str(out).strip().split('\n')
