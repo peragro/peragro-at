@@ -15,9 +15,9 @@ from damn_at.serialization.generated.damn_types.ttypes import (
     AssetDescription
 )
 
-# from damn_at.analyzer import Analyzer  # pylint: disable=W0611
-# from damn_at.metadatastore import MetaDataStore  # pylint: disable=W0611
-# from damn_at.transcoder import Transcoder  # pylint: disable=W0611
+from damn_at.analyzer import Analyzer  # pylint: disable=W0611
+from damn_at.metadatastore import MetaDataStore  # pylint: disable=W0611
+from damn_at.transcoder import Transcoder  # pylint: disable=W0611
 
 logger = logging.getLogger('damn_at')  # pylint: disable=C0103
 
@@ -35,4 +35,4 @@ _CMD_DESCRIPTION = r'''
 
 __all__ = ['TargetMimetype', 'TargetMimetypeOption', 'MetaDataType',
            'MetaDataValue', 'FileId', 'FileDescription', 'AssetId',
-           'AssetDescription']
+           'AssetDescription', 'Analyzer', 'MetaDataStore', 'Transcoder']
