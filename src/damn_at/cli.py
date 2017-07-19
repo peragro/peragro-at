@@ -123,7 +123,7 @@ def assetname_completer(prefix, parsed_args, **kwargs):
 
 def split_assetname(assetname):
     import re
-    regexp = re.compile(r'^(.+?)(\((.+?)\))?$')
+    regexp = re.compile(r'^(.+?)\s*(\((.+?)\))?$')
     match = regexp.match(assetname)
     asset_subname = match.group(1)
     asset_mimetype = match.group(3)
