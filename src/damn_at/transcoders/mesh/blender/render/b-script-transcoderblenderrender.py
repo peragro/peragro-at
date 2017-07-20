@@ -65,7 +65,7 @@ def calc_center(bbox):
 
     minbox = Vector([min(c) for c in allvecs])
     maxbox = Vector([max(c) for c in allvecs])
-    return (minbox+maxbox)//2
+    return (minbox+maxbox) / 2
 
 
 def scale_camera(cameraob, camdata, mesh_box, txtw, txth):
