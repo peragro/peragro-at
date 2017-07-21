@@ -54,8 +54,10 @@ def script_path(filename):
     return os.path.join(dirname, 'b-script-' + fnoext + '.py')
 
 
-def run_blender(an_uri, script_uri, arguments=[]):
+def run_blender(an_uri, script_uri, arguments=None):
     """Runs blender with the given file and script"""
+    if arguments is None:
+        arguments = []
     paths = collect_python3_paths()
 
     dirname = os.path.dirname(__file__)
