@@ -26,6 +26,7 @@ sys_mimetypes.add_type("application/x-blender", ".blend")
 sys_mimetypes.add_type("image/tga", ".tga")
 sys_mimetypes.add_type("application/x-crystalspace.library+xml", ".xml")
 sys_mimetypes.add_type("image/x-dds", ".dds")
+sys_mimetypes.add_type("application/wavefront-obj", ".obj")
 
 # Add special purpose meta-mimetypes for transcoding, only add them
 # to the inverse lookup table (mimetype->extension) and not to the

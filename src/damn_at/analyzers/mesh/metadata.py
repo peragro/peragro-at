@@ -42,19 +42,21 @@ class MetaDataAssimpTexture(MetaDataExtractor):
 class MetaDataAssimpMaterial(MetaDataExtractor):
     __mimetype__ = 'application/assimp.material'
 
-    diffuse = MetaDataType.STRING, lambda context: str(context['$clr.diffuse'])
-    shadingm = MetaDataType.STRING, lambda context: str(context['$mat.shadingm'])
-    ambient = MetaDataType.STRING, lambda context: str(context['$clr.ambient'])
-    specular = MetaDataType.STRING, lambda context: str(context['$clr.specular'])
-    shininess = MetaDataType.STRING, lambda context: str(context['$mat.shininess'])
-    opacity = MetaDataType.STRING, lambda context: str(context['$mat.opacity'])
-    refracti = MetaDataType.STRING, lambda context: str(context['$mat.refracti'])
+    diffuse = MetaDataType.STRING, lambda context: str(context['diffuse'])
+    shadingm = MetaDataType.STRING, lambda context: str(context['shadingm'])
+    ambient = MetaDataType.STRING, lambda context: str(context['ambient'])
+    specular = MetaDataType.STRING, lambda context: str(context['specular'])
+    shininess = MetaDataType.STRING, lambda context: str(context['shininess'])
+    opacity = MetaDataType.STRING, lambda context: str(context['opacity'])
+    refracti = MetaDataType.STRING, lambda context: str(context['refracti'])
 
 
 class MetaDataAssimpMesh(MetaDataExtractor):
     __mimetype__ = 'application/assimp.mesh'
 
-    nr_of_faces = MetaDataType.INT, lambda context: context.mNumFaces
-    nr_of_vertices = MetaDataType.INT, lambda context: context.mNumVertices
-    nr_of_bones = MetaDataType.INT, lambda context: context.mNumBones
-    nr_of_anim_meshes = MetaDataType.INT, lambda context: context.mNumAnimMeshes
+    nr_of_faces = MetaDataType.INT, lambda context: len(context.faces)
+    nr_of_vertices = MetaDataType.INT, lambda context: len(context.vertices)
+    nr_of_normals = MetaDataType.INT, lambda context: len(context.normals)
+    nr_of_bones = MetaDataType.INT, lambda context: len(context.bones)
+    nr_of_texturecoords = MetaDataType.INT, lambda context: len(context.texturecoords)
+    nr_of_anim_meshes = MetaDataType.INT, lambda context: context.numanimmeshes

@@ -86,7 +86,7 @@ class AssimpAnalyzer(IAnalyzer):
             )
 
             for i, texture in enumerate(scene.textures):
-                name = texture.mName.data if texture.mName and texture.mName.data else 'texture-'+str(i)
+                name = texture.name if texture.name else 'texture-'+str(i)
                 asset_descr = AssetDescription(asset=AssetId(
                     subname=name,
                     mimetype=assimp_mimetype + ".texture",
@@ -97,8 +97,10 @@ class AssimpAnalyzer(IAnalyzer):
                 textures[i] = asset_descr
 
             for i, material in enumerate(scene.materials):
-                properties = GetMaterialProperties(material)
-                name = properties.get('?mat.name', 'material-'+str(i))
+                properties = {}
+                for key, value in material.properties.items():
+                    properties[key] = value
+                name = properties.get('name', 'material-'+str(i))
                 asset_descr = AssetDescription(asset=AssetId(
                     subname=name,
                     mimetype=assimp_mimetype + ".material",
@@ -109,7 +111,7 @@ class AssimpAnalyzer(IAnalyzer):
                 materials[i] = asset_descr
 
             for i, mesh in enumerate(scene.meshes):
-                name = mesh.mName.data if mesh.mName and mesh.mName.data else 'mesh-' + str(i)
+                name = mesh.name if mesh.name else 'mesh-' + str(i)
                 asset_descr = AssetDescription(asset=AssetId(
                     subname=name,
                     mimetype=assimp_mimetype + ".mesh",
@@ -118,10 +120,10 @@ class AssimpAnalyzer(IAnalyzer):
                 asset_descr.metadata = MetaDataAssimpMesh.extract(mesh)
                 asset_descr.dependencies = []
                 # Dependencies
-                if mesh.mMaterialIndex is not None:
-                    if mesh.mMaterialIndex in materials:
+                if mesh.materialindex is not None:
+                    if mesh.materialindex in materials:
                         asset_descr.dependencies.append(
-                            materials[mesh.mMaterialIndex].asset
+                            materials[mesh.materialindex].asset
                         )
                 file_descr.assets.append(asset_descr)
 
