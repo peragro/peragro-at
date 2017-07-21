@@ -63,7 +63,7 @@ class GenericVideoAnalyzer(IAnalyzer):
 
         meta = {}
         flag = False
-        lines = out.strip().split('\n')
+        lines = out.decode('utf-8').strip().split('\n')
         for line in lines:
             line = line.split(':', 1)
             if len(line) == 1:
