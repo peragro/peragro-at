@@ -4,12 +4,12 @@ Role
 Transcoder convience class to find the right plugin for a mimetype
 and address it.
 """
-from .pluginmanager import DAMNPluginManagerSingleton
+from damn_at.pluginmanager import DAMNPluginManagerSingleton
 
 from damn_at import TargetMimetype, TargetMimetypeOption
-from .options import options_to_template, parse_options
+from damn_at.options import options_to_template, parse_options
 
-from .utilities import (
+from damn_at.utilities import (
     find_asset_ids_in_file_descr,
     get_asset_names_in_file_descr
 )
