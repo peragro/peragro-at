@@ -1,12 +1,10 @@
-"""
-Assimp-based analyzer.
-"""
+"""Assimp-based analyzer."""
 from __future__ import absolute_import
 import os
 import logging
 import subprocess
 
-from pyassimp import *
+import pyassimp
 
 from damn_at import (
     mimetypes,
@@ -23,9 +21,7 @@ LOG = logging.getLogger(__name__)
 
 
 def get_assimp_types():
-    """
-    Extract all possible formats and store their mime types
-    """
+    """Extract all possible formats and store their mime types"""
     # TODO: not exactly reliable, a lot of unknown mimetypes
     # for those extensions :/
     try:
@@ -36,11 +32,11 @@ def get_assimp_types():
         )
         out, err = pro.communicate()
         if pro.returncode != 0:
-            LOG.debug("'assimp listext' failed with error code %d!\n%s\n%s" % (
-                pro.returncode,
-                out,
-                err
-            ))
+            LOG.debug("'assimp listext' failed with error code %d! "
+                      % pro.returncode,
+                      out,
+                      err
+                      )
             return []
     except OSError as oserror:
         LOG.debug("'assimp listext' failed! %s", oserror)
@@ -50,7 +46,7 @@ def get_assimp_types():
     mimes = []
     for ext in extensions:
         mime = mimetypes.guess_type('file.' + ext, False)[0]
-        LOG.info('Mimetype Info:\n\tExtension: %s\n\tMime: %s' % (ext, mime))
+        LOG.info('Mimetype Info:\n\tExtension: %s\n\tMime: %s', ext, mime)
         mimes.append(mime)
     return mimes
 
@@ -74,7 +70,7 @@ class AssimpAnalyzer(IAnalyzer):
 
         scene = None
         try:
-            scene = load(an_uri)
+            scene = pyassimp.load(an_uri)
 
             textures = {}
             materials = {}
@@ -128,7 +124,7 @@ class AssimpAnalyzer(IAnalyzer):
                 file_descr.assets.append(asset_descr)
 
         finally:
-            release(scene)
+            pyassimp.release(scene)
 
         '''
         obj = Loader(an_uri)
@@ -155,8 +151,7 @@ class AssimpAnalyzer(IAnalyzer):
                 ))
                 asset_descr.metadata = MetaDataWaveFrontGroup.extract(group)
                 asset_descr.dependencies = [d_asset_descr.asset]
-                file_descr.assets.append(asset_descr)
-        '''
+                file_descr.assets.append(asset_descr)'''
 
         return file_descr
 
@@ -178,7 +173,7 @@ class Loader(object):
             if values[0] == 'g':
                 current = {'faces': []}
                 group_name = values[1]
-                LOG.info("Group:\n%s\n%s" % (group_name, values))
+                LOG.info("Group:\n%s\n%s", group_name, values)
                 self.groups[group_name] = current
             elif values[0] == 'v':
                 vertices.append(tuple(map(float, values[1:4])))
