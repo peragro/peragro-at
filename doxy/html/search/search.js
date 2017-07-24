@@ -10,7 +10,7 @@ var indexSectionsWithContent =
   0: "_abcdefghilmnoprstuvw",
   1: "abcdefghilmoprstuvw",
   2: "dtv",
-  3: "_abcdefghimnprstw",
+  3: "_abcdefghilmnprstw",
   4: "p"
 };
 
