@@ -80,8 +80,7 @@ class AssimpAnalyzer(IAnalyzer):
 
             from damn_at.analyzers.mesh.metadata import (
                 MetaDataAssimpTexture,
-                MetaDataAssimpMesh,
-                MetaDataAssimpMaterial
+                MetaDataAssimpMesh
             )
 
             for i, texture in enumerate(scene.textures):
