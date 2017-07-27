@@ -8,6 +8,8 @@ import pyassimp
 
 from damn_at import (
     mimetypes,
+    MetaDataType,
+    MetaDataValue,
     FileId,
     FileDescription,
     AssetDescription,
@@ -53,7 +55,8 @@ def get_assimp_types():
 
 class AssimpAnalyzer(IAnalyzer):
     """Assimp-based analyzer."""
-    handled_types = ['application/wavefront-obj']
+    handled_types = ['application/wavefront-obj',
+                     'application/fbx']
 
     def __init__(self):
         IAnalyzer.__init__(self)
@@ -102,7 +105,14 @@ class AssimpAnalyzer(IAnalyzer):
                     mimetype=assimp_mimetype + ".material",
                     file=fileid
                 ))
-                asset_descr.metadata = MetaDataAssimpMaterial.extract(properties)
+                asset_descr.metadata = {}
+                for key, value in properties.items():
+                    if key == 'name' or key == 'file':
+                        continue
+                    asset_descr.metadata[key] = MetaDataValue(
+                        type=MetaDataType.STRING,
+                        string_value=str(value)
+                    )
                 file_descr.assets.append(asset_descr)
                 materials[i] = asset_descr
 

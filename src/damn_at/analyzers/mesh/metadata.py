@@ -42,14 +42,6 @@ class MetaDataAssimpTexture(MetaDataExtractor):
 class MetaDataAssimpMaterial(MetaDataExtractor):
     __mimetype__ = 'application/assimp.material'
 
-    diffuse = MetaDataType.STRING, lambda context: str(context['diffuse'])
-    shadingm = MetaDataType.STRING, lambda context: str(context['shadingm'])
-    ambient = MetaDataType.STRING, lambda context: str(context['ambient'])
-    specular = MetaDataType.STRING, lambda context: str(context['specular'])
-    shininess = MetaDataType.STRING, lambda context: str(context['shininess'])
-    opacity = MetaDataType.STRING, lambda context: str(context['opacity'])
-    refracti = MetaDataType.STRING, lambda context: str(context['refracti'])
-
 
 class MetaDataAssimpMesh(MetaDataExtractor):
     __mimetype__ = 'application/assimp.mesh'
