@@ -42,7 +42,7 @@ def serialize_file_description(file_descr, format='print'):
     elif format == 'json':
         data = SerializeThriftMsg(file_descr, TSimpleJSONProtocol)
     elif format == 'json-pretty':
-        data = SerializeThriftMsg(file_descr, TSimpleJSONProtocol)
+        data = SerializeThriftMsg(file_descr, TSimpleJSONProtocol).decode()
         data = json.loads(data)
         data = json.dumps(data, indent=4)
     elif format == 'binary':
