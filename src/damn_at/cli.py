@@ -89,7 +89,7 @@ def create_argparse_analyze(subparsers):
             LOG.info(serialize_file_description(descr, 'print'))
             # print(serialize_file_description(descr, 'print'))
         elif not output and not store:
-            LOG.info(serialize_file_description(descr, format_type))
+            print(serialize_file_description(descr, format_type))
             # print(serialize_file_description(descr, format_type))
         elif output:
             with open(output, 'wb') as file:
