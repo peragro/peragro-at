@@ -9,6 +9,7 @@ http://peragro.github.io/peragro-at/
 [![Build Status](https://api.travis-ci.org/peragro/peragro-at.png)](https://travis-ci.org/peragro/peragro-at)
 [![Code Health](https://landscape.io/github/peragro/peragro-at/master/landscape.png)](https://landscape.io/github/peragro/peragro-at/master)
 [![Coverage Status](https://coveralls.io/repos/peragro/peragro-at/badge.svg?branch=master)](https://coveralls.io/r/peragro/peragro-at?branch=master)
+[![Coverty Status](https://scan.coverity.com/projects/14216/badge.svg)](https://scan.coverity.com/projects/peragro-at)
 
 Installation with Docker (Recommended)
 -----
