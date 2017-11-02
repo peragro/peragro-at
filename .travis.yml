@@ -4,6 +4,7 @@ python:
 env:
   global:
     secure: "TxYs86fLN8Yw+oN0GShmtLGS5a+NR2x35PcN4U8gEheRGSSxVU8O+MrpGfUZf3CVAT6FfE3zfX2DkV57JlWfP3i7ff5iPtMOEAzbqah41olFVCYCLJdw6J8dbfRcUkWS550b6BAXaWclB0jhtdEP8PmlFpAiRZ0acg3Ynsk+/ew="
+    secure: "CjUMzwG8sgi/4O0cSyvfgXURBEdJg0z+2xraipxCMC159pFwdgbeAi2tGkCXNBeFDy5Ub4EyiD66mnhW1U9TK9yPtyrLf4pB5BnmllDr0cJS5uV/7VaMXPrPiPtZjwn5MHatmBtCdCfVq0EsdGolR9e+y/sXMa12XihOpMwgi/Q="
 before_install:
 - sudo apt-get install -qq python-sphinx doxygen graphviz
 services:
@@ -27,5 +28,5 @@ addons:
       name: "peragro/peragro-at"
       description: "Build submitted via Travis CI"
     build_command_prepend: ""
-    build_command:   ""
+    build_command:   "cov-build --dir cov-int --no-command --fs-capture-search /opt/peragro-at/"
     branch_pattern: coverity_scan
